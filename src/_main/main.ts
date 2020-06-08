@@ -3,10 +3,10 @@ import {
   ElmMessage,
   GotError,
   JavaScriptMessage,
+  JsRefSerialPort,
   SendToSerialPort,
-  SerialPortConnected,
-  SerialPortDisconnected,
   SerialPortRef,
+  SerialPortUpdated,
 } from "../Generated/Types/PlotterControl"
 import { Maybe } from "../Generated/Basics/Basics"
 
@@ -35,13 +35,13 @@ function main(): void {
   // Outcoming messages
   addEventListener("error", (e) => send([GotError, String(e.error)]))
   addEventListener("unhandledrejection", (e) => send([GotError, String(e.reason)]))
-  navigator.serial.addEventListener("disconnect", () => send([SerialPortDisconnected]))
+  navigator.serial.addEventListener("disconnect", () => send([SerialPortUpdated, null]))
 
   // Incoming messages
   ;(app.ports.sendElmMessage_.subscribe as any)((a: ElmMessage) => {
     switch (a[0]) {
       case ConnectSerialPort:
-        return connectSerialPort(a[1], a[2]).then((a: SerialPort) => send([SerialPortConnected, [SerialPortRef, a]]))
+        return connectSerialPort(a[1], a[2]).then((a) => send([SerialPortUpdated, a]))
       case SendToSerialPort:
         return sendToSerialPort(a[1][1], a[2])
     }
@@ -51,12 +51,13 @@ function main(): void {
 /**
  * To connect to serial port.
  * */
-async function connectSerialPort(filter: SerialPortFilter, options: SerialOptions): Promise<void> {
+async function connectSerialPort(filter: SerialPortFilter, options: SerialOptions): Promise<Maybe<JsRefSerialPort>> {
   const port = await getPort(filter)
   if (!port) {
-    return
+    return null
   }
-  return port.open(options)
+  await port.open(options)
+  return [SerialPortRef, port]
 }
 
 /**
