@@ -5,7 +5,6 @@ import {
   JavaScriptMessage,
   JsRefSerialPort,
   SendToSerialPort,
-  SerialPortRef,
   SerialPortUpdated,
 } from "../Generated/Types/PlotterControl"
 import { Maybe } from "../Generated/Basics/Basics"
@@ -57,7 +56,7 @@ async function connectSerialPort(filter: SerialPortFilter, options: SerialOption
     return null
   }
   await port.open(options)
-  return [SerialPortRef, port]
+  return [JsRefSerialPort, port]
 }
 
 /**
