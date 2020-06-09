@@ -24,13 +24,13 @@ stepSize =
 {-| To offset commands by distance in millimeters.
 -}
 offsetBy : ( Float, Float ) -> Command -> Command
-offsetBy ( offsetX, offsetY ) a =
+offsetBy ( offsetY, offsetX ) a =
     case a of
         PU2 x y ->
-            PU2 (x + offsetX * stepSize) (y + offsetY * stepSize)
+            PU2 (x + offsetX / stepSize) (y + offsetY / stepSize)
 
         PD x y ->
-            PD (x + offsetX * stepSize) (y + offsetY * stepSize)
+            PD (x + offsetX / stepSize) (y + offsetY / stepSize)
 
         _ ->
             a
