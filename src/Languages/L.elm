@@ -1,5 +1,7 @@
 module Languages.L exposing (..)
 
+import String exposing (fromInt)
+
 
 pageTitle =
     "Plotter Control"
@@ -17,8 +19,15 @@ choosePlotFile =
     "Choose Plot File"
 
 
-plotSelectionButton =
-    "Plot Selection"
+plotButton i =
+    if i == 0 then
+        "Plot Nothing"
+
+    else if i == 1 then
+        "Plot 1 Item"
+
+    else
+        "Plot " ++ fromInt i ++ " Items"
 
 
 plotterNotes =

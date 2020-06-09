@@ -13,7 +13,7 @@ import Types.PlotterControl exposing (ElmMessage(..), JavaScriptMessage(..), JsR
 import Utils.Command exposing (Command(..), commandsToString, offsetBy)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
 import Utils.RegistrationMark exposing (registrationMark, registrationMarkSize, registrationMarks)
-import Utils.Utils exposing (Point)
+import Utils.Utils exposing (Point, boolToNumber)
 
 
 {-| To define what can happen.
@@ -221,7 +221,8 @@ viewConnectedInterface config model =
                 ]
             , text " "
             , button [ class "btn btn-danger", onClick (Plot |> config.sendMsg) ]
-                [ text L.plotSelectionButton
+                [ text
+                    (L.plotButton (model.selectionMarks |> List.length |> (+) (boolToNumber model.selectionFile)))
                 ]
             ]
         , div (absolute ( Left 0 30, Top 3 0 ) ++ [ class "small" ])
