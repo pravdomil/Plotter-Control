@@ -1,9 +1,9 @@
 port module Ports exposing (javaScriptMessageSubscription, sendElmMessage)
 
-import Generated.Types.PlotterControlDecode exposing (javaScriptMessageDecoder)
-import Generated.Types.PlotterControlEncode exposing (encodeElmMessage)
+import Generated.Types.MessagesDecode exposing (javaScriptMessageDecoder)
+import Generated.Types.MessagesEncode exposing (encodeElmMessage)
 import Json.Decode as Decode exposing (decodeValue)
-import Json.Encode as Encode exposing (encode)
+import Json.Encode as Encode
 import Types.Messages exposing (ElmMessage, JavaScriptMessage)
 
 

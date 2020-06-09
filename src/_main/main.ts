@@ -6,7 +6,7 @@ import {
   JsRefSerialPort,
   SendToSerialPort,
   SerialPortUpdated,
-} from "../Generated/Types/PlotterControl"
+} from "../Generated/Types/Messages"
 import { Maybe } from "../Generated/Basics/Basics"
 
 main()
