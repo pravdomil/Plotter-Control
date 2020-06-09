@@ -74,5 +74,5 @@ registrationMark =
     , PD 424 124
     , PU2 464 4
     , PD 464 124
-    , PU
+    , LineEnd
     ]

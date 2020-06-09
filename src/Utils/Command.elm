@@ -8,7 +8,7 @@ import String exposing (fromFloat, join)
 type Command
     = IN
     | IP0011
-    | PU
+    | LineEnd
     | PU2 Float Float
     | PD Float Float
 
@@ -55,7 +55,7 @@ commandToString a =
         IP0011 ->
             "IP0,0,1,1"
 
-        PU ->
+        LineEnd ->
             "PU"
 
         PU2 x y ->
