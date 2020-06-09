@@ -4,7 +4,7 @@ import Generated.Types.PlotterControlDecode exposing (javaScriptMessageDecoder)
 import Generated.Types.PlotterControlEncode exposing (encodeElmMessage)
 import Json.Decode as Decode exposing (decodeValue)
 import Json.Encode as Encode exposing (encode)
-import Types.PlotterControl exposing (ElmMessage, JavaScriptMessage)
+import Types.Messages exposing (ElmMessage, JavaScriptMessage)
 
 
 {-| To send Elm message.

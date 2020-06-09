@@ -9,7 +9,7 @@ import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
 import String
 import Task
-import Types.PlotterControl exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter)
+import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter)
 import Utils.Command exposing (Command(..), commandsToString, offsetBy)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
 import Utils.RegistrationMark exposing (registrationMark, registrationMarkSize, registrationMarks)
