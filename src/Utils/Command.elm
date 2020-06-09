@@ -8,9 +8,9 @@ import String exposing (fromFloat, join)
 type Command
     = IN
     | IP0011
-    | LineEnd
     | PU2 Float Float
     | PD Float Float
+    | LineEnd
 
 
 {-| To define plotter step size.
@@ -55,11 +55,11 @@ commandToString a =
         IP0011 ->
             "IP0,0,1,1"
 
-        LineEnd ->
-            "PU"
-
         PU2 x y ->
             "PU" ++ fromFloat x ++ "," ++ fromFloat y
 
         PD x y ->
             "PD" ++ fromFloat x ++ "," ++ fromFloat y
+
+        LineEnd ->
+            "PU"
