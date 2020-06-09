@@ -5,9 +5,21 @@ pageTitle =
     "Plotter Control"
 
 
-mimakiManual =
-    "Mimaki CG-60st Manual"
+connectToPlotter =
+    "Connect to Plotter"
 
 
-openPort =
-    "Open Port"
+connectingToPlotter =
+    "Connecting..."
+
+
+choosePlotFile =
+    "Choose Plot File"
+
+
+plotSelectionButton =
+    "Plot Selection"
+
+
+plotterNotes =
+    "Note: Speed, pressure and offset can be set only by using plotter panel."
