@@ -12,3 +12,9 @@ hopefully respects order of commands.
 cmdBatch : List (Cmd msg) -> Cmd msg
 cmdBatch a =
     a |> List.reverse |> Cmd.batch
+
+
+{-| To define what point is.
+-}
+type alias Point =
+    ( Float, Float )
