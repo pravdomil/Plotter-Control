@@ -8,8 +8,8 @@ import String exposing (fromFloat, join)
 type Command
     = IN
     | IP0011
-    | PU2 Float Float
-    | PD Float Float
+    | MoveTo Float Float
+    | LineTo Float Float
     | LineEnd
 
 
@@ -25,11 +25,11 @@ stepSize =
 offsetBy : ( Float, Float ) -> Command -> Command
 offsetBy ( offsetY, offsetX ) a =
     case a of
-        PU2 x y ->
-            PU2 (x + offsetX / stepSize) (y + offsetY / stepSize)
+        MoveTo x y ->
+            MoveTo (x + offsetX / stepSize) (y + offsetY / stepSize)
 
-        PD x y ->
-            PD (x + offsetX / stepSize) (y + offsetY / stepSize)
+        LineTo x y ->
+            LineTo (x + offsetX / stepSize) (y + offsetY / stepSize)
 
         _ ->
             a
@@ -55,10 +55,10 @@ commandToString a =
         IP0011 ->
             "IP0,0,1,1"
 
-        PU2 x y ->
+        MoveTo x y ->
             "PU" ++ fromFloat x ++ "," ++ fromFloat y
 
-        PD x y ->
+        LineTo x y ->
             "PD" ++ fromFloat x ++ "," ++ fromFloat y
 
         LineEnd ->
