@@ -36,63 +36,43 @@ registrationMark : List Command
 registrationMark =
     [ PU2 4 104
     , PD 124 104
-    , PU
     , PU2 144 4
     , PD 144 124
-    , PU
     , PU2 104 4
     , PD 104 124
-    , PU
     , PU2 4 144
     , PD 124 144
-    , PU
     , PU2 4 184
     , PD 124 184
-    , PU
     , PU2 4 224
     , PD 124 224
-    , PU
     , PU2 4 264
     , PD 124 264
-    , PU
     , PU2 4 304
     , PD 124 304
-    , PU
     , PU2 4 344
     , PD 124 344
-    , PU
     , PU2 4 384
     , PD 124 384
-    , PU
     , PU2 4 424
     , PD 124 424
-    , PU
     , PU2 4 464
     , PD 124 464
-    , PU
     , PU2 184 4
     , PD 184 124
-    , PU
     , PU2 224 4
     , PD 224 124
-    , PU
     , PU2 264 4
     , PD 264 124
-    , PU
     , PU2 304 4
     , PD 304 124
-    , PU
     , PU2 344 4
     , PD 344 124
-    , PU
     , PU2 384 4
     , PD 384 124
-    , PU
     , PU2 424 4
     , PD 424 124
-    , PU
     , PU2 464 4
     , PD 464 124
     , PU
-    , PU2 860 0
     ]
