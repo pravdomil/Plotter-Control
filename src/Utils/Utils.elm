@@ -18,3 +18,14 @@ cmdBatch a =
 -}
 type alias Point =
     ( Float, Float )
+
+
+{-| To convert boolean to 0 or 1.
+-}
+boolToNumber : Bool -> number
+boolToNumber a =
+    if a then
+        1
+
+    else
+        0
