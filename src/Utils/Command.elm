@@ -1,7 +1,6 @@
 module Utils.Command exposing (..)
 
 import String exposing (fromFloat, join)
-import Utils.Utils exposing (Point)
 
 
 {-| To define MGL-IIc commands.
