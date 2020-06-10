@@ -175,68 +175,61 @@ view config model =
         [ h3 (absolute ( Left 2 0, Top 1.5 0 ))
             [ text L.pageTitle ]
         , div (absolute ( Left 2 0, Top 5 0 ))
-            [ case model.port_ of
-                Idle ->
-                    viewDisconnectedInterface config model
-
-                Waiting ->
-                    viewConnectingInterface config model
-
-                Ready _ ->
-                    viewConnectedInterface config model
-            ]
+            [ viewControlInterface config model ]
         , div
             (absolute ( Left 1 0, Bottom 1 0 ) ++ [ class "small text-danger" ])
             (model.errors |> List.map (\v -> div [] [ text v ]))
         ]
 
 
-{-| To show connect button when we are disconnected.
+{-| To show control interface.
 -}
-viewDisconnectedInterface : Config msg -> Model -> Html msg
-viewDisconnectedInterface config _ =
-    p []
-        [ button [ class "btn btn-primary", onClick (config.sendMsg ConnectToPlotter) ]
-            [ text L.connectToPlotter
-            ]
-        ]
-
-
-{-| To show something when we are connecting.
--}
-viewConnectingInterface : Config msg -> Model -> Html msg
-viewConnectingInterface _ _ =
-    p []
-        [ text L.connectingToPlotter
-        ]
-
-
-{-| To show user interface when we are connected.
--}
-viewConnectedInterface : Config msg -> Model -> Html msg
-viewConnectedInterface config model =
+viewControlInterface : Config msg -> Model -> Html msg
+viewControlInterface config model =
     div []
         [ div (absolute ( Left 0 30, Top 0 0 ))
             [ button [ class "btn btn-primary", onClick (ChoosePlotFile |> config.sendMsg) ]
                 [ text L.choosePlotFile
                 ]
             , text " "
-            , button [ class "btn btn-danger", onClick (Plot |> config.sendMsg) ]
-                [ text
-                    (L.plotButton (model.selectionMarks |> List.length |> (+) (boolToNumber model.selectionFile)))
-                ]
+            , case model.port_ of
+                Idle ->
+                    button [ class "btn btn-primary", onClick (ConnectToPlotter |> config.sendMsg) ]
+                        [ text L.connectToPlotter
+                        ]
+
+                Waiting ->
+                    button [ class "btn btn-primary", disabled True ]
+                        [ text L.connectingToPlotter
+                        ]
+
+                Ready _ ->
+                    button
+                        [ class "btn btn-danger", disabled model.writerIsBusy, onClick (Plot |> config.sendMsg) ]
+                        [ if model.writerIsBusy then
+                            text L.sendingData
+
+                          else
+                            text
+                                (L.plotButton (model.selectionMarks |> List.length |> (+) (boolToNumber model.selectionFile)))
+                        ]
             ]
         , div (absolute ( Left 0 30, Top 3 0 ) ++ [ class "small" ])
             [ text L.plotterNotes
             ]
         , div (absolute ( Left 0 0, Top 5 0 )) [ viewRegistrationMarks config model ]
-        , button
-            (absolute ( Left 8 8, Top 21 6 )
-                ++ [ buttonClass model.selectionFile
-                   , onClick (SelectPlotFile |> config.sendMsg)
-                   ]
-            )
-            []
+        , case model.plotFile of
+            Just ( a, _ ) ->
+                button
+                    (absolute ( Left 4 16, Top 22 4 )
+                        ++ [ buttonClass model.selectionFile
+                           , onClick (SelectPlotFile |> config.sendMsg)
+                           ]
+                    )
+                    [ text (a |> File.name) ]
+
+            Nothing ->
+                text ""
         ]
 
 

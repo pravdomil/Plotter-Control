@@ -30,5 +30,9 @@ plotButton i =
         "Plot " ++ fromInt i ++ " Items"
 
 
+sendingData =
+    "Sending Data..."
+
+
 plotterNotes =
     "Note: Speed, pressure and offset can be set only by using plotter panel."
