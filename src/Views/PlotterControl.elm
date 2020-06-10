@@ -25,7 +25,7 @@ type Msg
     | ConnectToPlotter
     | ChoosePlotFile
     | GotPlotFile File
-    | GotPlotFileContent String
+    | GotPlotFileAndContent File String
     | SelectRegistrationMark Point
     | SelectPlotFile
     | Plot
@@ -42,7 +42,7 @@ publicMsg =
 type alias Model =
     { errors : List String
     , port_ : Status JsRefSerialPort
-    , plotFile : Maybe String
+    , plotFile : Maybe ( File, String )
     , selectionFile : Bool
     , selectionMarks : List Point
     }
@@ -116,11 +116,11 @@ update config msg model =
 
         GotPlotFile a ->
             ( model
-            , a |> File.toString |> Task.perform (GotPlotFileContent >> config.sendMsg)
+            , a |> File.toString |> Task.perform (GotPlotFileAndContent a >> config.sendMsg)
             )
 
-        GotPlotFileContent a ->
-            ( { model | plotFile = Just a }, Cmd.none )
+        GotPlotFileAndContent a b ->
+            ( { model | plotFile = Just ( a, b ) }, Cmd.none )
 
         SelectRegistrationMark a ->
             if model.selectionMarks |> List.member a then
@@ -144,7 +144,7 @@ update config msg model =
                                 |> commandsToString
                                 |> (\v ->
                                         if model.selectionFile then
-                                            v ++ (model.plotFile |> Maybe.withDefault "")
+                                            v ++ (model.plotFile |> Maybe.map second |> Maybe.withDefault "")
 
                                         else
                                             v
