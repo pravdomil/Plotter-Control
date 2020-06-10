@@ -139,6 +139,7 @@ update config msg model =
                         data : String
                         data =
                             model.selectionMarks
+                                |> List.reverse
                                 |> List.concatMap (\v -> registrationMark |> List.map (offsetBy v))
                                 |> (\v -> List.concat [ [ IN, IP0011 ], v ])
                                 |> commandsToString
