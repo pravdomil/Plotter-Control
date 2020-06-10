@@ -15,6 +15,7 @@ type ElmMessage
 type JavaScriptMessage
     = GotError String
     | SerialPortUpdated (Maybe JsRefSerialPort)
+    | WriterIsBusyUpdated Bool
 
 
 {-| To filter serial ports.

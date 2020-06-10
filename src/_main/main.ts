@@ -6,6 +6,7 @@ import {
   JsRefSerialPort,
   SendToSerialPort,
   SerialPortUpdated,
+  WriterIsBusyUpdated,
 } from "../Generated/Types/Messages"
 import { Maybe } from "../Generated/Basics/Basics"
 
@@ -42,7 +43,7 @@ function main(): void {
       case ConnectSerialPort:
         return connectSerialPort(a[1], a[2]).then((a) => send([SerialPortUpdated, a]))
       case SendToSerialPort:
-        return sendToSerialPort(a[1][1], a[2])
+        return sendToSerialPort(a[1][1], a[2], send)
     }
   })
 }
@@ -78,8 +79,15 @@ async function getPort(filter: SerialPortFilter): Promise<Maybe<SerialPort>> {
 /**
  * To send string to serial port.
  * */
-function sendToSerialPort(a: SerialPort, b: string): void {
-  a.writable?.getWriter().write(new TextEncoder().encode(b))
+async function sendToSerialPort(a: SerialPort, b: string, send: (a: JavaScriptMessage) => void): Promise<void> {
+  if (!a.writable || a.writable.locked) {
+    return
+  }
+  send([WriterIsBusyUpdated, true])
+  const writer = a.writable.getWriter()
+  await writer.write(new TextEncoder().encode(b))
+  await writer.close()
+  send([WriterIsBusyUpdated, false])
 }
 
 /**

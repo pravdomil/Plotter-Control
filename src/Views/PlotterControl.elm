@@ -2,13 +2,14 @@ module Views.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subsc
 
 import File exposing (File)
 import File.Select as Select
-import Html exposing (Attribute, Html, a, button, div, h3, p, text)
-import Html.Attributes exposing (class)
+import Html exposing (Attribute, Html, a, button, div, h3, text)
+import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
 import String
 import Task
+import Tuple exposing (second)
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter)
 import Utils.Command exposing (Command(..), commandsToString, offsetBy)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
@@ -43,6 +44,7 @@ type alias Model =
     { errors : List String
     , port_ : Status JsRefSerialPort
     , plotFile : Maybe ( File, String )
+    , writerIsBusy : Bool
     , selectionFile : Bool
     , selectionMarks : List Point
     }
@@ -69,6 +71,7 @@ init : Config msg -> ( Model, Cmd msg )
 init _ =
     ( { errors = []
       , port_ = Idle
+      , writerIsBusy = False
       , plotFile = Nothing
       , selectionFile = False
       , selectionMarks = []
@@ -96,6 +99,9 @@ update config msg model =
 
                                 Nothing ->
                                     ( { model | port_ = Idle }, Cmd.none )
+
+                        WriterIsBusyUpdated c ->
+                            ( { model | writerIsBusy = c }, Cmd.none )
 
                 Nothing ->
                     ( model, Cmd.none )
