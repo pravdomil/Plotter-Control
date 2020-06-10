@@ -1,12 +1,14 @@
 import {
+  Busy,
   ConnectSerialPort,
   ElmMessage,
   GotError,
+  Idle,
   JavaScriptMessage,
   JsRefSerialPort,
+  Ready,
   SendToSerialPort,
   SerialPortUpdated,
-  WriterIsBusyUpdated,
 } from "../Generated/Types/Messages"
 import { Maybe } from "../Generated/Basics/Basics"
 
@@ -35,13 +37,13 @@ function main(): void {
   // Outcoming messages
   addEventListener("error", (e) => send([GotError, String(e.error)]))
   addEventListener("unhandledrejection", (e) => send([GotError, String(e.reason)]))
-  navigator.serial.addEventListener("disconnect", () => send([SerialPortUpdated, null]))
+  navigator.serial.addEventListener("disconnect", () => send([SerialPortUpdated, [Idle]]))
 
   // Incoming messages
   ;(app.ports.sendElmMessage_.subscribe as any)((a: ElmMessage) => {
     switch (a[0]) {
       case ConnectSerialPort:
-        return connectSerialPort(a[1], a[2]).then((a) => send([SerialPortUpdated, a]))
+        return connectSerialPort(a[1], a[2], send)
       case SendToSerialPort:
         return sendToSerialPort(a[1][1], a[2], send)
     }
@@ -51,13 +53,18 @@ function main(): void {
 /**
  * To connect to serial port.
  * */
-async function connectSerialPort(filter: SerialPortFilter, options: SerialOptions): Promise<Maybe<JsRefSerialPort>> {
+async function connectSerialPort(
+  filter: SerialPortFilter,
+  options: SerialOptions,
+  send: (a: JavaScriptMessage) => void
+): Promise<void> {
   const port = await getPort(filter)
   if (!port) {
-    return null
+    send([SerialPortUpdated, [Idle]])
+    return
   }
   await port.open(options)
-  return [JsRefSerialPort, port]
+  send([SerialPortUpdated, [Ready, [JsRefSerialPort, port]]])
 }
 
 /**
@@ -83,11 +90,11 @@ async function sendToSerialPort(a: SerialPort, b: string, send: (a: JavaScriptMe
   if (!a.writable || a.writable.locked) {
     return
   }
-  send([WriterIsBusyUpdated, true])
+  send([SerialPortUpdated, [Busy]])
   const writer = a.writable.getWriter()
   await writer.write(new TextEncoder().encode(b))
   await writer.close()
-  send([WriterIsBusyUpdated, false])
+  send([SerialPortUpdated, [Ready, [JsRefSerialPort, a]]])
 }
 
 /**

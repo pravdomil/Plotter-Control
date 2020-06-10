@@ -14,8 +14,7 @@ type ElmMessage
 -}
 type JavaScriptMessage
     = GotError String
-    | SerialPortUpdated (Maybe JsRefSerialPort)
-    | WriterIsBusyUpdated Bool
+    | SerialPortUpdated PortStatus
 
 
 {-| To filter serial ports.
@@ -37,6 +36,15 @@ type alias SerialOptions =
     --, buffersize : Maybe Int
     --, rtscts : Maybe Bool
     }
+
+
+{-| To define port status.
+-}
+type PortStatus
+    = Idle
+    | Connecting
+    | Ready JsRefSerialPort
+    | Busy
 
 
 {-| To keep SerialPort reference in Elm.

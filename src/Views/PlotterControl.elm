@@ -10,7 +10,7 @@ import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
 import String
 import Task
 import Tuple exposing (second)
-import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter)
+import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, PortStatus(..), SerialOptions, SerialPortFilter)
 import Utils.Command exposing (Command(..), commandsToString, offsetBy)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
 import Utils.RegistrationMark exposing (registrationMark, registrationMarkSize, registrationMarks)
@@ -42,20 +42,11 @@ publicMsg =
 -}
 type alias Model =
     { errors : List String
-    , port_ : Status JsRefSerialPort
+    , port_ : PortStatus
     , plotFile : Maybe ( File, String )
-    , writerIsBusy : Bool
     , selectionFile : Bool
     , selectionMarks : List Point
     }
-
-
-{-| To define status.
--}
-type Status a
-    = Idle
-    | Waiting
-    | Ready a
 
 
 {-| To define what things we need.
@@ -71,7 +62,6 @@ init : Config msg -> ( Model, Cmd msg )
 init _ =
     ( { errors = []
       , port_ = Idle
-      , writerIsBusy = False
       , plotFile = Nothing
       , selectionFile = False
       , selectionMarks = []
@@ -93,15 +83,7 @@ update config msg model =
                             ( { model | errors = c :: model.errors }, Cmd.none )
 
                         SerialPortUpdated c ->
-                            case c of
-                                Just d ->
-                                    ( { model | port_ = Ready d }, Cmd.none )
-
-                                Nothing ->
-                                    ( { model | port_ = Idle }, Cmd.none )
-
-                        WriterIsBusyUpdated c ->
-                            ( { model | writerIsBusy = c }, Cmd.none )
+                            ( { model | port_ = c }, Cmd.none )
 
                 Nothing ->
                     ( model, Cmd.none )
@@ -204,20 +186,22 @@ viewControlInterface config model =
                         [ text L.connectToPlotter
                         ]
 
-                Waiting ->
+                Connecting ->
                     button [ class "btn btn-primary", disabled True ]
                         [ text L.connectingToPlotter
                         ]
 
                 Ready _ ->
                     button
-                        [ class "btn btn-danger", disabled model.writerIsBusy, onClick (Plot |> config.sendMsg) ]
-                        [ if model.writerIsBusy then
-                            text L.sendingData
+                        [ class "btn btn-danger", onClick (Plot |> config.sendMsg) ]
+                        [ text
+                            (L.plotButton (model.selectionMarks |> List.length |> (+) (boolToNumber model.selectionFile)))
+                        ]
 
-                          else
-                            text
-                                (L.plotButton (model.selectionMarks |> List.length |> (+) (boolToNumber model.selectionFile)))
+                Busy ->
+                    button
+                        [ class "btn btn-danger", disabled True ]
+                        [ text L.sendingData
                         ]
             ]
         , div (absolute ( Left 0 30, Top 3 0 ) ++ [ class "small" ])
