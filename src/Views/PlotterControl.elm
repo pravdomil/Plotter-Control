@@ -2,19 +2,17 @@ module Views.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subsc
 
 import File exposing (File)
 import File.Select as Select
-import Html exposing (Attribute, Html, a, button, div, h3, text)
-import Html.Attributes exposing (class, disabled)
-import Html.Events exposing (onClick)
+import Html exposing (Attribute, Html, a, button, div, h3, h6, input, label, li, ol, p, small, span, text)
+import Html.Attributes exposing (checked, class, disabled, type_)
+import Html.Events exposing (onClick, onInput)
 import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
-import String
+import String exposing (join)
 import Task
-import Tuple exposing (second)
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, PortStatus(..), SerialOptions, SerialPortFilter)
 import Utils.Command exposing (Command(..), commandsToString, offsetBy)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
-import Utils.RegistrationMark exposing (registrationMark, registrationMarkSize, registrationMarks)
-import Utils.Utils exposing (Point, boolToNumber)
+import Utils.RegistrationMark exposing (horizontalRegistrationMark, verticalRegistrationMark)
 
 
 {-| To define what can happen.
@@ -24,12 +22,10 @@ type Msg
       GotJavaScriptMessage (Maybe JavaScriptMessage)
       -- UI
     | ConnectToPlotter
-    | ChoosePlotFile
+    | Plot String
+    | PlotFile
     | GotPlotFile File
-    | GotPlotFileAndContent File String
-    | SelectRegistrationMark Point
-    | SelectPlotFile
-    | Plot
+    | ChangeOrientation Orientation
 
 
 {-| To make some messages available outside this module.
@@ -43,10 +39,13 @@ publicMsg =
 type alias Model =
     { errors : List String
     , port_ : PortStatus
-    , plotFile : Maybe ( File, String )
-    , selectionFile : Bool
-    , selectionMarks : List Point
+    , orientation : Maybe Orientation
     }
+
+
+type Orientation
+    = Front
+    | Rear
 
 
 {-| To define what things we need.
@@ -62,9 +61,7 @@ init : Config msg -> ( Model, Cmd msg )
 init _ =
     ( { errors = []
       , port_ = Idle
-      , plotFile = Nothing
-      , selectionFile = False
-      , selectionMarks = []
+      , orientation = Nothing
       }
     , Cmd.none
     )
@@ -97,55 +94,28 @@ update config msg model =
                 )
             )
 
-        ChoosePlotFile ->
-            ( model
-            , Select.file [] (GotPlotFile >> config.sendMsg)
-            )
-
-        GotPlotFile a ->
-            ( model
-            , a |> File.toString |> Task.perform (GotPlotFileAndContent a >> config.sendMsg)
-            )
-
-        GotPlotFileAndContent a b ->
-            ( { model | plotFile = Just ( a, b ) }, Cmd.none )
-
-        SelectRegistrationMark a ->
-            if model.selectionMarks |> List.member a then
-                ( { model | selectionMarks = model.selectionMarks |> List.filter ((/=) a) }, Cmd.none )
-
-            else
-                ( { model | selectionMarks = a :: model.selectionMarks }, Cmd.none )
-
-        SelectPlotFile ->
-            ( { model | selectionFile = not model.selectionFile }, Cmd.none )
-
-        Plot ->
+        Plot data ->
             case model.port_ of
                 Ready a ->
-                    let
-                        data : String
-                        data =
-                            model.selectionMarks
-                                |> List.reverse
-                                |> List.concatMap (\v -> registrationMark |> List.map (offsetBy v))
-                                |> (\v -> List.concat [ [ IN, IP0011 ], v ])
-                                |> commandsToString
-                                |> (\v ->
-                                        if model.selectionFile then
-                                            v ++ (model.plotFile |> Maybe.map second |> Maybe.withDefault "")
-
-                                        else
-                                            v
-                                   )
-                                |> (\v -> v ++ String.repeat 10000 ";")
-                    in
                     ( model
                     , sendElmMessage (SendToSerialPort a data)
                     )
 
                 _ ->
                     ( model, Cmd.none )
+
+        PlotFile ->
+            ( model
+            , Select.file [] (GotPlotFile >> config.sendMsg)
+            )
+
+        GotPlotFile a ->
+            ( model
+            , a |> File.toString |> Task.perform (Plot >> config.sendMsg)
+            )
+
+        ChangeOrientation a ->
+            ( { model | orientation = Just a }, Cmd.none )
 
 
 {-| To handle subscriptions.
@@ -175,89 +145,284 @@ view config model =
 viewControlInterface : Config msg -> Model -> Html msg
 viewControlInterface config model =
     div []
-        [ div (absolute ( Left 0 30, Top 0 0 ))
-            [ button [ class "btn btn-primary", onClick (ChoosePlotFile |> config.sendMsg) ]
-                [ text L.choosePlotFile
+        [ div (absolute ( Left 0 19, Top 0 0 ))
+            [ p []
+                [ case model.port_ of
+                    Idle ->
+                        button [ class "btn btn-primary", onClick (ConnectToPlotter |> config.sendMsg) ]
+                            [ text L.connectToPlotter
+                            ]
+
+                    Connecting ->
+                        button [ class "btn btn-primary", disabled True ]
+                            [ text L.connectingToPlotter
+                            ]
+
+                    Ready _ ->
+                        button
+                            [ class "btn btn-success", disabled True ]
+                            [ text L.connectedButtonLabel ]
+
+                    Busy ->
+                        button
+                            [ class "btn btn-danger", disabled True ]
+                            [ text L.sendingData
+                            ]
                 ]
-            , text " "
-            , case model.port_ of
-                Idle ->
-                    button [ class "btn btn-primary", onClick (ConnectToPlotter |> config.sendMsg) ]
-                        [ text L.connectToPlotter
+            , div []
+                [ div [] [ text "Orientation" ]
+                , div [ class "d-flex" ]
+                    [ label []
+                        [ input
+                            [ type_ "radio"
+                            , checked (model.orientation == Just Front)
+                            , onInput (\_ -> ChangeOrientation Front |> config.sendMsg)
+                            ]
+                            []
+                        , span [ class "align-text-bottom" ] [ text " Front" ]
                         ]
-
-                Connecting ->
-                    button [ class "btn btn-primary", disabled True ]
-                        [ text L.connectingToPlotter
+                    ]
+                , div [ class "d-flex" ]
+                    [ label []
+                        [ input
+                            [ type_ "radio"
+                            , checked (model.orientation == Just Rear)
+                            , onInput (\_ -> ChangeOrientation Rear |> config.sendMsg)
+                            ]
+                            []
+                        , span [ class "align-text-bottom" ] [ text " Rear" ]
                         ]
-
-                Ready _ ->
-                    button
-                        [ class "btn btn-danger", onClick (Plot |> config.sendMsg) ]
-                        [ text
-                            (L.plotButton (model.selectionMarks |> List.length |> (+) (boolToNumber model.selectionFile)))
-                        ]
-
-                Busy ->
-                    button
-                        [ class "btn btn-danger", disabled True ]
-                        [ text L.sendingData
-                        ]
+                    ]
+                ]
+            , p [] [ small [] [ text L.plotterNotes ] ]
             ]
-        , div (absolute ( Left 0 30, Top 3 0 ) ++ [ class "small" ])
-            [ text L.plotterNotes
-            ]
-        , div (absolute ( Left 0 0, Top 5 0 )) [ viewRegistrationMarks config model ]
-        , case model.plotFile of
-            Just ( a, _ ) ->
-                button
-                    (absolute ( Left 4 16, Top 22 4 )
-                        ++ [ buttonClass model.selectionFile
-                           , onClick (SelectPlotFile |> config.sendMsg)
-                           ]
-                    )
-                    [ text (a |> File.name) ]
+        , div (absolute ( Left 22 40, Top -4.5 0 ))
+            [ case model.orientation of
+                Just a ->
+                    viewControlInterface2 config model a
 
-            Nothing ->
-                text ""
+                Nothing ->
+                    text ""
+            ]
         ]
 
 
 {-| To view registration marks.
 -}
-viewRegistrationMarks : Config msg -> Model -> Html msg
-viewRegistrationMarks config model =
+viewControlInterface2 : Config msg -> Model -> Orientation -> Html msg
+viewControlInterface2 config _ orientation =
     let
-        scale =
-            0.04
+        registrationMarkOffset =
+            case orientation of
+                Front ->
+                    2.5
 
-        markSize =
-            registrationMarkSize * scale
+                Rear ->
+                    0.5
 
-        ( maxX, maxY ) =
-            registrationMarks
-                |> List.foldl (\( x, y ) ( accX, accY ) -> ( max x accX, max y accY )) ( 0, 0 )
+        horizontal =
+            horizontalRegistrationMark |> List.map (offsetBy ( 0, registrationMarkOffset ))
 
-        viewRegistrationMark : Point -> Html msg
-        viewRegistrationMark (( x, y ) as point) =
-            button
-                (absolute ( Left ((maxX - x) * scale) markSize, Top ((maxY - y) * scale) markSize )
-                    ++ [ model.selectionMarks |> List.member point |> buttonClass
-                       , class "p-0 px-3"
-                       , onClick (SelectRegistrationMark point |> config.sendMsg)
-                       ]
-                )
-                []
+        vertical =
+            verticalRegistrationMark |> List.map (offsetBy ( registrationMarkOffset, 0 ))
+
+        plot a offset ( moveToX, moveToY ) =
+            a
+                |> List.map (offsetBy offset)
+                |> (\v -> v ++ [ LineStart moveToX moveToY, LineEnd ])
+                |> onClickPlot
+
+        onClickPlot : List Command -> Attribute msg
+        onClickPlot a =
+            a |> commandsToString |> Plot |> config.sendMsg |> onClick
     in
-    div [] (registrationMarks |> List.map viewRegistrationMark)
+    div []
+        [ p [ class "mb-0" ] [ text "Axis A - Zeroing" ]
+        , ol []
+            [ li []
+                [ text "Set zero by guesswork."
+                ]
+            , li []
+                [ button [ class "btn btn-sm btn-primary mb-1", plot horizontal ( 0, 0 ) ( 0, 200 ) ]
+                    [ text "Cut Registration Mark"
+                    ]
+                ]
+            , li []
+                [ text "Read compensation and "
+                , button [ class "btn btn-sm btn-primary mb-1", onClickPlot [ LineStart 0 0, LineEnd ] ]
+                    [ text "Go to Zero"
+                    ]
+                , text "."
+                ]
+            , li []
+                [ text "Set zero by reading correction from registration mark."
+                ]
+            , li []
+                [ button [ class "btn btn-sm btn-primary mb-1", plot horizontal ( 0, 12 ) ( 0, 200 ) ]
+                    [ text "Cut Registration Mark to Verify Correction"
+                    ]
+                ]
+            ]
+        , p [ class "mb-0" ] [ text "Axis A - Distance Compensation" ]
+        , ol []
+            [ li []
+                [ button [ class "btn btn-sm btn-primary mb-1", plot horizontal ( 0, 900 + 12 ) ( 0, 700 ) ]
+                    [ text "Cut Registration Mark"
+                    ]
+                ]
+            , li []
+                [ text "Read compensation and "
+                , button [ class "btn btn-sm btn-primary mb-1", onClickPlot [ LineStart 0 0, LineEnd ] ]
+                    [ text "Go to Zero"
+                    ]
+                , text "."
+                ]
+            , li []
+                [ text "Press \"Sheet Set\" and \"Function\" and set distance compensation." ]
+            , li []
+                [ text "Load leaf again and set zero by guesswork." ]
+            , li []
+                [ button [ class "btn btn-sm btn-primary", plot horizontal ( 0, 900 ) ( 0, 700 ) ]
+                    [ text "Cut Registration Mark to Verify Correction"
+                    ]
+                ]
+            ]
+        , p [ class "mb-0" ] [ text "Axis B - Zeroing" ]
+        , ol []
+            [ li []
+                [ button [ class "btn btn-sm btn-primary mb-1", plot vertical ( 0, 0 ) ( 0, 200 ) ]
+                    [ text "Cut Registration Mark"
+                    ]
+                ]
+            , li []
+                [ text "Read compensation and "
+                , button [ class "btn btn-sm btn-primary mb-1", onClickPlot [ LineStart 0 0, LineEnd ] ]
+                    [ text "Go to Zero"
+                    ]
+                , text "."
+                ]
+            , li []
+                [ text "Set zero by reading correction from registration mark." ]
+            , li []
+                [ button [ class "btn btn-sm btn-primary mb-1", plot vertical ( 0, 12 ) ( 0, 200 ) ]
+                    [ text "Cut Registration Mark to Verify Correction"
+                    ]
+                ]
+            ]
+        , p [ class "mb-0" ] [ text "Axis Alignment" ]
+        , ol []
+            [ li []
+                [ button [ class "btn btn-sm btn-primary mb-1", plot vertical ( 0, 900 + 12 ) ( 0, 700 ) ]
+                    [ text "Cut Registration Mark"
+                    ]
+                ]
+            , li []
+                [ text "Read compensation and "
+                , button [ class "btn btn-sm btn-primary mb-1", onClickPlot [ LineStart 0 (900 + 12), LineEnd ] ]
+                    [ text "Go Back to Registration Mark"
+                    ]
+                , text "."
+                ]
+            , li []
+                [ text "Press any arrow key and \"Function\" and set axis alignment." ]
+            , li []
+                [ button [ class "btn btn-sm btn-primary mb-1", plot vertical ( 0, 900 ) ( 0, 700 ) ]
+                    [ text "Cut Registration Mark to Verify Correction"
+                    ]
+                ]
+            ]
+        , p [ class "mb-0" ] [ text "Finish" ]
+        , ol []
+            [ li []
+                [ button
+                    [ class "btn btn-sm btn-primary mb-1"
+                    , onClickPlot
+                        ((horizontal ++ vertical |> List.map (offsetBy ( 0, 100 )))
+                            ++ (horizontal ++ vertical |> List.map (offsetBy ( 0, 800 )))
+                            ++ [ LineStart 0 500, LineEnd ]
+                        )
+                    ]
+                    [ text "Verify Calibration 1"
+                    ]
+                , text " "
+                , button
+                    [ class "btn btn-sm btn-primary mb-1"
+                    , onClickPlot
+                        ((horizontal ++ vertical |> List.map (offsetBy ( 0, 100 + 12 )))
+                            ++ (horizontal ++ vertical |> List.map (offsetBy ( 0, 800 + 12 )))
+                            ++ [ LineStart 0 500, LineEnd ]
+                        )
+                    ]
+                    [ text "Verify Calibration 2"
+                    ]
+                , text " "
+                , button
+                    [ class "btn btn-sm btn-primary mb-1"
+                    , onClickPlot
+                        ((horizontal ++ vertical |> List.map (offsetBy ( 0, 100 + 12 + 12 )))
+                            ++ (horizontal ++ vertical |> List.map (offsetBy ( 0, 800 + 12 + 12 )))
+                            ++ [ LineStart 0 500, LineEnd ]
+                        )
+                    ]
+                    [ text "Verify Calibration 3"
+                    ]
+                ]
+            , li []
+                [ button
+                    [ class "btn btn-sm btn-primary mb-1"
+                    , onClick ((testCut ++ ([ LineStart 0 200, LineEnd ] |> commandsToString)) |> Plot |> config.sendMsg)
+                    ]
+                    [ text "Do Test Cut"
+                    ]
+                ]
+            , li []
+                [ button [ class "btn btn-sm btn-primary mb-1", onClick (PlotFile |> config.sendMsg) ]
+                    [ text "Plot File"
+                    ]
+                ]
+            ]
+        ]
 
 
-{-| To get class for selected or unselected button.
--}
-buttonClass : Bool -> Attribute msg
-buttonClass selected =
-    if selected then
-        class "btn btn-primary"
-
-    else
-        class "btn btn-secondary"
+testCut =
+    [ "IN"
+    , "IP0,0,1,1"
+    , "PU2164.00,424.00"
+    , "PD2164.00,64.01"
+    , "PD2167.05,45.04"
+    , "PD2175.57,28.57"
+    , "PD2188.56,15.58"
+    , "PD2205.03,7.06"
+    , "PD2224.00,4.01"
+    , "PD2303.99,4.01"
+    , "PD2303.99,84.00"
+    , "PD2306.72,94.10"
+    , "PD2313.90,101.27"
+    , "PD2323.99,104.00"
+    , "PD2483.99,104.00"
+    , "PD2494.08,101.27"
+    , "PD2501.26,94.10"
+    , "PD2503.99,84.00"
+    , "PD2503.99,4.01"
+    , "PD2584.00,4.01"
+    , "PD2602.96,7.06"
+    , "PD2619.43,15.58"
+    , "PD2632.42,28.57"
+    , "PD2640.94,45.04"
+    , "PD2644.00,64.01"
+    , "PD2644.00,424.00"
+    , "PD2640.94,442.96"
+    , "PD2632.42,459.43"
+    , "PD2619.43,472.41"
+    , "PD2602.96,480.93"
+    , "PD2584.00,484.00"
+    , "PD2224.00,484.00"
+    , "PD2205.03,480.93"
+    , "PD2188.57,472.41"
+    , "PD2175.58,459.42"
+    , "PD2167.07,442.95"
+    , "PD2164.01,424.00"
+    , "PD2164.00,424.00"
+    , "PU"
+    ]
+        |> join ";"

@@ -15,6 +15,10 @@ connectingToPlotter =
     "Connecting..."
 
 
+connectedButtonLabel =
+    "Connected"
+
+
 choosePlotFile =
     "Choose Plot File"
 

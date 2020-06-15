@@ -8,7 +8,7 @@ import String exposing (fromFloat, join)
 type Command
     = IN
     | IP0011
-    | MoveTo Float Float
+    | LineStart Float Float
     | LineTo Float Float
     | LineEnd
 
@@ -20,16 +20,30 @@ stepSize =
     0.025
 
 
-{-| To offset commands by distance in millimeters.
+{-| To offset commands by distance.
 -}
 offsetBy : ( Float, Float ) -> Command -> Command
-offsetBy ( offsetY, offsetX ) a =
+offsetBy ( offsetX, offsetY ) a =
     case a of
-        MoveTo x y ->
-            MoveTo (x + offsetX / stepSize) (y + offsetY / stepSize)
+        LineStart x y ->
+            LineStart (x + offsetX) (y + offsetY)
 
         LineTo x y ->
-            LineTo (x + offsetX / stepSize) (y + offsetY / stepSize)
+            LineTo (x + offsetX) (y + offsetY)
+
+        _ ->
+            a
+
+
+{-| -}
+scaleBy : ( Float, Float ) -> Command -> Command
+scaleBy ( scaleX, scaleY ) a =
+    case a of
+        LineStart x y ->
+            LineStart (x * scaleX) (y * scaleY)
+
+        LineTo x y ->
+            LineTo (x * scaleX) (y * scaleY)
 
         _ ->
             a
@@ -40,7 +54,12 @@ offsetBy ( offsetY, offsetX ) a =
 commandsToString : List Command -> String
 commandsToString a =
     a
-        |> List.map commandToString
+        |> List.map
+            (\v ->
+                v
+                    |> scaleBy ( 1 / stepSize, 1 / stepSize )
+                    |> commandToString
+            )
         |> join ";"
 
 
@@ -55,11 +74,11 @@ commandToString a =
         IP0011 ->
             "IP0,0,1,1"
 
-        MoveTo x y ->
-            "PU" ++ fromFloat x ++ "," ++ fromFloat y
+        LineStart x y ->
+            "PU" ++ fromFloat y ++ "," ++ fromFloat x
 
         LineTo x y ->
-            "PD" ++ fromFloat x ++ "," ++ fromFloat y
+            "PD" ++ fromFloat y ++ "," ++ fromFloat x
 
         LineEnd ->
             "PU"
