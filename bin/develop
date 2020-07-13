@@ -13,5 +13,5 @@ cd "${0%/*}/.."
 source "bin/build"
 
 # To start development server.
-tsc -w -p src/_main --outFile "dist/static/$VERSION/main.js" &
+tsc -w -p src/_main --outFile "dist/static/$VERSION/ts.js" &
 elm-live src/Main.elm --open --dir dist -- --output="dist/static/$VERSION/elm.js"

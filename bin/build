@@ -32,5 +32,5 @@ sed -i "" "s/VERSION/$VERSION/g" dist/index.html
 find src/Types -type f -exec elm-json-interop {} \;
 
 # To compile our app.
-tsc -p src/_main --outFile "dist/static/$VERSION/main.js"
+tsc -p src/_main --outFile "dist/static/$VERSION/ts.js"
 elm make src/Main.elm --optimize --output="dist/static/$VERSION/elm.js"
