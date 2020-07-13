@@ -10,7 +10,7 @@ set -u
 cd "${0%/*}/.."
 
 # To generate JSON encoders/decoders and TypeScript definitions.
-elm-json-interop src/Types/*
+find src/Types -type f -exec elm-json-interop {} \;
 
 # To compile our app.
 tsc -p src/_main --outFile dist/main.js
