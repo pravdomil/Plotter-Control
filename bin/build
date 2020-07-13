@@ -12,6 +12,9 @@ set -x
 # To be in project root.
 cd "${0%/*}/.."
 
+# To have dependencies from npm ready.
+npm i
+
 # To generate JSON encoders/decoders and TypeScript definitions.
 find src/Types -type f -exec elm-json-interop {} \;
 
