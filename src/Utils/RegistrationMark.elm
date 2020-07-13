@@ -34,12 +34,6 @@ registrationMarks =
 registrationMark =
     let
         _ =
-            horizontalRegistrationMark
-                |> List.map (offsetBy ( 0, 2.5 ))
-                |> commandsToString
-                |> Debug.log "log"
-
-        _ =
             """
 
         PU104,4
