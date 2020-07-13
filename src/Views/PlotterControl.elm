@@ -1,10 +1,12 @@
 module Views.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subscriptions, update, view)
 
+import Browser exposing (Document)
 import File exposing (File)
 import File.Select as Select
-import Html exposing (Attribute, Html, a, button, div, h3, h6, input, label, li, ol, p, small, span, text)
+import Html exposing (Attribute, Html, a, button, div, h3, input, label, li, ol, p, small, span, text)
 import Html.Attributes exposing (checked, class, disabled, type_)
 import Html.Events exposing (onClick, onInput)
+import Json.Decode as Decode
 import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
 import String exposing (join)
@@ -57,8 +59,8 @@ type alias Config msg =
 
 {-| To init our view.
 -}
-init : Config msg -> ( Model, Cmd msg )
-init _ =
+init : Config msg -> Decode.Value -> ( Model, Cmd msg )
+init _ _ =
     ( { errors = []
       , port_ = Idle
       , orientation = Nothing
@@ -127,9 +129,10 @@ subscriptions config _ =
 
 {-| To show interface.
 -}
-view : Config msg -> Model -> Html msg
+view : Config msg -> Model -> Document msg
 view config model =
-    div []
+    { title = L.pageTitle
+    , body =
         [ h3 (absolute ( Left 2 0, Top 1.5 0 ))
             [ text L.pageTitle ]
         , div (absolute ( Left 2 0, Top 5 0 ))
@@ -138,6 +141,7 @@ view config model =
             (absolute ( Left 1 0, Bottom 1 0 ) ++ [ class "small text-danger" ])
             (model.errors |> List.map (\v -> div [] [ text v ]))
         ]
+    }
 
 
 {-| To show control interface.
