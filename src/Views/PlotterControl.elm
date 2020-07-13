@@ -90,7 +90,7 @@ update config msg model =
             , sendElmMessage
                 (ConnectSerialPort
                     (SerialPortFilter 0x0403 0x6001)
-                    (SerialOptions 38400)
+                    (SerialOptions 9600)
                 )
             )
 
