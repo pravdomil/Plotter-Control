@@ -6,7 +6,7 @@ set -e
 # To stop on unset variables.
 set -u
 
-# To be always in project root.
+# To be in project root.
 cd "${0%/*}/.."
 
 # To start development server.

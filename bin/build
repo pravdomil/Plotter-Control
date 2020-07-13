@@ -9,7 +9,7 @@ set -u
 # To show what we are doing.
 set -x
 
-# To be always in project root.
+# To be in project root.
 cd "${0%/*}/.."
 
 # To generate JSON encoders/decoders and TypeScript definitions.
