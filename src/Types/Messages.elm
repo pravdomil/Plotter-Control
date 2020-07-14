@@ -51,3 +51,19 @@ type PortStatus
 -}
 type JsRefSerialPort
     = JsRefSerialPort Decode.Value
+
+
+
+---
+
+
+{-| To convert port status to Bool.
+-}
+portStatusToBool : PortStatus -> Bool
+portStatusToBool a =
+    case a of
+        Ready _ ->
+            True
+
+        _ ->
+            False
