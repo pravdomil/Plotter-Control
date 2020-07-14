@@ -11,7 +11,7 @@ import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
 import String exposing (join)
 import Task
-import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, PortStatus(..), SerialOptions, SerialPortFilter, portStatusToBool)
+import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
 
 
@@ -37,7 +37,7 @@ publicMsg =
 -}
 type alias Model =
     { errors : List String
-    , port_ : PortStatus
+    , port_ : SerialPortStatus
     }
 
 
