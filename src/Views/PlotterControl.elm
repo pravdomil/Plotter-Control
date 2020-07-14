@@ -3,7 +3,7 @@ module Views.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subsc
 import Browser exposing (Document)
 import File exposing (File)
 import File.Select as Select
-import Html exposing (Attribute, Html, a, b, button, div, h3, input, p, span, text)
+import Html exposing (Attribute, Html, a, b, button, div, fieldset, h3, input, p, span, text)
 import Html.Attributes exposing (disabled)
 import Html.Events exposing (onClick, onInput)
 import Json.Decode as Decode
@@ -197,37 +197,24 @@ viewControls config model =
                         [ text L.sendingData
                         ]
             ]
-        , p []
-            [ button
-                [ C.btn
-                , C.btnPrimary
-                , C.btnSm
-                , disabled (portStatusToBool model.port_ |> not)
-                , onClick (PlotFile |> config.sendMsg)
+        , fieldset [ disabled (portStatusToBool model.port_ |> not) ]
+            [ p []
+                [ button
+                    [ C.btn, C.btnPrimary, C.btnSm, onClick (PlotFile |> config.sendMsg) ]
+                    [ text L.plotFile
+                    ]
                 ]
-                [ text L.plotFile
+            , p []
+                [ button
+                    [ C.btn, C.btnPrimary, C.btnSm, onClick ("\u{001B};@:\nLOAD_MARKERS\nEND\n" |> Plot |> config.sendMsg) ]
+                    [ text L.loadMarkers
+                    ]
                 ]
-            ]
-        , p []
-            [ button
-                [ C.btn
-                , C.btnPrimary
-                , C.btnSm
-                , disabled (portStatusToBool model.port_ |> not)
-                , onClick ("\u{001B};@:\nLOAD_MARKERS\nEND\n" |> Plot |> config.sendMsg)
-                ]
-                [ text L.loadMarkers
-                ]
-            ]
-        , p []
-            [ button
-                [ C.btn
-                , C.btnPrimary
-                , C.btnSm
-                , disabled (portStatusToBool model.port_ |> not)
-                , onClick ("\u{001B};@:\nRECUT\nEND\n" |> Plot |> config.sendMsg)
-                ]
-                [ text L.recut
+            , p []
+                [ button
+                    [ C.btn, C.btnPrimary, C.btnSm, onClick ("\u{001B};@:\nRECUT\nEND\n" |> Plot |> config.sendMsg) ]
+                    [ text L.recut
+                    ]
                 ]
             ]
         ]
@@ -235,7 +222,7 @@ viewControls config model =
 
 {-| -}
 viewConfiguration : Config msg -> Model -> Html msg
-viewConfiguration config _ =
+viewConfiguration config model =
     let
         onInputPlot : (Int -> String) -> Attribute msg
         onInputPlot fn =
@@ -256,7 +243,7 @@ viewConfiguration config _ =
                 , div [ C.col ] [ b ]
                 ]
     in
-    div []
+    fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
             [ b []
                 [ text "Marker Configuration"
