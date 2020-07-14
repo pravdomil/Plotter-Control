@@ -86,7 +86,11 @@ async function getPort(filter: SerialPortFilter): Promise<Maybe<SerialPort>> {
 /**
  * To send string to serial port.
  * */
-async function sendToSerialPort(a: SerialPort, b: string, send: (a: JavaScriptMessage) => void): Promise<void> {
+async function sendToSerialPort(
+  a: SerialPort,
+  b: string,
+  send: (a: JavaScriptMessage) => void
+): Promise<void> {
   if (!a.writable || a.writable.locked) {
     return
   }
