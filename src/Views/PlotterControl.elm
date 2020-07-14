@@ -9,7 +9,6 @@ import Html.Events exposing (onClick)
 import Json.Decode as Decode
 import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
-import String exposing (join)
 import Styles.C as C
 import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
