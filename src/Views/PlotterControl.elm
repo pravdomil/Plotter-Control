@@ -3,12 +3,13 @@ module Views.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subsc
 import Browser exposing (Document)
 import File exposing (File)
 import File.Select as Select
-import Html exposing (Attribute, Html, a, button, div, h3, p, text)
+import Html exposing (Attribute, Html, a, b, button, div, h3, input, p, span, text)
 import Html.Attributes exposing (disabled)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onInput)
 import Json.Decode as Decode
 import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
+import String exposing (fromInt)
 import Styles.C as C
 import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
@@ -151,6 +152,11 @@ viewControls : Config msg -> Model -> Html msg
 viewControls config model =
     div []
         [ p []
+            [ b []
+                [ text "Controls"
+                ]
+            ]
+        , p []
             [ case model.port_ of
                 Idle ->
                     button [ C.btn, C.btnPrimary, onClick (ConnectToPlotter |> config.sendMsg) ]
@@ -211,9 +217,106 @@ viewControls config model =
 
 {-| -}
 viewConfiguration : Config msg -> Model -> Html msg
-viewConfiguration _ _ =
+viewConfiguration config _ =
+    let
+        onInputPlot : (Int -> String) -> Attribute msg
+        onInputPlot fn =
+            onInput
+                (\v ->
+                    v
+                        |> String.toInt
+                        |> Maybe.map fn
+                        |> Maybe.map (\vv -> "\u{001B};@:\n" ++ vv ++ "\nEND\n")
+                        |> Maybe.withDefault ""
+                        |> Plot
+                        |> config.sendMsg
+                )
+
+        formRow a b =
+            div [ C.row, C.g2, C.mb2 ]
+                [ div [ C.col, C.dFlex, C.alignItemsCenter ] [ a ]
+                , div [ C.col ] [ b ]
+                ]
+    in
     div []
-        [ text "" ]
+        [ p []
+            [ b []
+                [ text "Marker Configuration"
+                ]
+            ]
+        , formRow (text "Size:")
+            (div
+                [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot
+                        (\v ->
+                            [ "SET MARKER_X_SIZE=" ++ fromInt (v * 40)
+                            , "SET MARKER_Y_SIZE=" ++ fromInt (v * 40)
+                            ]
+                                |> String.join "\n"
+                        )
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm" ]
+                ]
+            )
+        , formRow (text "X Distance:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot (\v -> "SET MARKER_X_DIS=" ++ fromInt (v * 40))
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm" ]
+                ]
+            )
+        , formRow (text "Y Distance:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot (\v -> "SET MARKER_Y_DIS=" ++ fromInt (v * 40))
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm" ]
+                ]
+            )
+        , formRow (text "Markers on X Axis:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot (\v -> "SET MARKER_X_N=" ++ fromInt v)
+                    ]
+                    []
+                ]
+            )
+        , div [ C.m5 ] []
+        , p []
+            [ b []
+                [ text "OPOS Configuration"
+                ]
+            ]
+        , formRow (text "X Offset:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot (\v -> "SETSYS OPOS_xoffset=" ++ fromInt (v * 80))
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm" ]
+                ]
+            )
+        , formRow (text "Y Offset:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot (\v -> "SETSYS OPOS_yoffset=" ++ fromInt (v * 80))
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm" ]
+                ]
+            )
+        ]
 
 
 {-| -}
