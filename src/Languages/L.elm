@@ -17,8 +17,8 @@ connectedButtonLabel =
     "Connected"
 
 
-plotFile =
-    "Plot File"
+cutFromFile =
+    "Cut From File"
 
 
 sendingData =
@@ -29,5 +29,5 @@ loadMarkers =
     "Load Markers"
 
 
-recut =
-    "Recut"
+recutLastFile =
+    "Recut Last File"

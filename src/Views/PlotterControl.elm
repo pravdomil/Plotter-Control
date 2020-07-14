@@ -179,11 +179,6 @@ viewControls config model =
     in
     div []
         [ p []
-            [ b []
-                [ text "Controls"
-                ]
-            ]
-        , p []
             [ case model.port_ of
                 Idle ->
                     button [ C.btn, C.btnPrimary, onClick (ConnectToPlotter |> config.sendMsg) ]
@@ -206,23 +201,29 @@ viewControls config model =
                         [ text L.sendingData
                         ]
             ]
+        , p []
+            [ b []
+                [ text "Controls"
+                ]
+            ]
         , fieldset [ disabled (portStatusToBool model.port_ |> not) ]
             [ p []
                 [ button
-                    [ C.btn, C.btnPrimary, C.btnSm, onClick (PlotFile |> config.sendMsg) ]
-                    [ text L.plotFile
-                    ]
-                ]
-            , p []
-                [ button
-                    [ C.btn, C.btnPrimary, C.btnSm, onClickPlot "LOAD_MARKERS" ]
+                    [ C.btn, C.btnPrimary, onClickPlot "LOAD_MARKERS" ]
                     [ text L.loadMarkers
                     ]
                 ]
             , p []
-                [ button
-                    [ C.btn, C.btnPrimary, C.btnSm, onClickPlot "RECUT" ]
-                    [ text L.recut
+                [ span
+                    [ C.btnGroup ]
+                    [ button
+                        [ C.btn, C.btnPrimary, onClick (PlotFile |> config.sendMsg) ]
+                        [ text L.cutFromFile
+                        ]
+                    , button
+                        [ C.btn, C.btnPrimary, onClickPlot "RECUT" ]
+                        [ text L.recutLastFile
+                        ]
                     ]
                 ]
             ]
