@@ -318,20 +318,20 @@ viewConfiguration config _ =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot (\v -> "SETSYS OPOS_xoffset=" ++ fromInt (v * 80))
+                    , onInputPlot (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
                     ]
                     []
-                , span [ C.inputGroupText ] [ text "mm" ]
+                , span [ C.inputGroupText ] [ text "mm / 80" ]
                 ]
             )
         , formRow (text "Y Offset:")
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot (\v -> "SETSYS OPOS_yoffset=" ++ fromInt (v * 80))
+                    , onInputPlot (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
                     ]
                     []
-                , span [ C.inputGroupText ] [ text "mm" ]
+                , span [ C.inputGroupText ] [ text "mm / 80" ]
                 ]
             )
         ]
