@@ -306,31 +306,33 @@ viewConfiguration config model =
                 ]
             )
         , div [ C.m5 ] []
-        , p []
-            [ b []
-                [ text "OPOS Calibration"
+        , div [ C.dNone ]
+            [ p []
+                [ b []
+                    [ text "OPOS Calibration"
+                    ]
                 ]
+            , formRow (text "X Offset:")
+                (div [ C.inputGroup ]
+                    [ input
+                        [ C.formControl
+                        , onInputPlot (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
+                        ]
+                        []
+                    , span [ C.inputGroupText ] [ text "mm / 80" ]
+                    ]
+                )
+            , formRow (text "Y Offset:")
+                (div [ C.inputGroup ]
+                    [ input
+                        [ C.formControl
+                        , onInputPlot (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
+                        ]
+                        []
+                    , span [ C.inputGroupText ] [ text "mm / 80" ]
+                    ]
+                )
             ]
-        , formRow (text "X Offset:")
-            (div [ C.inputGroup ]
-                [ input
-                    [ C.formControl
-                    , onInputPlot (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
-                    ]
-                    []
-                , span [ C.inputGroupText ] [ text "mm / 80" ]
-                ]
-            )
-        , formRow (text "Y Offset:")
-            (div [ C.inputGroup ]
-                [ input
-                    [ C.formControl
-                    , onInputPlot (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
-                    ]
-                    []
-                , span [ C.inputGroupText ] [ text "mm / 80" ]
-                ]
-            )
         ]
 
 
