@@ -168,6 +168,15 @@ Mimaki commands are:
 -}
 viewControls : Config msg -> Model -> Html msg
 viewControls config model =
+    let
+        onClickPlot : String -> Attribute msg
+        onClickPlot a =
+            onClick
+                (("\u{001B};@:\n" ++ a ++ "\nEND\n")
+                    |> Plot
+                    |> config.sendMsg
+                )
+    in
     div []
         [ p []
             [ b []
@@ -206,13 +215,13 @@ viewControls config model =
                 ]
             , p []
                 [ button
-                    [ C.btn, C.btnPrimary, C.btnSm, onClick ("\u{001B};@:\nLOAD_MARKERS\nEND\n" |> Plot |> config.sendMsg) ]
+                    [ C.btn, C.btnPrimary, C.btnSm, onClickPlot "LOAD_MARKERS" ]
                     [ text L.loadMarkers
                     ]
                 ]
             , p []
                 [ button
-                    [ C.btn, C.btnPrimary, C.btnSm, onClick ("\u{001B};@:\nRECUT\nEND\n" |> Plot |> config.sendMsg) ]
+                    [ C.btn, C.btnPrimary, C.btnSm, onClickPlot "RECUT" ]
                     [ text L.recut
                     ]
                 ]
