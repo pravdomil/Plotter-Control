@@ -311,7 +311,7 @@ viewConfiguration config _ =
         , div [ C.m5 ] []
         , p []
             [ b []
-                [ text "OPOS Configuration"
+                [ text "OPOS Calibration"
                 ]
             ]
         , formRow (text "X Offset:")
