@@ -4,12 +4,13 @@ import Browser exposing (Document)
 import File exposing (File)
 import File.Select as Select
 import Html exposing (Attribute, Html, a, button, div, h3, p, text)
-import Html.Attributes exposing (class, disabled)
+import Html.Attributes exposing (disabled)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode
 import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
 import String exposing (join)
+import Styles.C as C
 import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
@@ -139,7 +140,7 @@ view config model =
             [ viewSystemConfiguration config model
             ]
         , div
-            (absolute ( Left 1 0, Bottom 1 0 ) ++ [ class "small text-danger" ])
+            (absolute ( Left 1 0, Bottom 1 0 ) ++ [ C.small, C.textDanger ])
             (model.errors |> List.map (\v -> div [] [ text v ]))
         ]
     }
@@ -153,29 +154,31 @@ viewControls config model =
         [ p []
             [ case model.port_ of
                 Idle ->
-                    button [ class "btn btn-primary", onClick (ConnectToPlotter |> config.sendMsg) ]
+                    button [ C.btn, C.btnPrimary, onClick (ConnectToPlotter |> config.sendMsg) ]
                         [ text L.connectToPlotter
                         ]
 
                 Connecting ->
-                    button [ class "btn btn-primary", disabled True ]
+                    button [ C.btn, C.btnPrimary, disabled True ]
                         [ text L.connectingToPlotter
                         ]
 
                 Ready _ ->
                     button
-                        [ class "btn btn-success", disabled True ]
+                        [ C.btn, C.btnSuccess, disabled True ]
                         [ text L.connectedButtonLabel ]
 
                 Busy ->
                     button
-                        [ class "btn btn-danger", disabled True ]
+                        [ C.btn, C.btnDanger, disabled True ]
                         [ text L.sendingData
                         ]
             ]
         , p []
             [ button
-                [ class "btn btn-primary btn-sm"
+                [ C.btn
+                , C.btnPrimary
+                , C.btnSm
                 , disabled (portStatusToBool model.port_ |> not)
                 , onClick (PlotFile |> config.sendMsg)
                 ]
@@ -184,7 +187,9 @@ viewControls config model =
             ]
         , p []
             [ button
-                [ class "btn btn-primary btn-sm"
+                [ C.btn
+                , C.btnPrimary
+                , C.btnSm
                 , disabled (portStatusToBool model.port_ |> not)
                 , onClick ("\u{001B};@:\nLOAD_MARKERS\nEND\n" |> Plot |> config.sendMsg)
                 ]
@@ -193,7 +198,9 @@ viewControls config model =
             ]
         , p []
             [ button
-                [ class "btn btn-primary btn-sm"
+                [ C.btn
+                , C.btnPrimary
+                , C.btnSm
                 , disabled (portStatusToBool model.port_ |> not)
                 , onClick ("\u{001B};@:\nRECUT\nEND\n" |> Plot |> config.sendMsg)
                 ]
