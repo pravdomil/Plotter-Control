@@ -22,7 +22,7 @@ function main(): void {
   if (typeof navigator.serial === "undefined") {
     alert(
       [
-        "There is no support for serial port communication.",
+        "No Support for Serial Port",
         "",
         'Make sure to use Chrome browser and allow "Experimental Web Platform features" in Chrome flags.',
       ].join("\n")
