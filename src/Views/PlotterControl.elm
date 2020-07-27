@@ -3,7 +3,7 @@ module Views.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subsc
 import Browser exposing (Document)
 import File exposing (File)
 import File.Select as Select
-import Html exposing (Attribute, Html, a, b, button, div, fieldset, h3, input, p, span, text)
+import Html exposing (Attribute, Html, a, b, button, div, fieldset, h3, input, p, small, span, text)
 import Html.Attributes exposing (disabled)
 import Html.Events exposing (onClick, onInput)
 import Json.Decode as Decode
@@ -14,6 +14,12 @@ import Styles.C as C
 import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
+
+
+{-| To hardcore serial port baud rate.
+-}
+baudRate =
+    38400
 
 
 {-| To define what can happen.
@@ -83,7 +89,7 @@ update config msg model =
             , sendElmMessage
                 (ConnectSerialPort
                     (SerialPortFilter 0x0403 0x6001)
-                    (SerialOptions 9600)
+                    (SerialOptions baudRate)
                 )
             )
 
@@ -200,6 +206,11 @@ viewControls config model =
                         [ C.btn, C.btnDanger, disabled True ]
                         [ text L.sendingData
                         ]
+            ]
+        , p []
+            [ small []
+                [ text ("Make sure to set baud rate to " ++ fromInt baudRate ++ " bits/s.")
+                ]
             ]
         , p []
             [ b []
