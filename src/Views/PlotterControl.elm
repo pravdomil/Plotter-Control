@@ -219,6 +219,16 @@ viewControls config model =
         ]
 
 
+{-| To show form label and input.
+-}
+viewFormLabelAndInput : Html a -> Html a -> Html a
+viewFormLabelAndInput a b =
+    div [ C.row, C.g2, C.mb2 ]
+        [ div [ C.col, C.dFlex, C.alignItemsCenter ] [ a ]
+        , div [ C.col ] [ b ]
+        ]
+
+
 {-| -}
 viewConfiguration : Config msg -> Model -> Html msg
 viewConfiguration config model =
@@ -243,12 +253,6 @@ viewConfiguration config model =
                         |> Plot
                         |> config.sendMsg
                 )
-
-        formRow a b =
-            div [ C.row, C.g2, C.mb2 ]
-                [ div [ C.col, C.dFlex, C.alignItemsCenter ] [ a ]
-                , div [ C.col ] [ b ]
-                ]
     in
     fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
@@ -256,7 +260,7 @@ viewConfiguration config model =
                 [ text "Marker Configuration"
                 ]
             ]
-        , formRow (text "Size:")
+        , viewFormLabelAndInput (text "Size:")
             (div
                 [ C.inputGroup ]
                 [ input
@@ -273,7 +277,7 @@ viewConfiguration config model =
                 , span [ C.inputGroupText ] [ text "mm" ]
                 ]
             )
-        , formRow (text "X Distance:")
+        , viewFormLabelAndInput (text "X Distance:")
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
@@ -283,7 +287,7 @@ viewConfiguration config model =
                 , span [ C.inputGroupText ] [ text "mm" ]
                 ]
             )
-        , formRow (text "Y Distance:")
+        , viewFormLabelAndInput (text "Y Distance:")
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
@@ -293,7 +297,7 @@ viewConfiguration config model =
                 , span [ C.inputGroupText ] [ text "mm" ]
                 ]
             )
-        , formRow (text "Markers on X Axis:")
+        , viewFormLabelAndInput (text "Markers on X Axis:")
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
@@ -303,7 +307,7 @@ viewConfiguration config model =
                 ]
             )
         , div [ C.m3 ] []
-        , formRow (text "")
+        , viewFormLabelAndInput (text "")
             (button
                 [ C.btn, C.btnPrimary, onClickPlot "LOAD_MARKERS" ]
                 [ text L.loadMarkers
@@ -316,7 +320,7 @@ viewConfiguration config model =
                     [ text "OPOS Calibration"
                     ]
                 ]
-            , formRow (text "X Offset:")
+            , viewFormLabelAndInput (text "X Offset:")
                 (div [ C.inputGroup ]
                     [ input
                         [ C.formControl
@@ -326,7 +330,7 @@ viewConfiguration config model =
                     , span [ C.inputGroupText ] [ text "mm / 80" ]
                     ]
                 )
-            , formRow (text "Y Offset:")
+            , viewFormLabelAndInput (text "Y Offset:")
                 (div [ C.inputGroup ]
                     [ input
                         [ C.formControl
