@@ -337,7 +337,7 @@ viewConfiguration config model =
                 (div [ C.inputGroup ]
                     [ input
                         [ C.formControl
-                        , onInputPlot (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
+                        , onInputPlot config (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
                         ]
                         []
                     , span [ C.inputGroupText ] [ text "mm / 80" ]
@@ -347,7 +347,7 @@ viewConfiguration config model =
                 (div [ C.inputGroup ]
                     [ input
                         [ C.formControl
-                        , onInputPlot (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
+                        , onInputPlot config (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
                         ]
                         []
                     , span [ C.inputGroupText ] [ text "mm / 80" ]
