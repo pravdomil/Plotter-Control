@@ -219,6 +219,22 @@ viewControls config model =
         ]
 
 
+{-| Plot if input changed.
+-}
+onInputPlot : Config msg -> (Int -> String) -> Attribute msg
+onInputPlot config fn =
+    onInput
+        (\v ->
+            v
+                |> String.toInt
+                |> Maybe.map fn
+                |> Maybe.map (\vv -> "\u{001B};@:\n" ++ vv ++ "\nEND\n")
+                |> Maybe.withDefault ""
+                |> Plot
+                |> config.sendMsg
+        )
+
+
 {-| To show form label and input.
 -}
 viewFormLabelAndInput : Html a -> Html a -> Html a
@@ -240,19 +256,6 @@ viewConfiguration config model =
                     |> Plot
                     |> config.sendMsg
                 )
-
-        onInputPlot : (Int -> String) -> Attribute msg
-        onInputPlot fn =
-            onInput
-                (\v ->
-                    v
-                        |> String.toInt
-                        |> Maybe.map fn
-                        |> Maybe.map (\vv -> "\u{001B};@:\n" ++ vv ++ "\nEND\n")
-                        |> Maybe.withDefault ""
-                        |> Plot
-                        |> config.sendMsg
-                )
     in
     fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
@@ -265,7 +268,7 @@ viewConfiguration config model =
                 [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot
+                    , onInputPlot config
                         (\v ->
                             [ "SET MARKER_X_SIZE=" ++ fromInt (v * 40)
                             , "SET MARKER_Y_SIZE=" ++ fromInt (v * 40)
@@ -281,7 +284,7 @@ viewConfiguration config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot (\v -> "SET MARKER_X_DIS=" ++ fromInt (v * 40))
+                    , onInputPlot config (\v -> "SET MARKER_X_DIS=" ++ fromInt (v * 40))
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm" ]
@@ -291,7 +294,7 @@ viewConfiguration config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot (\v -> "SET MARKER_Y_DIS=" ++ fromInt (v * 40))
+                    , onInputPlot config (\v -> "SET MARKER_Y_DIS=" ++ fromInt (v * 40))
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm" ]
@@ -301,7 +304,7 @@ viewConfiguration config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot (\v -> "SET MARKER_X_N=" ++ fromInt v)
+                    , onInputPlot config (\v -> "SET MARKER_X_N=" ++ fromInt v)
                     ]
                     []
                 ]
