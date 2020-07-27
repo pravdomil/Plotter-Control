@@ -209,7 +209,17 @@ viewControls config model =
                 ]
             ]
         , fieldset [ disabled (portStatusToBool model.port_ |> not) ]
-            [ p []
+            [ viewFormLabelAndInput (text "Knife Pressure:")
+                (div [ C.inputGroup ]
+                    [ input
+                        [ C.formControl
+                        , onInputPlot config (\v -> "SET KNIFE_PRESSURE=" ++ fromInt v)
+                        ]
+                        []
+                    , span [ C.inputGroupText ] [ text "g" ]
+                    ]
+                )
+            , p []
                 [ button
                     [ C.btn, C.btnPrimary, onClick (PlotFile |> config.sendMsg) ]
                     [ text L.cutFromFile
