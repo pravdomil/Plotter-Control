@@ -174,15 +174,6 @@ Mimaki commands are:
 -}
 viewControls : Config msg -> Model -> Html msg
 viewControls config model =
-    let
-        onClickPlot : String -> Attribute msg
-        onClickPlot a =
-            onClick
-                (("\u{001B};@:\n" ++ a ++ "\nEND\n")
-                    |> Plot
-                    |> config.sendMsg
-                )
-    in
     div []
         [ p []
             [ case model.port_ of
@@ -220,21 +211,8 @@ viewControls config model =
         , fieldset [ disabled (portStatusToBool model.port_ |> not) ]
             [ p []
                 [ button
-                    [ C.btn, C.btnPrimary, onClickPlot "LOAD_MARKERS" ]
-                    [ text L.loadMarkers
-                    ]
-                ]
-            , p []
-                [ span
-                    [ C.btnGroup ]
-                    [ button
-                        [ C.btn, C.btnPrimary, onClick (PlotFile |> config.sendMsg) ]
-                        [ text L.cutFromFile
-                        ]
-                    , button
-                        [ C.btn, C.btnPrimary, onClickPlot "RECUT" ]
-                        [ text L.recutLastFile
-                        ]
+                    [ C.btn, C.btnPrimary, onClick (PlotFile |> config.sendMsg) ]
+                    [ text L.cutFromFile
                     ]
                 ]
             ]
@@ -245,6 +223,14 @@ viewControls config model =
 viewConfiguration : Config msg -> Model -> Html msg
 viewConfiguration config model =
     let
+        onClickPlot : String -> Attribute msg
+        onClickPlot a =
+            onClick
+                (("\u{001B};@:\n" ++ a ++ "\nEND\n")
+                    |> Plot
+                    |> config.sendMsg
+                )
+
         onInputPlot : (Int -> String) -> Attribute msg
         onInputPlot fn =
             onInput
@@ -314,6 +300,13 @@ viewConfiguration config model =
                     , onInputPlot (\v -> "SET MARKER_X_N=" ++ fromInt v)
                     ]
                     []
+                ]
+            )
+        , div [ C.m3 ] []
+        , formRow (text "")
+            (button
+                [ C.btn, C.btnPrimary, onClickPlot "LOAD_MARKERS" ]
+                [ text L.loadMarkers
                 ]
             )
         , div [ C.m5 ] []
