@@ -248,7 +248,7 @@ viewControls config model =
             ]
         , p []
             [ b []
-                [ text "Controls"
+                [ text "Plotter Settings"
                 ]
             ]
         , fieldset [ disabled (portStatusToBool model.port_ |> not) ]
@@ -307,7 +307,7 @@ viewConfiguration config model =
     fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
             [ b []
-                [ text "Marker Configuration"
+                [ text "Marker Settings"
                 ]
             ]
         , viewFormLabelAndInput (text "Size:")
