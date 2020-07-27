@@ -20,12 +20,13 @@ type alias Point =
     ( Float, Float )
 
 
-{-| To convert boolean to 0 or 1.
+{-| To convert maybe to boolean.
 -}
-boolToNumber : Bool -> number
-boolToNumber a =
-    if a then
-        1
+maybeToBool : Maybe a -> Bool
+maybeToBool a =
+    case a of
+        Just _ ->
+            True
 
-    else
-        0
+        Nothing ->
+            False

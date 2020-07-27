@@ -14,6 +14,7 @@ import Styles.C as C
 import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
+import Utils.Utils exposing (maybeToBool)
 
 
 {-| To hardcore serial port baud rate.
@@ -30,8 +31,10 @@ type Msg
       -- UI
     | ConnectToPlotter
     | Plot String
-    | PlotFile
+    | LoadFile
     | GotPlotFile File
+    | GotPlotFileAndContent File String
+    | PlotFile
 
 
 {-| To make some messages available outside this module.
@@ -45,6 +48,7 @@ publicMsg =
 type alias Model =
     { errors : List String
     , port_ : SerialPortStatus
+    , file : Maybe ( File, String )
     }
 
 
@@ -61,6 +65,7 @@ init : Config msg -> Decode.Value -> ( Model, Cmd msg )
 init _ _ =
     ( { errors = []
       , port_ = Idle
+      , file = Nothing
       }
     , Cmd.none
     )
@@ -103,15 +108,30 @@ update config msg model =
                 _ ->
                     ( model, Cmd.none )
 
-        PlotFile ->
+        LoadFile ->
             ( model
             , Select.file [] (GotPlotFile >> config.sendMsg)
             )
 
         GotPlotFile a ->
             ( model
-            , a |> File.toString |> Task.perform (Plot >> config.sendMsg)
+            , a |> File.toString |> Task.perform (GotPlotFileAndContent a >> config.sendMsg)
             )
+
+        GotPlotFileAndContent a b ->
+            ( { model | file = Just ( a, b ) }
+            , Cmd.none
+            )
+
+        PlotFile ->
+            case model.port_ of
+                Ready a ->
+                    ( model
+                    , sendElmMessage (SendToSerialPort a (model.file |> Maybe.map Tuple.second |> Maybe.withDefault ""))
+                    )
+
+                _ ->
+                    ( model, Cmd.none )
 
 
 {-| To handle subscriptions.
@@ -199,6 +219,29 @@ viewControls config model =
                         ]
             ]
         , p []
+            [ button
+                [ C.btn, C.btnPrimary, onClick (LoadFile |> config.sendMsg) ]
+                [ text L.loadFile
+                ]
+            , text " "
+            , button
+                [ C.btn
+                , C.btnDanger
+                , onClick (PlotFile |> config.sendMsg)
+                , disabled ((model.file |> maybeToBool |> not) || (model.port_ |> portStatusToBool |> not))
+                ]
+                [ text
+                    (L.plot
+                        ++ (model.file
+                                |> Maybe.map Tuple.first
+                                |> Maybe.map File.name
+                                |> Maybe.map ((++) " ")
+                                |> Maybe.withDefault ""
+                           )
+                    )
+                ]
+            ]
+        , p []
             [ small []
                 [ text ("Make sure to set baud rate to " ++ fromInt baudRate ++ " bits/s.")
                 ]
@@ -219,12 +262,6 @@ viewControls config model =
                     , span [ C.inputGroupText ] [ text "g" ]
                     ]
                 )
-            , p []
-                [ button
-                    [ C.btn, C.btnPrimary, onClick (PlotFile |> config.sendMsg) ]
-                    [ text L.cutFromFile
-                    ]
-                ]
             ]
         ]
 
