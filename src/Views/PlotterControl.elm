@@ -319,6 +319,15 @@ viewConfiguration config model =
                     []
                 ]
             )
+        , viewFormLabelAndInput (text "Sensitivity:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot config (\v -> "SET OPOS_LEVEL=" ++ fromInt v)
+                    ]
+                    []
+                ]
+            )
         , div [ C.m3 ] []
         , viewFormLabelAndInput (text "")
             (button
