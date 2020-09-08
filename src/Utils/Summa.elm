@@ -11,7 +11,7 @@ type Command
     | Menu
     | SysMenu
       --
-    | Set string
+    | Set String
     | Setsys
       --
     | LoadMarkers
@@ -61,8 +61,8 @@ commandToString a =
         Menu ->
             "MENU"
 
-        Set a ->
-            "SET " ++ a
+        Set b ->
+            "SET " ++ b
 
         SysMenu ->
             "SYS_MENU"
