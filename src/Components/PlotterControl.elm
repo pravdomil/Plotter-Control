@@ -234,7 +234,7 @@ viewControls config model =
             [ button
                 [ C.btn
                 , C.btnDanger
-                , onClickSend config RECUT
+                , onClickSend config Recut
                 , disabled (model.port_ |> portStatusToBool |> not)
                 ]
                 [ text "Replot"
@@ -367,7 +367,7 @@ viewConfiguration config model =
         , div [ C.m3 ] []
         , viewFormLabelAndInput (text "")
             (button
-                [ C.btn, C.btnPrimary, onClickPlot "LOAD_MARKERS" ]
+                [ C.btn, C.btnPrimary, onClickSend config LoadMarkers ]
                 [ text S.loadMarkers
                 ]
             )
