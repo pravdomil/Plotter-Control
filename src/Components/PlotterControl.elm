@@ -171,7 +171,7 @@ view config model =
 
 
 {-| To show controls.
-Mimaki commands are:
+Summa commands are:
 
 ```txt
     QUERY
