@@ -166,7 +166,7 @@ view config model =
             [ viewControls config model
             ]
         , div (float [ Left (col 1), Top 5, Size 22 40 ])
-            [ viewConfiguration config model
+            [ viewMarkerSettings config model
             ]
         , div (float [ Left (col 2), Top 5, Size 22 40 ])
             [ viewSystemConfiguration config model
@@ -299,8 +299,8 @@ viewFormLabelAndInput a b =
 
 
 {-| -}
-viewConfiguration : Config msg -> Model -> Html msg
-viewConfiguration config model =
+viewMarkerSettings : Config msg -> Model -> Html msg
+viewMarkerSettings config model =
     fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
             [ b []
