@@ -247,7 +247,15 @@ viewControls config model =
                 ]
             ]
         , div [ C.mb5 ] []
-        , p []
+        , viewPlotterSettings config model
+        ]
+
+
+{-| -}
+viewPlotterSettings : Config msg -> Model -> Html msg
+viewPlotterSettings config model =
+    div []
+        [ p []
             [ b []
                 [ text "Plotter Settings"
                 ]
