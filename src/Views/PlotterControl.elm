@@ -223,8 +223,9 @@ viewControls config model =
                 [ C.btn, C.btnPrimary, onClick (LoadFile |> config.sendMsg) ]
                 [ text L.loadFile
                 ]
-            , text " "
-            , button
+            ]
+        , p []
+            [ button
                 [ C.btn
                 , C.btnDanger
                 , onClick (PlotFile |> config.sendMsg)
