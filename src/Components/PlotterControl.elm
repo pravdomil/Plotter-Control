@@ -17,12 +17,6 @@ import Utils.S as S
 import Utils.Utils exposing (maybeToBool)
 
 
-{-| To hardcore serial port baud rate.
--}
-baudRate =
-    57600
-
-
 {-| To define what can happen.
 -}
 type Msg
@@ -59,6 +53,12 @@ type alias Model =
 type alias Config msg =
     { sendMsg : Msg -> msg
     }
+
+
+{-| To hardcore serial port baud rate.
+-}
+baudRate =
+    57600
 
 
 {-| To init our component.
