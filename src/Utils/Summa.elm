@@ -1,6 +1,6 @@
 module Utils.Summa exposing (..)
 
-{-| -}
+import String exposing (join)
 
 
 {-| To define summa commands.
@@ -47,7 +47,14 @@ type Command
 -}
 sendCommand : Command -> String
 sendCommand a =
-    "\u{001B};@:\n" ++ (a |> commandToString) ++ "\nEND\n"
+    sendCommands [ a ]
+
+
+{-| To send commands.
+-}
+sendCommands : List Command -> String
+sendCommands a =
+    "\u{001B};@:\n" ++ (a |> List.map commandToString |> join "\n") ++ "\nEND\n"
 
 
 {-| To convert command to string.
