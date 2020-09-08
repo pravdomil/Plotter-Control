@@ -12,7 +12,7 @@ type Command
     | SysMenu
       --
     | Set String
-    | Setsys
+    | SetSys String
       --
     | LoadMarkers
     | ReloadMarkers
@@ -74,8 +74,8 @@ commandToString a =
         SysMenu ->
             "SYS_MENU"
 
-        Setsys ->
-            "SETSYS"
+        SetSys b ->
+            "SETSYS " ++ b
 
         LoadMarkers ->
             "LOAD_MARKERS"
