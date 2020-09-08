@@ -172,7 +172,8 @@ view config model =
             [ viewControls config model
             ]
         , div (float [ Left (col 1), Top 5, Size 22 40 ])
-            [ viewMarkerSettings config model
+            [ viewPlotterSettings config model
+            , viewMarkerSettings config model
             ]
         , div (float [ Left (col 2), Top 5, Size 22 40 ])
             []
@@ -251,7 +252,6 @@ viewControls config model =
                 ]
             ]
         , div [ C.mb5 ] []
-        , viewPlotterSettings config model
         ]
 
 
