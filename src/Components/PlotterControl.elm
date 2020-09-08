@@ -374,7 +374,7 @@ viewOposCalibration config _ =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputSend config (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
+                    , onInputSend config (\v -> [ SetSys ("OPOS_xoffset=" ++ fromInt v) ])
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm / 80" ]
@@ -384,7 +384,7 @@ viewOposCalibration config _ =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputSend config (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
+                    , onInputSend config (\v -> [ SetSys ("OPOS_yoffset=" ++ fromInt v) ])
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm / 80" ]
