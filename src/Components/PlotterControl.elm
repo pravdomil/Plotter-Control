@@ -231,6 +231,16 @@ viewControls config model =
                 ]
             ]
         , p []
+            [ button
+                [ C.btn
+                , C.btnDanger
+                , onClickSend config RECUT
+                , disabled (model.port_ |> portStatusToBool |> not)
+                ]
+                [ text "Replot"
+                ]
+            ]
+        , p []
             [ small []
                 [ text ("Make sure to set baud rate to " ++ fromInt baudRate ++ " bits/s.")
                 ]
