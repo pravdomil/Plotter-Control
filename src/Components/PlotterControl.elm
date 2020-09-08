@@ -126,14 +126,17 @@ update config msg model =
             )
 
         PlotFile ->
-            case model.port_ of
-                Ready a ->
-                    ( model
-                    , sendElmMessage (SendToSerialPort a (model.file |> Maybe.map Tuple.second |> Maybe.withDefault ""))
-                    )
+            let
+                cmd : Cmd msg
+                cmd =
+                    case ( model.port_, model.file ) of
+                        ( Ready port_, Just ( _, data ) ) ->
+                            sendElmMessage (SendToSerialPort port_ data)
 
-                _ ->
-                    ( model, Cmd.none )
+                        _ ->
+                            Cmd.none
+            in
+            ( model, cmd )
 
 
 {-| To handle subscriptions.
