@@ -31,3 +31,11 @@ loadMarkers =
 
 plot =
     "Plot"
+
+
+xOffset =
+    "X Offset:"
+
+
+yOffset =
+    "Y Offset:"

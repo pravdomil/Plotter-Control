@@ -380,7 +380,7 @@ viewConfiguration config model =
                     [ text "OPOS Calibration"
                     ]
                 ]
-            , viewFormLabelAndInput (text "X Offset:")
+            , viewFormLabelAndInput (text S.xOffset)
                 (div [ C.inputGroup ]
                     [ input
                         [ C.formControl
@@ -390,7 +390,7 @@ viewConfiguration config model =
                     , span [ C.inputGroupText ] [ text "mm / 80" ]
                     ]
                 )
-            , viewFormLabelAndInput (text "Y Offset:")
+            , viewFormLabelAndInput (text S.yOffset)
                 (div [ C.inputGroup ]
                     [ input
                         [ C.formControl
