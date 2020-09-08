@@ -14,6 +14,7 @@ import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
 import Utils.Layout exposing (Constrain(..), float)
 import Utils.S as S
+import Utils.Summa exposing (Command(..), sendCommand)
 import Utils.Utils exposing (maybeToBool)
 
 
