@@ -276,7 +276,7 @@ onInputPlot config fn =
                 |> Maybe.map fn
                 |> Maybe.map (\vv -> "\u{001B};@:\n" ++ vv ++ "\nEND\n")
                 |> Maybe.withDefault ""
-                |> Plot
+                |> SendData
                 |> config.sendMsg
         )
 
