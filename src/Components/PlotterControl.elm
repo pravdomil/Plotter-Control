@@ -246,6 +246,7 @@ viewControls config model =
                 [ text ("Make sure to set baud rate to " ++ fromInt baudRate ++ " bits/s.")
                 ]
             ]
+        , div [ C.mb5 ] []
         , p []
             [ b []
                 [ text "Plotter Settings"
