@@ -295,6 +295,7 @@ viewPlotterSettings config model =
                 , span [ C.inputGroupText ] [ text "mm" ]
                 ]
             )
+        , div [ C.mb5 ] []
         ]
 
 
@@ -368,6 +369,7 @@ viewMarkerSettings config model =
                 [ text S.loadMarkers
                 ]
             )
+        , div [ C.mb5 ] []
         ]
 
 
@@ -400,6 +402,7 @@ viewOposCalibration config _ =
                 , span [ C.inputGroupText ] [ text "mm / 80" ]
                 ]
             )
+        , div [ C.mb5 ] []
         ]
 
 
