@@ -21,7 +21,8 @@ import Utils.Utils exposing (maybeToBool)
 {-| To define what can happen.
 -}
 type Msg
-    = --
+    = NothingHappened
+    | --
       GotJavaScriptMessage (Maybe JavaScriptMessage)
       --
     | ConnectToPlotter
@@ -79,6 +80,10 @@ init _ _ =
 update : Config msg -> Msg -> Model -> ( Model, Cmd msg )
 update config msg model =
     case msg of
+        NothingHappened ->
+            ( model, Cmd.none )
+
+        --
         GotJavaScriptMessage a ->
             case a of
                 Just b ->
