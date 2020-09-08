@@ -100,16 +100,7 @@ update config msg model =
                 )
             )
 
-        PlotData data ->
-            case model.port_ of
-                Ready a ->
-                    ( model
-                    , sendElmMessage (SendToSerialPort a data)
-                    )
-
-                _ ->
-                    ( model, Cmd.none )
-
+        --
         LoadFile ->
             ( model
             , Select.file [] (GotFile >> config.sendMsg)
@@ -137,6 +128,21 @@ update config msg model =
                             Cmd.none
             in
             ( model, cmd )
+
+        PlotData data ->
+            plotData config model data
+
+
+{-| To plot data.
+-}
+plotData : Config msg -> Model -> String -> ( Model, Cmd msg )
+plotData _ model data =
+    case model.port_ of
+        Ready port_ ->
+            ( model, sendElmMessage (SendToSerialPort port_ data) )
+
+        _ ->
+            ( model, Cmd.none )
 
 
 {-| To handle subscriptions.
