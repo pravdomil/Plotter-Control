@@ -117,17 +117,12 @@ update config msg model =
             )
 
         PlotFile ->
-            let
-                cmd : Cmd msg
-                cmd =
-                    case ( model.port_, model.file ) of
-                        ( Ready port_, Just ( _, data ) ) ->
-                            sendElmMessage (SendToSerialPort port_ data)
+            case model.file of
+                Just ( _, data ) ->
+                    plotData config model data
 
-                        _ ->
-                            Cmd.none
-            in
-            ( model, cmd )
+                _ ->
+                    ( model, Cmd.none )
 
         PlotData data ->
             plotData config model data
