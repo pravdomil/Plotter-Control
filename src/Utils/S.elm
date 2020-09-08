@@ -1,4 +1,4 @@
-module Languages.L exposing (..)
+module Utils.S exposing (..)
 
 
 pageTitle =

@@ -7,13 +7,13 @@ import Html exposing (Attribute, Html, a, b, button, div, fieldset, h3, input, p
 import Html.Attributes exposing (disabled)
 import Html.Events exposing (onClick, onInput)
 import Json.Decode as Decode
-import Languages.L as L
 import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
 import String exposing (fromInt)
 import Styles.C as C
 import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
 import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
+import Utils.S as S
 import Utils.Utils exposing (maybeToBool)
 
 
@@ -152,10 +152,10 @@ view config model =
         w =
             22
     in
-    { title = L.pageTitle
+    { title = S.pageTitle
     , body =
         [ h3 (absolute ( Left (col 0) w, Top 1.5 3 ))
-            [ text L.pageTitle ]
+            [ text S.pageTitle ]
         , div (absolute ( Left (col 0) w, Top 5 40 ))
             [ viewControls config model
             ]
@@ -199,29 +199,29 @@ viewControls config model =
             [ case model.port_ of
                 Idle ->
                     button [ C.btn, C.btnPrimary, onClick (ConnectToPlotter |> config.sendMsg) ]
-                        [ text L.connectToPlotter
+                        [ text S.connectToPlotter
                         ]
 
                 Connecting ->
                     button [ C.btn, C.btnPrimary, disabled True ]
-                        [ text L.connectingToPlotter
+                        [ text S.connectingToPlotter
                         ]
 
                 Ready _ ->
                     button
                         [ C.btn, C.btnSuccess, disabled True ]
-                        [ text L.connectedButtonLabel ]
+                        [ text S.connectedButtonLabel ]
 
                 Busy ->
                     button
                         [ C.btn, C.btnDanger, disabled True ]
-                        [ text L.sendingData
+                        [ text S.sendingData
                         ]
             ]
         , p []
             [ button
                 [ C.btn, C.btnPrimary, onClick (LoadFile |> config.sendMsg) ]
-                [ text L.loadFile
+                [ text S.loadFile
                 ]
             ]
         , p []
@@ -232,7 +232,7 @@ viewControls config model =
                 , disabled ((model.file |> maybeToBool |> not) || (model.port_ |> portStatusToBool |> not))
                 ]
                 [ text
-                    (L.plot
+                    (S.plot
                         ++ (model.file
                                 |> Maybe.map Tuple.first
                                 |> Maybe.map File.name
@@ -370,7 +370,7 @@ viewConfiguration config model =
         , viewFormLabelAndInput (text "")
             (button
                 [ C.btn, C.btnPrimary, onClickPlot "LOAD_MARKERS" ]
-                [ text L.loadMarkers
+                [ text S.loadMarkers
                 ]
             )
         , div [ C.m5 ] []
