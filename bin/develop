@@ -10,8 +10,8 @@ set -u
 cd "${0%/*}/.."
 
 # To build app first.
-source "bin/build"
+source bin/build
 
 # To start development server.
 tsc -w -p src/_main --outFile "dist/static/$VERSION/ts.js" &
-elm-live src/Main.elm --open --dir dist -- --output="dist/static/$VERSION/elm.js"
+elm-live src/Main.elm --open --dir dist -- --output dist/static/"$VERSION"/elm.js
