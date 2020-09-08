@@ -226,7 +226,7 @@ viewControls config model =
                 , disabled ((model.file |> maybeToBool |> not) || (model.port_ |> portStatusToBool |> not))
                 ]
                 [ text
-                    (S.plot
+                    (S.cut
                         ++ (model.file
                                 |> Maybe.map Tuple.first
                                 |> Maybe.map File.name
@@ -243,7 +243,7 @@ viewControls config model =
                 , onClickSend config Recut
                 , disabled (model.port_ |> portStatusToBool |> not)
                 ]
-                [ text "Replot"
+                [ text "Recut"
                 ]
             ]
         , p []

@@ -29,8 +29,8 @@ loadMarkers =
     "Load Markers"
 
 
-plot =
-    "Plot"
+cut =
+    "Cut"
 
 
 xOffset =
