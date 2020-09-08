@@ -9,8 +9,9 @@ type Command
     = QUERY
       --
     | MENU
-    | SET
     | SYS_MENU
+      --
+    | SET String
     | SETSYS
       --
     | LOAD_MARKERS
@@ -60,8 +61,8 @@ commandToString a =
         MENU ->
             "MENU"
 
-        SET ->
-            "SET"
+        SET a ->
+            "SET " ++ a
 
         SYS_MENU ->
             "SYS_MENU"
