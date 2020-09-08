@@ -265,39 +265,6 @@ viewControls config model =
         ]
 
 
-{-| Send command on click.
--}
-onClickSend : Config msg -> Command -> Attribute msg
-onClickSend config a =
-    onClick (sendCommand a |> SendData |> config.sendMsg)
-
-
-{-| Plot if input changed.
--}
-onInputPlot : Config msg -> (Int -> String) -> Attribute msg
-onInputPlot config fn =
-    onInput
-        (\v ->
-            v
-                |> String.toInt
-                |> Maybe.map fn
-                |> Maybe.map (\vv -> "\u{001B};@:\n" ++ vv ++ "\nEND\n")
-                |> Maybe.withDefault ""
-                |> SendData
-                |> config.sendMsg
-        )
-
-
-{-| To show form label and input.
--}
-viewFormLabelAndInput : Html a -> Html a -> Html a
-viewFormLabelAndInput a b =
-    div [ C.row, C.g2, C.mb2 ]
-        [ div [ C.col, C.dFlex, C.alignItemsCenter ] [ a ]
-        , div [ C.col ] [ b ]
-        ]
-
-
 {-| -}
 viewMarkerSettings : Config msg -> Model -> Html msg
 viewMarkerSettings config model =
@@ -409,4 +376,41 @@ viewSystemConfiguration : Config msg -> Model -> Html msg
 viewSystemConfiguration _ _ =
     div []
         [ text ""
+        ]
+
+
+
+--
+
+
+{-| Send command on click.
+-}
+onClickSend : Config msg -> Command -> Attribute msg
+onClickSend config a =
+    onClick (sendCommand a |> SendData |> config.sendMsg)
+
+
+{-| Plot if input changed.
+-}
+onInputPlot : Config msg -> (Int -> String) -> Attribute msg
+onInputPlot config fn =
+    onInput
+        (\v ->
+            v
+                |> String.toInt
+                |> Maybe.map fn
+                |> Maybe.map (\vv -> "\u{001B};@:\n" ++ vv ++ "\nEND\n")
+                |> Maybe.withDefault ""
+                |> SendData
+                |> config.sendMsg
+        )
+
+
+{-| To show form label and input.
+-}
+viewFormLabelAndInput : Html a -> Html a -> Html a
+viewFormLabelAndInput a b =
+    div [ C.row, C.g2, C.mb2 ]
+        [ div [ C.col, C.dFlex, C.alignItemsCenter ] [ a ]
+        , div [ C.col ] [ b ]
         ]
