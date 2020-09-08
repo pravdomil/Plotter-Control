@@ -2,25 +2,7 @@ module Styles.C exposing (..)
 
 {-| To get more CSS class safety, we extract all classes from our stylesheets.
 To get fresh classes run following script in the browser.
-
-```js
-function getCssClasses() {
-  const a = [...document.styleSheets]
-    .map((b) => [...b.cssRules])
-    .flat()
-    .map((b) => b.selectorText)
-    .filter((b) => b)
-    .map((b) => b.split(","))
-    .flat()
-    .map((b) => b.trim())
-    .filter((b) => b.match(/^\./))
-    .map((b) => b.replace(/^\.([a-zA-Z0-9_-]*).*$/, "$1"))
-    .map((b) => `${b.replace(/-./g, (c) => c.substr(1).toUpperCase())} = class ${JSON.stringify(b)}`)
-  return [...new Set(a).keys()].join("\n")
-}
-document.write(getCssClasses().replace(/\\n/g, "<br>"))
-```
-
+<https://gist.github.com/pravdomil/be27dcdb284b5fe25d50919f90420964>
 -}
 
 import Html.Attributes exposing (class)
