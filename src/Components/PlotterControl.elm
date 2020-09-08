@@ -1,4 +1,4 @@
-module Views.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subscriptions, update, view)
+module Components.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subscriptions, update, view)
 
 import Browser exposing (Document)
 import File exposing (File)
@@ -59,7 +59,7 @@ type alias Config msg =
     }
 
 
-{-| To init our view.
+{-| To init our component.
 -}
 init : Config msg -> Decode.Value -> ( Model, Cmd msg )
 init _ _ =
@@ -71,7 +71,7 @@ init _ _ =
     )
 
 
-{-| To update our view.
+{-| To update our component.
 -}
 update : Config msg -> Msg -> Model -> ( Model, Cmd msg )
 update config msg model =

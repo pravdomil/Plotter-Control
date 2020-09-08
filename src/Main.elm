@@ -1,8 +1,8 @@
 module Main exposing (main)
 
 import Browser
+import Components.PlotterControl as PlotterControl
 import Json.Decode as Decode
-import Views.PlotterControl as PlotterControl
 
 
 {-| To create things needed for App view.
