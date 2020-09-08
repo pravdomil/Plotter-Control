@@ -403,14 +403,6 @@ viewOposCalibration config _ =
         ]
 
 
-{-| -}
-viewSystemConfiguration : Config msg -> Model -> Html msg
-viewSystemConfiguration _ _ =
-    div []
-        [ text ""
-        ]
-
-
 
 --
 
