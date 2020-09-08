@@ -42,6 +42,13 @@ type Command
     | END
 
 
+{-| To send command.
+-}
+sendCommand : Command -> String
+sendCommand a =
+    "\u{001B};@:\n" ++ (a |> commandToString) ++ "\nEND\n"
+
+
 {-| To convert command to string.
 -}
 commandToString : Command -> String
