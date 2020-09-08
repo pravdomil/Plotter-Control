@@ -369,34 +369,38 @@ viewConfiguration config model =
                 [ text S.loadMarkers
                 ]
             )
-        , div [ C.m5 ] []
-        , div [ C.dNone ]
-            [ p []
-                [ b []
-                    [ text "OPOS Calibration"
-                    ]
+        ]
+
+
+{-| -}
+viewOposCalibration : Config msg -> Model -> Html msg
+viewOposCalibration config _ =
+    div []
+        [ p []
+            [ b []
+                [ text "OPOS Calibration"
                 ]
-            , viewFormLabelAndInput (text S.xOffset)
-                (div [ C.inputGroup ]
-                    [ input
-                        [ C.formControl
-                        , onInputPlot config (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
-                        ]
-                        []
-                    , span [ C.inputGroupText ] [ text "mm / 80" ]
-                    ]
-                )
-            , viewFormLabelAndInput (text S.yOffset)
-                (div [ C.inputGroup ]
-                    [ input
-                        [ C.formControl
-                        , onInputPlot config (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
-                        ]
-                        []
-                    , span [ C.inputGroupText ] [ text "mm / 80" ]
-                    ]
-                )
             ]
+        , viewFormLabelAndInput (text S.xOffset)
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot config (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm / 80" ]
+                ]
+            )
+        , viewFormLabelAndInput (text S.yOffset)
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot config (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm / 80" ]
+                ]
+            )
         ]
 
 
