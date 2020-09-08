@@ -12,7 +12,7 @@ import String exposing (fromInt)
 import Styles.C as C
 import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
-import Utils.Rectangle exposing (PositionX(..), PositionY(..), absolute)
+import Utils.Layout exposing (Constrain(..), float)
 import Utils.S as S
 import Utils.Utils exposing (maybeToBool)
 
@@ -146,27 +146,25 @@ subscriptions config _ =
 view : Config msg -> Model -> Document msg
 view config model =
     let
+        col : number -> number
         col i =
-            2 * (i + 1) + i * w
-
-        w =
-            22
+            2 * (i + 1) + i * 22
     in
     { title = S.pageTitle
     , body =
-        [ h3 (absolute ( Left (col 0) w, Top 1.5 3 ))
+        [ h3 (float [ Left (col 0), Top 1.5, Size 22 3 ])
             [ text S.pageTitle ]
-        , div (absolute ( Left (col 0) w, Top 5 40 ))
+        , div (float [ Left (col 0), Top 5, Size 22 40 ])
             [ viewControls config model
             ]
-        , div (absolute ( Left (col 1) w, Top 5 40 ))
+        , div (float [ Left (col 1), Top 5, Size 22 40 ])
             [ viewConfiguration config model
             ]
-        , div (absolute ( Left (col 2) w, Top 5 40 ))
+        , div (float [ Left (col 2), Top 5, Size 22 40 ])
             [ viewSystemConfiguration config model
             ]
         , div
-            (absolute ( Left 1 0, Bottom 1 0 ) ++ [ C.small, C.textDanger ])
+            (float [ Left 1, Bottom 1 ] ++ [ C.small, C.textDanger ])
             (model.errors |> List.map (\v -> div [] [ text v ]))
         ]
     }
