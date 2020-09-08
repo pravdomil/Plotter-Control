@@ -26,15 +26,17 @@ baudRate =
 {-| To define what can happen.
 -}
 type Msg
-    = -- Outside World
+    = --
       GotJavaScriptMessage (Maybe JavaScriptMessage)
-      -- UI
+      --
     | ConnectToPlotter
-    | Plot String
+      --
     | LoadFile
-    | GotPlotFile File
-    | GotPlotFileAndContent File String
+    | GotFile File
+    | GotFileWithContent File String
+      --
     | PlotFile
+    | PlotData String
 
 
 {-| To make some messages available outside this module.
@@ -98,7 +100,7 @@ update config msg model =
                 )
             )
 
-        Plot data ->
+        PlotData data ->
             case model.port_ of
                 Ready a ->
                     ( model
@@ -110,15 +112,15 @@ update config msg model =
 
         LoadFile ->
             ( model
-            , Select.file [] (GotPlotFile >> config.sendMsg)
+            , Select.file [] (GotFile >> config.sendMsg)
             )
 
-        GotPlotFile a ->
+        GotFile a ->
             ( model
-            , a |> File.toString |> Task.perform (GotPlotFileAndContent a >> config.sendMsg)
+            , a |> File.toString |> Task.perform (GotFileWithContent a >> config.sendMsg)
             )
 
-        GotPlotFileAndContent a b ->
+        GotFileWithContent a b ->
             ( { model | file = Just ( a, b ) }
             , Cmd.none
             )
