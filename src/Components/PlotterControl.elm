@@ -175,8 +175,7 @@ view config model =
             [ viewMarkerSettings config model
             ]
         , div (float [ Left (col 2), Top 5, Size 22 40 ])
-            [ viewSystemConfiguration config model
-            ]
+            []
         , div
             (float [ Left 1, Bottom 1 ] ++ [ C.small, C.textDanger ])
             (model.errors |> List.map (\v -> div [] [ text v ]))
