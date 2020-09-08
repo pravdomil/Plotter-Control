@@ -404,4 +404,5 @@ viewConfiguration config model =
 viewSystemConfiguration : Config msg -> Model -> Html msg
 viewSystemConfiguration _ _ =
     div []
-        [ text "" ]
+        [ text ""
+        ]
