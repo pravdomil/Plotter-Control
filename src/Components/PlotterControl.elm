@@ -91,6 +91,7 @@ update config msg model =
                 Nothing ->
                     ( model, Cmd.none )
 
+        --
         ConnectToPlotter ->
             ( model
             , sendElmMessage
@@ -116,6 +117,7 @@ update config msg model =
             , Cmd.none
             )
 
+        --
         PlotFile ->
             case model.file of
                 Just ( _, data ) ->
