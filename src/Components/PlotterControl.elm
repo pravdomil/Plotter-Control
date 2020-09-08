@@ -332,20 +332,20 @@ viewConfiguration config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SET MARKER_X_DIS=" ++ fromInt (v * 40))
+                    , onInputPlot config (\v -> "SET MARKER_X_DIS=" ++ fromInt (v * 4))
                     ]
                     []
-                , span [ C.inputGroupText ] [ text "mm" ]
+                , span [ C.inputGroupText ] [ text "mm/10" ]
                 ]
             )
         , viewFormLabelAndInput (text "Y Distance:")
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SET MARKER_Y_DIS=" ++ fromInt (v * 40))
+                    , onInputPlot config (\v -> "SET MARKER_Y_DIS=" ++ fromInt (v * 4))
                     ]
                     []
-                , span [ C.inputGroupText ] [ text "mm" ]
+                , span [ C.inputGroupText ] [ text "mm/10" ]
                 ]
             )
         , viewFormLabelAndInput (text "Markers on X Axis:")
