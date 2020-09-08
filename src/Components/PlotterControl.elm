@@ -270,6 +270,16 @@ viewPlotterSettings config model =
                 , span [ C.inputGroupText ] [ text "g" ]
                 ]
             )
+        , viewFormLabelAndInput (text "Velocity:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot config (\v -> "SET VELOCITY=" ++ fromInt v)
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm/s" ]
+                ]
+            )
         ]
 
 
