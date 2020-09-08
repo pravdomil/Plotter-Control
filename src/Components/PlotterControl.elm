@@ -265,6 +265,13 @@ viewControls config model =
         ]
 
 
+{-| Send command on click.
+-}
+onClickSend : Config msg -> Command -> Attribute msg
+onClickSend config a =
+    onClick (sendCommand a |> SendData |> config.sendMsg)
+
+
 {-| Plot if input changed.
 -}
 onInputPlot : Config msg -> (Int -> String) -> Attribute msg
@@ -294,15 +301,6 @@ viewFormLabelAndInput a b =
 {-| -}
 viewConfiguration : Config msg -> Model -> Html msg
 viewConfiguration config model =
-    let
-        onClickPlot : String -> Attribute msg
-        onClickPlot a =
-            onClick
-                (("\u{001B};@:\n" ++ a ++ "\nEND\n")
-                    |> Plot
-                    |> config.sendMsg
-                )
-    in
     fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
             [ b []
