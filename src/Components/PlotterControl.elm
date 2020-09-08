@@ -254,24 +254,22 @@ viewControls config model =
 {-| -}
 viewPlotterSettings : Config msg -> Model -> Html msg
 viewPlotterSettings config model =
-    div []
+    fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
             [ b []
                 [ text "Plotter Settings"
                 ]
             ]
-        , fieldset [ disabled (portStatusToBool model.port_ |> not) ]
-            [ viewFormLabelAndInput (text "Knife Pressure:")
-                (div [ C.inputGroup ]
-                    [ input
-                        [ C.formControl
-                        , onInputPlot config (\v -> "SET KNIFE_PRESSURE=" ++ fromInt v)
-                        ]
-                        []
-                    , span [ C.inputGroupText ] [ text "g" ]
+        , viewFormLabelAndInput (text "Knife Pressure:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputPlot config (\v -> "SET KNIFE_PRESSURE=" ++ fromInt v)
                     ]
-                )
-            ]
+                    []
+                , span [ C.inputGroupText ] [ text "g" ]
+                ]
+            )
         ]
 
 
