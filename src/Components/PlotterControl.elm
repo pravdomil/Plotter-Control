@@ -29,8 +29,8 @@ type Msg
     | GotFile File
     | GotFileWithContent File String
       --
-    | PlotFile
-    | PlotData String
+    | SendFile
+    | SendData String
 
 
 {-| To make some messages available outside this module.
@@ -118,22 +118,22 @@ update config msg model =
             )
 
         --
-        PlotFile ->
+        SendFile ->
             case model.file of
                 Just ( _, data ) ->
-                    plotData config model data
+                    sendData config model data
 
                 _ ->
                     ( model, Cmd.none )
 
-        PlotData data ->
-            plotData config model data
+        SendData data ->
+            sendData config model data
 
 
-{-| To plot data.
+{-| To send data to serial port.
 -}
-plotData : Config msg -> Model -> String -> ( Model, Cmd msg )
-plotData _ model data =
+sendData : Config msg -> Model -> String -> ( Model, Cmd msg )
+sendData _ model data =
     case model.port_ of
         Ready port_ ->
             ( model, sendElmMessage (SendToSerialPort port_ data) )
@@ -216,7 +216,7 @@ viewControls config model =
             [ button
                 [ C.btn
                 , C.btnDanger
-                , onClick (PlotFile |> config.sendMsg)
+                , onClick (SendFile |> config.sendMsg)
                 , disabled ((model.file |> maybeToBool |> not) || (model.port_ |> portStatusToBool |> not))
                 ]
                 [ text
