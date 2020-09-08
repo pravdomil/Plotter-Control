@@ -20,7 +20,7 @@ import Utils.Utils exposing (maybeToBool)
 {-| To hardcore serial port baud rate.
 -}
 baudRate =
-    38400
+    57600
 
 
 {-| To define what can happen.
