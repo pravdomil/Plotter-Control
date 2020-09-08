@@ -68,11 +68,11 @@ commandToString a =
         Menu ->
             "MENU"
 
-        Set b ->
-            "SET " ++ b
-
         SysMenu ->
             "SYS_MENU"
+
+        Set b ->
+            "SET " ++ b
 
         SetSys b ->
             "SETSYS " ++ b
