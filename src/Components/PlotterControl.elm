@@ -285,6 +285,16 @@ viewPlotterSettings config model =
                 , span [ C.inputGroupText ] [ text "mm/s" ]
                 ]
             )
+        , viewFormLabelAndInput (text "Recut offset:")
+            (div [ C.inputGroup ]
+                [ input
+                    [ C.formControl
+                    , onInputSend config (\v -> [ Set ("RECUT_OFFSET=" ++ fromInt v) ])
+                    ]
+                    []
+                , span [ C.inputGroupText ] [ text "mm" ]
+                ]
+            )
         ]
 
 
