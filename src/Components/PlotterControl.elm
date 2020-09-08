@@ -14,7 +14,7 @@ import Task
 import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
 import Utils.Layout exposing (Constrain(..), float)
 import Utils.S as S
-import Utils.Summa exposing (Command(..), sendCommand)
+import Utils.Summa exposing (Command(..), sendCommand, sendCommands)
 import Utils.Utils exposing (maybeToBool)
 
 
@@ -269,7 +269,7 @@ viewPlotterSettings config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SET KNIFE_PRESSURE=" ++ fromInt v)
+                    , onInputSend config (\v -> [ Set ("KNIFE_PRESSURE=" ++ fromInt v) ])
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "g" ]
@@ -279,7 +279,7 @@ viewPlotterSettings config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SET VELOCITY=" ++ fromInt v)
+                    , onInputSend config (\v -> [ Set ("VELOCITY=" ++ fromInt v) ])
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm/s" ]
@@ -302,12 +302,11 @@ viewMarkerSettings config model =
                 [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config
+                    , onInputSend config
                         (\v ->
-                            [ "SET MARKER_X_SIZE=" ++ fromInt (v * 40)
-                            , "SET MARKER_Y_SIZE=" ++ fromInt (v * 40)
+                            [ Set ("MARKER_X_SIZE=" ++ fromInt (v * 40))
+                            , Set ("MARKER_Y_SIZE=" ++ fromInt (v * 40))
                             ]
-                                |> String.join "\n"
                         )
                     ]
                     []
@@ -318,7 +317,7 @@ viewMarkerSettings config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SET MARKER_X_DIS=" ++ fromInt (v * 4))
+                    , onInputSend config (\v -> [ Set ("MARKER_X_DIS=" ++ fromInt (v * 4)) ])
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm/10" ]
@@ -328,7 +327,7 @@ viewMarkerSettings config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SET MARKER_Y_DIS=" ++ fromInt (v * 4))
+                    , onInputSend config (\v -> [ Set ("MARKER_Y_DIS=" ++ fromInt (v * 4)) ])
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm/10" ]
@@ -338,7 +337,7 @@ viewMarkerSettings config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SET MARKER_X_N=" ++ fromInt v)
+                    , onInputSend config (\v -> [ Set ("MARKER_X_N=" ++ fromInt v) ])
                     ]
                     []
                 ]
@@ -347,7 +346,7 @@ viewMarkerSettings config model =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SET OPOS_LEVEL=" ++ fromInt v)
+                    , onInputSend config (\v -> [ Set ("OPOS_LEVEL=" ++ fromInt v) ])
                     ]
                     []
                 ]
@@ -375,7 +374,7 @@ viewOposCalibration config _ =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
+                    , onInputSend config (\v -> "SETSYS OPOS_xoffset=" ++ fromInt v)
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm / 80" ]
@@ -385,7 +384,7 @@ viewOposCalibration config _ =
             (div [ C.inputGroup ]
                 [ input
                     [ C.formControl
-                    , onInputPlot config (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
+                    , onInputSend config (\v -> "SETSYS OPOS_yoffset=" ++ fromInt v)
                     ]
                     []
                 , span [ C.inputGroupText ] [ text "mm / 80" ]
@@ -413,18 +412,16 @@ onClickSend config a =
     onClick (sendCommand a |> SendData |> config.sendMsg)
 
 
-{-| Plot if input changed.
+{-| Send commands on input.
 -}
-onInputPlot : Config msg -> (Int -> String) -> Attribute msg
-onInputPlot config fn =
+onInputSend : Config msg -> (Int -> List Command) -> Attribute msg
+onInputSend config toCommands =
     onInput
         (\v ->
             v
                 |> String.toInt
-                |> Maybe.map fn
-                |> Maybe.map (\vv -> "\u{001B};@:\n" ++ vv ++ "\nEND\n")
-                |> Maybe.withDefault ""
-                |> SendData
+                |> Maybe.map (toCommands >> sendCommands >> SendData)
+                |> Maybe.withDefault NothingHappened
                 |> config.sendMsg
         )
 
