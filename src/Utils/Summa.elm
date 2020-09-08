@@ -6,41 +6,41 @@ module Utils.Summa exposing (..)
 {-| To define summa commands.
 -}
 type Command
-    = QUERY
+    = Query
       --
-    | MENU
-    | SYS_MENU
+    | Menu
+    | SysMenu
       --
-    | SET String
-    | SETSYS
+    | Set string
+    | Setsys
       --
-    | LOAD_MARKERS
-    | RELOAD_MARKERS
-    | READ_MARKERS
+    | LoadMarkers
+    | ReloadMarkers
+    | ReadMarkers
       --
-    | ACTIVATE_BARCODE
+    | ActivateBarcode
       --
-    | READ_MEDIA_SENSORS
-    | SWEEP_MEDIA_SENSORS
+    | ReadMediaSensors
+    | SweepMediaSensors
       --
-    | READ_LAST_FILE
-    | RECUT
+    | ReadLastFile
+    | Recut
       --
-    | SET_ORIGIN
+    | SetOrigin
       --
-    | STORE
-    | RESTORE
+    | Store
+    | Restore
       --
-    | READ_LANGUAGE
-    | WRITE_LANGUAGE
+    | ReadLanguage
+    | WriteLanguage
       --
-    | SET_SERIAL
+    | SetSerial
       --
-    | CAL_AXES_LOGI2
+    | CalAxesLogi2
       --
-    | UPGRADE_FLASH
+    | UpgradeFlash
       --
-    | END
+    | End
 
 
 {-| To send command.
@@ -55,68 +55,68 @@ sendCommand a =
 commandToString : Command -> String
 commandToString a =
     case a of
-        QUERY ->
+        Query ->
             "QUERY"
 
-        MENU ->
+        Menu ->
             "MENU"
 
-        SET a ->
+        Set a ->
             "SET " ++ a
 
-        SYS_MENU ->
+        SysMenu ->
             "SYS_MENU"
 
-        SETSYS ->
+        Setsys ->
             "SETSYS"
 
-        LOAD_MARKERS ->
+        LoadMarkers ->
             "LOAD_MARKERS"
 
-        RELOAD_MARKERS ->
+        ReloadMarkers ->
             "RELOAD_MARKERS"
 
-        READ_MARKERS ->
+        ReadMarkers ->
             "READ_MARKERS"
 
-        ACTIVATE_BARCODE ->
+        ActivateBarcode ->
             "ACTIVATE_BARCODE"
 
-        READ_MEDIA_SENSORS ->
+        ReadMediaSensors ->
             "READ_MEDIA_SENSORS"
 
-        SWEEP_MEDIA_SENSORS ->
+        SweepMediaSensors ->
             "SWEEP_MEDIA_SENSORS"
 
-        READ_LAST_FILE ->
+        ReadLastFile ->
             "READ_LAST_FILE"
 
-        RECUT ->
+        Recut ->
             "RECUT"
 
-        SET_ORIGIN ->
+        SetOrigin ->
             "SET_ORIGIN"
 
-        STORE ->
+        Store ->
             "STORE"
 
-        RESTORE ->
+        Restore ->
             "RESTORE"
 
-        READ_LANGUAGE ->
+        ReadLanguage ->
             "READ_LANGUAGE"
 
-        WRITE_LANGUAGE ->
+        WriteLanguage ->
             "WRITE_LANGUAGE"
 
-        SET_SERIAL ->
+        SetSerial ->
             "SET_SERIAL"
 
-        CAL_AXES_LOGI2 ->
+        CalAxesLogi2 ->
             "CAL_AXES_LOGI2"
 
-        UPGRADE_FLASH ->
+        UpgradeFlash ->
             "UPGRADE_FLASH"
 
-        END ->
+        End ->
             "END"
