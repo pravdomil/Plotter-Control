@@ -225,15 +225,14 @@ viewControls config model =
                 , onClick (SendFile |> config.sendMsg)
                 , disabled ((model.file |> maybeToBool |> not) || (model.port_ |> portStatusToBool |> not))
                 ]
-                [ text
-                    (S.cut
-                        ++ (model.file
-                                |> Maybe.map Tuple.first
-                                |> Maybe.map File.name
-                                |> Maybe.map ((++) " ")
-                                |> Maybe.withDefault ""
-                           )
-                    )
+                [ text S.cut
+                , small []
+                    [ text
+                        (model.file
+                            |> Maybe.map (\( v, _ ) -> " \"" ++ File.name v ++ "\"")
+                            |> Maybe.withDefault ""
+                        )
+                    ]
                 ]
             ]
         , p []
