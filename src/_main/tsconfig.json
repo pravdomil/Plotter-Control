@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "module": "system",
-    "target": "ES6",
-    "strict": true
-  }
-}
