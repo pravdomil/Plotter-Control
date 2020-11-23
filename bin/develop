@@ -13,4 +13,4 @@ cd "${0%/*}/.."
 source bin/build
 
 # To start development server.
-elm-live src/Main.elm --open --dir dist -- --output dist/static/"$VERSION"/elm.js
+elm-live src/Main.elm --open --dir dist --hot -- --output="dist/static/$VERSION/elm.js"
