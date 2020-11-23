@@ -26,4 +26,4 @@ sed -i "" "s/VERSION/$VERSION/g" dist/index.html
 find src/Types -type f -exec elm-to-json-and-ts {} \;
 
 # To compile our app.
-elm make src/Main.elm --optimize --output dist/static/"$VERSION"/elm.js
+elm make src/Main.elm --optimize --output "dist/static/$VERSION/elm.js"
