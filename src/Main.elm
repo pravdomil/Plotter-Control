@@ -1,25 +1,18 @@
 module Main exposing (main)
 
+import App.App.App exposing (..)
+import App.App.Types exposing (..)
 import Browser
-import Components.PlotterControl as PlotterControl
 import Json.Decode as Decode
 
 
-{-| To create things needed for App view.
+{-| To create application.
 -}
-appConfig : PlotterControl.Config PlotterControl.Msg
-appConfig =
-    { sendMsg = identity
-    }
-
-
-{-| To create application with App view.
--}
-main : Program Decode.Value PlotterControl.Model PlotterControl.Msg
+main : Program Decode.Value Model Msg
 main =
     Browser.document
-        { init = PlotterControl.init appConfig
-        , update = PlotterControl.update appConfig
-        , subscriptions = PlotterControl.subscriptions appConfig
-        , view = PlotterControl.view appConfig
+        { init = init
+        , update = update
+        , subscriptions = subscriptions
+        , view = view
         }
