@@ -16,8 +16,8 @@ VERSION=$(date +%s)
 rm -r dist || true
 
 # To copy static resources.
-cp -r res/dist dist
-mv dist/static/VERSION dist/static/"$VERSION"
+cp -r src/_dist dist
+mv dist/static/VERSION "dist/static/$VERSION"
 
 # To pass version to the app.
 sed -i "" "s/VERSION/$VERSION/g" dist/index.html
