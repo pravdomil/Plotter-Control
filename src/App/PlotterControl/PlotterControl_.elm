@@ -9,7 +9,7 @@ import Html.Attributes exposing (autofocus, disabled, value)
 import Html.Events exposing (onClick, onInput)
 import Styles.C as C
 import Utils.Interop as Interop exposing (Status(..))
-import Utils.Translation exposing (..)
+import Utils.Translation as Translation exposing (..)
 import View.Layout exposing (..)
 
 
@@ -71,15 +71,24 @@ subscriptions _ =
 {-| -}
 view : Model -> Layout Msg
 view model =
-    row ratio1
+    column ratio1
         []
-        [ column (ratio 1)
-            [ C.borderEnd ]
-            [ viewConsole model
+        [ element (rem 5)
+            []
+            (h3 [ C.m3 ]
+                [ text (t A_Title)
+                ]
+            )
+        , row ratio1
+            []
+            [ column (ratio 1)
+                [ C.borderEnd ]
+                [ viewConsole model
+                ]
+            , column (ratio 1.618)
+                []
+                [ viewStatus model ]
             ]
-        , column (ratio 1.618)
-            []
-            []
         ]
 
 
@@ -88,10 +97,7 @@ viewConsole : Model -> Layout Msg
 viewConsole model =
     html ratio1
         []
-        [ h3 [ C.m3 ]
-            [ text (t A_Title)
-            ]
-        , div [ C.mx3 ]
+        [ div [ C.mx3 ]
             [ h6 [] [ text (t (A_Raw "Console")) ]
             , input
                 [ C.formControl
@@ -101,4 +107,14 @@ viewConsole model =
                 ]
                 []
             ]
+        ]
+
+
+{-| -}
+viewStatus : Model -> Layout Msg
+viewStatus model =
+    html ratio1
+        []
+        [ h6 [ C.mx3 ] [ text (t (A_Raw "Status")) ]
+        , h3 [ C.mx3 ] [ text (t (Translation.status model.plotterControl.status)) ]
         ]
