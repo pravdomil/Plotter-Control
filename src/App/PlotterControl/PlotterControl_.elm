@@ -4,12 +4,10 @@ import App.App.App exposing (..)
 import App.PlotterControl.PlotterControl exposing (..)
 import Browser exposing (Document)
 import File exposing (File)
-import File.Select as Select
 import Html exposing (..)
 import Html.Attributes exposing (disabled)
 import Html.Events exposing (onClick, onInput)
 import Styles.C as C
-import Task
 import Utils.Interop as Interop exposing (Status(..))
 
 
@@ -24,61 +22,29 @@ init =
 {-| -}
 update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
-    case msg of
-        NothingHappened ->
-            ( model, Cmd.none )
-
-        --
-        GotJavaScriptMessage a ->
+    let
+        { plotterControl } =
+            model
+    in
+    (case msg of
+        PlotterControlMsg a ->
             case a of
-                Just b ->
-                    case b of
-                        GotError c ->
-                            ( { model | errors = c :: model.errors }, Cmd.none )
+                ConsoleChanged b ->
+                    ( { plotterControl | console = b }
+                    , Cmd.none
+                    )
 
-                        SerialPortUpdated c ->
-                            ( { model | port_ = c }, Cmd.none )
+                SendData b ->
+                    ( plotterControl
+                    , Interop.sendData b
+                    )
 
-                Nothing ->
-                    ( model, Cmd.none )
-
-        --
-        ConnectToPlotter ->
-            ( model
-            , sendElmMessage
-                (ConnectSerialPort
-                    (SerialPortFilter 0x0403 0x6001)
-                    (SerialOptions baudRate)
-                )
-            )
-
-        --
-        LoadFile ->
-            ( model
-            , Select.file [] (GotFile >> config.sendMsg)
-            )
-
-        GotFile a ->
-            ( model
-            , a |> File.toString |> Task.perform (GotFileWithContent a >> config.sendMsg)
-            )
-
-        GotFileWithContent a b ->
-            ( { model | file = Just ( a, b ) }
-            , Cmd.none
-            )
-
-        --
-        SendFile ->
-            case model.file of
-                Just ( _, data ) ->
-                    sendData config model (data ++ (Recut |> sendCommand |> String.repeat 100))
-
-                _ ->
-                    ( model, Cmd.none )
-
-        SendData data ->
-            sendData config model data
+                GotStatus b ->
+                    ( { plotterControl | status = b }
+                    , Cmd.none
+                    )
+    )
+        |> Tuple.mapFirst (\v -> { model | plotterControl = v })
 
 
 
