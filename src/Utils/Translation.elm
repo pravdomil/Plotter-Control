@@ -6,6 +6,7 @@ module Utils.Translation exposing (..)
 {-| -}
 type Translation
     = A_Title
+    | A_Raw String
       --
     | ConnectToPlotter
     | ConnectingToPlotter
@@ -27,6 +28,9 @@ t a =
     case a of
         A_Title ->
             "Plotter Control"
+
+        A_Raw b ->
+            b
 
         --
         ConnectToPlotter ->
