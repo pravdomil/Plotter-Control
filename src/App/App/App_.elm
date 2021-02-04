@@ -2,6 +2,7 @@ module App.App.App_ exposing (..)
 
 import App.App.App exposing (..)
 import App.PlotterControl.PlotterControl_ as PlotterControl_
+import Browser exposing (Document)
 import Html exposing (text)
 import Json.Decode as Decode
 import Utils.Update as Update
@@ -11,7 +12,7 @@ import Utils.Update as Update
 -}
 init : Decode.Value -> ( Model, Cmd Msg )
 init _ =
-    ( { router = PlotterControl_.init
+    ( { plotterControl = PlotterControl_.init
       }
     , Cmd.none
     )
