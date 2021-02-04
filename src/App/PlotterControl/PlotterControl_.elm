@@ -165,7 +165,7 @@ view model =
         []
         [ element (rem 5)
             []
-            (h3 [ C.m3 ]
+            (h6 [ C.m3 ]
                 [ text (t A_Title)
                 ]
             )
