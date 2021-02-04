@@ -34,23 +34,31 @@ function checkSerialPortSupport() {
 }
 
 async function sendData(a, callback) {
-  callback({ _: 1 })
+  const Ready = 0,
+    Connecting = 1,
+    Idle = 2,
+    Busy = 3,
+    Error = 4
+
+  callback({ _: Connecting })
+
   const port = await getPort()
   if (!port) {
-    callback({ _: 0 })
+    callback({ _: Ready })
     return
   }
+
   await port.open({ baudRate: 57600 })
   if (!port.writable || port.writable.locked) {
-    callback({ _: 4, a: "Can't open serial port." })
+    callback({ _: Error, a: "Can't open serial port." })
     return
   }
-  callback({ _: 2 })
+
+  callback({ _: Busy })
   const writer = port.writable.getWriter()
-  callback({ _: 3 })
   await writer.write(new TextEncoder().encode(b))
   await writer.close()
-  callback({ _: 2 })
+  callback({ _: Idle })
 }
 
 async function getPort() {
