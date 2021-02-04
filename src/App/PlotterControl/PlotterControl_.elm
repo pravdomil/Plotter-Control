@@ -209,7 +209,7 @@ viewCommands : Model -> Layout Msg
 viewCommands _ =
     html ratio1
         []
-        [ div [ C.mx3, style "font-size" "12px" ]
+        [ div [ C.mx3, style "font-size" "14px" ]
             [ h6 [ C.textMuted ] [ text (t (A_Raw "Commands")) ]
             , p [] (commands |> Dict.values |> List.take 10 |> List.map viewCommand)
             ]
