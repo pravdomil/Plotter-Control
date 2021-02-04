@@ -29,8 +29,8 @@ update msg model =
 {-| To handle subscriptions.
 -}
 subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Sub.none
+subscriptions model =
+    PlotterControl_.subscriptions model
 
 
 {-| To show interface.
