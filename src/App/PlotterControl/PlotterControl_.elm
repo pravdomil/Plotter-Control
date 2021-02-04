@@ -174,6 +174,7 @@ view model =
             [ column (ratio 1)
                 [ C.borderEnd ]
                 [ viewConsole model
+                , viewCommands model
                 ]
             , column (ratio 1.618)
                 []
@@ -185,7 +186,7 @@ view model =
 {-| -}
 viewConsole : Model -> Layout Msg
 viewConsole model =
-    html ratio1
+    html (rem 6)
         []
         [ form [ C.mx3, onSubmit (ConsoleSubmitted |> PlotterControlMsg) ]
             [ h6 [] [ text (t (A_Raw "Console")) ]
@@ -199,7 +200,15 @@ viewConsole model =
                     []
                 ]
             ]
-        , div [ C.mx3, style "font-size" "12px" ]
+        ]
+
+
+{-| -}
+viewCommands : Model -> Layout Msg
+viewCommands _ =
+    html ratio1
+        []
+        [ div [ C.mx3, style "font-size" "12px" ]
             [ h6 [] [ text (t (A_Raw "Commands")) ]
             , p [] (commands |> Dict.values |> List.take 10 |> List.map viewCommand)
             ]
