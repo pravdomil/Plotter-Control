@@ -48,7 +48,7 @@ async function sendData(a, callback) {
     return
   }
 
-  const writer = await getWriter()
+  const writer = await getWriter(port)
   if (!writer) {
     callback({ _: Error, a: "Can't open serial port." })
     return
