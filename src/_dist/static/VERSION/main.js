@@ -1,4 +1,4 @@
-main()
+addEventListener("DOMContentLoaded", main)
 
 function main() {
   const app = Elm.Main.init({
