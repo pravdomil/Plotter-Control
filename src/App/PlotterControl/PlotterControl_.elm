@@ -86,7 +86,9 @@ update msg model =
                     )
 
                 PlotFile ->
-                    ()
+                    ( model
+                    , sendData (model.plotterControl.file |> Maybe.map Tuple.second |> Maybe.withDefault "")
+                    )
 
                 --
                 GotStatus b ->
