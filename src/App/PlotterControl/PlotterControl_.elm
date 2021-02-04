@@ -219,7 +219,7 @@ viewCommands _ =
 viewCommand : Command Msg -> Html Msg
 viewCommand a =
     div []
-        [ text a.name
+        [ text (String.toUpper a.name)
         , text " - "
         , text a.description
         ]
