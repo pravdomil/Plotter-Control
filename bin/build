@@ -25,5 +25,8 @@ mv dist/static/VERSION "dist/static/$VERSION"
 # To pass version to the app.
 sed -i "" "s/VERSION/$VERSION/g" dist/index.html
 
+# To build styles.
+cp node_modules/bootstrap/dist/css/bootstrap.min.css "dist/static/$VERSION"
+
 # To compile our app.
 elm make src/Main.elm --optimize --output "dist/static/$VERSION/elm.js"
