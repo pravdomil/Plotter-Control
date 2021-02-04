@@ -6,7 +6,7 @@ import Browser exposing (Document)
 import File exposing (File)
 import File.Select
 import Html exposing (..)
-import Html.Attributes exposing (autofocus, disabled, value)
+import Html.Attributes exposing (autofocus, disabled, style, value)
 import Html.Events exposing (onClick, onInput)
 import Styles.C as C
 import Task
@@ -159,18 +159,34 @@ view model =
 {-| -}
 viewConsole : Model -> Layout Msg
 viewConsole model =
-    html (rem 6)
+    html ratio1
         []
         [ div [ C.mx3 ]
             [ h6 [] [ text (t (A_Raw "Console")) ]
-            , input
-                [ C.formControl
-                , autofocus True
-                , value model.plotterControl.console
-                , onInput (ConsoleChanged >> PlotterControlMsg)
+            , p []
+                [ input
+                    [ C.formControl
+                    , autofocus True
+                    , value model.plotterControl.console
+                    , onInput (ConsoleChanged >> PlotterControlMsg)
+                    ]
+                    []
                 ]
-                []
             ]
+        , div [ C.mx3, style "font-size" "12px" ]
+            [ h6 [] [ text (t (A_Raw "Commands")) ]
+            , p [] (commands |> List.take 10 |> List.map viewCommand)
+            ]
+        ]
+
+
+{-| -}
+viewCommand : Command Msg -> Html Msg
+viewCommand a =
+    div []
+        [ text a.name
+        , text " - "
+        , text a.description
         ]
 
 
