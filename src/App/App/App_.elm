@@ -1,20 +1,17 @@
 module App.App.App_ exposing (..)
 
 import App.App.App exposing (..)
-import App.Router.Router_ as Router_
-import Browser exposing (Document, UrlRequest)
-import Browser.Navigation as Navigation
+import App.PlotterControl.PlotterControl_ as PlotterControl_
 import Html exposing (text)
 import Json.Decode as Decode
-import Url exposing (Url)
 import Utils.Update as Update
 
 
 {-| To init model.
 -}
-init : Decode.Value -> Url -> Navigation.Key -> ( Model, Cmd Msg )
-init _ _ key =
-    ( { router = Router_.init key
+init : Decode.Value -> ( Model, Cmd Msg )
+init _ =
+    ( { router = PlotterControl_.init
       }
     , Cmd.none
     )
@@ -25,7 +22,7 @@ init _ _ key =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     ( model, Cmd.none )
-        |> Update.andThen (Router_.update msg)
+        |> Update.andThen (PlotterControl_.update msg)
 
 
 {-| To handle subscriptions.

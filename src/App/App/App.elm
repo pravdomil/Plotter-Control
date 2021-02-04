@@ -1,16 +1,16 @@
 module App.App.App exposing (..)
 
-import App.Router.Router exposing (Router, RouterMsg)
+import App.PlotterControl.PlotterControl exposing (PlotterControl, PlotterControlMsg)
 
 
 {-| To define things we keep.
 -}
 type alias Model =
-    { router : Router
+    { plotterControl : PlotterControl
     }
 
 
 {-| To define what can happen.
 -}
 type Msg
-    = RouterMsg RouterMsg
+    = PlotterControlMsg PlotterControlMsg

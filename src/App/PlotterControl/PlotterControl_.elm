@@ -1,84 +1,29 @@
-module App.PlotterControl.PlotterControl_ exposing (Config, Model, Msg, init, publicMsg, subscriptions, update, view)
+module App.PlotterControl.PlotterControl_ exposing (..)
 
+import App.App.App exposing (..)
+import App.PlotterControl.PlotterControl exposing (..)
 import Browser exposing (Document)
 import File exposing (File)
 import File.Select as Select
-import Html exposing (Attribute, Html, a, b, button, div, fieldset, h3, input, p, small, span, text)
+import Html exposing (..)
 import Html.Attributes exposing (disabled)
 import Html.Events exposing (onClick, onInput)
-import Json.Decode as Decode
-import Ports exposing (javaScriptMessageSubscription, sendElmMessage)
-import String exposing (fromInt)
 import Styles.C as C
 import Task
-import Types.Messages exposing (ElmMessage(..), JavaScriptMessage(..), JsRefSerialPort, SerialOptions, SerialPortFilter, SerialPortStatus(..), portStatusToBool)
-import Utils.Layout exposing (Constrain(..), float)
-import Utils.S as S
-import Utils.Summa exposing (Command(..), sendCommand, sendCommands)
-import Utils.Utils exposing (maybeToBool)
+import Utils.Interop as Interop exposing (Status(..))
 
 
-{-| To define what can happen.
--}
-type Msg
-    = NothingHappened
-    | --
-      GotJavaScriptMessage (Maybe JavaScriptMessage)
-      --
-    | ConnectToPlotter
-      --
-    | LoadFile
-    | GotFile File
-    | GotFileWithContent File String
-      --
-    | SendFile
-    | SendData String
-
-
-{-| To make some messages available outside this module.
--}
-publicMsg =
-    {}
-
-
-{-| To define things we keep.
--}
-type alias Model =
-    { errors : List String
-    , port_ : SerialPortStatus
-    , file : Maybe ( File, String )
+{-| -}
+init : PlotterControl
+init =
+    { status = Ready
+    , console = ""
     }
 
 
-{-| To define what things we need.
--}
-type alias Config msg =
-    { sendMsg : Msg -> msg
-    }
-
-
-{-| To hardcore serial port baud rate.
--}
-baudRate =
-    57600
-
-
-{-| To init our component.
--}
-init : Config msg -> Decode.Value -> ( Model, Cmd msg )
-init _ _ =
-    ( { errors = []
-      , port_ = Idle
-      , file = Nothing
-      }
-    , Cmd.none
-    )
-
-
-{-| To update our component.
--}
-update : Config msg -> Msg -> Model -> ( Model, Cmd msg )
-update config msg model =
+{-| -}
+update : Msg -> Model -> ( Model, Cmd msg )
+update msg model =
     case msg of
         NothingHappened ->
             ( model, Cmd.none )
@@ -136,10 +81,13 @@ update config msg model =
             sendData config model data
 
 
-{-| To send data to serial port.
--}
-sendData : Config msg -> Model -> String -> ( Model, Cmd msg )
-sendData _ model data =
+
+--
+
+
+{-| -}
+sendData : PlotterControl -> String -> ( PlotterControl, Cmd msg )
+sendData model data =
     case model.port_ of
         Ready port_ ->
             ( model, sendElmMessage (SendToSerialPort port_ data) )
@@ -148,17 +96,23 @@ sendData _ model data =
             ( model, Cmd.none )
 
 
-{-| To handle subscriptions.
--}
-subscriptions : Config msg -> Model -> Sub msg
-subscriptions config _ =
-    javaScriptMessageSubscription (GotJavaScriptMessage >> config.sendMsg)
+
+--
 
 
-{-| To show interface.
--}
-view : Config msg -> Model -> Document msg
-view config model =
+{-| -}
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Interop.statusSubscription (GotStatus >> PlotterControlMsg)
+
+
+
+--
+
+
+{-| -}
+view : PlotterControl -> Document msg
+view model =
     let
         col : number -> number
         col i =
@@ -184,10 +138,9 @@ view config model =
     }
 
 
-{-| To show controls.
--}
-viewControls : Config msg -> Model -> Html msg
-viewControls config model =
+{-| -}
+viewControls : PlotterControl -> Html msg
+viewControls model =
     div []
         [ p []
             [ case model.port_ of
@@ -255,8 +208,8 @@ viewControls config model =
 
 
 {-| -}
-viewPlotterSettings : Config msg -> Model -> Html msg
-viewPlotterSettings config model =
+viewPlotterSettings : PlotterControl -> Html msg
+viewPlotterSettings model =
     fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
             [ b []
@@ -298,8 +251,8 @@ viewPlotterSettings config model =
 
 
 {-| -}
-viewMarkerSettings : Config msg -> Model -> Html msg
-viewMarkerSettings config model =
+viewMarkerSettings : PlotterControl -> Html msg
+viewMarkerSettings model =
     fieldset [ disabled (portStatusToBool model.port_ |> not) ]
         [ p []
             [ b []
@@ -372,8 +325,8 @@ viewMarkerSettings config model =
 
 
 {-| -}
-viewOposCalibration : Config msg -> Model -> Html msg
-viewOposCalibration config _ =
+viewOposCalibration : PlotterControl -> Html msg
+viewOposCalibration _ =
     div []
         [ p []
             [ b []
@@ -410,15 +363,15 @@ viewOposCalibration config _ =
 
 {-| Send command on click.
 -}
-onClickSend : Config msg -> Command -> Attribute msg
-onClickSend config a =
+onClickSend : Command -> Attribute msg
+onClickSend a =
     onClick (sendCommand a |> SendData |> config.sendMsg)
 
 
 {-| Send commands on input.
 -}
-onInputSend : Config msg -> (Int -> List Command) -> Attribute msg
-onInputSend config toCommands =
+onInputSend : (Int -> List Command) -> Attribute msg
+onInputSend toCommands =
     onInput
         (\v ->
             v
