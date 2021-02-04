@@ -164,7 +164,7 @@ view : Model -> Layout Msg
 view model =
     column ratio1
         []
-        [ element (rem 5)
+        [ element (rem 4)
             []
             (h6 [ C.m3 ]
                 [ text (t A_Title)
