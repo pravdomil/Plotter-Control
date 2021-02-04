@@ -1,16 +1,7 @@
 addEventListener("DOMContentLoaded", main)
 
 function main() {
-  if (!("serial" in navigator)) {
-    alert(
-      [
-        "No Support for Serial Port",
-        "",
-        'Make sure to use Chrome browser and allow "Experimental Web Platform features" in Chrome flags.',
-      ].join("\n")
-    )
-    return
-  }
+  checkSerialPortSupport()
 
   const app = Elm.Main.init({
     node: element(document.body, "div"),
@@ -27,6 +18,19 @@ function element(parent, type, className) {
   if (parent) parent.appendChild(el)
   if (className) el.className = className
   return el
+}
+
+function checkSerialPortSupport() {
+  if (!("serial" in navigator)) {
+    alert(
+      [
+        "No Support for Serial Port",
+        "",
+        'Make sure to use Chrome browser and allow "Experimental Web Platform features" in Chrome flags.',
+      ].join("\n")
+    )
+    throw new Error()
+  }
 }
 
 async function getPort() {
