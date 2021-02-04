@@ -55,6 +55,7 @@ commands =
     in
     [ Command "l" (t (A_Raw "Load File")) (LoadFile |> PlotterControlMsg)
     , Command "m" (t (A_Raw "Markers Load")) (LoadMarkers |> PlotterControlMsg)
+    , Command "s" (t (A_Raw "Set Default OPOS Sensitivity 30")) (SetSensitivity 30 |> PlotterControlMsg)
     , Command "p" (t (A_Raw "Plot File")) (PlotFile |> PlotterControlMsg)
     ]
         ++ sensitivity
