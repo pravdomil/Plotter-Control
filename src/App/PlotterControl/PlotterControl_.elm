@@ -53,7 +53,7 @@ commands =
                             (SetSensitivity v |> PlotterControlMsg)
                     )
     in
-    [ Command "f" (t (A_Raw "File Load")) (LoadFile |> PlotterControlMsg)
+    [ Command "l" (t (A_Raw "Load File")) (LoadFile |> PlotterControlMsg)
     , Command "m" (t (A_Raw "Markers Load")) (LoadMarkers |> PlotterControlMsg)
     , Command "p" (t (A_Raw "Plot File")) (PlotFile |> PlotterControlMsg)
     ]
