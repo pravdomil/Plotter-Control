@@ -1,12 +1,14 @@
 module App.PlotterControl.PlotterControl exposing (..)
 
+import File exposing (File)
 import Utils.Interop exposing (Status)
 
 
 {-| -}
 type alias PlotterControl =
-    { status : Status
-    , console : String
+    { console : String
+    , status : Status
+    , file : Maybe File
     }
 
 

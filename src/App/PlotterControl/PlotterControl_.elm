@@ -16,8 +16,9 @@ import View.Layout exposing (..)
 {-| -}
 init : PlotterControl
 init =
-    { status = Ready
-    , console = ""
+    { console = ""
+    , status = Ready
+    , file = Nothing
     }
 
 
