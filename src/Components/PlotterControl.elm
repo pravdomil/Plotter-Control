@@ -127,7 +127,7 @@ update config msg model =
         SendFile ->
             case model.file of
                 Just ( _, data ) ->
-                    sendData config model data
+                    sendData config model (data ++ (Recut |> sendCommand |> String.repeat 100))
 
                 _ ->
                     ( model, Cmd.none )
