@@ -16,6 +16,10 @@ function main() {
     node: element(document.body, "div"),
     flags: {},
   })
+
+  app.ports.sendData.subscribe(function (a) {
+    sendData(a, app.ports.statusSubscriptionPort.send)
+  })
 }
 
 function element(parent, type, className) {
