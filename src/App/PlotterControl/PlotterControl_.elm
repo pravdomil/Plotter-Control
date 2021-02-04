@@ -30,23 +30,31 @@ init =
 
 
 {-| -}
-commands : List ( String, String, Msg )
+type alias Command msg =
+    { name : String
+    , description : String
+    , msg : msg
+    }
+
+
+{-| -}
+commands : List (Command Msg)
 commands =
     let
-        sensitivity : List ( String, String, Msg )
+        sensitivity : List (Command Msg)
         sensitivity =
             List.range 0 60
                 |> List.map
                     (\v ->
-                        ( "s" ++ String.fromInt v
-                        , t (A_Raw ("Set OPOS Sensitivity to " ++ String.fromInt v))
-                        , SetSensitivity v |> PlotterControlMsg
-                        )
+                        Command
+                            ("s" ++ String.fromInt v)
+                            (t (A_Raw ("Set OPOS Sensitivity to " ++ String.fromInt v)))
+                            (SetSensitivity v |> PlotterControlMsg)
                     )
     in
-    [ ( "f", t (A_Raw "File Load"), LoadFile |> PlotterControlMsg )
-    , ( "m", t (A_Raw "Markers Load"), LoadMarkers |> PlotterControlMsg )
-    , ( "p", t (A_Raw "Plot File"), PlotFile |> PlotterControlMsg )
+    [ Command "f" (t (A_Raw "File Load")) (LoadFile |> PlotterControlMsg)
+    , Command "m" (t (A_Raw "Markers Load")) (LoadMarkers |> PlotterControlMsg)
+    , Command "p" (t (A_Raw "Plot File")) (PlotFile |> PlotterControlMsg)
     ]
         ++ sensitivity
 
