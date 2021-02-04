@@ -228,8 +228,26 @@ viewCommand a =
 {-| -}
 viewStatus : Model -> Layout Msg
 viewStatus model =
+    let
+        textColor =
+            case model.plotterControl.status of
+                Ready ->
+                    C.textPrimary
+
+                Connecting ->
+                    C.textDanger
+
+                Idle ->
+                    C.textSuccess
+
+                Busy ->
+                    C.textDanger
+
+                Error _ ->
+                    C.textDanger
+    in
     html (rem 6)
         []
         [ h6 [ C.mx3 ] [ text (t (A_Raw "Status")) ]
-        , h3 [ C.mx3 ] [ text (t (Translation.status model.plotterControl.status)) ]
+        , h3 [ C.mx3, textColor ] [ text (t (Translation.status model.plotterControl.status)) ]
         ]
