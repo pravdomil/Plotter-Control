@@ -81,7 +81,9 @@ update msg model =
                     )
 
                 SetSensitivity b ->
-                    ()
+                    ( model
+                    , sendData (SummaCommand.Set ("OPOS_LEVEL=" ++ String.fromInt b) |> SummaCommand.toHpGl)
+                    )
 
                 PlotFile ->
                     ()
