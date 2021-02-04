@@ -36,7 +36,12 @@ function checkSerialPortSupport() {
 async function sendData(a, callback) {
   callback({ _: 1 })
   const port = await getPort()
-  if (!port || !port.writable || port.writable.locked) {
+  if (!port) {
+    callback({ _: 0 })
+    return
+  }
+  await port.open({ baudRate: 57600 })
+  if (!port.writable || port.writable.locked) {
     callback({ _: 4, a: "Can't open serial port." })
     return
   }
