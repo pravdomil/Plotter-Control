@@ -64,6 +64,15 @@ async function sendData(a, callback) {
   callback({ _: Idle })
 }
 
+async function getWriter(port) {
+  try {
+    if (!port.writable) await port.open({ baudRate: 57600 })
+    if (port.writable.locked) return null
+    return port.writable.getWriter()
+  } catch (e) {}
+  return null
+}
+
 async function getPort() {
   try {
     const ports = await navigator.serial.getPorts()
