@@ -48,19 +48,20 @@ async function sendData(a, callback) {
     return
   }
 
-  if (!port.writable) {
-    await port.open({ baudRate: 57600 })
-  }
-
-  if (port.writable.locked) {
+  const writer = await getWriter()
+  if (!writer) {
     callback({ _: Error, a: "Can't open serial port." })
     return
   }
 
   callback({ _: Busy })
-  const writer = port.writable.getWriter()
-  await writer.write(new TextEncoder().encode(a))
-  await writer.close()
+
+  const result = await writeData(writer, a)
+  if (!result) {
+    callback({ _: Error, a: "Can't write data to serial port." })
+    return
+  }
+
   callback({ _: Idle })
 }
 
@@ -69,6 +70,15 @@ async function getWriter(port) {
     if (!port.writable) await port.open({ baudRate: 57600 })
     if (port.writable.locked) return null
     return port.writable.getWriter()
+  } catch (e) {}
+  return null
+}
+
+async function writeData(writer, a) {
+  try {
+    await writer.write(new TextEncoder().encode(a))
+    await writer.close()
+    return true
   } catch (e) {}
   return null
 }
