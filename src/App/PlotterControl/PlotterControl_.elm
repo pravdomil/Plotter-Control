@@ -178,7 +178,7 @@ view model =
                 ]
             , column (ratio 1.618)
                 []
-                [ viewStatus model ]
+                [ viewStatus model, viewFile model ]
             ]
         ]
 
@@ -250,4 +250,21 @@ viewStatus model =
         []
         [ h6 [ C.mx3, C.textMuted ] [ text (t (A_Raw "Status")) ]
         , h3 [ C.mx3, textColor ] [ text (t (Translation.status model.plotterControl.status)) ]
+        ]
+
+
+{-| -}
+viewFile : Model -> Layout Msg
+viewFile model =
+    html ratio1
+        []
+        [ h6 [ C.mx3, C.textMuted ] [ text (t (A_Raw "File")) ]
+        , h3 [ C.mx3 ]
+            [ case model.plotterControl.file of
+                Just ( b, _ ) ->
+                    text (b |> File.name)
+
+                Nothing ->
+                    text (t (A_Raw "No file loaded."))
+            ]
         ]
