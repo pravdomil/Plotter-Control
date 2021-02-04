@@ -56,7 +56,7 @@ commands =
 
 
 {-| -}
-update : Msg -> Model -> ( Model, Cmd msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
         { plotterControl } =
@@ -72,22 +72,22 @@ update msg model =
 
                 --
                 LoadFile ->
-                    ( model
+                    ( plotterControl
                     , File.Select.file [] (GotFile >> PlotterControlMsg)
                     )
 
                 LoadMarkers ->
-                    ( model
+                    ( plotterControl
                     , sendData (SummaCommand.LoadMarkers |> SummaCommand.toHpGl)
                     )
 
                 SetSensitivity b ->
-                    ( model
+                    ( plotterControl
                     , sendData (SummaCommand.Set ("OPOS_LEVEL=" ++ String.fromInt b) |> SummaCommand.toHpGl)
                     )
 
                 PlotFile ->
-                    ( model
+                    ( plotterControl
                     , sendData (model.plotterControl.file |> Maybe.map Tuple.second |> Maybe.withDefault "")
                     )
 
