@@ -27,19 +27,19 @@ t a =
 
         --
         Status_Ready ->
-            "Ready"
+            "Ready."
 
         Status_Connecting ->
-            "Connecting"
+            "Connecting..."
 
         Status_Idle ->
-            "Idle"
+            "Idle."
 
         Status_Busy ->
-            "Busy"
+            "Busy."
 
         Status_Error b ->
-            "Error: " ++ b
+            b
 
 
 
