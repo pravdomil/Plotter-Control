@@ -37,9 +37,9 @@ subscriptions model =
 {-| To show interface.
 -}
 view : Model -> Document Msg
-view _ =
+view model =
     { title = t A_Title
     , body =
-        [ text "Hello world!"
+        [ PlotterControl_.view model
         ]
     }
