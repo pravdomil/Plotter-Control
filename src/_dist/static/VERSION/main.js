@@ -33,6 +33,21 @@ function checkSerialPortSupport() {
   }
 }
 
+async function sendData(a, callback) {
+  callback({ _: 1 })
+  const port = await getPort()
+  if (!port || !port.writable || port.writable.locked) {
+    callback({ _: 4, a: "Can't open serial port." })
+    return
+  }
+  callback({ _: 2 })
+  const writer = port.writable.getWriter()
+  callback({ _: 3 })
+  await writer.write(new TextEncoder().encode(b))
+  await writer.close()
+  callback({ _: 2 })
+}
+
 async function getPort() {
   try {
     const ports = await navigator.serial.getPorts()
