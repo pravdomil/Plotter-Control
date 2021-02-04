@@ -8,7 +8,23 @@ port sendData : String -> Cmd msg
 
 
 {-| -}
-port statusSubscription : (Decode.Value -> msg) -> Sub msg
+port statusSubscriptionPort : (Decode.Value -> msg) -> Sub msg
+
+
+{-| -}
+statusSubscription : (Status -> msg) -> Sub msg
+statusSubscription fn =
+    let
+        decode : Decode.Value -> Status
+        decode a =
+            case a |> Decode.decodeValue statusDecoder of
+                Ok b ->
+                    b
+
+                Err b ->
+                    Error (Decode.errorToString b)
+    in
+    statusSubscriptionPort (decode >> fn)
 
 
 
