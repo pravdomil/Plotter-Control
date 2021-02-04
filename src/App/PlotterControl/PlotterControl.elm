@@ -16,5 +16,10 @@ type alias PlotterControl =
 type PlotterControlMsg
     = ConsoleChanged String
       --
-    | SendData String
+    | LoadFile
+    | LoadMarkers
+    | SetSensitivity Int
+    | PlotFile
+      --
     | GotStatus Status
+    | GotFile File

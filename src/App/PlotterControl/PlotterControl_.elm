@@ -4,6 +4,7 @@ import App.App.App exposing (..)
 import App.PlotterControl.PlotterControl exposing (..)
 import Browser exposing (Document)
 import File exposing (File)
+import File.Select
 import Html exposing (..)
 import Html.Attributes exposing (autofocus, disabled, value)
 import Html.Events exposing (onClick, onInput)
@@ -27,6 +28,32 @@ init =
 
 
 {-| -}
+commands : List ( String, String, Msg )
+commands =
+    let
+        sensitivity : List ( String, String, Msg )
+        sensitivity =
+            List.range 0 60
+                |> List.map
+                    (\v ->
+                        ( "s" ++ String.fromInt v
+                        , t (A_Raw ("Set OPOS Sensitivity to " ++ String.fromInt v))
+                        , SetSensitivity v |> PlotterControlMsg
+                        )
+                    )
+    in
+    [ ( "f", t (A_Raw "File Load"), LoadFile |> PlotterControlMsg )
+    , ( "m", t (A_Raw "Markers Load"), LoadMarkers |> PlotterControlMsg )
+    , ( "p", t (A_Raw "Plot File"), PlotFile |> PlotterControlMsg )
+    ]
+        ++ sensitivity
+
+
+
+--
+
+
+{-| -}
 update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     let
@@ -41,13 +68,29 @@ update msg model =
                     , Cmd.none
                     )
 
-                SendData b ->
-                    ( plotterControl
-                    , Interop.sendData b
+                --
+                LoadFile ->
+                    ( model
+                    , File.Select.file [] (GotFile >> PlotterControlMsg)
                     )
 
+                LoadMarkers ->
+                    ()
+
+                SetSensitivity b ->
+                    ()
+
+                PlotFile ->
+                    ()
+
+                --
                 GotStatus b ->
                     ( { plotterControl | status = b }
+                    , Cmd.none
+                    )
+
+                GotFile b ->
+                    ( { plotterControl | file = Just b }
                     , Cmd.none
                     )
     )
