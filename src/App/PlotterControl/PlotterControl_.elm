@@ -5,7 +5,7 @@ import App.PlotterControl.PlotterControl exposing (..)
 import Browser exposing (Document)
 import File exposing (File)
 import Html exposing (..)
-import Html.Attributes exposing (disabled)
+import Html.Attributes exposing (autofocus, disabled, value)
 import Html.Events exposing (onClick, onInput)
 import Styles.C as C
 import Utils.Interop as Interop exposing (Status(..))
@@ -69,16 +69,32 @@ view : Model -> Layout Msg
 view model =
     row ratio1
         []
-        [ column ratio1
-            []
-            [ element (rem 4)
-                []
-                (h3 []
-                    [ text (t A_Title)
-                    ]
-                )
+        [ column (ratio 1)
+            [ C.borderEnd ]
+            [ viewConsole model
             ]
-        , column ratio1
+        , column (ratio 1.618)
             []
             []
+        ]
+
+
+{-| -}
+viewConsole : Model -> Layout Msg
+viewConsole model =
+    html ratio1
+        []
+        [ h3 [ C.m3 ]
+            [ text (t A_Title)
+            ]
+        , div [ C.mx3 ]
+            [ h6 [] [ text (t (A_Raw "Console")) ]
+            , input
+                [ C.formControl
+                , autofocus True
+                , value model.plotterControl.console
+                , onInput (ConsoleChanged >> PlotterControlMsg)
+                ]
+                []
+            ]
         ]
