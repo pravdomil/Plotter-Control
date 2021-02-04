@@ -3,6 +3,7 @@ module App.PlotterControl.PlotterControl_ exposing (..)
 import App.App.App exposing (..)
 import App.PlotterControl.PlotterControl exposing (..)
 import Browser exposing (Document)
+import Dict exposing (Dict)
 import File exposing (File)
 import File.Select
 import Html exposing (..)
@@ -38,7 +39,7 @@ type alias Command msg =
 
 
 {-| -}
-commands : List (Command Msg)
+commands : Dict String (Command Msg)
 commands =
     let
         sensitivity : List (Command Msg)
@@ -57,6 +58,8 @@ commands =
     , Command "p" (t (A_Raw "Plot File")) (PlotFile |> PlotterControlMsg)
     ]
         ++ sensitivity
+        |> List.map (\v -> ( v.name, v ))
+        |> Dict.fromList
 
 
 
@@ -190,7 +193,7 @@ viewConsole model =
             ]
         , div [ C.mx3, style "font-size" "12px" ]
             [ h6 [] [ text (t (A_Raw "Commands")) ]
-            , p [] (commands |> List.take 10 |> List.map viewCommand)
+            , p [] (commands |> Dict.values |> List.take 10 |> List.map viewCommand)
             ]
         ]
 
