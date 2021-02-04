@@ -1,11 +1,10 @@
 module Utils.Summa exposing (..)
 
-import String exposing (join)
+{-| -}
 
 
-{-| To define summa commands.
--}
-type Command
+{-| -}
+type SummaCommand
     = Query
       --
     | Menu
@@ -43,24 +42,26 @@ type Command
     | End
 
 
-{-| To send command.
--}
-sendCommand : Command -> String
-sendCommand a =
-    sendCommands [ a ]
+{-| -}
+toHpGl : SummaCommand -> String
+toHpGl a =
+    listToHpGl [ a ]
 
 
-{-| To send commands.
--}
-sendCommands : List Command -> String
-sendCommands a =
-    "\u{001B};@:\n" ++ (a |> List.map commandToString |> join "\n") ++ "\nEND\n"
+{-| -}
+listToHpGl : List SummaCommand -> String
+listToHpGl a =
+    []
+        ++ [ "\u{001B};@:" ]
+        ++ (a |> List.map toString)
+        ++ [ "END" ]
+        |> String.join "\n"
 
 
 {-| To convert command to string.
 -}
-commandToString : Command -> String
-commandToString a =
+toString : SummaCommand -> String
+toString a =
     case a of
         Query ->
             "QUERY"
