@@ -1,6 +1,6 @@
 module Utils.Translation exposing (..)
 
-{-| -}
+import Utils.Interop exposing (Status(..))
 
 
 {-| -}
@@ -20,6 +20,12 @@ type Translation
       --
     | XOffset
     | YOffset
+      --
+    | Status_Ready
+    | Status_Connecting
+    | Status_Idle
+    | Status_Busy
+    | Status_Error String
 
 
 {-| -}
@@ -62,3 +68,43 @@ t a =
 
         YOffset ->
             "Y Offset:"
+
+        --
+        Status_Ready ->
+            "Ready"
+
+        Status_Connecting ->
+            "Connecting"
+
+        Status_Idle ->
+            "Idle"
+
+        Status_Busy ->
+            "Busy"
+
+        Status_Error b ->
+            "Error: " ++ b
+
+
+
+--
+
+
+{-| -}
+status : Status -> Translation
+status a =
+    case a of
+        Ready ->
+            Status_Ready
+
+        Connecting ->
+            Status_Connecting
+
+        Idle ->
+            Status_Idle
+
+        Busy ->
+            Status_Busy
+
+        Error b ->
+            Status_Error b
