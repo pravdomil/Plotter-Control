@@ -5,31 +5,39 @@ To get fresh classes run following script in the browser.
 <https://gist.github.com/pravdomil/be27dcdb284b5fe25d50919f90420964>
 -}
 
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (..)
 
 
-h1 =
-    class "h1"
+srOnly =
+    class "sr-only"
 
 
-h2 =
-    class "h2"
+srOnlyFocusable =
+    class "sr-only-focusable"
 
 
-h3 =
-    class "h3"
-
-
-h4 =
-    class "h4"
+h6 =
+    class "h6"
 
 
 h5 =
     class "h5"
 
 
-h6 =
-    class "h6"
+h4 =
+    class "h4"
+
+
+h3 =
+    class "h3"
+
+
+h2 =
+    class "h2"
+
+
+h1 =
+    class "h1"
 
 
 small =
@@ -120,6 +128,14 @@ containerFluid =
     class "container-fluid"
 
 
+containerXxl =
+    class "container-xxl"
+
+
+containerXl =
+    class "container-xl"
+
+
 containerLg =
     class "container-lg"
 
@@ -130,14 +146,6 @@ containerMd =
 
 containerSm =
     class "container-sm"
-
-
-containerXl =
-    class "container-xl"
-
-
-containerXxl =
-    class "container-xxl"
 
 
 row =
@@ -1512,6 +1520,10 @@ formCheckInput =
     class "form-check-input"
 
 
+formCheckLabel =
+    class "form-check-label"
+
+
 formSwitch =
     class "form-switch"
 
@@ -1556,12 +1568,12 @@ validTooltip =
     class "valid-tooltip"
 
 
-isValid =
-    class "is-valid"
-
-
 wasValidated =
     class "was-validated"
+
+
+isValid =
+    class "is-valid"
 
 
 invalidFeedback =
@@ -1652,20 +1664,20 @@ btnLink =
     class "btn-link"
 
 
-btnGroupLg =
-    class "btn-group-lg"
-
-
 btnLg =
     class "btn-lg"
 
 
-btnGroupSm =
-    class "btn-group-sm"
+btnGroupLg =
+    class "btn-group-lg"
 
 
 btnSm =
     class "btn-sm"
+
+
+btnGroupSm =
+    class "btn-group-sm"
 
 
 fade =
@@ -1680,20 +1692,20 @@ collapsing =
     class "collapsing"
 
 
+dropup =
+    class "dropup"
+
+
+dropend =
+    class "dropend"
+
+
 dropdown =
     class "dropdown"
 
 
-dropleft =
-    class "dropleft"
-
-
-dropright =
-    class "dropright"
-
-
-dropup =
-    class "dropup"
+dropstart =
+    class "dropstart"
 
 
 dropdownToggle =
@@ -1704,52 +1716,52 @@ dropdownMenu =
     class "dropdown-menu"
 
 
-dropdownMenuLeft =
-    class "dropdown-menu-left"
+dropdownMenuStart =
+    class "dropdown-menu-start"
 
 
-dropdownMenuRight =
-    class "dropdown-menu-right"
+dropdownMenuEnd =
+    class "dropdown-menu-end"
 
 
-dropdownMenuSmLeft =
-    class "dropdown-menu-sm-left"
+dropdownMenuSmStart =
+    class "dropdown-menu-sm-start"
 
 
-dropdownMenuSmRight =
-    class "dropdown-menu-sm-right"
+dropdownMenuSmEnd =
+    class "dropdown-menu-sm-end"
 
 
-dropdownMenuMdLeft =
-    class "dropdown-menu-md-left"
+dropdownMenuMdStart =
+    class "dropdown-menu-md-start"
 
 
-dropdownMenuMdRight =
-    class "dropdown-menu-md-right"
+dropdownMenuMdEnd =
+    class "dropdown-menu-md-end"
 
 
-dropdownMenuLgLeft =
-    class "dropdown-menu-lg-left"
+dropdownMenuLgStart =
+    class "dropdown-menu-lg-start"
 
 
-dropdownMenuLgRight =
-    class "dropdown-menu-lg-right"
+dropdownMenuLgEnd =
+    class "dropdown-menu-lg-end"
 
 
-dropdownMenuXlLeft =
-    class "dropdown-menu-xl-left"
+dropdownMenuXlStart =
+    class "dropdown-menu-xl-start"
 
 
-dropdownMenuXlRight =
-    class "dropdown-menu-xl-right"
+dropdownMenuXlEnd =
+    class "dropdown-menu-xl-end"
 
 
-dropdownMenuXxlLeft =
-    class "dropdown-menu-xxl-left"
+dropdownMenuXxlStart =
+    class "dropdown-menu-xxl-start"
 
 
-dropdownMenuXxlRight =
-    class "dropdown-menu-xxl-right"
+dropdownMenuXxlEnd =
+    class "dropdown-menu-xxl-end"
 
 
 dropdownDivider =
@@ -1924,12 +1936,12 @@ cardImg =
     class "card-img"
 
 
-cardImgBottom =
-    class "card-img-bottom"
-
-
 cardImgTop =
     class "card-img-top"
+
+
+cardImgBottom =
+    class "card-img-bottom"
 
 
 cardGroup =
@@ -2140,6 +2152,10 @@ toast =
     class "toast"
 
 
+toastContainer =
+    class "toast-container"
+
+
 toastHeader =
     class "toast-header"
 
@@ -2236,24 +2252,24 @@ tooltip =
     class "tooltip"
 
 
-bsTooltipAuto =
-    class "bs-tooltip-auto"
-
-
 bsTooltipTop =
     class "bs-tooltip-top"
 
 
-bsTooltipRight =
-    class "bs-tooltip-right"
+bsTooltipAuto =
+    class "bs-tooltip-auto"
+
+
+bsTooltipEnd =
+    class "bs-tooltip-end"
 
 
 bsTooltipBottom =
     class "bs-tooltip-bottom"
 
 
-bsTooltipLeft =
-    class "bs-tooltip-left"
+bsTooltipStart =
+    class "bs-tooltip-start"
 
 
 tooltipInner =
@@ -2264,24 +2280,24 @@ popover =
     class "popover"
 
 
-bsPopoverAuto =
-    class "bs-popover-auto"
-
-
 bsPopoverTop =
     class "bs-popover-top"
 
 
-bsPopoverRight =
-    class "bs-popover-right"
+bsPopoverAuto =
+    class "bs-popover-auto"
+
+
+bsPopoverEnd =
+    class "bs-popover-end"
 
 
 bsPopoverBottom =
     class "bs-popover-bottom"
 
 
-bsPopoverLeft =
-    class "bs-popover-left"
+bsPopoverStart =
+    class "bs-popover-start"
 
 
 popoverHeader =
@@ -2320,20 +2336,20 @@ carouselFade =
     class "carousel-fade"
 
 
-carouselControlNext =
-    class "carousel-control-next"
-
-
 carouselControlPrev =
     class "carousel-control-prev"
 
 
-carouselControlNextIcon =
-    class "carousel-control-next-icon"
+carouselControlNext =
+    class "carousel-control-next"
 
 
 carouselControlPrevIcon =
     class "carousel-control-prev-icon"
+
+
+carouselControlNextIcon =
+    class "carousel-control-next-icon"
 
 
 carouselIndicators =
@@ -2492,12 +2508,12 @@ alignTextTop =
     class "align-text-top"
 
 
-floatLeft =
-    class "float-left"
+floatStart =
+    class "float-start"
 
 
-floatRight =
-    class "float-right"
+floatEnd =
+    class "float-end"
 
 
 floatNone =
@@ -2620,32 +2636,40 @@ bottom100 =
     class "bottom-100"
 
 
-left0 =
-    class "left-0"
+start0 =
+    class "start-0"
 
 
-left50 =
-    class "left-50"
+start50 =
+    class "start-50"
 
 
-left100 =
-    class "left-100"
+start100 =
+    class "start-100"
 
 
-right0 =
-    class "right-0"
+end0 =
+    class "end-0"
 
 
-right50 =
-    class "right-50"
+end50 =
+    class "end-50"
 
 
-right100 =
-    class "right-100"
+end100 =
+    class "end-100"
 
 
 translateMiddle =
     class "translate-middle"
+
+
+translateMiddleX =
+    class "translate-middle-x"
+
+
+translateMiddleY =
+    class "translate-middle-y"
 
 
 border =
@@ -2664,12 +2688,12 @@ borderTop0 =
     class "border-top-0"
 
 
-borderRight =
-    class "border-right"
+borderEnd =
+    class "border-end"
 
 
-borderRight0 =
-    class "border-right-0"
+borderEnd0 =
+    class "border-end-0"
 
 
 borderBottom =
@@ -2680,12 +2704,12 @@ borderBottom0 =
     class "border-bottom-0"
 
 
-borderLeft =
-    class "border-left"
+borderStart =
+    class "border-start"
 
 
-borderLeft0 =
-    class "border-left-0"
+borderStart0 =
+    class "border-start-0"
 
 
 borderPrimary =
@@ -3116,32 +3140,32 @@ mtAuto =
     class "mt-auto"
 
 
-mr0 =
-    class "mr-0"
+me0 =
+    class "me-0"
 
 
-mr1 =
-    class "mr-1"
+me1 =
+    class "me-1"
 
 
-mr2 =
-    class "mr-2"
+me2 =
+    class "me-2"
 
 
-mr3 =
-    class "mr-3"
+me3 =
+    class "me-3"
 
 
-mr4 =
-    class "mr-4"
+me4 =
+    class "me-4"
 
 
-mr5 =
-    class "mr-5"
+me5 =
+    class "me-5"
 
 
-mrAuto =
-    class "mr-auto"
+meAuto =
+    class "me-auto"
 
 
 mb0 =
@@ -3172,32 +3196,32 @@ mbAuto =
     class "mb-auto"
 
 
-ml0 =
-    class "ml-0"
+ms0 =
+    class "ms-0"
 
 
-ml1 =
-    class "ml-1"
+ms1 =
+    class "ms-1"
 
 
-ml2 =
-    class "ml-2"
+ms2 =
+    class "ms-2"
 
 
-ml3 =
-    class "ml-3"
+ms3 =
+    class "ms-3"
 
 
-ml4 =
-    class "ml-4"
+ms4 =
+    class "ms-4"
 
 
-ml5 =
-    class "ml-5"
+ms5 =
+    class "ms-5"
 
 
-mlAuto =
-    class "ml-auto"
+msAuto =
+    class "ms-auto"
 
 
 p0 =
@@ -3296,28 +3320,28 @@ pt5 =
     class "pt-5"
 
 
-pr0 =
-    class "pr-0"
+pe0 =
+    class "pe-0"
 
 
-pr1 =
-    class "pr-1"
+pe1 =
+    class "pe-1"
 
 
-pr2 =
-    class "pr-2"
+pe2 =
+    class "pe-2"
 
 
-pr3 =
-    class "pr-3"
+pe3 =
+    class "pe-3"
 
 
-pr4 =
-    class "pr-4"
+pe4 =
+    class "pe-4"
 
 
-pr5 =
-    class "pr-5"
+pe5 =
+    class "pe-5"
 
 
 pb0 =
@@ -3344,28 +3368,28 @@ pb5 =
     class "pb-5"
 
 
-pl0 =
-    class "pl-0"
+ps0 =
+    class "ps-0"
 
 
-pl1 =
-    class "pl-1"
+ps1 =
+    class "ps-1"
 
 
-pl2 =
-    class "pl-2"
+ps2 =
+    class "ps-2"
 
 
-pl3 =
-    class "pl-3"
+ps3 =
+    class "ps-3"
 
 
-pl4 =
-    class "pl-4"
+ps4 =
+    class "ps-4"
 
 
-pl5 =
-    class "pl-5"
+ps5 =
+    class "ps-5"
 
 
 fs1 =
@@ -3432,12 +3456,12 @@ textCapitalize =
     class "text-capitalize"
 
 
-textLeft =
-    class "text-left"
+textStart =
+    class "text-start"
 
 
-textRight =
-    class "text-right"
+textEnd =
+    class "text-end"
 
 
 textCenter =
@@ -3644,16 +3668,16 @@ roundedTop =
     class "rounded-top"
 
 
-roundedRight =
-    class "rounded-right"
+roundedEnd =
+    class "rounded-end"
 
 
 roundedBottom =
     class "rounded-bottom"
 
 
-roundedLeft =
-    class "rounded-left"
+roundedStart =
+    class "rounded-start"
 
 
 visible =
@@ -3664,12 +3688,12 @@ invisible =
     class "invisible"
 
 
-floatSmLeft =
-    class "float-sm-left"
+floatSmStart =
+    class "float-sm-start"
 
 
-floatSmRight =
-    class "float-sm-right"
+floatSmEnd =
+    class "float-sm-end"
 
 
 floatSmNone =
@@ -4024,32 +4048,32 @@ mtSmAuto =
     class "mt-sm-auto"
 
 
-mrSm0 =
-    class "mr-sm-0"
+meSm0 =
+    class "me-sm-0"
 
 
-mrSm1 =
-    class "mr-sm-1"
+meSm1 =
+    class "me-sm-1"
 
 
-mrSm2 =
-    class "mr-sm-2"
+meSm2 =
+    class "me-sm-2"
 
 
-mrSm3 =
-    class "mr-sm-3"
+meSm3 =
+    class "me-sm-3"
 
 
-mrSm4 =
-    class "mr-sm-4"
+meSm4 =
+    class "me-sm-4"
 
 
-mrSm5 =
-    class "mr-sm-5"
+meSm5 =
+    class "me-sm-5"
 
 
-mrSmAuto =
-    class "mr-sm-auto"
+meSmAuto =
+    class "me-sm-auto"
 
 
 mbSm0 =
@@ -4080,32 +4104,32 @@ mbSmAuto =
     class "mb-sm-auto"
 
 
-mlSm0 =
-    class "ml-sm-0"
+msSm0 =
+    class "ms-sm-0"
 
 
-mlSm1 =
-    class "ml-sm-1"
+msSm1 =
+    class "ms-sm-1"
 
 
-mlSm2 =
-    class "ml-sm-2"
+msSm2 =
+    class "ms-sm-2"
 
 
-mlSm3 =
-    class "ml-sm-3"
+msSm3 =
+    class "ms-sm-3"
 
 
-mlSm4 =
-    class "ml-sm-4"
+msSm4 =
+    class "ms-sm-4"
 
 
-mlSm5 =
-    class "ml-sm-5"
+msSm5 =
+    class "ms-sm-5"
 
 
-mlSmAuto =
-    class "ml-sm-auto"
+msSmAuto =
+    class "ms-sm-auto"
 
 
 pSm0 =
@@ -4204,28 +4228,28 @@ ptSm5 =
     class "pt-sm-5"
 
 
-prSm0 =
-    class "pr-sm-0"
+peSm0 =
+    class "pe-sm-0"
 
 
-prSm1 =
-    class "pr-sm-1"
+peSm1 =
+    class "pe-sm-1"
 
 
-prSm2 =
-    class "pr-sm-2"
+peSm2 =
+    class "pe-sm-2"
 
 
-prSm3 =
-    class "pr-sm-3"
+peSm3 =
+    class "pe-sm-3"
 
 
-prSm4 =
-    class "pr-sm-4"
+peSm4 =
+    class "pe-sm-4"
 
 
-prSm5 =
-    class "pr-sm-5"
+peSm5 =
+    class "pe-sm-5"
 
 
 pbSm0 =
@@ -4252,48 +4276,48 @@ pbSm5 =
     class "pb-sm-5"
 
 
-plSm0 =
-    class "pl-sm-0"
+psSm0 =
+    class "ps-sm-0"
 
 
-plSm1 =
-    class "pl-sm-1"
+psSm1 =
+    class "ps-sm-1"
 
 
-plSm2 =
-    class "pl-sm-2"
+psSm2 =
+    class "ps-sm-2"
 
 
-plSm3 =
-    class "pl-sm-3"
+psSm3 =
+    class "ps-sm-3"
 
 
-plSm4 =
-    class "pl-sm-4"
+psSm4 =
+    class "ps-sm-4"
 
 
-plSm5 =
-    class "pl-sm-5"
+psSm5 =
+    class "ps-sm-5"
 
 
-textSmLeft =
-    class "text-sm-left"
+textSmStart =
+    class "text-sm-start"
 
 
-textSmRight =
-    class "text-sm-right"
+textSmEnd =
+    class "text-sm-end"
 
 
 textSmCenter =
     class "text-sm-center"
 
 
-floatMdLeft =
-    class "float-md-left"
+floatMdStart =
+    class "float-md-start"
 
 
-floatMdRight =
-    class "float-md-right"
+floatMdEnd =
+    class "float-md-end"
 
 
 floatMdNone =
@@ -4648,32 +4672,32 @@ mtMdAuto =
     class "mt-md-auto"
 
 
-mrMd0 =
-    class "mr-md-0"
+meMd0 =
+    class "me-md-0"
 
 
-mrMd1 =
-    class "mr-md-1"
+meMd1 =
+    class "me-md-1"
 
 
-mrMd2 =
-    class "mr-md-2"
+meMd2 =
+    class "me-md-2"
 
 
-mrMd3 =
-    class "mr-md-3"
+meMd3 =
+    class "me-md-3"
 
 
-mrMd4 =
-    class "mr-md-4"
+meMd4 =
+    class "me-md-4"
 
 
-mrMd5 =
-    class "mr-md-5"
+meMd5 =
+    class "me-md-5"
 
 
-mrMdAuto =
-    class "mr-md-auto"
+meMdAuto =
+    class "me-md-auto"
 
 
 mbMd0 =
@@ -4704,32 +4728,32 @@ mbMdAuto =
     class "mb-md-auto"
 
 
-mlMd0 =
-    class "ml-md-0"
+msMd0 =
+    class "ms-md-0"
 
 
-mlMd1 =
-    class "ml-md-1"
+msMd1 =
+    class "ms-md-1"
 
 
-mlMd2 =
-    class "ml-md-2"
+msMd2 =
+    class "ms-md-2"
 
 
-mlMd3 =
-    class "ml-md-3"
+msMd3 =
+    class "ms-md-3"
 
 
-mlMd4 =
-    class "ml-md-4"
+msMd4 =
+    class "ms-md-4"
 
 
-mlMd5 =
-    class "ml-md-5"
+msMd5 =
+    class "ms-md-5"
 
 
-mlMdAuto =
-    class "ml-md-auto"
+msMdAuto =
+    class "ms-md-auto"
 
 
 pMd0 =
@@ -4828,28 +4852,28 @@ ptMd5 =
     class "pt-md-5"
 
 
-prMd0 =
-    class "pr-md-0"
+peMd0 =
+    class "pe-md-0"
 
 
-prMd1 =
-    class "pr-md-1"
+peMd1 =
+    class "pe-md-1"
 
 
-prMd2 =
-    class "pr-md-2"
+peMd2 =
+    class "pe-md-2"
 
 
-prMd3 =
-    class "pr-md-3"
+peMd3 =
+    class "pe-md-3"
 
 
-prMd4 =
-    class "pr-md-4"
+peMd4 =
+    class "pe-md-4"
 
 
-prMd5 =
-    class "pr-md-5"
+peMd5 =
+    class "pe-md-5"
 
 
 pbMd0 =
@@ -4876,48 +4900,48 @@ pbMd5 =
     class "pb-md-5"
 
 
-plMd0 =
-    class "pl-md-0"
+psMd0 =
+    class "ps-md-0"
 
 
-plMd1 =
-    class "pl-md-1"
+psMd1 =
+    class "ps-md-1"
 
 
-plMd2 =
-    class "pl-md-2"
+psMd2 =
+    class "ps-md-2"
 
 
-plMd3 =
-    class "pl-md-3"
+psMd3 =
+    class "ps-md-3"
 
 
-plMd4 =
-    class "pl-md-4"
+psMd4 =
+    class "ps-md-4"
 
 
-plMd5 =
-    class "pl-md-5"
+psMd5 =
+    class "ps-md-5"
 
 
-textMdLeft =
-    class "text-md-left"
+textMdStart =
+    class "text-md-start"
 
 
-textMdRight =
-    class "text-md-right"
+textMdEnd =
+    class "text-md-end"
 
 
 textMdCenter =
     class "text-md-center"
 
 
-floatLgLeft =
-    class "float-lg-left"
+floatLgStart =
+    class "float-lg-start"
 
 
-floatLgRight =
-    class "float-lg-right"
+floatLgEnd =
+    class "float-lg-end"
 
 
 floatLgNone =
@@ -5272,32 +5296,32 @@ mtLgAuto =
     class "mt-lg-auto"
 
 
-mrLg0 =
-    class "mr-lg-0"
+meLg0 =
+    class "me-lg-0"
 
 
-mrLg1 =
-    class "mr-lg-1"
+meLg1 =
+    class "me-lg-1"
 
 
-mrLg2 =
-    class "mr-lg-2"
+meLg2 =
+    class "me-lg-2"
 
 
-mrLg3 =
-    class "mr-lg-3"
+meLg3 =
+    class "me-lg-3"
 
 
-mrLg4 =
-    class "mr-lg-4"
+meLg4 =
+    class "me-lg-4"
 
 
-mrLg5 =
-    class "mr-lg-5"
+meLg5 =
+    class "me-lg-5"
 
 
-mrLgAuto =
-    class "mr-lg-auto"
+meLgAuto =
+    class "me-lg-auto"
 
 
 mbLg0 =
@@ -5328,32 +5352,32 @@ mbLgAuto =
     class "mb-lg-auto"
 
 
-mlLg0 =
-    class "ml-lg-0"
+msLg0 =
+    class "ms-lg-0"
 
 
-mlLg1 =
-    class "ml-lg-1"
+msLg1 =
+    class "ms-lg-1"
 
 
-mlLg2 =
-    class "ml-lg-2"
+msLg2 =
+    class "ms-lg-2"
 
 
-mlLg3 =
-    class "ml-lg-3"
+msLg3 =
+    class "ms-lg-3"
 
 
-mlLg4 =
-    class "ml-lg-4"
+msLg4 =
+    class "ms-lg-4"
 
 
-mlLg5 =
-    class "ml-lg-5"
+msLg5 =
+    class "ms-lg-5"
 
 
-mlLgAuto =
-    class "ml-lg-auto"
+msLgAuto =
+    class "ms-lg-auto"
 
 
 pLg0 =
@@ -5452,28 +5476,28 @@ ptLg5 =
     class "pt-lg-5"
 
 
-prLg0 =
-    class "pr-lg-0"
+peLg0 =
+    class "pe-lg-0"
 
 
-prLg1 =
-    class "pr-lg-1"
+peLg1 =
+    class "pe-lg-1"
 
 
-prLg2 =
-    class "pr-lg-2"
+peLg2 =
+    class "pe-lg-2"
 
 
-prLg3 =
-    class "pr-lg-3"
+peLg3 =
+    class "pe-lg-3"
 
 
-prLg4 =
-    class "pr-lg-4"
+peLg4 =
+    class "pe-lg-4"
 
 
-prLg5 =
-    class "pr-lg-5"
+peLg5 =
+    class "pe-lg-5"
 
 
 pbLg0 =
@@ -5500,48 +5524,48 @@ pbLg5 =
     class "pb-lg-5"
 
 
-plLg0 =
-    class "pl-lg-0"
+psLg0 =
+    class "ps-lg-0"
 
 
-plLg1 =
-    class "pl-lg-1"
+psLg1 =
+    class "ps-lg-1"
 
 
-plLg2 =
-    class "pl-lg-2"
+psLg2 =
+    class "ps-lg-2"
 
 
-plLg3 =
-    class "pl-lg-3"
+psLg3 =
+    class "ps-lg-3"
 
 
-plLg4 =
-    class "pl-lg-4"
+psLg4 =
+    class "ps-lg-4"
 
 
-plLg5 =
-    class "pl-lg-5"
+psLg5 =
+    class "ps-lg-5"
 
 
-textLgLeft =
-    class "text-lg-left"
+textLgStart =
+    class "text-lg-start"
 
 
-textLgRight =
-    class "text-lg-right"
+textLgEnd =
+    class "text-lg-end"
 
 
 textLgCenter =
     class "text-lg-center"
 
 
-floatXlLeft =
-    class "float-xl-left"
+floatXlStart =
+    class "float-xl-start"
 
 
-floatXlRight =
-    class "float-xl-right"
+floatXlEnd =
+    class "float-xl-end"
 
 
 floatXlNone =
@@ -5896,32 +5920,32 @@ mtXlAuto =
     class "mt-xl-auto"
 
 
-mrXl0 =
-    class "mr-xl-0"
+meXl0 =
+    class "me-xl-0"
 
 
-mrXl1 =
-    class "mr-xl-1"
+meXl1 =
+    class "me-xl-1"
 
 
-mrXl2 =
-    class "mr-xl-2"
+meXl2 =
+    class "me-xl-2"
 
 
-mrXl3 =
-    class "mr-xl-3"
+meXl3 =
+    class "me-xl-3"
 
 
-mrXl4 =
-    class "mr-xl-4"
+meXl4 =
+    class "me-xl-4"
 
 
-mrXl5 =
-    class "mr-xl-5"
+meXl5 =
+    class "me-xl-5"
 
 
-mrXlAuto =
-    class "mr-xl-auto"
+meXlAuto =
+    class "me-xl-auto"
 
 
 mbXl0 =
@@ -5952,32 +5976,32 @@ mbXlAuto =
     class "mb-xl-auto"
 
 
-mlXl0 =
-    class "ml-xl-0"
+msXl0 =
+    class "ms-xl-0"
 
 
-mlXl1 =
-    class "ml-xl-1"
+msXl1 =
+    class "ms-xl-1"
 
 
-mlXl2 =
-    class "ml-xl-2"
+msXl2 =
+    class "ms-xl-2"
 
 
-mlXl3 =
-    class "ml-xl-3"
+msXl3 =
+    class "ms-xl-3"
 
 
-mlXl4 =
-    class "ml-xl-4"
+msXl4 =
+    class "ms-xl-4"
 
 
-mlXl5 =
-    class "ml-xl-5"
+msXl5 =
+    class "ms-xl-5"
 
 
-mlXlAuto =
-    class "ml-xl-auto"
+msXlAuto =
+    class "ms-xl-auto"
 
 
 pXl0 =
@@ -6076,28 +6100,28 @@ ptXl5 =
     class "pt-xl-5"
 
 
-prXl0 =
-    class "pr-xl-0"
+peXl0 =
+    class "pe-xl-0"
 
 
-prXl1 =
-    class "pr-xl-1"
+peXl1 =
+    class "pe-xl-1"
 
 
-prXl2 =
-    class "pr-xl-2"
+peXl2 =
+    class "pe-xl-2"
 
 
-prXl3 =
-    class "pr-xl-3"
+peXl3 =
+    class "pe-xl-3"
 
 
-prXl4 =
-    class "pr-xl-4"
+peXl4 =
+    class "pe-xl-4"
 
 
-prXl5 =
-    class "pr-xl-5"
+peXl5 =
+    class "pe-xl-5"
 
 
 pbXl0 =
@@ -6124,48 +6148,48 @@ pbXl5 =
     class "pb-xl-5"
 
 
-plXl0 =
-    class "pl-xl-0"
+psXl0 =
+    class "ps-xl-0"
 
 
-plXl1 =
-    class "pl-xl-1"
+psXl1 =
+    class "ps-xl-1"
 
 
-plXl2 =
-    class "pl-xl-2"
+psXl2 =
+    class "ps-xl-2"
 
 
-plXl3 =
-    class "pl-xl-3"
+psXl3 =
+    class "ps-xl-3"
 
 
-plXl4 =
-    class "pl-xl-4"
+psXl4 =
+    class "ps-xl-4"
 
 
-plXl5 =
-    class "pl-xl-5"
+psXl5 =
+    class "ps-xl-5"
 
 
-textXlLeft =
-    class "text-xl-left"
+textXlStart =
+    class "text-xl-start"
 
 
-textXlRight =
-    class "text-xl-right"
+textXlEnd =
+    class "text-xl-end"
 
 
 textXlCenter =
     class "text-xl-center"
 
 
-floatXxlLeft =
-    class "float-xxl-left"
+floatXxlStart =
+    class "float-xxl-start"
 
 
-floatXxlRight =
-    class "float-xxl-right"
+floatXxlEnd =
+    class "float-xxl-end"
 
 
 floatXxlNone =
@@ -6520,32 +6544,32 @@ mtXxlAuto =
     class "mt-xxl-auto"
 
 
-mrXxl0 =
-    class "mr-xxl-0"
+meXxl0 =
+    class "me-xxl-0"
 
 
-mrXxl1 =
-    class "mr-xxl-1"
+meXxl1 =
+    class "me-xxl-1"
 
 
-mrXxl2 =
-    class "mr-xxl-2"
+meXxl2 =
+    class "me-xxl-2"
 
 
-mrXxl3 =
-    class "mr-xxl-3"
+meXxl3 =
+    class "me-xxl-3"
 
 
-mrXxl4 =
-    class "mr-xxl-4"
+meXxl4 =
+    class "me-xxl-4"
 
 
-mrXxl5 =
-    class "mr-xxl-5"
+meXxl5 =
+    class "me-xxl-5"
 
 
-mrXxlAuto =
-    class "mr-xxl-auto"
+meXxlAuto =
+    class "me-xxl-auto"
 
 
 mbXxl0 =
@@ -6576,32 +6600,32 @@ mbXxlAuto =
     class "mb-xxl-auto"
 
 
-mlXxl0 =
-    class "ml-xxl-0"
+msXxl0 =
+    class "ms-xxl-0"
 
 
-mlXxl1 =
-    class "ml-xxl-1"
+msXxl1 =
+    class "ms-xxl-1"
 
 
-mlXxl2 =
-    class "ml-xxl-2"
+msXxl2 =
+    class "ms-xxl-2"
 
 
-mlXxl3 =
-    class "ml-xxl-3"
+msXxl3 =
+    class "ms-xxl-3"
 
 
-mlXxl4 =
-    class "ml-xxl-4"
+msXxl4 =
+    class "ms-xxl-4"
 
 
-mlXxl5 =
-    class "ml-xxl-5"
+msXxl5 =
+    class "ms-xxl-5"
 
 
-mlXxlAuto =
-    class "ml-xxl-auto"
+msXxlAuto =
+    class "ms-xxl-auto"
 
 
 pXxl0 =
@@ -6700,28 +6724,28 @@ ptXxl5 =
     class "pt-xxl-5"
 
 
-prXxl0 =
-    class "pr-xxl-0"
+peXxl0 =
+    class "pe-xxl-0"
 
 
-prXxl1 =
-    class "pr-xxl-1"
+peXxl1 =
+    class "pe-xxl-1"
 
 
-prXxl2 =
-    class "pr-xxl-2"
+peXxl2 =
+    class "pe-xxl-2"
 
 
-prXxl3 =
-    class "pr-xxl-3"
+peXxl3 =
+    class "pe-xxl-3"
 
 
-prXxl4 =
-    class "pr-xxl-4"
+peXxl4 =
+    class "pe-xxl-4"
 
 
-prXxl5 =
-    class "pr-xxl-5"
+peXxl5 =
+    class "pe-xxl-5"
 
 
 pbXxl0 =
@@ -6748,36 +6772,36 @@ pbXxl5 =
     class "pb-xxl-5"
 
 
-plXxl0 =
-    class "pl-xxl-0"
+psXxl0 =
+    class "ps-xxl-0"
 
 
-plXxl1 =
-    class "pl-xxl-1"
+psXxl1 =
+    class "ps-xxl-1"
 
 
-plXxl2 =
-    class "pl-xxl-2"
+psXxl2 =
+    class "ps-xxl-2"
 
 
-plXxl3 =
-    class "pl-xxl-3"
+psXxl3 =
+    class "ps-xxl-3"
 
 
-plXxl4 =
-    class "pl-xxl-4"
+psXxl4 =
+    class "ps-xxl-4"
 
 
-plXxl5 =
-    class "pl-xxl-5"
+psXxl5 =
+    class "ps-xxl-5"
 
 
-textXxlLeft =
-    class "text-xxl-left"
+textXxlStart =
+    class "text-xxl-start"
 
 
-textXxlRight =
-    class "text-xxl-right"
+textXxlEnd =
+    class "text-xxl-end"
 
 
 textXxlCenter =
@@ -6870,3 +6894,83 @@ dPrintInlineFlex =
 
 dPrintNone =
     class "d-print-none"
+
+
+
+--
+
+
+static =
+    positionStatic
+
+
+rel =
+    positionRelative
+
+
+abs =
+    positionAbsolute
+
+
+fixed =
+    positionFixed
+
+
+sticky =
+    positionSticky
+
+
+
+--
+
+
+width a =
+    style "width" (a |> toRem)
+
+
+maxWidth a =
+    style "max-width" (a |> toRem)
+
+
+height a =
+    style "height" (a |> toRem)
+
+
+maxHeight a =
+    style "max-height" (a |> toRem)
+
+
+
+--
+
+
+start a =
+    style "left" (a |> toRem)
+
+
+end a =
+    style "right" (a |> toRem)
+
+
+top a =
+    style "top" (a |> toRem)
+
+
+bottom a =
+    style "bottom" (a |> toRem)
+
+
+
+--
+
+
+none =
+    class ""
+
+
+
+--
+
+
+toRem a =
+    String.fromFloat a ++ "rem"
