@@ -86,21 +86,6 @@ update msg model =
 
 
 {-| -}
-sendData : PlotterControl -> String -> ( PlotterControl, Cmd msg )
-sendData model data =
-    case model.port_ of
-        Ready port_ ->
-            ( model, sendElmMessage (SendToSerialPort port_ data) )
-
-        _ ->
-            ( model, Cmd.none )
-
-
-
---
-
-
-{-| -}
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Interop.statusSubscription (GotStatus >> PlotterControlMsg)
