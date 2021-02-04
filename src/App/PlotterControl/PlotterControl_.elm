@@ -95,7 +95,7 @@ view model =
 {-| -}
 viewConsole : Model -> Layout Msg
 viewConsole model =
-    html ratio1
+    html (rem 6)
         []
         [ div [ C.mx3 ]
             [ h6 [] [ text (t (A_Raw "Console")) ]
@@ -113,7 +113,7 @@ viewConsole model =
 {-| -}
 viewStatus : Model -> Layout Msg
 viewStatus model =
-    html ratio1
+    html (rem 6)
         []
         [ h6 [ C.mx3 ] [ text (t (A_Raw "Status")) ]
         , h3 [ C.mx3 ] [ text (t (Translation.status model.plotterControl.status)) ]
