@@ -34,34 +34,39 @@ function checkSerialPortSupport() {
 }
 
 async function sendData(a, callback) {
-  const Ready = 0,
-    Connecting = 1,
-    Idle = 2,
-    Busy = 3,
-    Error = 4
+  try {
+    const Ready = 0,
+      Connecting = 1,
+      Idle = 2,
+      Busy = 3,
+      Error = 4
 
-  callback({ _: Connecting })
+    callback({ _: Connecting })
 
-  const port = await getPort()
-  if (!port) {
-    callback({ _: Ready })
-    return
+    const port = await getPort()
+    if (!port) {
+      callback({ _: Ready })
+      return
+    }
+
+    if (!port.writable) {
+      await port.open({ baudRate: 57600 })
+    }
+
+    if (!port.writable || port.writable.locked) {
+      callback({ _: Error, a: "Can't open serial port." })
+      return
+    }
+
+    callback({ _: Busy })
+    const writer = port.writable.getWriter()
+    await writer.write(new TextEncoder().encode(a))
+    await writer.close()
+    callback({ _: Idle })
+  } catch (e) {
+    callback({ _: Error, a: "Something went wrong." })
+    throw e
   }
-
-  if (!port.writable) {
-    await port.open({ baudRate: 57600 })
-  }
-
-  if (!port.writable || port.writable.locked) {
-    callback({ _: Error, a: "Can't open serial port." })
-    return
-  }
-
-  callback({ _: Busy })
-  const writer = port.writable.getWriter()
-  await writer.write(new TextEncoder().encode(a))
-  await writer.close()
-  callback({ _: Idle })
 }
 
 async function getPort() {
