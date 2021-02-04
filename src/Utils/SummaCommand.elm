@@ -1,4 +1,4 @@
-module Utils.Summa exposing (..)
+module Utils.SummaCommand exposing (..)
 
 {-| -}
 
