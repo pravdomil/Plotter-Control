@@ -189,7 +189,7 @@ viewConsole model =
     html (rem 6)
         []
         [ form [ C.mx3, onSubmit (ConsoleSubmitted |> PlotterControlMsg) ]
-            [ h6 [] [ text (t (A_Raw "Console")) ]
+            [ h6 [ C.textMuted ] [ text (t (A_Raw "Console")) ]
             , p []
                 [ input
                     [ C.formControl
@@ -209,7 +209,7 @@ viewCommands _ =
     html ratio1
         []
         [ div [ C.mx3, style "font-size" "12px" ]
-            [ h6 [] [ text (t (A_Raw "Commands")) ]
+            [ h6 [ C.textMuted ] [ text (t (A_Raw "Commands")) ]
             , p [] (commands |> Dict.values |> List.take 10 |> List.map viewCommand)
             ]
         ]
@@ -248,6 +248,6 @@ viewStatus model =
     in
     html (rem 6)
         []
-        [ h6 [ C.mx3 ] [ text (t (A_Raw "Status")) ]
+        [ h6 [ C.mx3, C.textMuted ] [ text (t (A_Raw "Status")) ]
         , h3 [ C.mx3, textColor ] [ text (t (Translation.status model.plotterControl.status)) ]
         ]
