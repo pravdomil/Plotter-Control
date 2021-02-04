@@ -9,7 +9,8 @@ import Html exposing (..)
 import Html.Attributes exposing (autofocus, disabled, value)
 import Html.Events exposing (onClick, onInput)
 import Styles.C as C
-import Utils.Interop as Interop exposing (Status(..))
+import Utils.Interop as Interop exposing (Status(..), sendData)
+import Utils.SummaCommand as SummaCommand
 import Utils.Translation as Translation exposing (..)
 import View.Layout exposing (..)
 
@@ -75,7 +76,9 @@ update msg model =
                     )
 
                 LoadMarkers ->
-                    ()
+                    ( model
+                    , sendData (SummaCommand.LoadMarkers |> SummaCommand.toHpGl)
+                    )
 
                 SetSensitivity b ->
                     ()
