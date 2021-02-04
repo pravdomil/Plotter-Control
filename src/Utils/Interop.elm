@@ -1,4 +1,4 @@
-port module Ports exposing (javaScriptMessageSubscription, sendElmMessage)
+port module Utils.Interop exposing (..)
 
 import Generated.Types.MessagesDecode exposing (javaScriptMessageDecoder)
 import Generated.Types.MessagesEncode exposing (encodeElmMessage)
