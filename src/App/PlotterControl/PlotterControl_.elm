@@ -128,11 +128,19 @@ update msg model =
 consoleSubmitted : Model -> ( PlotterControl, Cmd Msg )
 consoleSubmitted model =
     let
+        ( status, cmd ) =
+            case commands |> Dict.get (model.plotterControl.console |> String.toLower) of
+                Just a ->
+                    ( model.plotterControl.status, Task.succeed () |> Task.perform (always a.msg) )
+
+                Nothing ->
+                    ( Error (t (A_Raw "Unknown command.")), Cmd.none )
+
         { plotterControl } =
             model
     in
-    ( { plotterControl | console = "" }
-    , Cmd.none
+    ( { plotterControl | console = "", status = status }
+    , cmd
     )
 
 
