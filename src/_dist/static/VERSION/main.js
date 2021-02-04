@@ -53,7 +53,7 @@ async function sendData(a, callback) {
       await port.open({ baudRate: 57600 })
     }
 
-    if (!port.writable || port.writable.locked) {
+    if (port.writable.locked) {
       callback({ _: Error, a: "Can't open serial port." })
       return
     }
