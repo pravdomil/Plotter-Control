@@ -8,7 +8,7 @@ import Utils.Interop exposing (Status)
 type alias PlotterControl =
     { console : String
     , status : Status
-    , file : Maybe File
+    , file : Maybe ( File, String )
     }
 
 
@@ -23,3 +23,4 @@ type PlotterControlMsg
       --
     | GotStatus Status
     | GotFile File
+    | GotFileContent File String

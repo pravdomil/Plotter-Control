@@ -9,6 +9,7 @@ import Html exposing (..)
 import Html.Attributes exposing (autofocus, disabled, value)
 import Html.Events exposing (onClick, onInput)
 import Styles.C as C
+import Task
 import Utils.Interop as Interop exposing (Status(..), sendData)
 import Utils.SummaCommand as SummaCommand
 import Utils.Translation as Translation exposing (..)
@@ -97,7 +98,12 @@ update msg model =
                     )
 
                 GotFile b ->
-                    ( { plotterControl | file = Just b }
+                    ( plotterControl
+                    , File.toString b |> Task.perform (GotFileContent b >> PlotterControlMsg)
+                    )
+
+                GotFileContent b c ->
+                    ( { plotterControl | file = Just ( b, c ) }
                     , Cmd.none
                     )
     )
