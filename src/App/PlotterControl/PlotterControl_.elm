@@ -7,7 +7,7 @@ import File exposing (File)
 import File.Select
 import Html exposing (..)
 import Html.Attributes exposing (autofocus, disabled, style, value)
-import Html.Events exposing (onClick, onInput)
+import Html.Events exposing (onClick, onInput, onSubmit)
 import Styles.C as C
 import Task
 import Utils.Interop as Interop exposing (Status(..), sendData)
@@ -78,6 +78,9 @@ update msg model =
                     , Cmd.none
                     )
 
+                ConsoleSubmitted ->
+                    consoleSubmitted model
+
                 --
                 LoadFile ->
                     ( plotterControl
@@ -116,6 +119,18 @@ update msg model =
                     )
     )
         |> Tuple.mapFirst (\v -> { model | plotterControl = v })
+
+
+{-| -}
+consoleSubmitted : Model -> ( PlotterControl, Cmd Msg )
+consoleSubmitted model =
+    let
+        { plotterControl } =
+            model
+    in
+    ( { plotterControl | console = "" }
+    , Cmd.none
+    )
 
 
 
@@ -161,7 +176,7 @@ viewConsole : Model -> Layout Msg
 viewConsole model =
     html ratio1
         []
-        [ div [ C.mx3 ]
+        [ form [ C.mx3, onSubmit (ConsoleSubmitted |> PlotterControlMsg) ]
             [ h6 [] [ text (t (A_Raw "Console")) ]
             , p []
                 [ input

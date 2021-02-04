@@ -15,6 +15,7 @@ type alias PlotterControl =
 {-| -}
 type PlotterControlMsg
     = ConsoleChanged String
+    | ConsoleSubmitted
       --
     | LoadFile
     | LoadMarkers
