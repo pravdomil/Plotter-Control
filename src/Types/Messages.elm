@@ -28,7 +28,7 @@ type alias SerialPortFilter =
 {-| To specify options when connecting to serial port.
 -}
 type alias SerialOptions =
-    { baudrate : Int
+    { baudRate : Int
 
     --, databits : Maybe Int
     --, stopbits : Maybe Int
