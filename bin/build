@@ -25,8 +25,5 @@ mv dist/static/VERSION "dist/static/$VERSION"
 # To pass version to the app.
 sed -i "" "s/VERSION/$VERSION/g" dist/index.html
 
-# To generate JSON encoders/decoders and TypeScript types.
-find src/Types -type f -exec elm-to-json-and-ts {} \;
-
 # To compile our app.
 elm make src/Main.elm --optimize --output "dist/static/$VERSION/elm.js"
