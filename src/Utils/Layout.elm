@@ -1,135 +1,274 @@
-module Utils.Layout exposing (..)
+module View.Layout exposing
+    ( Layout
+    , column
+    , element
+    , html
+    , px
+    , ratio
+    , ratio1
+    , rem
+    , render
+    , renderCss
+    , row
+    )
 
-import Html exposing (Attribute)
-import Html.Attributes exposing (style)
-import String exposing (fromFloat)
+{-| Pravdomil Layout
 
+Inspired by elm-ui.
 
-{-| To define position constrains.
+Note: Flex size is computed by content size, width, flex-basis (limited by min|max-width).
+Note 2: Default value for min-width is auto (content width).
+
 -}
-type Constrain
-    = -- Basics
-      Top Offset
-    | Bottom Offset
-    | Left Offset
-    | Right Offset
-      -- Center
-    | TopCenter Offset Offset
-    | BottomCenter Offset Offset
-    | LeftCenter Offset Offset
-    | RightCenter Offset Offset
-    | Center Offset Offset
-      -- Fill
-    | Fill Offset Offset Offset Offset
-    | FillWidth Offset Offset
-    | FillHeight Offset Offset
-      -- Size
-    | Width Size
-    | Height Size
-    | Size Size Size
-      -- Raw Size
-    | Width_ String
-    | Height_ String
-    | Size_ String String
+
+import Html exposing (..)
+import Html.Attributes exposing (class, style)
 
 
-{-| To specify offset use number in rem units.
--}
-type alias Offset =
-    Float
+{-| -}
+type Layout msg
+    = Row Size (List (Attribute msg)) (List (Layout msg))
+    | Column Size (List (Attribute msg)) (List (Layout msg))
+    | Element Size (List (Attribute msg)) (Html msg)
+    | Html Size (List (Attribute msg)) (List (Html msg))
 
 
-{-| To specify size use number in rem units.
--}
-type alias Size =
-    Float
+{-| -}
+type Size
+    = Px Float
+    | Rem Float
+    | Ratio Float
 
 
-{-| To make element to be container for floating elements.
--}
-container : List Constrain -> List (Attribute msg)
-container a =
-    [ style "position" "relative" ] ++ (a |> List.concatMap constrainToAttributes)
+{-| -}
+type Direction
+    = Row_
+    | Column_
 
 
-{-| To make element float inside container.
--}
-float : List Constrain -> List (Attribute msg)
-float a =
-    [ style "position" "absolute" ] ++ (a |> List.concatMap constrainToAttributes)
+
+--
 
 
-{-| To convert constrain to HTML attributes.
--}
-constrainToAttributes : Constrain -> List (Attribute msg)
-constrainToAttributes a =
+{-| -}
+row =
+    Row
+
+
+{-| -}
+column =
+    Column
+
+
+{-| -}
+element =
+    Element
+
+
+{-| -}
+html =
+    Html
+
+
+
+--
+
+
+{-| -}
+px =
+    Px
+
+
+{-| -}
+rem =
+    Rem
+
+
+{-| -}
+ratio =
+    Ratio
+
+
+{-| -}
+ratio1 =
+    Ratio 1
+
+
+
+--
+
+
+{-| -}
+renderCss : Html msg
+renderCss =
+    css
+
+
+{-| -}
+render : Layout msg -> Html msg
+render a =
+    a |> helper Column_
+
+
+
+--
+
+
+{-| -}
+helper : Direction -> Layout msg -> Html msg
+helper dir a =
     case a of
-        -- Basics
-        Top offset ->
-            [ style "top" (offset |> toRem) ]
+        Row size_ attrs b ->
+            div (rowClass :: sizeToAttr dir size_ :: minSize Row_ b :: attrs) (b |> List.map (helper Row_))
 
-        Bottom offset ->
-            [ style "bottom" (offset |> toRem) ]
+        Column size_ attrs b ->
+            div (columnClass :: sizeToAttr dir size_ :: minSize Column_ b :: attrs) (b |> List.map (helper Column_))
 
-        Left offset ->
-            [ style "left" (offset |> toRem) ]
+        Element size_ attrs b ->
+            div (elementClass :: sizeToAttr dir size_ :: attrs) [ b ]
 
-        Right offset ->
-            [ style "right" (offset |> toRem) ]
-
-        -- Center
-        TopCenter offsetX offsetY ->
-            [ style "top" (offsetY |> toRem), style "left" ("calc(50% - " ++ (offsetX |> toRem) ++ ")"), style "transform" "translateX(-50%)" ]
-
-        BottomCenter offsetX offsetY ->
-            [ style "bottom" (offsetY |> toRem), style "left" ("calc(50% - " ++ (offsetX |> toRem) ++ ")"), style "transform" "translateX(-50%)" ]
-
-        LeftCenter offsetX offsetY ->
-            [ style "left" (offsetX |> toRem), style "top" ("calc(50% - " ++ (offsetY |> toRem) ++ ")"), style "transform" "translateY(-50%)" ]
-
-        RightCenter offsetX offsetY ->
-            [ style "right" (offsetX |> toRem), style "top" ("calc(50% - " ++ (offsetY |> toRem) ++ ")"), style "transform" "translateY(-50%)" ]
-
-        Center offsetX offsetY ->
-            [ style "left" ("calc(50% - " ++ (offsetX |> toRem) ++ ")"), style "top" ("calc(50% - " ++ (offsetY |> toRem) ++ ")"), style "transform" "translate(-50%, -50%)" ]
-
-        -- Fill
-        Fill top right bottom left ->
-            [ style "top" (top |> toRem)
-            , style "right" (right |> toRem)
-            , style "bottom" (bottom |> toRem)
-            , style "left" (left |> toRem)
-            ]
-
-        FillWidth offsetLeft offsetRight ->
-            [ style "left" (offsetLeft |> toRem), style "right" (offsetRight |> toRem) ]
-
-        FillHeight offsetTop offsetBottom ->
-            [ style "top" (offsetTop |> toRem), style "bottom" (offsetBottom |> toRem) ]
-
-        -- Size
-        Width width ->
-            [ style "width" (width |> toRem) ]
-
-        Height height ->
-            [ style "height" (height |> toRem) ]
-
-        Size width height ->
-            [ style "width" (width |> toRem), style "height" (height |> toRem) ]
-
-        -- Raw Size
-        Width_ width ->
-            [ style "width" width ]
-
-        Height_ height ->
-            [ style "height" height ]
-
-        Size_ width height ->
-            [ style "width" width, style "height" height ]
+        Html size_ attrs b ->
+            div (htmlClass :: sizeToAttr dir size_ :: attrs) b
 
 
-{-| To convert number to rem units.
--}
-toRem : Float -> String
-toRem a =
-    a |> fromFloat |> (\v -> v ++ "rem")
+
+--
+
+
+{-| -}
+minSize : Direction -> List (Layout msg) -> Attribute msg
+minSize dir a =
+    let
+        toPx : Size -> Maybe Float
+        toPx b =
+            case b of
+                Px c ->
+                    Just c
+
+                _ ->
+                    Nothing
+
+        toRem : Size -> Maybe Float
+        toRem b =
+            case b of
+                Rem c ->
+                    Just c
+
+                _ ->
+                    Nothing
+
+        sum : (Size -> Maybe Float) -> String -> Maybe String
+        sum fn suffix =
+            a
+                |> List.filterMap (size >> fn)
+                |> List.foldl (+) 0
+                |> (\v ->
+                        if v == 0 then
+                            Nothing
+
+                        else
+                            Just (String.fromFloat v ++ suffix)
+                   )
+    in
+    [ sum toPx "px"
+    , sum toRem "rem"
+    ]
+        |> List.filterMap identity
+        |> String.join " + "
+        |> wrapInCalc
+        |> style ("min-" ++ directionToProperty dir)
+
+
+{-| -}
+sizeToAttr : Direction -> Size -> Attribute msg
+sizeToAttr dir a =
+    case a of
+        Px b ->
+            style (directionToProperty dir) (String.fromFloat b ++ "px")
+
+        Rem b ->
+            style (directionToProperty dir) (String.fromFloat b ++ "rem")
+
+        Ratio b ->
+            style "flex" (String.fromFloat b ++ " 0 0%")
+
+
+{-| -}
+size : Layout msg -> Size
+size a =
+    case a of
+        Row b _ _ ->
+            b
+
+        Column b _ _ ->
+            b
+
+        Element b _ _ ->
+            b
+
+        Html b _ _ ->
+            b
+
+
+
+--
+
+
+{-| -}
+directionToProperty : Direction -> String
+directionToProperty a =
+    case a of
+        Row_ ->
+            "width"
+
+        Column_ ->
+            "height"
+
+
+{-| -}
+wrapInCalc : String -> String
+wrapInCalc a =
+    "calc(" ++ a ++ ")"
+
+
+
+--
+
+
+{-| -}
+css : Html msg
+css =
+    node "style"
+        []
+        [ text ".pl-row,     .pl-column,     .pl-element     { display: flex; }"
+        , text ".pl-row > *, .pl-column > *, .pl-element > * { flex: 0 0 auto; min-width: 0; min-height: 0; }"
+
+        --
+        , text ".pl-column      { flex-direction: column; }"
+        , text ".pl-element > * { width: 100%; }"
+        , text ".pl-html        { overflow: auto; }"
+        ]
+
+
+{-| -}
+rowClass : Attribute msg
+rowClass =
+    class "pl-row"
+
+
+{-| -}
+columnClass : Attribute msg
+columnClass =
+    class "pl-column"
+
+
+{-| -}
+elementClass : Attribute msg
+elementClass =
+    class "pl-element"
+
+
+{-| -}
+htmlClass : Attribute msg
+htmlClass =
+    class "pl-html"
