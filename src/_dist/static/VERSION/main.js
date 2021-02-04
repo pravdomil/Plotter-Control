@@ -24,3 +24,15 @@ function element(parent, type, className) {
   if (className) el.className = className
   return el
 }
+
+async function getPort() {
+  try {
+    const ports = await navigator.serial.getPorts()
+    if (ports[0]) return ports[0]
+    const options = {
+      filters: [{ usbVendorId: 0x0403, usbProductId: 0x6001 }],
+    }
+    return await navigator.serial.requestPort(options)
+  } catch (e) {}
+  return null
+}
