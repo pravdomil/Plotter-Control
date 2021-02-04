@@ -9,6 +9,8 @@ import Html.Attributes exposing (disabled)
 import Html.Events exposing (onClick, onInput)
 import Styles.C as C
 import Utils.Interop as Interop exposing (Status(..))
+import Utils.Translation exposing (..)
+import View.Layout exposing (..)
 
 
 {-| -}
@@ -62,5 +64,20 @@ subscriptions _ =
 
 
 {-| -}
-view : PlotterControl -> Document msg
+view : Model -> Layout Msg
 view model =
+    row ratio1
+        []
+        [ column ratio1
+            []
+            [ element (rem 4)
+                []
+                (h3 []
+                    [ text (t A_Title)
+                    ]
+                )
+            ]
+        , column ratio1
+            []
+            []
+        ]

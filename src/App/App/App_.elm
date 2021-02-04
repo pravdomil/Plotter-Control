@@ -7,6 +7,7 @@ import Html exposing (text)
 import Json.Decode as Decode
 import Utils.Translation exposing (Translation(..), t)
 import Utils.Update as Update
+import View.Layout as Layout
 
 
 {-| To init model.
@@ -40,6 +41,7 @@ view : Model -> Document Msg
 view model =
     { title = t A_Title
     , body =
-        [ PlotterControl_.view model
+        [ Layout.renderCss
+        , Layout.render (PlotterControl_.view model)
         ]
     }
