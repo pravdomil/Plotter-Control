@@ -5,9 +5,10 @@ import App.PlotterControl.PlotterControl_ as PlotterControl_
 import Browser exposing (Document)
 import Html exposing (text)
 import Json.Decode as Decode
+import Styles.C as C
 import Utils.Translation exposing (Translation(..), t)
 import Utils.Update as Update
-import View.Layout as Layout
+import View.Layout exposing (..)
 
 
 {-| To init model.
@@ -41,7 +42,10 @@ view : Model -> Document Msg
 view model =
     { title = t A_Title
     , body =
-        [ Layout.renderCss
-        , Layout.render (PlotterControl_.view model)
+        [ renderCss
+        , row ratio1
+            [ C.abs, C.start0, C.end0, C.top0, C.bottom0 ]
+            [ PlotterControl_.view model ]
+            |> render
         ]
     }
