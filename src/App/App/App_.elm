@@ -5,6 +5,7 @@ import App.PlotterControl.PlotterControl_ as PlotterControl_
 import Browser exposing (Document)
 import Html exposing (text)
 import Json.Decode as Decode
+import Utils.Translation exposing (Translation(..), t)
 import Utils.Update as Update
 
 
@@ -37,7 +38,7 @@ subscriptions model =
 -}
 view : Model -> Document Msg
 view _ =
-    { title = "Hello world!"
+    { title = t A_Title
     , body =
         [ text "Hello world!"
         ]
