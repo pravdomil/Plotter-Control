@@ -56,7 +56,7 @@ async function sendData(a, callback) {
 
   callback({ _: Busy })
   const writer = port.writable.getWriter()
-  await writer.write(new TextEncoder().encode(b))
+  await writer.write(new TextEncoder().encode(a))
   await writer.close()
   callback({ _: Idle })
 }
