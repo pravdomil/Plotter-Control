@@ -1,4 +1,4 @@
-module Components.PlotterControl exposing (Config, Model, Msg, init, publicMsg, subscriptions, update, view)
+module App.PlotterControl.PlotterControl_ exposing (Config, Model, Msg, init, publicMsg, subscriptions, update, view)
 
 import Browser exposing (Document)
 import File exposing (File)
