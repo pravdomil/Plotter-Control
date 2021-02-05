@@ -216,7 +216,9 @@ view model =
                 ]
             , column (ratio 1.618)
                 []
-                [ viewStatus model, viewFile model ]
+                [ viewStatus model
+                , viewFile model
+                ]
             ]
         ]
 
