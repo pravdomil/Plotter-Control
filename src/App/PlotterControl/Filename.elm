@@ -21,6 +21,9 @@ type alias Filename =
     -- @
     , speed : Int
 
+    -- x
+    , copies : Int
+
     -- .dat
     }
 
@@ -28,7 +31,7 @@ type alias Filename =
 {-| -}
 format : String
 format =
-    "<name>-<width>x<length>x<markers>@<speed>.dat"
+    "<name>-<width>x<length>x<markers>@<speed>x<copies>.dat"
 
 
 {-| -}
@@ -86,6 +89,8 @@ parser =
         |. Parser.symbol "x"
         |= Parser.int
         |. Parser.symbol "@"
+        |= Parser.int
+        |. Parser.symbol "x"
         |= (Parser.getChompedString (Parser.chompUntil ".dat") |> Parser.andThen parseInt)
         |. Parser.symbol ".dat"
         |. Parser.end
