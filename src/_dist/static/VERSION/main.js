@@ -52,14 +52,14 @@ async function sendData(a, callback) {
   try {
     if (!port.writable) await port.open({ baudRate: 57600 })
   } catch (e) {
-    callback({ _: Error, a: "Can't open serial port." })
+    callback({ _: Error, a: { _: 0 } })
     throw e
   }
 
   try {
     writer = port.writable.getWriter()
   } catch (e) {
-    callback({ _: Error, a: "Serial port is busy." })
+    callback({ _: Error, a: { _: 1 } })
     throw e
   }
 
@@ -69,7 +69,7 @@ async function sendData(a, callback) {
     await writer.write(new TextEncoder().encode(a))
     await writer.close()
   } catch (e) {
-    callback({ _: Error, a: "Can't write data to serial port." })
+    callback({ _: Error, a: { _: 2 } })
     throw e
   }
 
