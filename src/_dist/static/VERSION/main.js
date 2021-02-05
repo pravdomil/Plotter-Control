@@ -39,42 +39,42 @@ async function sendData(a, callback) {
     Idle = 2,
     Busy = 3,
     Error = 4
+  let port, writer
 
   callback({ _: Connecting })
 
-  const port = await getPort()
-  if (!port) {
+  try {
+    port = await getPort()
+  } catch (e) {
     callback({ _: Ready })
-    return
+    throw e
   }
 
-  const writer = await getWriter(port)
-  if (!writer) {
+  try {
+    if (!port.writable) await port.open({ baudRate: 57600 })
+  } catch (e) {
     callback({ _: Error, a: "Can't open serial port." })
-    return
+    throw e
+  }
+
+  try {
+    writer = port.writable.getWriter()
+  } catch (e) {
+    callback({ _: Error, a: "Serial port is busy." })
+    throw e
   }
 
   callback({ _: Busy })
 
-  const result = await writeData(writer, a)
-  if (!result) {
+  try {
+    await writer.write(new TextEncoder().encode(a))
+    await writer.close()
+  } catch (e) {
     callback({ _: Error, a: "Can't write data to serial port." })
-    return
+    throw e
   }
 
   callback({ _: Idle })
-}
-
-async function getWriter(port) {
-  if (!port.writable) await port.open({ baudRate: 57600 })
-  if (port.writable.locked) return null
-  return port.writable.getWriter()
-}
-
-async function writeData(writer, a) {
-  await writer.write(new TextEncoder().encode(a))
-  await writer.close()
-  return true
 }
 
 async function getPort() {
