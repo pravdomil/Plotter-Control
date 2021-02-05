@@ -292,6 +292,7 @@ viewCommand a =
 viewStatus : Model -> Layout Msg
 viewStatus model =
     let
+        textColor : Attribute msg
         textColor =
             case model.plotterControl.status of
                 Ready ->
@@ -311,8 +312,12 @@ viewStatus model =
     in
     html (rem 6)
         []
-        [ h6 [ C.mx3, C.textMuted ] [ text (t (A_Raw "Status")) ]
-        , h3 [ C.mx3, textColor ] [ text (t (Translation.status model.plotterControl.status)) ]
+        [ h6 [ C.mx3, C.textMuted ]
+            [ text (t (A_Raw "Status"))
+            ]
+        , h3 [ C.mx3, textColor ]
+            [ text (t (Translation.status model.plotterControl.status))
+            ]
         ]
 
 
