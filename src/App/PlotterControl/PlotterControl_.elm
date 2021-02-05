@@ -8,6 +8,7 @@ import File.Select
 import Html exposing (..)
 import Html.Attributes exposing (autofocus, style, value)
 import Html.Events exposing (onInput, onSubmit)
+import Parser exposing ((|.), (|=), Parser)
 import Styles.C as C
 import Task
 import Utils.Interop as Interop exposing (Status(..), sendData)
@@ -66,6 +67,37 @@ commands =
 commandFromString : String -> Maybe (Command Msg)
 commandFromString a =
     commands |> Dict.get (a |> String.toLower)
+
+
+
+--
+
+
+{-| -}
+filenameParser : Parser Filename
+filenameParser =
+    Parser.succeed Filename
+        |= Parser.getChompedString (Parser.chompUntil "_")
+        |. Parser.symbol "_"
+        |= Parser.float
+        |. Parser.symbol "x"
+        |= Parser.float
+        |. Parser.symbol "x"
+        |= Parser.int
+        |. Parser.symbol "@"
+        |= Parser.int
+        |. Parser.symbol ".dat"
+
+
+{-| -}
+filenameFromString : String -> Result String Filename
+filenameFromString a =
+    case a |> Parser.run filenameParser of
+        Ok b ->
+            Ok b
+
+        Err _ ->
+            Err a
 
 
 
