@@ -140,7 +140,7 @@ update msg model =
 
                 PlotFile ->
                     ( plotterControl
-                    , sendData (model.plotterControl.file |> Maybe.map Tuple.second |> Maybe.withDefault "")
+                    , sendData (model.plotterControl.file |> Maybe.map .content |> Maybe.withDefault "")
                     )
 
                 --
@@ -155,7 +155,7 @@ update msg model =
                     )
 
                 GotFileContent b c ->
-                    ( { plotterControl | file = Just ( b, c ) }
+                    ( { plotterControl | file = Just { name = filenameFromString (File.name b), content = c } }
                     , Cmd.none
                     )
     )
