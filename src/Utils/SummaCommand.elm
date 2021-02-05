@@ -1,6 +1,6 @@
 module Utils.SummaCommand exposing (..)
 
-import Utils.HpGl exposing (HpGl)
+import Utils.HpGl as HpGl exposing (HpGl)
 
 
 {-| -}
