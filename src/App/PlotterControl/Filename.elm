@@ -47,7 +47,7 @@ fromString a =
 
 {-| -}
 toHpGl : Filename -> HpGl
-toHpGl a =
+toHpGl f =
     let
         prefix : HpGl
         prefix =
@@ -55,12 +55,12 @@ toHpGl a =
             , "MARKER_Y_SIZE=" ++ String.fromInt (3 * 40)
 
             --
-            , "MARKER_Y_DIS=" ++ String.fromFloat (a.width * 40)
-            , "MARKER_X_DIS=" ++ String.fromFloat (a.length * 40)
-            , "MARKER_X_N=" ++ String.fromInt a.markers
+            , "MARKER_Y_DIS=" ++ String.fromFloat (f.width * 40)
+            , "MARKER_X_DIS=" ++ String.fromFloat (f.length * 40)
+            , "MARKER_X_N=" ++ String.fromInt f.markers
 
             --
-            , "VELOCITY=" ++ String.fromInt a.speed
+            , "VELOCITY=" ++ String.fromInt f.speed
             ]
                 |> List.map SummaCommand.Set
                 |> SummaCommand.listToHpGl
