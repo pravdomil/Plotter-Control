@@ -318,17 +318,55 @@ viewFile model =
     html ratio1
         []
         [ h6 [ C.mx3, C.textMuted ] [ text (t (A_Raw "File")) ]
-        , h3 [ C.mx3 ]
-            [ case model.plotterControl.file of
-                Just ( b, _ ) ->
-                    text (b |> File.name)
+        , case model.plotterControl.file of
+            Just b ->
+                case b.filename of
+                    Ok c ->
+                        viewFilename c
 
-                Nothing ->
-                    text (t (A_Raw "No file loaded."))
-            ]
+                    Err c ->
+                        h3 [ C.mx3, C.textDanger ]
+                            [ text (c |> String.replace "_" "_\u{200B}")
+                            ]
+
+            Nothing ->
+                h3 [ C.mx3 ]
+                    [ text (t (A_Raw "No file loaded."))
+                    ]
         , div [ C.mx3, C.textMuted, style "font-size" "14px" ]
             [ p []
                 [ text (t (A_Raw "File format: <name>-<width>x<length>x<markers>@<speed>.dat"))
+                ]
+            ]
+        ]
+
+
+{-| -}
+viewFilename : Filename -> Html msg
+viewFilename a =
+    div [ C.mx3 ]
+        [ h3 [ C.textPrimary ]
+            [ text a.name
+            ]
+        , table [ style "font-size" "14px" ]
+            [ tbody []
+                [ tr []
+                    [ td [ C.p0, C.pe1 ] [ text (t (A_Raw "Width:")) ]
+                    , td [] [ text (String.fromFloat a.width), text "mm" ]
+                    ]
+                , tr []
+                    [ td [ C.p0, C.pe1 ] [ text (t (A_Raw "Length:")) ]
+                    , td []
+                        [ text (String.fromFloat a.length)
+                        , text "mm"
+                        , text " x "
+                        , text (String.fromInt a.markers)
+                        ]
+                    ]
+                , tr []
+                    [ td [ C.p0, C.pe1 ] [ text (t (A_Raw "Speed:")) ]
+                    , td [] [ text (String.fromInt a.speed), text "mm/s" ]
+                    ]
                 ]
             ]
         ]
