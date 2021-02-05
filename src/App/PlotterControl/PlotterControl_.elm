@@ -8,7 +8,7 @@ import File exposing (File)
 import File.Select
 import Html exposing (..)
 import Html.Attributes exposing (autofocus, style, value)
-import Html.Events exposing (onInput, onSubmit)
+import Html.Events exposing (onClick, onInput, onSubmit)
 import Styles.C as C
 import Task
 import Utils.HpGl as HpGl exposing (HpGl)
@@ -288,7 +288,7 @@ viewCommands _ =
 {-| -}
 viewCommand : Command Msg -> Html Msg
 viewCommand a =
-    tr []
+    tr [ style "cursor" "pointer", onClick a.msg ]
         [ td [ C.fwBolder, C.p0, C.pe1 ]
             [ text (String.toUpper a.name)
             ]
