@@ -173,7 +173,7 @@ plotFile model =
         Just a ->
             case a.filename of
                 Ok b ->
-                    sendData (HpGl.append (Filename.toHpGl b) a.content)
+                    sendData (Filename.toHpGl b a.content)
 
                 Err _ ->
                     sendData a.content
