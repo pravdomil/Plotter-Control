@@ -227,23 +227,23 @@ viewConsole model =
     html (rem 6)
         []
         [ form [ C.mx3, onSubmit (ConsoleSubmitted |> PlotterControlMsg) ]
-            [ h6 [ C.textMuted ] [ text (t (A_Raw "Console")) ]
-            , div []
-                [ input
-                    [ C.formControl
-                    , autofocus True
-                    , value model.plotterControl.console
-                    , onInput (ConsoleChanged >> PlotterControlMsg)
-                    ]
-                    []
-                , div [ C.mt1, style "font-size" "14px" ]
-                    [ case model.plotterControl.console |> commandFromString of
-                        Just a ->
-                            text a.description
+            [ h6 [ C.textMuted ]
+                [ text (t (A_Raw "Console"))
+                ]
+            , input
+                [ C.formControl
+                , autofocus True
+                , value model.plotterControl.console
+                , onInput (ConsoleChanged >> PlotterControlMsg)
+                ]
+                []
+            , div [ C.mt1, style "font-size" "14px" ]
+                [ case model.plotterControl.console |> commandFromString of
+                    Just a ->
+                        text a.description
 
-                        Nothing ->
-                            text "\u{00A0}"
-                    ]
+                    Nothing ->
+                        text "\u{00A0}"
                 ]
             ]
         ]
