@@ -1,6 +1,7 @@
 module App.PlotterControl.PlotterControl exposing (..)
 
 import File exposing (File)
+import Utils.HpGl exposing (HpGl)
 import Utils.Interop exposing (Status)
 
 
@@ -11,7 +12,7 @@ type alias PlotterControl =
     , file :
         Maybe
             { filename : Result String Filename
-            , content : String
+            , content : HpGl
             }
     }
 

@@ -11,6 +11,7 @@ import Html.Events exposing (onInput, onSubmit)
 import Parser exposing ((|.), (|=), Parser)
 import Styles.C as C
 import Task
+import Utils.HpGl as HpGl exposing (HpGl)
 import Utils.Interop as Interop exposing (Status(..), sendData)
 import Utils.SummaCommand as SummaCommand
 import Utils.Translation as Translation exposing (..)
@@ -170,7 +171,7 @@ update msg model =
                         | file =
                             Just
                                 { filename = filenameFromString (File.name b)
-                                , content = c
+                                , content = HpGl.fromString c
                                 }
                       }
                     , Cmd.none
@@ -224,7 +225,7 @@ plotFile model =
 
 
 {-| -}
-filenameToHpGl : Filename -> String
+filenameToHpGl : Filename -> HpGl
 filenameToHpGl a =
     [ "MARKER_X_SIZE=" ++ String.fromInt (3 * 40)
     , "MARKER_Y_SIZE=" ++ String.fromInt (3 * 40)
