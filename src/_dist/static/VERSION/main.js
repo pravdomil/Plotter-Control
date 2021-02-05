@@ -66,31 +66,22 @@ async function sendData(a, callback) {
 }
 
 async function getWriter(port) {
-  try {
-    if (!port.writable) await port.open({ baudRate: 57600 })
-    if (port.writable.locked) return null
-    return port.writable.getWriter()
-  } catch (e) {}
-  return null
+  if (!port.writable) await port.open({ baudRate: 57600 })
+  if (port.writable.locked) return null
+  return port.writable.getWriter()
 }
 
 async function writeData(writer, a) {
-  try {
-    await writer.write(new TextEncoder().encode(a))
-    await writer.close()
-    return true
-  } catch (e) {}
-  return null
+  await writer.write(new TextEncoder().encode(a))
+  await writer.close()
+  return true
 }
 
 async function getPort() {
-  try {
-    const ports = await navigator.serial.getPorts()
-    if (ports[0]) return ports[0]
-    const options = {
-      filters: [{ usbVendorId: 0x0403, usbProductId: 0x6001 }],
-    }
-    return await navigator.serial.requestPort(options)
-  } catch (e) {}
-  return null
+  const ports = await navigator.serial.getPorts()
+  if (ports[0]) return ports[0]
+  const options = {
+    filters: [{ usbVendorId: 0x0403, usbProductId: 0x6001 }],
+  }
+  return await navigator.serial.requestPort(options)
 }
