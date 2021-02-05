@@ -324,7 +324,8 @@ viewFile model =
                     ]
         , div [ C.mx3, C.textMuted, style "font-size" "14px" ]
             [ p []
-                [ text (t (A_Raw "File format: "))
+                [ text (t (A_Raw "File format:"))
+                , text " "
                 , text Filename.format
                 ]
             ]
