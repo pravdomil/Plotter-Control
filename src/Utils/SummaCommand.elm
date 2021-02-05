@@ -1,6 +1,6 @@
 module Utils.SummaCommand exposing (..)
 
-{-| -}
+import Utils.HpGl exposing (HpGl)
 
 
 {-| -}
@@ -43,19 +43,20 @@ type SummaCommand
 
 
 {-| -}
-toHpGl : SummaCommand -> String
+toHpGl : SummaCommand -> HpGl
 toHpGl a =
     listToHpGl [ a ]
 
 
 {-| -}
-listToHpGl : List SummaCommand -> String
+listToHpGl : List SummaCommand -> HpGl
 listToHpGl a =
     []
         ++ [ "\u{001B};@:" ]
         ++ (a |> List.map toString)
         ++ [ "END" ]
         |> String.join "\n"
+        |> HpGl.fromString
 
 
 {-| To convert command to string.
