@@ -240,13 +240,22 @@ viewConsole model =
                 , onInput (ConsoleChanged >> PlotterControlMsg)
                 ]
                 []
-            , div [ C.mt1, style "font-size" "14px" ]
-                [ case model.plotterControl.console |> commandFromString of
-                    Just a ->
-                        text a.description
-
-                    Nothing ->
+            , div [ C.mt1, style "font-size" "14px", C.fwBolder ]
+                [ case model.plotterControl.console of
+                    "" ->
                         text "\u{00A0}"
+
+                    _ ->
+                        case model.plotterControl.console |> commandFromString of
+                            Just a ->
+                                span [ C.textPrimary ]
+                                    [ text a.description
+                                    ]
+
+                            Nothing ->
+                                span [ C.textDanger ]
+                                    [ text (t (A_Raw "Unknown command."))
+                                    ]
                 ]
             ]
         ]
