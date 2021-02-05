@@ -224,7 +224,10 @@ viewCommands _ =
         []
         [ div [ C.mx3, style "font-size" "14px" ]
             [ h6 [ C.textMuted ] [ text (t (A_Raw "Commands")) ]
-            , p [] (commands |> Dict.values |> List.take 10 |> List.map viewCommand)
+            , table []
+                [ tbody []
+                    (commands |> Dict.values |> List.take 10 |> List.map viewCommand)
+                ]
             ]
         ]
 
@@ -232,10 +235,9 @@ viewCommands _ =
 {-| -}
 viewCommand : Command Msg -> Html Msg
 viewCommand a =
-    div []
-        [ text (String.toUpper a.name)
-        , text " - "
-        , text a.description
+    tr []
+        [ td [ C.fwBolder, C.pe1 ] [ text (String.toUpper a.name) ]
+        , td [] [ text a.description ]
         ]
 
 
