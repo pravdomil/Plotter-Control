@@ -270,7 +270,7 @@ viewCommands _ =
             [ h6 [ C.textMuted ]
                 [ text (t (A_Raw "Commands"))
                 ]
-            , table []
+            , table [ C.mb1 ]
                 [ tbody []
                     (commands
                         |> Dict.values
@@ -279,7 +279,7 @@ viewCommands _ =
                     )
                 ]
             , p []
-                [ text (t (A_Raw "Lower OPOS sensitivity means more sensitivity."))
+                [ text (t (A_Raw "Note: Lower OPOS sensitivity means more sensitivity."))
                 ]
             ]
         ]
