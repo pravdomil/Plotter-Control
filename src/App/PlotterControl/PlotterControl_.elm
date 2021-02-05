@@ -77,8 +77,8 @@ commandFromString a =
 filenameParser : Parser Filename
 filenameParser =
     Parser.succeed Filename
-        |= Parser.getChompedString (Parser.chompUntil "_")
-        |. Parser.symbol "_"
+        |= Parser.getChompedString (Parser.chompUntil "-")
+        |. Parser.symbol "-"
         |= Parser.float
         |. Parser.symbol "x"
         |= Parser.float
@@ -317,7 +317,7 @@ viewFile model =
             ]
         , div [ C.mx3, C.textMuted, style "font-size" "14px" ]
             [ p []
-                [ text (t (A_Raw "File format: <name>_<width>x<length>x<markers>@<speed>.dat"))
+                [ text (t (A_Raw "File format: <name>-<width>x<length>x<markers>@<speed>.dat"))
                 ]
             ]
         ]

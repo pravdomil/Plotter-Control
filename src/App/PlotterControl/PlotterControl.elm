@@ -20,7 +20,7 @@ type alias PlotterControl =
 type alias Filename =
     { name : String
 
-    -- _
+    -- -
     , width : Float
 
     -- x
