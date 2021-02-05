@@ -8,7 +8,7 @@ function main() {
     flags: {},
   })
 
-  app.ports.sendData.subscribe(function (a) {
+  app.ports.sendDataPort.subscribe(function (a) {
     sendData(a, app.ports.statusSubscriptionPort.send)
   })
 }
