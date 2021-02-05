@@ -76,6 +76,16 @@ commandFromString a =
 {-| -}
 filenameParser : Parser Filename
 filenameParser =
+    let
+        parseInt : String -> Parser Int
+        parseInt b =
+            case b |> String.toInt of
+                Just a ->
+                    Parser.succeed a
+
+                Nothing ->
+                    Parser.problem "Expecting Int."
+    in
     Parser.succeed Filename
         |= Parser.getChompedString (Parser.chompUntil "-")
         |. Parser.symbol "-"
@@ -85,7 +95,7 @@ filenameParser =
         |. Parser.symbol "x"
         |= Parser.int
         |. Parser.symbol "@"
-        |= Parser.int
+        |= (Parser.getChompedString (Parser.chompUntil ".dat") |> Parser.andThen parseInt)
         |. Parser.symbol ".dat"
         |. Parser.end
 
