@@ -283,4 +283,9 @@ viewFile model =
                 Nothing ->
                     text (t (A_Raw "No file loaded."))
             ]
+        , div [ C.mx3, C.textMuted, style "font-size" "14px" ]
+            [ p []
+                [ text (t (A_Raw "File format: <name>_<width>x<length>x<markers>@<speed>.dat"))
+                ]
+            ]
         ]
