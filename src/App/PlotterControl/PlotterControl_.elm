@@ -260,6 +260,9 @@ viewCommands _ =
                 [ tbody []
                     (commands |> Dict.values |> List.take 10 |> List.map viewCommand)
                 ]
+            , p []
+                [ text (t (A_Raw "Lower OPOS sensitivity means more sensitivity."))
+                ]
             ]
         ]
 
