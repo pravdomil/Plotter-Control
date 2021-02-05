@@ -204,6 +204,14 @@ viewConsole model =
                     , onInput (ConsoleChanged >> PlotterControlMsg)
                     ]
                     []
+                , div [ C.mt1, style "font-size" "14px" ]
+                    [ case model.plotterControl.console |> commandFromString of
+                        Just a ->
+                            text a.description
+
+                        Nothing ->
+                            text "\u{00A0}"
+                    ]
                 ]
             ]
         ]
