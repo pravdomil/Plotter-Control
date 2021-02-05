@@ -151,7 +151,7 @@ update msg model =
 
                 PlotFile ->
                     ( plotterControl
-                    , sendData (model.plotterControl.file |> Maybe.map .content |> Maybe.withDefault "")
+                    , plotFile model
                     )
 
                 --
@@ -195,6 +195,26 @@ consoleSubmitted model =
     ( { plotterControl | console = "", status = status }
     , cmd
     )
+
+
+
+--
+
+
+{-| -}
+plotFile : Model -> Cmd msg
+plotFile model =
+    case model.plotterControl.file of
+        Just a ->
+            case a.filename of
+                Ok b ->
+                    sendData (filenameToHpGl b ++ a.content)
+
+                Err _ ->
+                    sendData a.content
+
+        Nothing ->
+            Cmd.none
 
 
 
