@@ -10,7 +10,7 @@ type alias PlotterControl =
     , status : Status
     , file :
         Maybe
-            { name : Result String Filename
+            { filename : Result String Filename
             , content : String
             }
     }
