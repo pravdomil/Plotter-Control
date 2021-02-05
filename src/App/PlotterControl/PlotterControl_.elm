@@ -45,7 +45,7 @@ commands =
     let
         sensitivity : List (Command Msg)
         sensitivity =
-            List.range 0 60
+            List.range 1 60
                 |> List.map
                     (\v ->
                         Command
