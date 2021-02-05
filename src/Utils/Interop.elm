@@ -63,8 +63,8 @@ statusDecoder : Decoder Status
 statusDecoder =
     Decode.field "_" Decode.int
         |> Decode.andThen
-            (\i___ ->
-                case i___ of
+            (\i ->
+                case i of
                     0 ->
                         Decode.succeed Ready
 
@@ -78,7 +78,7 @@ statusDecoder =
                         Decode.map Error (Decode.field "a" errorDecoder)
 
                     _ ->
-                        Decode.fail ("I can't decode " ++ "Status" ++ ", unknown variant with index " ++ String.fromInt i___ ++ ".")
+                        Decode.fail ("I can't decode " ++ "Status" ++ ", unknown variant with index " ++ String.fromInt i ++ ".")
             )
 
 
@@ -87,8 +87,8 @@ errorDecoder : Decoder Error
 errorDecoder =
     Decode.field "_" Decode.int
         |> Decode.andThen
-            (\i___ ->
-                case i___ of
+            (\i ->
+                case i of
                     0 ->
                         Decode.succeed OpenError
 
@@ -99,5 +99,5 @@ errorDecoder =
                         Decode.succeed WriteError
 
                     _ ->
-                        Decode.fail ("I can't decode Error, unknown variant with index " ++ String.fromInt i___ ++ ".")
+                        Decode.fail ("I can't decode Error, unknown variant with index " ++ String.fromInt i ++ ".")
             )
