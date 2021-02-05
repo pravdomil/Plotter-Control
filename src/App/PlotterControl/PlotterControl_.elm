@@ -1,6 +1,7 @@
 module App.PlotterControl.PlotterControl_ exposing (..)
 
 import App.App.App exposing (..)
+import App.PlotterControl.Filename as Filename exposing (Filename)
 import App.PlotterControl.PlotterControl exposing (..)
 import Dict exposing (Dict)
 import File exposing (File)
@@ -8,7 +9,6 @@ import File.Select
 import Html exposing (..)
 import Html.Attributes exposing (autofocus, style, value)
 import Html.Events exposing (onInput, onSubmit)
-import Parser exposing ((|.), (|=), Parser)
 import Styles.C as C
 import Task
 import Utils.HpGl as HpGl exposing (HpGl)
@@ -75,48 +75,6 @@ commandFromString a =
 
 
 {-| -}
-filenameParser : Parser Filename
-filenameParser =
-    let
-        parseInt : String -> Parser Int
-        parseInt b =
-            case b |> String.toInt of
-                Just a ->
-                    Parser.succeed a
-
-                Nothing ->
-                    Parser.problem "Expecting Int."
-    in
-    Parser.succeed Filename
-        |= Parser.getChompedString (Parser.chompUntil "-")
-        |. Parser.symbol "-"
-        |= Parser.float
-        |. Parser.symbol "x"
-        |= Parser.float
-        |. Parser.symbol "x"
-        |= Parser.int
-        |. Parser.symbol "@"
-        |= (Parser.getChompedString (Parser.chompUntil ".dat") |> Parser.andThen parseInt)
-        |. Parser.symbol ".dat"
-        |. Parser.end
-
-
-{-| -}
-filenameFromString : String -> Result String Filename
-filenameFromString a =
-    case a |> Parser.run filenameParser of
-        Ok b ->
-            Ok b
-
-        Err _ ->
-            Err a
-
-
-
---
-
-
-{-| -}
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -170,7 +128,7 @@ update msg model =
                     ( { plotterControl
                         | file =
                             Just
-                                { filename = filenameFromString (File.name b)
+                                { filename = Filename.fromString (File.name b)
                                 , content = HpGl.fromString c
                                 }
                       }
@@ -215,31 +173,13 @@ plotFile model =
         Just a ->
             case a.filename of
                 Ok b ->
-                    sendData (HpGl.append (filenameToHpGl b) a.content)
+                    sendData (HpGl.append (Filename.toHpGl b) a.content)
 
                 Err _ ->
                     sendData a.content
 
         Nothing ->
             Cmd.none
-
-
-{-| -}
-filenameToHpGl : Filename -> HpGl
-filenameToHpGl a =
-    [ "MARKER_X_SIZE=" ++ String.fromInt (3 * 40)
-    , "MARKER_Y_SIZE=" ++ String.fromInt (3 * 40)
-
-    --
-    , "MARKER_Y_DIS=" ++ String.fromFloat (a.width * 40)
-    , "MARKER_X_DIS=" ++ String.fromFloat (a.length * 40)
-    , "MARKER_X_N=" ++ String.fromInt a.markers
-
-    --
-    , "VELOCITY=" ++ String.fromInt a.speed
-    ]
-        |> List.map SummaCommand.Set
-        |> SummaCommand.listToHpGl
 
 
 

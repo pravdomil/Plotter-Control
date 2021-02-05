@@ -1,5 +1,6 @@
 module App.PlotterControl.PlotterControl exposing (..)
 
+import App.PlotterControl.Filename exposing (Filename)
 import File exposing (File)
 import Utils.HpGl exposing (HpGl)
 import Utils.Interop exposing (Status)
@@ -14,26 +15,6 @@ type alias PlotterControl =
             { filename : Result String Filename
             , content : HpGl
             }
-    }
-
-
-{-| -}
-type alias Filename =
-    { name : String
-
-    -- -
-    , width : Float
-
-    -- x
-    , length : Float
-
-    -- x
-    , markers : Int
-
-    -- @
-    , speed : Int
-
-    -- .dat
     }
 
 
