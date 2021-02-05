@@ -279,8 +279,12 @@ viewCommands _ =
 viewCommand : Command Msg -> Html Msg
 viewCommand a =
     tr []
-        [ td [ C.fwBolder, C.p0, C.pe1 ] [ text (String.toUpper a.name) ]
-        , td [] [ text a.description ]
+        [ td [ C.fwBolder, C.p0, C.pe1 ]
+            [ text (String.toUpper a.name)
+            ]
+        , td []
+            [ text a.description
+            ]
         ]
 
 
