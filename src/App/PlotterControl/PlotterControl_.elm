@@ -146,18 +146,19 @@ update msg model =
 consoleSubmitted : Model -> ( PlotterControl, Cmd Msg )
 consoleSubmitted model =
     let
-        ( status, cmd ) =
-            case model.plotterControl.console |> commandFromString of
-                Just a ->
-                    ( model.plotterControl.status, Task.succeed () |> Task.perform (always a.msg) )
-
-                Nothing ->
-                    ( Error (t (A_Raw "Unknown command.")), Cmd.none )
-
         { plotterControl } =
             model
+
+        cmd : Cmd Msg
+        cmd =
+            case model.plotterControl.console |> commandFromString of
+                Just a ->
+                    Task.succeed () |> Task.perform (always a.msg)
+
+                Nothing ->
+                    Cmd.none
     in
-    ( { plotterControl | console = "", status = status }
+    ( { plotterControl | console = "" }
     , cmd
     )
 
