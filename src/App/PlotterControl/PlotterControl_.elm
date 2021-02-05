@@ -166,7 +166,13 @@ update msg model =
                     )
 
                 GotFileContent b c ->
-                    ( { plotterControl | file = Just { filename = filenameFromString (File.name b), content = c } }
+                    ( { plotterControl
+                        | file =
+                            Just
+                                { filename = filenameFromString (File.name b)
+                                , content = c
+                                }
+                      }
                     , Cmd.none
                     )
     )
