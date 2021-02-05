@@ -348,7 +348,7 @@ viewFilename a =
         [ h3 [ C.textPrimary ]
             [ text a.name
             ]
-        , table [ style "font-size" "14px" ]
+        , table [ style "font-size" "14px", C.mb2 ]
             [ tbody []
                 [ tr []
                     [ td [ C.p0, C.pe1 ] [ text (t (A_Raw "Width:")) ]
