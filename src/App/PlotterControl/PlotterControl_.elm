@@ -217,6 +217,24 @@ plotFile model =
             Cmd.none
 
 
+{-| -}
+filenameToHpGl : Filename -> String
+filenameToHpGl a =
+    [ "MARKER_X_SIZE=" ++ String.fromInt (3 * 40)
+    , "MARKER_Y_SIZE=" ++ String.fromInt (3 * 40)
+
+    --
+    , "MARKER_Y_DIS=" ++ String.fromFloat (a.width * 40)
+    , "MARKER_X_DIS=" ++ String.fromFloat (a.length * 40)
+    , "MARKER_X_N=" ++ String.fromInt a.markers
+
+    --
+    , "VELOCITY=" ++ String.fromInt a.speed
+    ]
+        |> List.map SummaCommand.Set
+        |> SummaCommand.listToHpGl
+
+
 
 --
 
