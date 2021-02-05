@@ -33,7 +33,7 @@ statusSubscription fn =
                     b
 
                 Err b ->
-                    Error (Decode.errorToString b)
+                    Error (DecodeError b)
     in
     statusSubscriptionPort (decode >> fn)
 
@@ -47,7 +47,15 @@ type Status
     = Ready
     | Connecting
     | Busy
-    | Error String
+    | Error Error
+
+
+{-| -}
+type Error
+    = OpenError
+    | WriterError
+    | WriteError
+    | DecodeError Decode.Error
 
 
 {-| -}
@@ -67,8 +75,29 @@ statusDecoder =
                         Decode.succeed Busy
 
                     3 ->
-                        Decode.map Error (Decode.field "a" Decode.string)
+                        Decode.map Error (Decode.field "a" errorDecoder)
 
                     _ ->
                         Decode.fail ("I can't decode " ++ "Status" ++ ", unknown variant with index " ++ String.fromInt i___ ++ ".")
+            )
+
+
+{-| -}
+errorDecoder : Decoder Error
+errorDecoder =
+    Decode.field "_" Decode.int
+        |> Decode.andThen
+            (\i___ ->
+                case i___ of
+                    0 ->
+                        Decode.succeed OpenError
+
+                    1 ->
+                        Decode.succeed WriterError
+
+                    2 ->
+                        Decode.succeed WriteError
+
+                    _ ->
+                        Decode.fail ("I can't decode Error, unknown variant with index " ++ String.fromInt i___ ++ ".")
             )
