@@ -257,10 +257,16 @@ viewCommands _ =
     html ratio1
         []
         [ div [ C.mx3, style "font-size" "14px" ]
-            [ h6 [ C.textMuted ] [ text (t (A_Raw "Commands")) ]
+            [ h6 [ C.textMuted ]
+                [ text (t (A_Raw "Commands"))
+                ]
             , table []
                 [ tbody []
-                    (commands |> Dict.values |> List.take 10 |> List.map viewCommand)
+                    (commands
+                        |> Dict.values
+                        |> List.take 10
+                        |> List.map viewCommand
+                    )
                 ]
             , p []
                 [ text (t (A_Raw "Lower OPOS sensitivity means more sensitivity."))
