@@ -2,13 +2,12 @@ module App.PlotterControl.PlotterControl_ exposing (..)
 
 import App.App.App exposing (..)
 import App.PlotterControl.PlotterControl exposing (..)
-import Browser exposing (Document)
 import Dict exposing (Dict)
 import File exposing (File)
 import File.Select
 import Html exposing (..)
-import Html.Attributes exposing (autofocus, disabled, style, value)
-import Html.Events exposing (onClick, onInput, onSubmit)
+import Html.Attributes exposing (autofocus, style, value)
+import Html.Events exposing (onInput, onSubmit)
 import Styles.C as C
 import Task
 import Utils.Interop as Interop exposing (Status(..), sendData)
