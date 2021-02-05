@@ -362,11 +362,18 @@ viewFilename a =
         , table [ style "font-size" "14px", C.mb2 ]
             [ tbody []
                 [ tr []
-                    [ td [ C.p0, C.pe1 ] [ text (t (A_Raw "Width:")) ]
-                    , td [] [ text (String.fromFloat a.width), text "mm" ]
+                    [ td [ C.p0, C.pe1 ]
+                        [ text (t (A_Raw "Width:"))
+                        ]
+                    , td []
+                        [ text (String.fromFloat a.width)
+                        , text "mm"
+                        ]
                     ]
                 , tr []
-                    [ td [ C.p0, C.pe1 ] [ text (t (A_Raw "Length:")) ]
+                    [ td [ C.p0, C.pe1 ]
+                        [ text (t (A_Raw "Length:"))
+                        ]
                     , td []
                         [ text (String.fromFloat a.length)
                         , text "mm"
@@ -375,12 +382,22 @@ viewFilename a =
                         ]
                     ]
                 , tr []
-                    [ td [ C.p0, C.pe1 ] [ text (t (A_Raw "Speed:")) ]
-                    , td [] [ text (String.fromInt a.speed), text "mm/s" ]
+                    [ td [ C.p0, C.pe1 ]
+                        [ text (t (A_Raw "Speed:"))
+                        ]
+                    , td []
+                        [ text (String.fromInt a.speed)
+                        , text "mm/s"
+                        ]
                     ]
                 , tr []
-                    [ td [ C.p0, C.pe1 ] [ text (t (A_Raw "Copies:")) ]
-                    , td [] [ text (String.fromInt a.copies), text "x" ]
+                    [ td [ C.p0, C.pe1 ]
+                        [ text (t (A_Raw "Copies:"))
+                        ]
+                    , td []
+                        [ text (String.fromInt a.copies)
+                        , text "x"
+                        ]
                     ]
                 ]
             ]
