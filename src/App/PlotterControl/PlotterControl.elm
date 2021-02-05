@@ -8,7 +8,31 @@ import Utils.Interop exposing (Status)
 type alias PlotterControl =
     { console : String
     , status : Status
-    , file : Maybe ( File, String )
+    , file :
+        Maybe
+            { name : Result String Filename
+            , content : String
+            }
+    }
+
+
+{-| -}
+type alias Filename =
+    { name : String
+
+    -- _
+    , width : Float
+
+    -- x
+    , length : Float
+
+    -- x
+    , markers : Int
+
+    -- @
+    , speed : Int
+
+    -- .dat
     }
 
 
