@@ -26,6 +26,12 @@ type alias Filename =
 
 
 {-| -}
+format : String
+format =
+    "<name>-<width>x<length>x<markers>@<speed>.dat"
+
+
+{-| -}
 fromString : String -> Result String Filename
 fromString a =
     case a |> Parser.run parser of
