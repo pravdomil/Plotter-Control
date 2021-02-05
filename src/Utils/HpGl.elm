@@ -19,3 +19,9 @@ fromString =
 toString : HpGl -> String
 toString (HpGl a) =
     a
+
+
+{-| -}
+append : HpGl -> HpGl -> HpGl
+append (HpGl a) (HpGl b) =
+    a ++ b |> HpGl
