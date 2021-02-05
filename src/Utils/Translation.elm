@@ -1,6 +1,6 @@
 module Utils.Translation exposing (..)
 
-import Utils.Interop exposing (Status(..))
+import Utils.Interop as Interop exposing (Error(..), Status(..))
 
 
 {-| -}
@@ -11,7 +11,11 @@ type Translation
     | Status_Ready
     | Status_Connecting
     | Status_Busy
-    | Status_Error String
+      --
+    | Interop_OpenError
+    | Interop_WriterError
+    | Interop_WriteError
+    | Interop_DecodeError
 
 
 {-| -}
@@ -34,8 +38,18 @@ t a =
         Status_Busy ->
             "Busy..."
 
-        Status_Error b ->
-            b
+        --
+        Interop_OpenError ->
+            "Can't open serial port."
+
+        Interop_WriterError ->
+            "Serial port is busy."
+
+        Interop_WriteError ->
+            "Can't write data to serial port."
+
+        Interop_DecodeError ->
+            "Can't communicate with serial port."
 
 
 
@@ -56,4 +70,21 @@ status a =
             Status_Busy
 
         Error b ->
-            Status_Error b
+            interopError b
+
+
+{-| -}
+interopError : Interop.Error -> Translation
+interopError a =
+    case a of
+        OpenError ->
+            Interop_OpenError
+
+        WriterError ->
+            Interop_WriterError
+
+        WriteError ->
+            Interop_WriteError
+
+        DecodeError _ ->
+            Interop_DecodeError
