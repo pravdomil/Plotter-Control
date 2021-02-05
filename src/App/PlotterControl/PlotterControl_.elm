@@ -62,6 +62,12 @@ commands =
         |> Dict.fromList
 
 
+{-| -}
+commandFromString : String -> Maybe (Command Msg)
+commandFromString a =
+    commands |> Dict.get (a |> String.toLower)
+
+
 
 --
 
@@ -129,7 +135,7 @@ consoleSubmitted : Model -> ( PlotterControl, Cmd Msg )
 consoleSubmitted model =
     let
         ( status, cmd ) =
-            case commands |> Dict.get (model.plotterControl.console |> String.toLower) of
+            case model.plotterControl.console |> commandFromString of
                 Just a ->
                     ( model.plotterControl.status, Task.succeed () |> Task.perform (always a.msg) )
 
