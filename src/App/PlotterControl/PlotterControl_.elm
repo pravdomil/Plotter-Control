@@ -343,8 +343,13 @@ viewFile model =
                         viewFilename c
 
                     Err c ->
-                        h3 [ C.mx3, C.textDanger ]
-                            [ text (c |> String.replace "_" "_\u{200B}")
+                        div [ C.mx3 ]
+                            [ h3 [ C.textPrimary ]
+                                [ text (c |> String.replace "_" "_\u{200B}")
+                                ]
+                            , p [ C.mb1, C.textDanger, C.fwBolder, style "font-size" "14px" ]
+                                [ text (t (A_Raw "Can't parse filename."))
+                                ]
                             ]
 
             Nothing ->
