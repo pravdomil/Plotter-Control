@@ -36,9 +36,8 @@ function checkSerialPortSupport() {
 async function sendData(a, callback) {
   const Ready = 0,
     Connecting = 1,
-    Idle = 2,
-    Busy = 3,
-    Error = 4
+    Busy = 2,
+    Error = 3
   let port, writer
 
   callback({ _: Connecting })
@@ -74,7 +73,7 @@ async function sendData(a, callback) {
     throw e
   }
 
-  callback({ _: Idle })
+  callback({ _: Ready })
 }
 
 async function getPort() {

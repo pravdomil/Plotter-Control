@@ -46,7 +46,6 @@ statusSubscription fn =
 type Status
     = Ready
     | Connecting
-    | Idle
     | Busy
     | Error String
 
@@ -65,12 +64,9 @@ statusDecoder =
                         Decode.succeed Connecting
 
                     2 ->
-                        Decode.succeed Idle
-
-                    3 ->
                         Decode.succeed Busy
 
-                    4 ->
+                    3 ->
                         Decode.map Error (Decode.field "a" Decode.string)
 
                     _ ->

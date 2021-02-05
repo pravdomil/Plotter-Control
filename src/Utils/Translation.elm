@@ -10,7 +10,6 @@ type Translation
       --
     | Status_Ready
     | Status_Connecting
-    | Status_Idle
     | Status_Busy
     | Status_Error String
 
@@ -32,9 +31,6 @@ t a =
         Status_Connecting ->
             "Connecting..."
 
-        Status_Idle ->
-            "Idle."
-
         Status_Busy ->
             "Busy..."
 
@@ -55,9 +51,6 @@ status a =
 
         Connecting ->
             Status_Connecting
-
-        Idle ->
-            Status_Idle
 
         Busy ->
             Status_Busy

@@ -301,9 +301,6 @@ viewStatus model =
                 Connecting ->
                     C.textPrimary
 
-                Idle ->
-                    C.textPrimary
-
                 Busy ->
                     C.textDanger
 
