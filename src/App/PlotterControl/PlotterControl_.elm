@@ -326,7 +326,9 @@ viewFile : Model -> Layout Msg
 viewFile model =
     html ratio1
         []
-        [ h6 [ C.mx3, C.textMuted ] [ text (t (A_Raw "File")) ]
+        [ h6 [ C.mx3, C.textMuted ]
+            [ text (t (A_Raw "File"))
+            ]
         , case model.plotterControl.file of
             Just b ->
                 case b.filename of
@@ -342,12 +344,10 @@ viewFile model =
                 h3 [ C.mx3 ]
                     [ text (t (A_Raw "No file loaded."))
                     ]
-        , div [ C.mx3, C.textMuted, style "font-size" "14px" ]
-            [ p []
-                [ text (t (A_Raw "Filename:"))
-                , text " "
-                , text Filename.format
-                ]
+        , p [ C.mx3, C.textMuted, style "font-size" "14px" ]
+            [ text (t (A_Raw "Filename:"))
+            , text " "
+            , text Filename.format
             ]
         ]
 
