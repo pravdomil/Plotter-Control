@@ -87,6 +87,7 @@ filenameParser =
         |. Parser.symbol "@"
         |= Parser.int
         |. Parser.symbol ".dat"
+        |. Parser.end
 
 
 {-| -}
