@@ -228,7 +228,7 @@ viewConsole model =
         []
         [ form [ C.mx3, onSubmit (ConsoleSubmitted |> PlotterControlMsg) ]
             [ h6 [ C.textMuted ] [ text (t (A_Raw "Console")) ]
-            , p []
+            , div []
                 [ input
                     [ C.formControl
                     , autofocus True
