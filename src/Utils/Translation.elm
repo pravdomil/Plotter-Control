@@ -36,7 +36,7 @@ t a =
             "Idle."
 
         Status_Busy ->
-            "Busy."
+            "Busy..."
 
         Status_Error b ->
             b
