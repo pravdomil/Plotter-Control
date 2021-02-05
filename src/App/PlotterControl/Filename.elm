@@ -1,7 +1,7 @@
 module App.PlotterControl.Filename exposing (..)
 
 import Parser exposing ((|.), (|=), Parser)
-import Utils.HpGl exposing (HpGl)
+import Utils.HpGl as HpGl exposing (HpGl)
 import Utils.SummaCommand as SummaCommand
 
 
@@ -46,8 +46,8 @@ fromString a =
 
 
 {-| -}
-toHpGl : Filename -> HpGl
-toHpGl f =
+toHpGl : Filename -> HpGl -> HpGl
+toHpGl f a =
     let
         prefix : HpGl
         prefix =
@@ -64,8 +64,12 @@ toHpGl f =
             ]
                 |> List.map SummaCommand.Set
                 |> SummaCommand.listToHpGl
+
+        postfix : HpGl
+        postfix =
+            ()
     in
-    prefix
+    HpGl.append (HpGl.append prefix a) postfix
 
 
 
