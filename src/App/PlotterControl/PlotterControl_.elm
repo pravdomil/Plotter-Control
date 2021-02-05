@@ -50,14 +50,14 @@ commands =
                     (\v ->
                         Command
                             ("s" ++ String.fromInt v)
-                            (t (A_Raw ("OPOS Sensitivity " ++ String.fromInt v ++ ".")))
+                            (t (A_Raw ("OPOS sensitivity " ++ String.fromInt v ++ ".")))
                             (SetSensitivity v |> PlotterControlMsg)
                     )
     in
-    [ Command "l" (t (A_Raw "Load File.")) (LoadFile |> PlotterControlMsg)
-    , Command "m" (t (A_Raw "Markers Load.")) (LoadMarkers |> PlotterControlMsg)
-    , Command "s" (t (A_Raw "OPOS Sensitivity 30 (default).")) (SetSensitivity 30 |> PlotterControlMsg)
-    , Command "p" (t (A_Raw "Plot File.")) (PlotFile |> PlotterControlMsg)
+    [ Command "l" (t (A_Raw "Load file.")) (LoadFile |> PlotterControlMsg)
+    , Command "m" (t (A_Raw "Markers load.")) (LoadMarkers |> PlotterControlMsg)
+    , Command "s" (t (A_Raw "OPOS sensitivity 30 (default).")) (SetSensitivity 30 |> PlotterControlMsg)
+    , Command "p" (t (A_Raw "Plot file.")) (PlotFile |> PlotterControlMsg)
     ]
         ++ sensitivity
         |> List.map (\v -> ( v.name, v ))
