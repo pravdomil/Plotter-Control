@@ -227,7 +227,7 @@ view model =
 {-| -}
 viewConsole : Model -> Layout Msg
 viewConsole model =
-    html (rem 6)
+    scroll (rem 6)
         []
         [ form [ C.mx3, onSubmit (ConsoleSubmitted |> PlotterControlMsg) ]
             [ h6 [ C.textMuted ]
@@ -264,7 +264,7 @@ viewConsole model =
 {-| -}
 viewCommands : Model -> Layout Msg
 viewCommands _ =
-    html ratio1
+    scroll ratio1
         []
         [ div [ C.mx3, style "font-size" "14px" ]
             [ h6 [ C.textMuted ]
@@ -317,7 +317,7 @@ viewStatus model =
                 Error _ ->
                     C.textDanger
     in
-    html (rem 6)
+    scroll (rem 6)
         []
         [ h6 [ C.mx3, C.textMuted ]
             [ text (t (A_Raw "Status"))
@@ -331,7 +331,7 @@ viewStatus model =
 {-| -}
 viewFile : Model -> Layout Msg
 viewFile model =
-    html ratio1
+    scroll ratio1
         []
         [ h6 [ C.mx3, C.textMuted ]
             [ text (t (A_Raw "File"))

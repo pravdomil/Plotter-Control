@@ -43,9 +43,8 @@ view model =
     { title = t A_Title
     , body =
         [ renderCss
-        , row ratio1
-            [ C.abs, C.start0, C.end0, C.top0, C.bottom0 ]
-            [ PlotterControl_.view model ]
-            |> render
+        , render [ C.abs, C.start0, C.end0, C.top0, C.bottom0 ]
+            [ PlotterControl_.view model
+            ]
         ]
     }

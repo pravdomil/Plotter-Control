@@ -1,8 +1,8 @@
 module View.Layout exposing
     ( Layout
+    , auto
     , column
     , element
-    , html
     , px
     , ratio
     , ratio1
@@ -10,6 +10,7 @@ module View.Layout exposing
     , render
     , renderCss
     , row
+    , scroll
     )
 
 {-| Pravdomil Layout
@@ -30,7 +31,7 @@ type Layout msg
     = Row Size (List (Attribute msg)) (List (Layout msg))
     | Column Size (List (Attribute msg)) (List (Layout msg))
     | Element Size (List (Attribute msg)) (Html msg)
-    | Html Size (List (Attribute msg)) (List (Html msg))
+    | Scroll Size (List (Attribute msg)) (List (Html msg))
 
 
 {-| -}
@@ -38,6 +39,7 @@ type Size
     = Px Float
     | Rem Float
     | Ratio Float
+    | Auto
 
 
 {-| -}
@@ -66,8 +68,8 @@ element =
 
 
 {-| -}
-html =
-    Html
+scroll =
+    Scroll
 
 
 
@@ -94,6 +96,11 @@ ratio1 =
     Ratio 1
 
 
+{-| -}
+auto =
+    Auto
+
+
 
 --
 
@@ -105,9 +112,10 @@ renderCss =
 
 
 {-| -}
-render : Layout msg -> Html msg
-render a =
-    a |> helper Column_
+render : List (Attribute msg) -> List (Layout msg) -> Html msg
+render attr a =
+    div (rowClass :: attr)
+        (a |> List.map helper)
 
 
 
@@ -115,20 +123,20 @@ render a =
 
 
 {-| -}
-helper : Direction -> Layout msg -> Html msg
-helper dir a =
+helper : Layout msg -> Html msg
+helper a =
     case a of
         Row size_ attrs b ->
-            div (rowClass :: sizeToAttr dir size_ :: minSize Row_ b :: attrs) (b |> List.map (helper Row_))
+            div (rowClass :: sizeToAttr size_ :: minSize Row_ b :: attrs) (b |> List.map helper)
 
         Column size_ attrs b ->
-            div (columnClass :: sizeToAttr dir size_ :: minSize Column_ b :: attrs) (b |> List.map (helper Column_))
+            div (columnClass :: sizeToAttr size_ :: minSize Column_ b :: attrs) (b |> List.map helper)
 
         Element size_ attrs b ->
-            div (elementClass :: sizeToAttr dir size_ :: attrs) [ b ]
+            div (elementClass :: sizeToAttr size_ :: attrs) [ b ]
 
-        Html size_ attrs b ->
-            div (htmlClass :: sizeToAttr dir size_ :: attrs) b
+        Scroll size_ attrs b ->
+            div (scrollClass :: sizeToAttr size_ :: attrs) b
 
 
 
@@ -180,17 +188,20 @@ minSize dir a =
 
 
 {-| -}
-sizeToAttr : Direction -> Size -> Attribute msg
-sizeToAttr dir a =
+sizeToAttr : Size -> Attribute msg
+sizeToAttr a =
     case a of
         Px b ->
-            style (directionToProperty dir) (String.fromFloat b ++ "px")
+            style "flex" ("0 0 " ++ String.fromFloat b ++ "px")
 
         Rem b ->
-            style (directionToProperty dir) (String.fromFloat b ++ "rem")
+            style "flex" ("0 0 " ++ String.fromFloat b ++ "rem")
 
         Ratio b ->
             style "flex" (String.fromFloat b ++ " 0 0%")
+
+        Auto ->
+            style "flex" "0 0 auto"
 
 
 {-| -}
@@ -206,7 +217,7 @@ size a =
         Element b _ _ ->
             b
 
-        Html b _ _ ->
+        Scroll b _ _ ->
             b
 
 
@@ -240,13 +251,14 @@ css : Html msg
 css =
     node "style"
         []
-        [ text ".pl-row,     .pl-column,     .pl-element     { display: flex; }"
-        , text ".pl-row > *, .pl-column > *, .pl-element > * { flex: 0 0 auto; min-width: 0; min-height: 0; }"
+        [ text ".pl-row         { display: flex; }"
+        , text ".pl-column      { display: flex; flex-direction: column; }"
+        , text ".pl-element     { display: flex; }"
+        , text ".pl-element > * { flex: 0 0 100%; }"
+        , text ".pl-scroll      { overflow: auto; }"
 
         --
-        , text ".pl-column      { flex-direction: column; }"
-        , text ".pl-element > * { width: 100%; }"
-        , text ".pl-html        { overflow: auto; }"
+        , text ".pl-row, .pl-column, .pl-element, .pl-scroll { min-width: 0; min-height: 0; }"
         ]
 
 
@@ -269,6 +281,6 @@ elementClass =
 
 
 {-| -}
-htmlClass : Attribute msg
-htmlClass =
-    class "pl-html"
+scrollClass : Attribute msg
+scrollClass =
+    class "pl-scroll"
