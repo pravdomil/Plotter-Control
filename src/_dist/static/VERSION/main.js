@@ -33,47 +33,47 @@ function checkSerialPortSupport() {
   }
 }
 
-async function sendData(a, callback) {
+async function sendData(a, send) {
   const Ready = 0,
     Connecting = 1,
     Busy = 2,
     Error = 3
   let port, writer
 
-  callback({ _: Connecting })
+  send({ _: Connecting })
 
   try {
     port = await getPort()
   } catch (e) {
-    callback({ _: Ready })
+    send({ _: Ready })
     throw e
   }
 
   try {
     if (!port.writable) await port.open({ baudRate: 57600 })
   } catch (e) {
-    callback({ _: Error, a: { _: 0 } })
+    send({ _: Error, a: { _: 0 } })
     throw e
   }
 
   try {
     writer = port.writable.getWriter()
   } catch (e) {
-    callback({ _: Error, a: { _: 1 } })
+    send({ _: Error, a: { _: 1 } })
     throw e
   }
 
-  callback({ _: Busy })
+  send({ _: Busy })
 
   try {
     await writer.write(new TextEncoder().encode(a))
     await writer.close()
   } catch (e) {
-    callback({ _: Error, a: { _: 2 } })
+    send({ _: Error, a: { _: 2 } })
     throw e
   }
 
-  callback({ _: Ready })
+  send({ _: Ready })
 }
 
 async function getPort() {
