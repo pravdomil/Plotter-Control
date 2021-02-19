@@ -3,7 +3,6 @@ module Utils.SummaCommand exposing (..)
 import Utils.HpGl as HpGl exposing (HpGl)
 
 
-{-| -}
 type SummaCommand
     = Query
       --
@@ -42,13 +41,11 @@ type SummaCommand
     | End
 
 
-{-| -}
 toHpGl : SummaCommand -> HpGl
 toHpGl a =
     listToHpGl [ a ]
 
 
-{-| -}
 listToHpGl : List SummaCommand -> HpGl
 listToHpGl a =
     []

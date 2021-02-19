@@ -5,7 +5,6 @@ import Utils.HpGl as HpGl exposing (HpGl)
 import Utils.SummaCommand as SummaCommand
 
 
-{-| -}
 type alias Filename =
     { name : String
 
@@ -28,13 +27,11 @@ type alias Filename =
     }
 
 
-{-| -}
 format : String
 format =
     "<name>-<width>x<length>x<markers>@<speed>x<copies>.dat"
 
 
-{-| -}
 fromString : String -> Result String Filename
 fromString a =
     case a |> Parser.run parser of
@@ -45,7 +42,6 @@ fromString a =
             Err a
 
 
-{-| -}
 toHpGl : Filename -> HpGl -> HpGl
 toHpGl f a =
     let
@@ -76,7 +72,6 @@ toHpGl f a =
 --
 
 
-{-| -}
 parser : Parser Filename
 parser =
     let

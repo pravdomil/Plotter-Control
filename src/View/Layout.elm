@@ -26,7 +26,6 @@ import Html exposing (..)
 import Html.Attributes exposing (class, style)
 
 
-{-| -}
 type Layout msg
     = Row Size (List (Attribute msg)) (List (Layout msg))
     | Column Size (List (Attribute msg)) (List (Layout msg))
@@ -34,7 +33,6 @@ type Layout msg
     | Scroll Size (List (Attribute msg)) (List (Html msg))
 
 
-{-| -}
 type Size
     = Px Float
     | Rem Float
@@ -42,7 +40,6 @@ type Size
     | Auto
 
 
-{-| -}
 type Direction
     = Row_
     | Column_
@@ -52,22 +49,18 @@ type Direction
 --
 
 
-{-| -}
 row =
     Row
 
 
-{-| -}
 column =
     Column
 
 
-{-| -}
 element =
     Element
 
 
-{-| -}
 scroll =
     Scroll
 
@@ -76,27 +69,22 @@ scroll =
 --
 
 
-{-| -}
 px =
     Px
 
 
-{-| -}
 rem =
     Rem
 
 
-{-| -}
 ratio =
     Ratio
 
 
-{-| -}
 ratio1 =
     Ratio 1
 
 
-{-| -}
 auto =
     Auto
 
@@ -105,13 +93,11 @@ auto =
 --
 
 
-{-| -}
 renderCss : Html msg
 renderCss =
     css
 
 
-{-| -}
 render : List (Attribute msg) -> List (Layout msg) -> Html msg
 render attr a =
     div (rowClass :: attr)
@@ -122,7 +108,6 @@ render attr a =
 --
 
 
-{-| -}
 helper : Layout msg -> Html msg
 helper a =
     case a of
@@ -143,7 +128,6 @@ helper a =
 --
 
 
-{-| -}
 minSize : Direction -> List (Layout msg) -> Attribute msg
 minSize dir a =
     let
@@ -187,7 +171,6 @@ minSize dir a =
         |> style ("min-" ++ directionToProperty dir)
 
 
-{-| -}
 sizeToAttr : Size -> Attribute msg
 sizeToAttr a =
     case a of
@@ -204,7 +187,6 @@ sizeToAttr a =
             style "flex" "0 0 auto"
 
 
-{-| -}
 size : Layout msg -> Size
 size a =
     case a of
@@ -225,7 +207,6 @@ size a =
 --
 
 
-{-| -}
 directionToProperty : Direction -> String
 directionToProperty a =
     case a of
@@ -236,7 +217,6 @@ directionToProperty a =
             "height"
 
 
-{-| -}
 wrapInCalc : String -> String
 wrapInCalc a =
     "calc(" ++ a ++ ")"
@@ -246,7 +226,6 @@ wrapInCalc a =
 --
 
 
-{-| -}
 css : Html msg
 css =
     node "style"
@@ -262,25 +241,21 @@ css =
         ]
 
 
-{-| -}
 rowClass : Attribute msg
 rowClass =
     class "pl-row"
 
 
-{-| -}
 columnClass : Attribute msg
 columnClass =
     class "pl-column"
 
 
-{-| -}
 elementClass : Attribute msg
 elementClass =
     class "pl-element"
 
 
-{-| -}
 scrollClass : Attribute msg
 scrollClass =
     class "pl-scroll"

@@ -4,11 +4,9 @@ import Json.Decode as Decode exposing (Decoder)
 import Utils.HpGl as HpGl exposing (HpGl)
 
 
-{-| -}
 port sendDataPort : String -> Cmd msg
 
 
-{-| -}
 sendData : HpGl -> Cmd msg
 sendData a =
     a |> HpGl.toString |> sendDataPort
@@ -18,11 +16,9 @@ sendData a =
 --
 
 
-{-| -}
 port statusSubscriptionPort : (Decode.Value -> msg) -> Sub msg
 
 
-{-| -}
 statusSubscription : (Status -> msg) -> Sub msg
 statusSubscription fn =
     let
@@ -42,7 +38,6 @@ statusSubscription fn =
 --
 
 
-{-| -}
 type Status
     = Ready
     | Connecting
@@ -50,7 +45,6 @@ type Status
     | Error Error
 
 
-{-| -}
 type Error
     = OpenError
     | WriterError
@@ -58,7 +52,6 @@ type Error
     | DecodeError Decode.Error
 
 
-{-| -}
 statusDecoder : Decoder Status
 statusDecoder =
     Decode.field "_" Decode.int
@@ -82,7 +75,6 @@ statusDecoder =
             )
 
 
-{-| -}
 errorDecoder : Decoder Error
 errorDecoder =
     Decode.field "_" Decode.int

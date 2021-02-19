@@ -6,7 +6,6 @@ import Utils.HpGl exposing (HpGl)
 import Utils.Interop exposing (Status)
 
 
-{-| -}
 type alias PlotterControl =
     { console : String
     , status : Status
@@ -18,7 +17,6 @@ type alias PlotterControl =
     }
 
 
-{-| -}
 type PlotterControlMsg
     = ConsoleChanged String
     | ConsoleSubmitted

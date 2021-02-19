@@ -18,7 +18,6 @@ import Utils.Translation as Translation exposing (..)
 import View.Layout exposing (..)
 
 
-{-| -}
 init : PlotterControl
 init =
     { console = ""
@@ -31,7 +30,6 @@ init =
 --
 
 
-{-| -}
 type alias Command msg =
     { name : String
     , description : String
@@ -39,7 +37,6 @@ type alias Command msg =
     }
 
 
-{-| -}
 commands : Dict String (Command Msg)
 commands =
     let
@@ -64,7 +61,6 @@ commands =
         |> Dict.fromList
 
 
-{-| -}
 commandFromString : String -> Maybe (Command Msg)
 commandFromString a =
     commands |> Dict.get (a |> String.toLower)
@@ -74,7 +70,6 @@ commandFromString a =
 --
 
 
-{-| -}
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -142,7 +137,6 @@ update msg model =
 --
 
 
-{-| -}
 consoleSubmitted : Model -> ( PlotterControl, Cmd Msg )
 consoleSubmitted model =
     let
@@ -167,7 +161,6 @@ consoleSubmitted model =
 --
 
 
-{-| -}
 plotFile : Model -> Cmd msg
 plotFile model =
     case model.plotterControl.file of
@@ -187,7 +180,6 @@ plotFile model =
 --
 
 
-{-| -}
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Interop.statusSubscription (GotStatus >> PlotterControlMsg)
@@ -197,7 +189,6 @@ subscriptions _ =
 --
 
 
-{-| -}
 view : Model -> Layout Msg
 view model =
     column ratio1
@@ -224,7 +215,6 @@ view model =
         ]
 
 
-{-| -}
 viewConsole : Model -> Layout Msg
 viewConsole model =
     scroll (rem 6)
@@ -261,7 +251,6 @@ viewConsole model =
         ]
 
 
-{-| -}
 viewCommands : Model -> Layout Msg
 viewCommands _ =
     scroll ratio1
@@ -285,7 +274,6 @@ viewCommands _ =
         ]
 
 
-{-| -}
 viewCommand : Command Msg -> Html Msg
 viewCommand a =
     tr [ style "cursor" "pointer", onClick a.msg ]
@@ -298,7 +286,6 @@ viewCommand a =
         ]
 
 
-{-| -}
 viewStatus : Model -> Layout Msg
 viewStatus model =
     let
@@ -328,7 +315,6 @@ viewStatus model =
         ]
 
 
-{-| -}
 viewFile : Model -> Layout Msg
 viewFile model =
     scroll ratio1
@@ -364,7 +350,6 @@ viewFile model =
         ]
 
 
-{-| -}
 viewFilename : Filename -> Html msg
 viewFilename a =
     div [ C.mx3 ]

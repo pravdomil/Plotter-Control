@@ -3,7 +3,6 @@ module Utils.Translation exposing (..)
 import Utils.Interop as Interop exposing (Error(..), Status(..))
 
 
-{-| -}
 type Translation
     = A_Title
     | A_Raw String
@@ -18,7 +17,6 @@ type Translation
     | Interop_DecodeError
 
 
-{-| -}
 t : Translation -> String
 t a =
     case a of
@@ -56,7 +54,6 @@ t a =
 --
 
 
-{-| -}
 status : Status -> Translation
 status a =
     case a of
@@ -73,7 +70,6 @@ status a =
             interopError b
 
 
-{-| -}
 interopError : Interop.Error -> Translation
 interopError a =
     case a of
