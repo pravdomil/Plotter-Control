@@ -1,4 +1,4 @@
-module App.PlotterControl.Filename exposing (..)
+module Filename exposing (..)
 
 import Parser exposing ((|.), (|=), Parser)
 import Utils.HpGl as HpGl exposing (HpGl)

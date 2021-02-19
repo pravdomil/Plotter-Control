@@ -3,6 +3,7 @@ module View.Layout exposing
     , auto
     , column
     , element
+    , map
     , px
     , ratio
     , ratio1
@@ -23,7 +24,7 @@ Note 2: Default value for min-width is auto (content width).
 -}
 
 import Html exposing (..)
-import Html.Attributes exposing (class, style)
+import Html.Attributes as Attribute exposing (class, style)
 
 
 type Layout msg
@@ -102,6 +103,22 @@ render : List (Attribute msg) -> List (Layout msg) -> Html msg
 render attr a =
     div (rowClass :: attr)
         (a |> List.map helper)
+
+
+map : (a -> b) -> Layout a -> Layout b
+map fn a =
+    case a of
+        Row b c d ->
+            Row b (c |> List.map (Attribute.map fn)) (d |> List.map (map fn))
+
+        Column b c d ->
+            Column b (c |> List.map (Attribute.map fn)) (d |> List.map (map fn))
+
+        Element b c d ->
+            Element b (c |> List.map (Attribute.map fn)) (d |> Html.map fn)
+
+        Scroll b c d ->
+            Scroll b (c |> List.map (Attribute.map fn)) (d |> List.map (Html.map fn))
 
 
 

@@ -1,11 +1,9 @@
-module App.PlotterControl.PlotterControl_ exposing (..)
+module PlotterControl exposing (..)
 
-import App.App.App exposing (..)
-import App.PlotterControl.Filename as Filename exposing (Filename)
-import App.PlotterControl.PlotterControl exposing (..)
 import Dict exposing (Dict)
 import File exposing (File)
 import File.Select
+import Filename exposing (Filename)
 import Html exposing (..)
 import Html.Attributes exposing (autofocus, style, value)
 import Html.Events exposing (onClick, onInput, onSubmit)
@@ -18,7 +16,18 @@ import Utils.Translation as Translation exposing (..)
 import View.Layout exposing (..)
 
 
-init : PlotterControl
+type alias Model =
+    { console : String
+    , status : Status
+    , file :
+        Maybe
+            { filename : Result String Filename
+            , content : HpGl
+            }
+    }
+
+
+init : Model
 init =
     { console = ""
     , status = Ready
@@ -30,150 +39,90 @@ init =
 --
 
 
-type alias Command msg =
-    { name : String
-    , description : String
-    , msg : msg
-    }
-
-
-commands : Dict String (Command Msg)
-commands =
-    let
-        sensitivity : List (Command Msg)
-        sensitivity =
-            List.range 1 60
-                |> List.map
-                    (\v ->
-                        Command
-                            ("s" ++ String.fromInt v)
-                            (t (A_Raw ("OPOS sensitivity " ++ String.fromInt v ++ ".")))
-                            (SetSensitivity v |> PlotterControlMsg)
-                    )
-    in
-    [ Command "l" (t (A_Raw "Load file.")) (LoadFile |> PlotterControlMsg)
-    , Command "m" (t (A_Raw "Markers load.")) (LoadMarkers |> PlotterControlMsg)
-    , Command "s" (t (A_Raw "OPOS sensitivity 30 (default).")) (SetSensitivity 30 |> PlotterControlMsg)
-    , Command "p" (t (A_Raw "Plot file.")) (PlotFile |> PlotterControlMsg)
-    ]
-        ++ sensitivity
-        |> List.map (\v -> ( v.name, v ))
-        |> Dict.fromList
-
-
-commandFromString : String -> Maybe (Command Msg)
-commandFromString a =
-    commands |> Dict.get (a |> String.toLower)
-
-
-
---
+type Msg
+    = ConsoleChanged String
+    | ConsoleSubmitted
+      --
+    | LoadFile
+    | LoadMarkers
+    | SetSensitivity Int
+    | PlotFile
+      --
+    | GotStatus Status
+    | GotFile File
+    | GotFileContent File String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    let
-        { plotterControl } =
-            model
-    in
-    (case msg of
-        PlotterControlMsg a ->
-            case a of
-                ConsoleChanged b ->
-                    ( { plotterControl | console = b }
-                    , Cmd.none
-                    )
+    case msg of
+        ConsoleChanged b ->
+            ( { model | console = b }
+            , Cmd.none
+            )
 
-                ConsoleSubmitted ->
-                    consoleSubmitted model
-
-                --
-                LoadFile ->
-                    ( plotterControl
-                    , File.Select.file [] (GotFile >> PlotterControlMsg)
-                    )
-
-                LoadMarkers ->
-                    ( plotterControl
-                    , sendData (SummaCommand.LoadMarkers |> SummaCommand.toHpGl)
-                    )
-
-                SetSensitivity b ->
-                    ( plotterControl
-                    , sendData (SummaCommand.Set ("OPOS_LEVEL=" ++ String.fromInt b) |> SummaCommand.toHpGl)
-                    )
-
-                PlotFile ->
-                    ( plotterControl
-                    , plotFile model
-                    )
-
-                --
-                GotStatus b ->
-                    ( { plotterControl | status = b }
-                    , Cmd.none
-                    )
-
-                GotFile b ->
-                    ( plotterControl
-                    , File.toString b |> Task.perform (GotFileContent b >> PlotterControlMsg)
-                    )
-
-                GotFileContent b c ->
-                    ( { plotterControl
-                        | file =
-                            Just
-                                { filename = Filename.fromString (File.name b)
-                                , content = HpGl.fromString c
-                                }
-                      }
-                    , Cmd.none
-                    )
-    )
-        |> Tuple.mapFirst (\v -> { model | plotterControl = v })
-
-
-
---
-
-
-consoleSubmitted : Model -> ( PlotterControl, Cmd Msg )
-consoleSubmitted model =
-    let
-        { plotterControl } =
-            model
-
-        cmd : Cmd Msg
-        cmd =
-            case model.plotterControl.console |> commandFromString of
+        ConsoleSubmitted ->
+            ( { model | console = "" }
+            , case model.console |> commandFromString of
                 Just a ->
                     Task.succeed () |> Task.perform (always a.msg)
 
                 Nothing ->
                     Cmd.none
-    in
-    ( { plotterControl | console = "" }
-    , cmd
-    )
+            )
 
+        --
+        LoadFile ->
+            ( model
+            , File.Select.file [] GotFile
+            )
 
+        LoadMarkers ->
+            ( model
+            , sendData (SummaCommand.LoadMarkers |> SummaCommand.toHpGl)
+            )
 
---
+        SetSensitivity b ->
+            ( model
+            , sendData (SummaCommand.Set ("OPOS_LEVEL=" ++ String.fromInt b) |> SummaCommand.toHpGl)
+            )
 
+        PlotFile ->
+            ( model
+            , case model.file of
+                Just a ->
+                    case a.filename of
+                        Ok b ->
+                            sendData (Filename.toHpGl b a.content)
 
-plotFile : Model -> Cmd msg
-plotFile model =
-    case model.plotterControl.file of
-        Just a ->
-            case a.filename of
-                Ok b ->
-                    sendData (Filename.toHpGl b a.content)
+                        Err _ ->
+                            sendData a.content
 
-                Err _ ->
-                    sendData a.content
+                Nothing ->
+                    Cmd.none
+            )
 
-        Nothing ->
-            Cmd.none
+        --
+        GotStatus b ->
+            ( { model | status = b }
+            , Cmd.none
+            )
+
+        GotFile b ->
+            ( model
+            , File.toString b |> Task.perform (GotFileContent b)
+            )
+
+        GotFileContent b c ->
+            ( { model
+                | file =
+                    Just
+                        { filename = Filename.fromString (File.name b)
+                        , content = HpGl.fromString c
+                        }
+              }
+            , Cmd.none
+            )
 
 
 
@@ -182,7 +131,7 @@ plotFile model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Interop.statusSubscription (GotStatus >> PlotterControlMsg)
+    Interop.statusSubscription GotStatus
 
 
 
@@ -219,24 +168,24 @@ viewConsole : Model -> Layout Msg
 viewConsole model =
     scroll (rem 6)
         []
-        [ form [ C.mx3, onSubmit (ConsoleSubmitted |> PlotterControlMsg) ]
+        [ form [ C.mx3, onSubmit ConsoleSubmitted ]
             [ h6 [ C.textMuted ]
                 [ text (t (A_Raw "Console"))
                 ]
             , input
                 [ C.formControl
                 , autofocus True
-                , value model.plotterControl.console
-                , onInput (ConsoleChanged >> PlotterControlMsg)
+                , value model.console
+                , onInput ConsoleChanged
                 ]
                 []
             , div [ C.mt1, style "font-size" "14px", C.fwBolder ]
-                [ case model.plotterControl.console of
+                [ case model.console of
                     "" ->
                         text "\u{00A0}"
 
                     _ ->
-                        case model.plotterControl.console |> commandFromString of
+                        case model.console |> commandFromString of
                             Just a ->
                                 span [ C.textPrimary ]
                                     [ text a.description
@@ -291,7 +240,7 @@ viewStatus model =
     let
         textColor : Attribute msg
         textColor =
-            case model.plotterControl.status of
+            case model.status of
                 Ready ->
                     C.textPrimary
 
@@ -310,7 +259,7 @@ viewStatus model =
             [ text (t (A_Raw "Status"))
             ]
         , h3 [ C.mx3, textColor ]
-            [ text (t (Translation.status model.plotterControl.status))
+            [ text (t (Translation.status model.status))
             ]
         ]
 
@@ -322,7 +271,7 @@ viewFile model =
         [ h6 [ C.mx3, C.textMuted ]
             [ text (t (A_Raw "File"))
             ]
-        , case model.plotterControl.file of
+        , case model.file of
             Just b ->
                 case b.filename of
                     Ok c ->
@@ -399,3 +348,43 @@ viewFilename a =
                 ]
             ]
         ]
+
+
+
+--
+
+
+type alias Command msg =
+    { name : String
+    , description : String
+    , msg : msg
+    }
+
+
+commands : Dict String (Command Msg)
+commands =
+    let
+        sensitivity : List (Command Msg)
+        sensitivity =
+            List.range 1 60
+                |> List.map
+                    (\v ->
+                        Command
+                            ("s" ++ String.fromInt v)
+                            (t (A_Raw ("OPOS sensitivity " ++ String.fromInt v ++ ".")))
+                            (SetSensitivity v)
+                    )
+    in
+    [ Command "l" (t (A_Raw "Load file.")) LoadFile
+    , Command "m" (t (A_Raw "Markers load.")) LoadMarkers
+    , Command "s" (t (A_Raw "OPOS sensitivity 30 (default).")) (SetSensitivity 30)
+    , Command "p" (t (A_Raw "Plot file.")) PlotFile
+    ]
+        ++ sensitivity
+        |> List.map (\v -> ( v.name, v ))
+        |> Dict.fromList
+
+
+commandFromString : String -> Maybe (Command Msg)
+commandFromString a =
+    commands |> Dict.get (a |> String.toLower)
