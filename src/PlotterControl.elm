@@ -217,7 +217,9 @@ viewCommands _ =
                     )
                 ]
             , p []
-                [ text (t (A_Raw "Note: Lower OPOS sensitivity means more sensitivity."))
+                [ small []
+                    [ text (t (A_Raw "Note: Lower OPOS sensitivity means more sensitivity."))
+                    ]
                 ]
             ]
         ]
