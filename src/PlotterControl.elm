@@ -196,15 +196,15 @@ viewConsole model =
                 ]
                 []
             , div [ C.mt1, style "font-size" "14px", C.fwBolder ]
-                [ case model.console of
-                    "" ->
+                [ case model |> commandFromModel of
+                    Nothing ->
                         text "\u{00A0}"
 
-                    _ ->
-                        case model.console |> commandFromString of
-                            Just a ->
+                    Just a ->
+                        case a of
+                            Just b ->
                                 span [ C.textPrimary ]
-                                    [ text a.description
+                                    [ text b.description
                                     ]
 
                             Nothing ->
