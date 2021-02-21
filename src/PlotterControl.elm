@@ -167,9 +167,13 @@ view model =
 viewConsole : Model -> Layout Msg
 viewConsole model =
     let
+        command : Maybe (Maybe (Command Msg))
+        command =
+            model |> commandFromModel
+
         isValid : Attribute msg
         isValid =
-            case model |> commandFromModel of
+            case command of
                 Just a ->
                     case a of
                         Just _ ->
@@ -196,7 +200,7 @@ viewConsole model =
                 ]
                 []
             , div [ C.mt1, style "font-size" "14px", C.fwBolder ]
-                [ case model |> commandFromModel of
+                [ case command of
                     Just a ->
                         case a of
                             Just b ->
