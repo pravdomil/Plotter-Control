@@ -63,7 +63,7 @@ update msg model =
 
         ConsoleSubmitted ->
             ( { model | console = "" }
-            , case model.console |> commandFromString of
+            , case model |> commandFromModel |> Maybe.andThen identity of
                 Just a ->
                     Task.succeed () |> Task.perform (always a.msg)
 
@@ -390,3 +390,13 @@ commands =
 commandFromString : String -> Maybe (Command Msg)
 commandFromString a =
     commands |> Dict.get (a |> String.toLower)
+
+
+commandFromModel : Model -> Maybe (Maybe (Command Msg))
+commandFromModel model =
+    case model.console of
+        "" ->
+            Nothing
+
+        _ ->
+            Just (commandFromString model.console)
