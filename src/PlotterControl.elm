@@ -79,7 +79,16 @@ update msg model =
 
         LoadMarkers ->
             ( model
-            , sendData (SummaCommand.LoadMarkers |> SummaCommand.toHpGl)
+            , SummaCommand.LoadMarkers
+                |> SummaCommand.toHpGl
+                |> (case model.file |> Maybe.andThen (.filename >> Result.toMaybe) of
+                        Just a ->
+                            Filename.toHpGl { a | copies = 1 }
+
+                        Nothing ->
+                            identity
+                   )
+                |> sendData
             )
 
         SetSensitivity b ->
