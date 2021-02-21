@@ -197,9 +197,6 @@ viewConsole model =
                 []
             , div [ C.mt1, style "font-size" "14px", C.fwBolder ]
                 [ case model |> commandFromModel of
-                    Nothing ->
-                        text "\u{00A0}"
-
                     Just a ->
                         case a of
                             Just b ->
@@ -211,6 +208,9 @@ viewConsole model =
                                 span [ C.textDanger ]
                                     [ text (t (A_Raw "Unknown command."))
                                     ]
+
+                    Nothing ->
+                        text "\u{00A0}"
                 ]
             ]
         ]
