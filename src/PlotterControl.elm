@@ -166,6 +166,21 @@ view model =
 
 viewConsole : Model -> Layout Msg
 viewConsole model =
+    let
+        isValid : Attribute msg
+        isValid =
+            case model |> commandFromModel of
+                Just a ->
+                    case a of
+                        Just _ ->
+                            C.none
+
+                        Nothing ->
+                            C.isInvalid
+
+                Nothing ->
+                    C.none
+    in
     scroll (rem 6)
         []
         [ form [ C.mx3, onSubmit ConsoleSubmitted ]
@@ -174,6 +189,7 @@ viewConsole model =
                 ]
             , input
                 [ C.formControl
+                , isValid
                 , autofocus True
                 , value model.console
                 , onInput ConsoleChanged
