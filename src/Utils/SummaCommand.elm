@@ -48,10 +48,7 @@ toHpGl a =
 
 listToHpGl : List SummaCommand -> HpGl
 listToHpGl a =
-    []
-        ++ [ "\u{001B};@:" ]
-        ++ (a |> List.map toString)
-        ++ [ "END" ]
+    ([ "\u{001B};@:" ] ++ (a |> List.map toString) ++ [ "END", "" ])
         |> String.join "\n"
         |> HpGl.fromString
 
