@@ -9,10 +9,10 @@ import Html.Attributes exposing (autofocus, style, value)
 import Html.Events exposing (onClick, onInput, onSubmit)
 import Styles.C as C
 import Task
+import Translation exposing (..)
 import Utils.HpGl as HpGl exposing (HpGl)
 import Utils.Interop as Interop exposing (Status(..), sendData)
 import Utils.SummaCommand as SummaCommand
-import Utils.Translation as Translation exposing (..)
 import View.Layout exposing (..)
 
 

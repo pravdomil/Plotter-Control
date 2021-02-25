@@ -1,4 +1,4 @@
-module Utils.Translation exposing (..)
+module Translation exposing (..)
 
 import Utils.Interop as Interop exposing (Error(..), Status(..))
 

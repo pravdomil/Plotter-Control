@@ -4,7 +4,7 @@ import Browser exposing (Document)
 import Json.Decode as Decode
 import PlotterControl
 import Styles.C as C
-import Utils.Translation exposing (Translation(..), t)
+import Translation exposing (Translation(..), t)
 import View.Layout as Layout exposing (..)
 
 
