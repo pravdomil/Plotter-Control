@@ -29,7 +29,7 @@ type alias Filename =
 
 format : String
 format =
-    "<name>-<width>x<length>x<markers>@<speed>x<copies>.dat"
+    "<Name>-<Width>x<Length>x<Markers>@<Speed>x<Copies>.dat"
 
 
 fromString : String -> Result String Filename
