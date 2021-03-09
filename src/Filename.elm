@@ -63,7 +63,11 @@ toHpGl f a =
 
         postfix : HpGl
         postfix =
-            SummaCommand.Recut |> List.repeat (f.copies - 1) |> SummaCommand.listToHpGl
+            SummaCommand.Recut
+                |> SummaCommand.toHpGl
+                |> HpGl.toString
+                |> String.repeat (f.copies - 1)
+                |> HpGl.fromString
     in
     HpGl.append (HpGl.append prefix a) postfix
 
