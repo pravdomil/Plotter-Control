@@ -9,9 +9,6 @@ set -u
 # To be in project root.
 cd "${0%/*}/.."
 
-# To have dependencies from npm ready.
-npm i
-
 # To define what version we are building.
 VERSION=$(date +%s)
 
@@ -25,8 +22,10 @@ mv dist/static/VERSION "dist/static/$VERSION"
 # To pass version to the app.
 sed -i "" "s/VERSION/$VERSION/g" dist/index.html
 
-# To build styles.
-cp node_modules/bootstrap/dist/css/bootstrap.min.css "dist/static/$VERSION"
-
 # To compile our app.
 elm make src/Main.elm --optimize --output "dist/static/$VERSION/elm.js"
+{
+  uglifyjs "dist/static/$VERSION/elm.js" --compress 'pure_funcs=[F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9],pure_getters,keep_fargs=false,unsafe_comps,unsafe'
+  uglifyjs "dist/static/$VERSION/main.js" --compress
+} | uglifyjs --mangle --output "dist/static/$VERSION/main.js"
+rm "dist/static/$VERSION/elm.js"
