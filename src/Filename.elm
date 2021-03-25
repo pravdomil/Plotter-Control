@@ -23,13 +23,13 @@ type alias Filename =
     -- x
     , copies : Int
 
-    -- .dat
+    -- .hpgl
     }
 
 
 format : String
 format =
-    "<Name>-<Width>x<Length>x<Markers>@<Speed>x<Copies>.dat"
+    "<Name>-<Width>x<Length>x<Markers>@<Speed>x<Copies>.hpgl"
 
 
 fromString : String -> Result String Filename
@@ -99,6 +99,6 @@ parser =
         |. Parser.symbol "@"
         |= Parser.int
         |. Parser.symbol "x"
-        |= (Parser.getChompedString (Parser.chompUntil ".dat") |> Parser.andThen parseInt)
-        |. Parser.symbol ".dat"
+        |= (Parser.getChompedString (Parser.chompUntil ".hpgl") |> Parser.andThen parseInt)
+        |. Parser.symbol ".hpgl"
         |. Parser.end
