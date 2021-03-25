@@ -166,6 +166,10 @@ fontMonospace =
 --
 
 
+type alias Element msg =
+    Element.Element msg
+
+
 p a =
     paragraph (spacing 8 :: a)
 
