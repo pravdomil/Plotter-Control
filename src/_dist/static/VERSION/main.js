@@ -22,13 +22,7 @@ function element(parent, tag, className) {
 
 function checkSerialPortSupport() {
   if (!("serial" in navigator)) {
-    alert(
-      [
-        "No Support for Serial Port",
-        "",
-        'Make sure to use Chrome browser and allow "Experimental Web Platform features" in Chrome flags.',
-      ].join("\n")
-    )
+    alert("Sorry you browser is not supported.")
     throw new Error()
   }
 }
