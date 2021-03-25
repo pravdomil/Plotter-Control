@@ -1,6 +1,6 @@
 module Translation exposing (..)
 
-import Utils.Interop as Interop exposing (Error(..), Status(..))
+import Interop exposing (Error(..), Status(..))
 
 
 type Translation

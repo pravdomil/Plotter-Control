@@ -1,8 +1,8 @@
-module Filename exposing (..)
+module Data.Filename exposing (..)
 
+import Data.HpGl as HpGl exposing (HpGl)
+import Data.SummaCommand as SummaCommand
 import Parser exposing ((|.), (|=), Parser)
-import Utils.HpGl as HpGl exposing (HpGl)
-import Utils.SummaCommand as SummaCommand
 
 
 type alias Filename =

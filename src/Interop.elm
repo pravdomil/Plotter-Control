@@ -1,7 +1,7 @@
-port module Utils.Interop exposing (..)
+port module Interop exposing (..)
 
+import Data.HpGl as HpGl exposing (HpGl)
 import Json.Decode as Decode exposing (Decoder)
-import Utils.HpGl as HpGl exposing (HpGl)
 
 
 port sendDataPort : String -> Cmd msg

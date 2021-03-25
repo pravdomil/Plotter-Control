@@ -1,18 +1,18 @@
 module PlotterControl exposing (..)
 
+import Data.Filename exposing (Filename)
+import Data.HpGl as HpGl exposing (HpGl)
+import Data.SummaCommand as SummaCommand
 import Dict exposing (Dict)
 import File exposing (File)
 import File.Select
-import Filename exposing (Filename)
 import Html exposing (..)
 import Html.Attributes exposing (autofocus, style, value)
 import Html.Events exposing (onClick, onInput, onSubmit)
+import Interop exposing (Status(..), sendData)
 import Styles.C as C
 import Task
 import Translation exposing (..)
-import Utils.HpGl as HpGl exposing (HpGl)
-import Utils.Interop as Interop exposing (Status(..), sendData)
-import Utils.SummaCommand as SummaCommand
 import View.Layout exposing (..)
 
 

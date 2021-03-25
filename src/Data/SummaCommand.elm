@@ -1,6 +1,6 @@
-module Utils.SummaCommand exposing (..)
+module Data.SummaCommand exposing (..)
 
-import Utils.HpGl as HpGl exposing (HpGl)
+import Data.HpGl as HpGl exposing (HpGl)
 
 
 type SummaCommand

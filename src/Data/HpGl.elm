@@ -1,4 +1,4 @@
-module Utils.HpGl exposing (..)
+module Data.HpGl exposing (..)
 
 {-| <https://en.wikipedia.org/wiki/HP-GL>
 -}
