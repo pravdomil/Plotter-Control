@@ -70,7 +70,7 @@ view : Model -> Document Msg
 view model =
     { title = t A_Title
     , body =
-        [ Element.layout Ui.rootStyle
+        [ Element.layout (Ui.rootStyle [])
             (Lazy.lazy PlotterControl.view model.plotterControl
                 |> Element.map PlotterControlMsg
             )

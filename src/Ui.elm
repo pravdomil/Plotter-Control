@@ -2,8 +2,11 @@ module Ui exposing (..)
 
 import Element exposing (..)
 import Element.Background as Background
+import Element.Border as Border
 import Element.Font as Font
+import Element.Input as Input
 import Element.Region as Region
+import Html
 
 
 white =
@@ -166,45 +169,121 @@ fontMonospace =
 --
 
 
-type alias Element msg =
-    Element.Element msg
-
-
-p a =
-    paragraph (spacing 8 :: a)
-
-
-h1 a =
-    p (Region.heading 1 :: Font.size (16 * 2.5 |> round) :: a)
-
-
-h2 a =
-    p (Region.heading 2 :: Font.size (16 * 2 |> round) :: a)
-
-
-h3 a =
-    p (Region.heading 3 :: Font.size ((16 * 1.75) |> round) :: a)
-
-
-h4 a =
-    p (Region.heading 4 :: Font.size ((16 * 1.5) |> round) :: a)
-
-
-h5 a =
-    p (Region.heading 5 :: Font.size ((16 * 1.25) |> round) :: a)
-
-
-h6 a =
-    p (Region.heading 6 :: Font.size (16 |> round) :: a)
+rootStyle a =
+    Background.color white
+        :: Font.color gray900
+        :: Font.size 16
+        :: Font.family fontSansSerif
+        :: a
 
 
 
 --
 
 
-rootStyle =
-    [ Background.color white
-    , Font.color gray900
-    , Font.size 16
-    , Font.family fontSansSerif
-    ]
+type alias Element msg =
+    Element.Element msg
+
+
+
+--
+
+
+row a =
+    Element.row
+        (spacing 32
+            :: width fill
+            :: a
+        )
+
+
+column a =
+    Element.column
+        (spacing 32
+            :: width fill
+            :: a
+        )
+
+
+
+--
+
+
+section a =
+    Element.column
+        (spacing 24
+            :: width fill
+            :: a
+        )
+
+
+h1 a =
+    p (Region.heading 1 :: Font.size 40 :: a)
+
+
+h2 a =
+    p (Region.heading 2 :: Font.size 32 :: a)
+
+
+h3 a =
+    p (Region.heading 3 :: Font.size 28 :: a)
+
+
+h4 a =
+    p (Region.heading 4 :: Font.size 24 :: a)
+
+
+h5 a =
+    p (Region.heading 5 :: Font.size 20 :: a)
+
+
+h6 a =
+    p (Region.heading 6 :: Font.size 16 :: a)
+
+
+p a =
+    paragraph (spacing 8 :: a)
+
+
+
+--
+
+
+none =
+    Element.none
+
+
+text =
+    Element.text
+
+
+el =
+    Element.el
+
+
+br =
+    html (Html.br [] [])
+
+
+muted a =
+    el (Font.color gray600 :: a)
+
+
+image =
+    Element.image
+
+
+link a =
+    Element.link (Font.color primary :: a)
+
+
+newTabLink a =
+    Element.newTabLink (Font.color primary :: a)
+
+
+buttonLink a =
+    Input.button
+        (Font.color primary
+            :: Border.rounded 2
+            :: a
+        )
