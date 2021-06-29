@@ -1,8 +1,8 @@
-module Data.Filename exposing (..)
+module PlotterControl.Data.Filename exposing (..)
 
-import Data.HpGl as HpGl exposing (HpGl)
-import Data.SummaCommand as SummaCommand
 import Parser exposing ((|.), (|=), Parser)
+import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Data.SummaCommand as SummaCommand
 
 
 type alias Filename =

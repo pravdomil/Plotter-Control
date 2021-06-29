@@ -1,4 +1,4 @@
-module Data.HpGl exposing (..)
+module PlotterControl.Data.HpGl exposing (..)
 
 {-| <https://en.wikipedia.org/wiki/HP-GL>
 -}

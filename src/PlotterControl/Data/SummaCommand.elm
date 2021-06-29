@@ -1,6 +1,6 @@
-module Data.SummaCommand exposing (..)
+module PlotterControl.Data.SummaCommand exposing (..)
 
-import Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 
 
 type SummaCommand

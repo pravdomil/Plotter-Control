@@ -1,6 +1,6 @@
-module Translation exposing (..)
+module PlotterControl.Translation exposing (..)
 
-import Interop exposing (Error(..), Status(..))
+import PlotterControl.Interop exposing (Error(..), Status(..))
 
 
 type Translation
@@ -70,7 +70,7 @@ status a =
             interopError b
 
 
-interopError : Interop.Error -> Translation
+interopError : PlotterControl.Interop.Error -> Translation
 interopError a =
     case a of
         OpenError ->

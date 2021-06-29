@@ -1,4 +1,4 @@
-module Ui exposing (..)
+module PlotterControl.Ui exposing (..)
 
 import Element exposing (..)
 import Element.Background as Background

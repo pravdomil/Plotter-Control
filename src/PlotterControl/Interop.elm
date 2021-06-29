@@ -1,7 +1,7 @@
-port module Interop exposing (..)
+port module PlotterControl.Interop exposing (..)
 
-import Data.HpGl as HpGl exposing (HpGl)
 import Json.Decode as Decode exposing (Decoder)
+import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 
 
 port sendDataPort : String -> Cmd msg

@@ -1,14 +1,14 @@
-module PlotterControl exposing (..)
+module PlotterControl.PlotterControl exposing (..)
 
-import Data.Filename as Filename exposing (Filename)
-import Data.HpGl as HpGl exposing (HpGl)
 import Element exposing (Color)
 import Element.Font as Font
 import File exposing (File)
-import Interop exposing (Status(..))
+import PlotterControl.Data.Filename as Filename exposing (Filename)
+import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Interop exposing (Status(..))
+import PlotterControl.Translation exposing (..)
+import PlotterControl.Ui exposing (..)
 import Task
-import Translation exposing (..)
-import Ui exposing (..)
 
 
 type alias Model =
@@ -69,7 +69,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Interop.statusSubscription GotStatus
+    PlotterControl.Interop.statusSubscription GotStatus
 
 
 
@@ -110,7 +110,7 @@ viewStatus model =
             [ text (t (A_Raw "Status"))
             ]
         , h3 [ Font.color color ]
-            [ text (t (Translation.status model.status))
+            [ text (t (PlotterControl.Translation.status model.status))
             ]
         ]
 
