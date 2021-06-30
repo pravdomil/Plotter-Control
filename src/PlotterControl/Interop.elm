@@ -1,15 +1,15 @@
-port module PlotterControl.Interop exposing (..)
+port module PlotterControl.Interop exposing (Error(..), Status(..), sendData, statusSubscription)
 
 import Json.Decode as Decode exposing (Decoder)
-import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 
 
 port sendDataPort : String -> Cmd msg
 
 
-sendData : HpGl -> Cmd msg
+sendData : PlotData -> Cmd msg
 sendData a =
-    a |> HpGl.toString |> sendDataPort
+    a |> PlotData.toString |> sendDataPort
 
 
 
