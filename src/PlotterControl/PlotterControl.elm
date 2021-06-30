@@ -156,12 +156,12 @@ viewFilename a =
             ]
         , row []
             [ text (t (A_Raw "Width:"))
-            , text (String.fromFloat a.width)
+            , text (String.fromFloat a.markerDistanceX)
             , text "mm"
             ]
         , row []
             [ text (t (A_Raw "Length:"))
-            , text (String.fromFloat a.length)
+            , text (String.fromFloat a.markerDistanceY)
             , text "mm"
             , text " x "
             ]

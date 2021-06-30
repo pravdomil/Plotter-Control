@@ -7,11 +7,12 @@ import PlotterControl.Data.SummaCommand as SummaCommand
 
 type alias Filename =
     { name : String
-    , width : Float
-    , length : Float
-    , markers : Int
+    , markerDistanceX : Float
+    , markerDistanceY : Float
+    , markerCount : Int
     , speed : Int
     , copies : Int
+    , perforation : Bool
     }
 
 
@@ -39,9 +40,9 @@ toHpGl f a =
             , "MARKER_Y_SIZE=" ++ String.fromInt (3 * 40)
 
             --
-            , "MARKER_Y_DIS=" ++ String.fromFloat (f.width * 40)
-            , "MARKER_X_DIS=" ++ String.fromFloat (f.length * 40)
-            , "MARKER_X_N=" ++ String.fromInt f.markers
+            , "MARKER_Y_DIS=" ++ String.fromFloat (f.markerDistanceX * 40)
+            , "MARKER_X_DIS=" ++ String.fromFloat (f.markerDistanceY * 40)
+            , "MARKER_X_N=" ++ String.fromInt f.markerCount
 
             --
             , "VELOCITY=" ++ String.fromInt f.speed
