@@ -3,7 +3,7 @@ module PlotterControl.Main exposing (..)
 import Browser exposing (Document)
 import Json.Decode as Decode
 import PlotterControl.PlotterControl
-import PlotterControl.Translation exposing (Translation(..), t)
+import PlotterControl.Translation as Translation
 import PlotterControl.Ui.Base exposing (..)
 
 
@@ -66,7 +66,7 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = t A_Title
+    { title = Translation.title
     , body =
         [ layout []
             (lazy PlotterControl.PlotterControl.view model.plotterControl
