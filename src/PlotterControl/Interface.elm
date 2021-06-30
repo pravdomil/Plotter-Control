@@ -95,7 +95,8 @@ view model =
                 (Decode.at [ "dataTransfer", "files" ] File.decoder)
     in
     column
-        [ height fill
+        [ width fill
+        , height fill
         , padding 32
         , onWithPrevent "dragover" (Decode.succeed DragOver)
         , onWithPrevent "drop" dropDecoder
