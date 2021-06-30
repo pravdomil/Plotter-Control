@@ -9,15 +9,213 @@ import Element.Input
 import Element.Keyed
 import Element.Lazy
 import Element.Region
-import Ui.Style as S
+import Html
+import Html.Attributes
+import Ui.Style as A
 
 
-rem a =
-    round (S.rem * a)
+layout a =
+    Element.layout (bgColor A.baseBgColor :: fontColor A.baseColor :: fontSize A.baseFontSize :: A.baseFontFamily :: a)
 
 
-rem_ a =
-    S.rem * a
+layoutWith opt a =
+    Element.layoutWith opt (bgColor A.baseBgColor :: fontColor A.baseColor :: fontSize A.baseFontSize :: A.baseFontFamily :: a)
+
+
+p a =
+    Element.paragraph (spacing A.baseLineSpacing :: a)
+
+
+textColumn a =
+    Element.textColumn (spacing A.baseLineSpacing :: width fill :: a)
+
+
+link a =
+    Element.link (fontColor A.linkColor :: a)
+
+
+link_ a =
+    Element.Input.button (fontColor A.linkColor :: focused [ borderColor (rgba 0 0 0 1) ] :: a)
+
+
+newTabLink a =
+    Element.newTabLink (fontColor A.linkColor :: a)
+
+
+download a =
+    Element.download (fontColor A.linkColor :: a)
+
+
+downloadAs a =
+    Element.downloadAs (fontColor A.linkColor :: a)
+
+
+h1 a =
+    p (regionHeading 1 :: fontSize A.h1FontSize :: a)
+
+
+h2 a =
+    p (regionHeading 2 :: fontSize A.h2FontSize :: a)
+
+
+h3 a =
+    p (regionHeading 3 :: fontSize A.h3FontSize :: a)
+
+
+h4 a =
+    p (regionHeading 4 :: fontSize A.h4FontSize :: a)
+
+
+h5 a =
+    p (regionHeading 5 :: fontSize A.h5FontSize :: a)
+
+
+h6 a =
+    p (regionHeading 6 :: fontSize A.h6FontSize :: a)
+
+
+br =
+    html (Html.br [] [])
+
+
+hr =
+    el [ width fill, paddingXY (Tuple.first A.hrPadding) (Tuple.second A.hrPadding) ] (el [ width fill, borderWidthEach 0 0 0 1, borderColor A.hrBorderColor ] none)
+
+
+id a =
+    htmlAttribute (Html.Attributes.id a)
+
+
+noneAttribute =
+    htmlAttribute (Html.Attributes.classList [])
+
+
+labelLeft a =
+    Element.Input.labelLeft (fontColor A.labelColor :: fontSize A.labelFontSize :: a)
+
+
+labelRight a =
+    Element.Input.labelRight (fontColor A.labelColor :: fontSize A.labelFontSize :: a)
+
+
+labelAbove a =
+    Element.Input.labelAbove (fontColor A.labelColor :: fontSize A.labelFontSize :: a)
+
+
+labelBelow a =
+    Element.Input.labelBelow (fontColor A.labelColor :: fontSize A.labelFontSize :: a)
+
+
+inputText a =
+    Element.Input.text (spacing A.inputSpacing :: padding A.inputPadding :: bgColor A.inputBgColor :: fontColor A.inputColor :: borderColor A.inputBorderColor :: borderWidth A.inputBorderWidth :: borderRounded A.inputBorderRounded :: a)
+
+
+inputMultiline a =
+    Element.Input.multiline (spacing A.inputSpacing :: padding A.inputPadding :: bgColor A.inputBgColor :: fontColor A.inputColor :: borderColor A.inputBorderColor :: borderWidth A.inputBorderWidth :: borderRounded A.inputBorderRounded :: a)
+
+
+inputSearch a =
+    Element.Input.search (spacing A.inputSpacing :: padding A.inputPadding :: bgColor A.inputBgColor :: fontColor A.inputColor :: borderColor A.inputBorderColor :: borderWidth A.inputBorderWidth :: borderRounded A.inputBorderRounded :: a)
+
+
+inputPlaceholder a =
+    Element.Input.placeholder (fontColor A.placeholderColor :: fontSize A.placeholderFontSize :: a)
+
+
+adaptiveScale =
+    Html.node "style" [] [ Html.text "@media screen and (pointer: fine) { body { zoom: 0.875 } }" ]
+
+
+
+--
+
+
+baseFontFamily =
+    A.baseFontFamily
+
+
+monospaceFontFamily =
+    A.monospaceFontFamily
+
+
+shadow1 =
+    A.shadow1
+
+
+shadow2 =
+    A.shadow2
+
+
+shadow3 =
+    A.shadow3
+
+
+grey0 =
+    A.grey0
+
+
+grey1 =
+    A.grey1
+
+
+grey2 =
+    A.grey2
+
+
+grey3 =
+    A.grey3
+
+
+grey4 =
+    A.grey4
+
+
+grey5 =
+    A.grey5
+
+
+grey6 =
+    A.grey6
+
+
+grey7 =
+    A.grey7
+
+
+grey8 =
+    A.grey8
+
+
+grey9 =
+    A.grey9
+
+
+grey10 =
+    A.grey10
+
+
+primary =
+    A.primary
+
+
+secondary =
+    A.secondary
+
+
+success =
+    A.success
+
+
+info =
+    A.info
+
+
+warning =
+    A.warning
+
+
+danger =
+    A.danger
 
 
 
@@ -128,14 +326,6 @@ column =
     Element.column
 
 
-download =
-    Element.download
-
-
-downloadAs =
-    Element.downloadAs
-
-
 el =
     Element.el
 
@@ -196,18 +386,6 @@ indexedTable =
     Element.indexedTable
 
 
-layout =
-    Element.layout
-
-
-layoutWith =
-    Element.layoutWith
-
-
-link =
-    Element.link
-
-
 map =
     Element.map
 
@@ -252,10 +430,6 @@ moveUp =
     Element.moveUp
 
 
-newTabLink =
-    Element.newTabLink
-
-
 noHover =
     Element.noHover
 
@@ -286,10 +460,6 @@ paddingEach minX maxX minY maxY =
 
 paddingXY =
     Element.paddingXY
-
-
-paragraph =
-    Element.paragraph
 
 
 pointer =
@@ -362,10 +532,6 @@ table =
 
 text =
     Element.text
-
-
-textColumn =
-    Element.textColumn
 
 
 toRgb =
@@ -720,28 +886,8 @@ inputFocusedOnLoad =
     Element.Input.focusedOnLoad
 
 
-inputLabelAbove =
-    Element.Input.labelAbove
-
-
-inputLabelBelow =
-    Element.Input.labelBelow
-
-
 inputLabelHidden =
     Element.Input.labelHidden
-
-
-inputLabelLeft =
-    Element.Input.labelLeft
-
-
-inputLabelRight =
-    Element.Input.labelRight
-
-
-inputMultiline =
-    Element.Input.multiline
 
 
 inputNewPassword =
@@ -756,10 +902,6 @@ inputOptionWith =
     Element.Input.optionWith
 
 
-inputPlaceholder =
-    Element.Input.placeholder
-
-
 inputRadio =
     Element.Input.radio
 
@@ -768,20 +910,12 @@ inputRadioRow =
     Element.Input.radioRow
 
 
-inputSearch =
-    Element.Input.search
-
-
 inputSlider =
     Element.Input.slider
 
 
 inputSpellChecked =
     Element.Input.spellChecked
-
-
-inputText =
-    Element.Input.text
 
 
 inputThumb =
