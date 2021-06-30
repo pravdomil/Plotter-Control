@@ -84,7 +84,7 @@ danger =
 -- Fonts
 
 
-fontFamilyBase =
+baseFontFamily =
     Font.family
         [ Font.typeface "system-ui"
         , Font.typeface "-apple-system"
@@ -102,7 +102,7 @@ fontFamilyBase =
         ]
 
 
-fontFamilyMonospace =
+monospaceFontFamily =
     Font.family
         [ Font.typeface "SFMono-Regular"
         , Font.typeface "Menlo"
