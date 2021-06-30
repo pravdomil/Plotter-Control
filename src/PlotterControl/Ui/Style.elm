@@ -37,27 +37,27 @@ hrBorderColor =
 
 
 h1FontSize =
-    20
+    56
 
 
 h2FontSize =
-    baseFontSize
+    48
 
 
 h3FontSize =
-    baseFontSize
+    40
 
 
 h4FontSize =
-    baseFontSize
+    32
 
 
 h5FontSize =
-    baseFontSize
+    24
 
 
 h6FontSize =
-    baseFontSize
+    16
 
 
 
