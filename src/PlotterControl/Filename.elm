@@ -84,10 +84,10 @@ parser =
         |. Parser.symbol "x"
         |= Parser.int
         |= Parser.oneOf
-            [ Parser.succeed True
-                |. Parser.symbol "perf"
-            , Parser.succeed False
+            [ Parser.succeed False
                 |. Parser.symbol "cut"
+            , Parser.succeed True
+                |. Parser.symbol "perf"
             ]
         |. Parser.symbol ".hpgl"
         |. Parser.end
