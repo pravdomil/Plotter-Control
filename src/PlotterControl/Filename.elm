@@ -67,16 +67,6 @@ toHpGl f a =
 
 parser : Parser Filename
 parser =
-    let
-        parseInt : String -> Parser Int
-        parseInt b =
-            case b |> String.toInt of
-                Just a ->
-                    Parser.succeed a
-
-                Nothing ->
-                    Parser.problem "Expecting Int."
-    in
     Parser.succeed Filename
         |= Parser.getChompedString (Parser.chompUntil "-")
         |. Parser.symbol "-"
@@ -88,6 +78,11 @@ parser =
         |. Parser.symbol "@"
         |= Parser.int
         |. Parser.symbol "x"
-        |= (Parser.getChompedString (Parser.chompUntil ".hpgl") |> Parser.andThen parseInt)
+        |= Parser.int
+        |= Parser.oneOf
+            [ Parser.succeed True
+                |. Parser.symbol "perf"
+            , Parser.succeed False
+            ]
         |. Parser.symbol ".hpgl"
         |. Parser.end
