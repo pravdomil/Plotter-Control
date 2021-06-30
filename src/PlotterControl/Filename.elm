@@ -1,7 +1,6 @@
 module PlotterControl.Filename exposing (..)
 
 import Parser exposing ((|.), (|=), Parser)
-import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 import PlotterControl.Data.SummaCommand as SummaCommand
 
