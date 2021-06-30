@@ -132,7 +132,7 @@ viewFile model =
                     Err c ->
                         column []
                             [ h3 [ fontColor primary ]
-                                [ text (c |> String.replace "_" "_\u{200B}")
+                                [ text (b.name |> String.replace "_" "_\u{200B}")
                                 ]
                             , p [ fontColor danger, fontSemiBold ]
                                 [ text (Translation.raw "Can't parse filename.")
