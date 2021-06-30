@@ -1,6 +1,6 @@
 module PlotterControl.Data.SummaCommand exposing (..)
 
-import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 
 
 type SummaCommand
@@ -45,16 +45,16 @@ type SummaCommand
 --
 
 
-toHpGl : SummaCommand -> HpGl
-toHpGl a =
-    listToHpGl [ a ]
+toPlotData : SummaCommand -> PlotData
+toPlotData a =
+    listToPlotData [ a ]
 
 
-listToHpGl : List SummaCommand -> HpGl
-listToHpGl a =
+listToPlotData : List SummaCommand -> PlotData
+listToPlotData a =
     ([ "\u{001B};@:" ] ++ (a |> List.map toString) ++ [ "END", "" ])
         |> String.join "\n"
-        |> HpGl.fromString
+        |> PlotData.fromString
 
 
 toString : SummaCommand -> String
