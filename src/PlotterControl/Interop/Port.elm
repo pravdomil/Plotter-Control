@@ -1,9 +1,9 @@
-port module PlotterControl.Port exposing (sendData, statusSubscription)
+port module PlotterControl.Interop.Port exposing (sendData, statusSubscription)
 
 import Json.Decode as Decode exposing (Decoder)
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
-import PlotterControl.Status as Status exposing (Status)
-import PlotterControl.Status.Decode
+import PlotterControl.Interop.Status as Status exposing (Status)
+import PlotterControl.Interop.Status.Decode
 
 
 port sendDataPort : String -> Cmd msg
@@ -26,7 +26,7 @@ statusSubscription fn =
     let
         decode : Decode.Value -> Status
         decode a =
-            case a |> Decode.decodeValue PlotterControl.Status.Decode.status of
+            case a |> Decode.decodeValue PlotterControl.Interop.Status.Decode.status of
                 Ok b ->
                     b
 

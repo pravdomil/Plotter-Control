@@ -1,4 +1,4 @@
-module PlotterControl.Status exposing (..)
+module PlotterControl.Interop.Status exposing (..)
 
 
 type Status

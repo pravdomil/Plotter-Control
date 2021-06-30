@@ -4,8 +4,8 @@ import File exposing (File)
 import Parser exposing (Parser)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 import PlotterControl.Filename as Filename exposing (Filename)
-import PlotterControl.Port
-import PlotterControl.Status exposing (Status)
+import PlotterControl.Interop.Port as Port
+import PlotterControl.Interop.Status as Status exposing (Status)
 import PlotterControl.Translation as Translation
 import PlotterControl.Ui.Base exposing (..)
 import Task
@@ -24,7 +24,7 @@ type alias Model =
 
 init : Model
 init =
-    { status = PlotterControl.Status.Ready
+    { status = Status.Ready
     , file = Nothing
     }
 
@@ -71,7 +71,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    PlotterControl.Port.statusSubscription GotStatus
+    Port.statusSubscription GotStatus
 
 
 
@@ -95,16 +95,16 @@ viewStatus model =
         color : Color
         color =
             case model.status of
-                PlotterControl.Status.Ready ->
+                Status.Ready ->
                     primary
 
-                PlotterControl.Status.Connecting ->
+                Status.Connecting ->
                     primary
 
-                PlotterControl.Status.Busy ->
+                Status.Busy ->
                     danger
 
-                PlotterControl.Status.Error _ ->
+                Status.Error _ ->
                     danger
     in
     column []
