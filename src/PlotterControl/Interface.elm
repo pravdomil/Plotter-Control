@@ -172,31 +172,25 @@ viewFile model =
 
 viewFilename : Filename -> Element msg
 viewFilename a =
-    column []
+    let
+        onOff : Bool -> String
+        onOff b =
+            if b then
+                "on"
+
+            else
+                "off"
+    in
+    column [ spacing 8, fontColor grey4 ]
         [ h3 [ fontColor primary ]
             [ text a.name
             ]
-        , row []
-            [ text (Translation.raw "Width:")
-            , text (String.fromFloat a.markerDistanceX)
-            , text "mm"
-            ]
-        , row []
-            [ text (Translation.raw "Length:")
-            , text (String.fromFloat a.markerDistanceY)
-            , text "mm"
-            , text " x "
-            ]
-        , row []
-            [ text (Translation.raw "Speed:")
-            , text (String.fromInt a.speed)
-            , text "mm/s"
-            ]
-        , row []
-            [ text (Translation.raw "Copies:")
-            , text (String.fromInt a.copies)
-            , text "x"
-            ]
+        , text (Translation.raw "Horizontal marker distance: " ++ String.fromFloat a.markerDistanceX ++ "mm")
+        , text (Translation.raw "Vertical marker distance: " ++ String.fromFloat a.markerDistanceY ++ "mm")
+        , text (Translation.raw "Number of markers: " ++ String.fromInt a.markerCount)
+        , text (Translation.raw "Speed: " ++ String.fromInt a.speed ++ "mm/s")
+        , text (Translation.raw "Copies: " ++ String.fromInt a.copies ++ "x")
+        , text (Translation.raw "Perforation: " ++ onOff a.perforation)
         ]
 
 
