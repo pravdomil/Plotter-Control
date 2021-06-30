@@ -29,7 +29,7 @@ type alias Filename =
 
 format : String
 format =
-    "<Name>-<Width>x<Length>x<Markers>@<Speed>x<Copies>.hpgl"
+    "<Name>-<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>@<Speed>x<Copies>.hpgl"
 
 
 fromString : String -> Result String Filename
