@@ -1,6 +1,7 @@
 module PlotterControl.PlotterControl exposing (..)
 
 import File exposing (File)
+import Parser exposing (Parser)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 import PlotterControl.Filename as Filename exposing (Filename)
 import PlotterControl.Interop exposing (Status(..))
@@ -13,7 +14,8 @@ type alias Model =
     { status : Status
     , file :
         Maybe
-            { filename : Result String Filename
+            { name : String
+            , filename : Result (List Parser.DeadEnd) Filename
             , content : HpGl
             }
     }
@@ -53,7 +55,8 @@ update msg model =
             ( { model
                 | file =
                     Just
-                        { filename = Filename.fromString (File.name b)
+                        { name = File.name b
+                        , filename = Filename.fromString (File.name b)
                         , content = HpGl.fromString c
                         }
               }
