@@ -1,8 +1,8 @@
 module PlotterControl.PlotterControl exposing (..)
 
 import File exposing (File)
-import PlotterControl.Data.Filename as Filename exposing (Filename)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Filename as Filename exposing (Filename)
 import PlotterControl.Interop exposing (Status(..))
 import PlotterControl.Translation exposing (..)
 import PlotterControl.Ui.Base exposing (..)

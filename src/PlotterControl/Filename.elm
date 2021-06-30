@@ -1,4 +1,4 @@
-module PlotterControl.Data.Filename exposing (..)
+module PlotterControl.Filename exposing (..)
 
 import Parser exposing ((|.), (|=), Parser)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
