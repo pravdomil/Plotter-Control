@@ -47,6 +47,7 @@ toPlotData a =
 
             --
             , "VELOCITY=" ++ String.fromInt a.speed
+            , "FLEX_CUT=" ++ onOff a.perforation
             ]
                 |> List.map SummaCommand.Set
                 |> SummaCommand.listToPlotData
@@ -58,6 +59,14 @@ toPlotData a =
                 |> PlotData.toString
                 |> String.repeat (a.copies - 1)
                 |> PlotData.fromString
+
+        onOff : Bool -> String
+        onOff b =
+            if b then
+                "ON"
+
+            else
+                "OFF"
     in
     ( prefix, postfix )
 
