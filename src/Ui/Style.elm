@@ -3,6 +3,10 @@ module Ui.Style exposing (..)
 import Element
 
 
+rem =
+    16
+
+
 
 -- Colors
 

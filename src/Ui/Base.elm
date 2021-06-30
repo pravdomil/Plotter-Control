@@ -9,6 +9,19 @@ import Element.Input
 import Element.Keyed
 import Element.Lazy
 import Element.Region
+import Ui.Style as S
+
+
+rem a =
+    round (S.rem * a)
+
+
+rem_ a =
+    S.rem * a
+
+
+
+--
 
 
 type alias Attr decorative msg =
