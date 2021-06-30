@@ -72,7 +72,7 @@ update msg model =
                         , data = data
                         }
               }
-            , Cmd.none
+            , Port.sendData (HpGl.toPlotData data)
             )
 
         DragOver ->
