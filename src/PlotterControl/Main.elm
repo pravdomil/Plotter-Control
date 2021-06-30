@@ -2,7 +2,7 @@ module PlotterControl.Main exposing (..)
 
 import Browser exposing (Document)
 import Json.Decode as Decode
-import PlotterControl.Interface
+import PlotterControl.Interface as Interface
 import PlotterControl.Translation as Translation
 import PlotterControl.Ui.Base exposing (..)
 
@@ -22,13 +22,13 @@ main =
 
 
 type alias Model =
-    { plotterControl : PlotterControl.Interface.Model
+    { plotterControl : Interface.Model
     }
 
 
 init : Decode.Value -> ( Model, Cmd Msg )
 init _ =
-    ( { plotterControl = PlotterControl.Interface.init
+    ( { plotterControl = Interface.init
       }
     , Cmd.none
     )
@@ -39,14 +39,14 @@ init _ =
 
 
 type Msg
-    = PlotterControlMsg PlotterControl.Interface.Msg
+    = PlotterControlMsg Interface.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         PlotterControlMsg a ->
-            PlotterControl.Interface.update a model.plotterControl
+            Interface.update a model.plotterControl
                 |> Tuple.mapBoth (\v -> { model | plotterControl = v }) (Cmd.map PlotterControlMsg)
 
 
@@ -56,7 +56,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    PlotterControl.Interface.subscriptions model.plotterControl
+    Interface.subscriptions model.plotterControl
         |> Sub.map PlotterControlMsg
 
 
@@ -69,7 +69,7 @@ view model =
     { title = Translation.title
     , body =
         [ layout []
-            (lazy PlotterControl.Interface.view model.plotterControl
+            (lazy Interface.view model.plotterControl
                 |> map PlotterControlMsg
             )
         ]
