@@ -2,6 +2,7 @@ port module PlotterControl.Interop exposing (Error(..), Status(..), sendData, st
 
 import Json.Decode as Decode exposing (Decoder)
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
+import PlotterControl.Interop.Decode
 
 
 port sendDataPort : String -> Cmd msg
@@ -24,7 +25,7 @@ statusSubscription fn =
     let
         decode : Decode.Value -> Status
         decode a =
-            case a |> Decode.decodeValue statusDecoder of
+            case a |> Decode.decodeValue PlotterControl.Interop.Decode.status of
                 Ok b ->
                     b
 
@@ -50,46 +51,3 @@ type Error
     | WriterError
     | WriteError
     | DecodeError Decode.Error
-
-
-statusDecoder : Decoder Status
-statusDecoder =
-    Decode.field "_" Decode.int
-        |> Decode.andThen
-            (\i ->
-                case i of
-                    0 ->
-                        Decode.succeed Ready
-
-                    1 ->
-                        Decode.succeed Connecting
-
-                    2 ->
-                        Decode.succeed Busy
-
-                    3 ->
-                        Decode.map Error (Decode.field "a" errorDecoder)
-
-                    _ ->
-                        Decode.fail ("I can't decode " ++ "Status" ++ ", unknown variant with index " ++ String.fromInt i ++ ".")
-            )
-
-
-errorDecoder : Decoder Error
-errorDecoder =
-    Decode.field "_" Decode.int
-        |> Decode.andThen
-            (\i ->
-                case i of
-                    0 ->
-                        Decode.succeed OpenError
-
-                    1 ->
-                        Decode.succeed WriterError
-
-                    2 ->
-                        Decode.succeed WriteError
-
-                    _ ->
-                        Decode.fail ("I can't decode Error, unknown variant with index " ++ String.fromInt i ++ ".")
-            )
