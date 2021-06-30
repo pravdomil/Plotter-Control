@@ -1,175 +1,66 @@
 module Ui exposing (..)
 
 import Element
-import Element.Background as Background
-import Element.Border as Border
-import Element.Font as Font
-import Element.Input as Input
-import Element.Region as Region
-import Html
-import Html.Attributes
+import Element.Background
+import Element.Border
+import Element.Events
+import Element.Font
+import Element.Input
+import Element.Keyed
+import Element.Lazy
+import Element.Region
 
 
+type alias Attr decorative msg =
+    Element.Attr decorative msg
 
--- Basic Elements
+
+type alias Attribute msg =
+    Element.Attribute msg
+
+
+type alias Color =
+    Element.Color
+
+
+type alias Column record msg =
+    Element.Column record msg
+
+
+type alias Decoration =
+    Element.Decoration
+
+
+type alias Device =
+    Element.Device
 
 
 type alias Element msg =
     Element.Element msg
 
 
-none =
-    Element.none
+type alias FocusStyle =
+    Element.FocusStyle
 
 
-text =
-    Element.text
+type alias IndexedColumn record msg =
+    Element.IndexedColumn record msg
 
 
-el =
-    Element.el
+type alias Length =
+    Element.Length
 
 
+type alias Option =
+    Element.Option
 
--- Rows and Columns
 
+above =
+    Element.above
 
-row =
-    Element.row
 
-
-wrappedRow =
-    Element.wrappedRow
-
-
-column =
-    Element.column
-
-
-
--- Text Layout
-
-
-p a =
-    Element.paragraph (spacing 0.5 :: a)
-
-
-textColumn a =
-    Element.textColumn (width fill :: a)
-
-
-h1 a =
-    p (Region.heading 1 :: fontSize 1.5 :: a)
-
-
-h2 a =
-    p (Region.heading 2 :: fontSize 2 :: a)
-
-
-h3 a =
-    p (Region.heading 3 :: fontSize 1.75 :: a)
-
-
-h4 a =
-    p (Region.heading 4 :: fontSize 1.5 :: a)
-
-
-h5 a =
-    p (Region.heading 5 :: fontSize 1.25 :: a)
-
-
-h6 a =
-    p (Region.heading 6 :: fontSize 1 :: a)
-
-
-
--- Data Table
-
-
-table : List (Element.Attribute msg) -> { data : List a, columns : List (Element.Column a msg) } -> Element msg
-table =
-    Element.table
-
-
-indexedTable : List (Element.Attribute msg) -> { data : List a, columns : List (Element.IndexedColumn a msg) } -> Element msg
-indexedTable =
-    Element.indexedTable
-
-
-
--- Size
-
-
-width =
-    Element.width
-
-
-height =
-    Element.height
-
-
-px =
-    Element.px
-
-
-shrink =
-    Element.shrink
-
-
-fill =
-    Element.fill
-
-
-fillPortion =
-    Element.fillPortion
-
-
-maximum =
-    Element.maximum
-
-
-minimum =
-    Element.minimum
-
-
-
--- Padding and Spacing
-
-
-padding a =
-    Element.padding (step a)
-
-
-paddingXY a b =
-    Element.paddingXY (step a) (step b)
-
-
-paddingEach a b c d =
-    Element.paddingEach { left = step a, right = step b, top = step c, bottom = step d }
-
-
-spacing a =
-    Element.spacing (step a)
-
-
-spacingXY a b =
-    Element.spacingXY (step a) (step b)
-
-
-spaceEvenly =
-    Element.spaceEvenly
-
-
-
--- Alignment
-
-
-centerX =
-    Element.centerX
-
-
-centerY =
-    Element.centerY
+alignBottom =
+    Element.alignBottom
 
 
 alignLeft =
@@ -184,444 +75,781 @@ alignTop =
     Element.alignTop
 
 
-alignBottom =
-    Element.alignBottom
+alpha =
+    Element.alpha
 
 
+behindContent =
+    Element.behindContent
 
--- Transparency
+
+below =
+    Element.below
+
+
+centerX =
+    Element.centerX
+
+
+centerY =
+    Element.centerY
+
+
+classifyDevice =
+    Element.classifyDevice
+
+
+clip =
+    Element.clip
+
+
+clipX =
+    Element.clipX
+
+
+clipY =
+    Element.clipY
+
+
+column =
+    Element.column
+
+
+download =
+    Element.download
+
+
+downloadAs =
+    Element.downloadAs
+
+
+el =
+    Element.el
+
+
+explain =
+    Element.explain
+
+
+fill =
+    Element.fill
+
+
+fillPortion =
+    Element.fillPortion
+
+
+focusStyle =
+    Element.focusStyle
+
+
+focused =
+    Element.focused
+
+
+forceHover =
+    Element.forceHover
+
+
+fromRgb =
+    Element.fromRgb
+
+
+fromRgb255 =
+    Element.fromRgb255
+
+
+height =
+    Element.height
+
+
+html =
+    Element.html
+
+
+htmlAttribute =
+    Element.htmlAttribute
+
+
+image =
+    Element.image
+
+
+inFront =
+    Element.inFront
+
+
+indexedTable =
+    Element.indexedTable
+
+
+layout =
+    Element.layout
+
+
+layoutWith =
+    Element.layoutWith
+
+
+link =
+    Element.link
+
+
+map =
+    Element.map
+
+
+mapAttribute =
+    Element.mapAttribute
+
+
+maximum =
+    Element.maximum
+
+
+minimum =
+    Element.minimum
+
+
+modular =
+    Element.modular
+
+
+mouseDown =
+    Element.mouseDown
+
+
+mouseOver =
+    Element.mouseOver
+
+
+moveDown =
+    Element.moveDown
+
+
+moveLeft =
+    Element.moveLeft
+
+
+moveRight =
+    Element.moveRight
+
+
+moveUp =
+    Element.moveUp
+
+
+newTabLink =
+    Element.newTabLink
+
+
+noHover =
+    Element.noHover
+
+
+noStaticStyleSheet =
+    Element.noStaticStyleSheet
+
+
+none =
+    Element.none
+
+
+onLeft =
+    Element.onLeft
+
+
+onRight =
+    Element.onRight
+
+
+padding =
+    Element.padding
+
+
+paddingEach minX maxX minY maxY =
+    Element.paddingEach { left = minX, right = maxX, top = minY, bottom = maxY }
+
+
+paddingXY =
+    Element.paddingXY
+
+
+paragraph =
+    Element.paragraph
+
+
+pointer =
+    Element.pointer
+
+
+px =
+    Element.px
+
+
+rgb =
+    Element.rgb
+
+
+rgb255 =
+    Element.rgb255
+
+
+rgba =
+    Element.rgba
+
+
+rgba255 =
+    Element.rgba255
+
+
+rotate =
+    Element.rotate
+
+
+row =
+    Element.row
+
+
+scale =
+    Element.scale
+
+
+scrollbarX =
+    Element.scrollbarX
+
+
+scrollbarY =
+    Element.scrollbarY
+
+
+scrollbars =
+    Element.scrollbars
+
+
+shrink =
+    Element.shrink
+
+
+spaceEvenly =
+    Element.spaceEvenly
+
+
+spacing =
+    Element.spacing
+
+
+spacingXY =
+    Element.spacingXY
+
+
+table =
+    Element.table
+
+
+text =
+    Element.text
+
+
+textColumn =
+    Element.textColumn
+
+
+toRgb =
+    Element.toRgb
 
 
 transparent =
     Element.transparent
 
 
-alpha =
-    Element.alpha
+width =
+    Element.width
+
+
+wrappedRow =
+    Element.wrappedRow
 
 
 
--- Links
-
-
-link : List (Element.Attribute msg) -> { label : Element msg, url : String } -> Element msg
-link a =
-    Element.link (fontColor primary :: a)
-
-
-newTabLink : List (Element.Attribute msg) -> { label : Element msg, url : String } -> Element msg
-newTabLink a =
-    Element.newTabLink (fontColor primary :: a)
-
-
-download : List (Element.Attribute msg) -> { label : Element msg, url : String } -> Element msg
-download a =
-    Element.download (fontColor primary :: a)
-
-
-downloadAs : List (Element.Attribute msg) -> { label : Element msg, filename : String, url : String } -> Element msg
-downloadAs a =
-    Element.downloadAs (fontColor primary :: a)
-
-
-
--- Images
-
-
-image : List (Element.Attribute msg) -> { description : String, src : String } -> Element msg
-image =
-    Element.image
-
-
-
--- Colors
-
-
-gray0 =
-    Element.rgb 1 1 1
-
-
-gray1 =
-    Element.rgb 0.96 0.97 0.97
-
-
-gray2 =
-    Element.rgb 0.9 0.92 0.93
-
-
-gray3 =
-    Element.rgb 0.86 0.88 0.89
-
-
-gray4 =
-    Element.rgb 0.8 0.82 0.84
-
-
-gray5 =
-    Element.rgb 0.67 0.7 0.73
-
-
-gray6 =
-    Element.rgb 0.41 0.45 0.48
-
-
-gray7 =
-    Element.rgb 0.28 0.3 0.33
-
-
-gray8 =
-    Element.rgb 0.19 0.22 0.24
-
-
-gray9 =
-    Element.rgb 0.12 0.14 0.15
-
-
-gray10 =
-    Element.rgb 0 0 0
-
-
-primary =
-    Element.rgb 0.05 0.43 0.99
-
-
-secondary =
-    gray6
-
-
-success =
-    Element.rgb 0.1 0.53 0.33
-
-
-info =
-    Element.rgb 0.05 0.79 0.94
-
-
-warning =
-    Element.rgb 1 0.76 0.03
-
-
-danger =
-    Element.rgb 0.86 0.21 0.27
-
-
-
--- Backgrounds
+--
 
 
 bgColor =
-    Background.color
+    Element.Background.color
+
+
+bgGradient =
+    Element.Background.gradient
+
+
+bgImage =
+    Element.Background.image
+
+
+bgTiled =
+    Element.Background.tiled
+
+
+bgTiledX =
+    Element.Background.tiledX
+
+
+bgTiledY =
+    Element.Background.tiledY
+
+
+bgUncropped =
+    Element.Background.uncropped
 
 
 
--- Font
-
-
-fontColor =
-    Font.color
-
-
-fontSize a =
-    Font.size (step a)
-
-
-
--- Font - Typefaces
-
-
-fontFamilyDefault =
-    Font.family
-        [ Font.typeface "system-ui"
-        , Font.typeface "-apple-system"
-        , Font.typeface "Segoe UI"
-        , Font.typeface "Roboto"
-        , Font.typeface "Helvetica Neue"
-        , Font.typeface "Arial"
-        , Font.typeface "Noto Sans"
-        , Font.typeface "Liberation Sans"
-        , Font.sansSerif
-        , Font.typeface "Apple Color Emoji"
-        , Font.typeface "Segoe UI Emoji"
-        , Font.typeface "Segoe UI Symbol"
-        , Font.typeface "Noto Color Emoji"
-        ]
-
-
-fontFamilyMonospace =
-    Font.family
-        [ Font.typeface "SFMono-Regular"
-        , Font.typeface "Menlo"
-        , Font.typeface "Monaco"
-        , Font.typeface "Consolas"
-        , Font.typeface "Liberation Mono"
-        , Font.typeface "Courier New"
-        , Font.monospace
-        ]
-
-
-
--- Font - Alignment and Spacing
-
-
-fontLeft =
-    Font.alignLeft
-
-
-fontRight =
-    Font.alignRight
-
-
-fontCenter =
-    Font.center
-
-
-
--- Font - Font Styles
-
-
-fontUnderline =
-    Font.underline
-
-
-fontStrike =
-    Font.strike
-
-
-fontItalic =
-    Font.italic
-
-
-fontUnitalicized =
-    Font.unitalicized
-
-
-
--- Font - Font Weight
-
-
-fontWeight a =
-    case a of
-        1 ->
-            Font.hairline
-
-        2 ->
-            Font.extraLight
-
-        3 ->
-            Font.light
-
-        4 ->
-            Font.regular
-
-        5 ->
-            Font.medium
-
-        6 ->
-            Font.semiBold
-
-        7 ->
-            Font.bold
-
-        8 ->
-            Font.extraBold
-
-        9 ->
-            Font.heavy
-
-        _ ->
-            Font.regular
-
-
-
--- Borders
+--
 
 
 borderColor =
-    Border.color
+    Element.Border.color
+
+
+borderDashed =
+    Element.Border.dashed
+
+
+borderDotted =
+    Element.Border.dotted
+
+
+borderGlow =
+    Element.Border.glow
+
+
+borderInnerGlow =
+    Element.Border.innerGlow
+
+
+borderInnerShadow =
+    Element.Border.innerShadow
+
+
+borderRoundEach topLeft topRight bottomLeft bottomRight =
+    Element.Border.roundEach { topLeft = topLeft, topRight = topRight, bottomLeft = bottomLeft, bottomRight = bottomRight }
+
+
+borderRounded =
+    Element.Border.rounded
+
+
+borderShadow =
+    Element.Border.shadow
+
+
+borderSolid =
+    Element.Border.solid
 
 
 borderWidth =
-    Border.width
+    Element.Border.width
 
 
-borderWidthEach a b c d =
-    Border.widthEach { left = a, right = b, top = c, bottom = d }
+borderWidthEach minX maxX minY maxY =
+    Element.Border.widthEach { left = minX, right = maxX, top = minY, bottom = maxY }
 
 
-borderRounded a =
-    Border.rounded (step a)
-
-
-borderShadow a =
-    Border.shadow
-        { offset = ( 0, step_ 1 )
-        , size = 0
-        , blur = step_ a
-        , color = gray10 |> Element.toRgb |> (\v -> { v | alpha = 0.2 }) |> Element.fromRgb
-        }
-
-
-
--- Extras
-
-
-br =
-    Element.html (Html.br [] [])
-
-
-hr =
-    row [ width fill, paddingXY 0 1 ]
-        [ el [ width fill, borderWidthEach 0 0 0 1, borderColor gray3 ] none
-        ]
-
-
-noneAttribute =
-    Element.htmlAttribute (Html.Attributes.classList [])
-
-
-id a =
-    Element.htmlAttribute (Html.Attributes.id a)
-
-
-
--- Inputs
-
-
-buttonLink : List (Element.Attribute msg) -> { label : Element msg, onPress : Maybe msg } -> Element msg
-buttonLink a =
-    Input.button
-        (fontColor primary
-            :: borderRounded 0.25
-            :: Element.focused [ borderColor (Element.rgba 0 0 0 1) ]
-            :: a
-        )
+borderWidthXY =
+    Element.Border.widthXY
 
 
 
 --
 
 
-inputStyle a =
-    padding 0.5
-        :: spacing 0.5
-        :: bgColor gray0
-        :: borderColor gray4
-        :: borderWidth 1
-        :: borderRounded 0.25
-        :: a
+onClick =
+    Element.Events.onClick
 
 
-searchInput a =
-    Input.search (inputStyle a)
+onDoubleClick =
+    Element.Events.onDoubleClick
 
 
-placeholder a =
-    Input.placeholder (fontSize 0.875 :: a)
+onFocus =
+    Element.Events.onFocus
+
+
+onLoseFocus =
+    Element.Events.onLoseFocus
+
+
+onMouseDown =
+    Element.Events.onMouseDown
+
+
+onMouseEnter =
+    Element.Events.onMouseEnter
+
+
+onMouseLeave =
+    Element.Events.onMouseLeave
+
+
+onMouseMove =
+    Element.Events.onMouseMove
+
+
+onMouseUp =
+    Element.Events.onMouseUp
 
 
 
 --
 
 
-inputCheckbox :
-    List (Element.Attribute msg)
-    ->
-        { icon : Bool -> Element msg
-        , label : Input.Label msg
-        , checked : Bool
-        , onChange : Bool -> msg
-        }
-    -> Element msg
-inputCheckbox a =
-    Input.checkbox (spacing 0.5 :: a)
+type alias Font =
+    Element.Font.Font
+
+
+type alias Variant =
+    Element.Font.Variant
+
+
+fontAlignLeft =
+    Element.Font.alignLeft
+
+
+fontAlignRight =
+    Element.Font.alignRight
+
+
+fontBold =
+    Element.Font.bold
+
+
+fontCenter =
+    Element.Font.center
+
+
+fontColor =
+    Element.Font.color
+
+
+fontDiagonalFractions =
+    Element.Font.diagonalFractions
+
+
+fontExternal =
+    Element.Font.external
+
+
+fontExtraBold =
+    Element.Font.extraBold
+
+
+fontExtraLight =
+    Element.Font.extraLight
+
+
+fontFamily =
+    Element.Font.family
+
+
+fontFeature =
+    Element.Font.feature
+
+
+fontGlow =
+    Element.Font.glow
+
+
+fontHairline =
+    Element.Font.hairline
+
+
+fontHeavy =
+    Element.Font.heavy
+
+
+fontIndexed =
+    Element.Font.indexed
+
+
+fontItalic =
+    Element.Font.italic
+
+
+fontJustify =
+    Element.Font.justify
+
+
+fontLetterSpacing =
+    Element.Font.letterSpacing
+
+
+fontLigatures =
+    Element.Font.ligatures
+
+
+fontLight =
+    Element.Font.light
+
+
+fontMedium =
+    Element.Font.medium
+
+
+fontMonospace =
+    Element.Font.monospace
+
+
+fontOrdinal =
+    Element.Font.ordinal
+
+
+fontRegular =
+    Element.Font.regular
+
+
+fontSansSerif =
+    Element.Font.sansSerif
+
+
+fontSemiBold =
+    Element.Font.semiBold
+
+
+fontSerif =
+    Element.Font.serif
+
+
+fontShadow =
+    Element.Font.shadow
+
+
+fontSize =
+    Element.Font.size
+
+
+fontSlashedZero =
+    Element.Font.slashedZero
+
+
+fontSmallCaps =
+    Element.Font.smallCaps
+
+
+fontStackedFractions =
+    Element.Font.stackedFractions
+
+
+fontStrike =
+    Element.Font.strike
+
+
+fontSwash =
+    Element.Font.swash
+
+
+fontTabularNumbers =
+    Element.Font.tabularNumbers
+
+
+fontTypeface =
+    Element.Font.typeface
+
+
+fontUnderline =
+    Element.Font.underline
+
+
+fontUnitalicized =
+    Element.Font.unitalicized
+
+
+fontVariant =
+    Element.Font.variant
+
+
+fontVariantList =
+    Element.Font.variantList
+
+
+fontWordSpacing =
+    Element.Font.wordSpacing
+
+
+
+--
+
+
+inputButton =
+    Element.Input.button
+
+
+inputCheckbox =
+    Element.Input.checkbox
+
+
+inputCurrentPassword =
+    Element.Input.currentPassword
 
 
 inputDefaultCheckbox =
-    Input.defaultCheckbox
+    Element.Input.defaultCheckbox
+
+
+inputDefaultThumb =
+    Element.Input.defaultThumb
+
+
+inputEmail =
+    Element.Input.email
+
+
+inputFocusedOnLoad =
+    Element.Input.focusedOnLoad
+
+
+inputLabelAbove =
+    Element.Input.labelAbove
+
+
+inputLabelBelow =
+    Element.Input.labelBelow
+
+
+inputLabelHidden =
+    Element.Input.labelHidden
+
+
+inputLabelLeft =
+    Element.Input.labelLeft
+
+
+inputLabelRight =
+    Element.Input.labelRight
+
+
+inputMultiline =
+    Element.Input.multiline
+
+
+inputNewPassword =
+    Element.Input.newPassword
+
+
+inputOption =
+    Element.Input.option
+
+
+inputOptionWith =
+    Element.Input.optionWith
+
+
+inputPlaceholder =
+    Element.Input.placeholder
+
+
+inputRadio =
+    Element.Input.radio
+
+
+inputRadioRow =
+    Element.Input.radioRow
+
+
+inputSearch =
+    Element.Input.search
+
+
+inputSlider =
+    Element.Input.slider
+
+
+inputSpellChecked =
+    Element.Input.spellChecked
+
+
+inputText =
+    Element.Input.text
+
+
+inputThumb =
+    Element.Input.thumb
+
+
+inputUsername =
+    Element.Input.username
 
 
 
 --
 
 
-inputRadioRow :
-    List (Element.Attribute msg)
-    ->
-        { label : Input.Label msg
-        , options : List (Input.Option a msg)
-        , selected : Maybe a
-        , onChange : a -> msg
-        }
-    -> Element msg
-inputRadioRow a =
-    Input.radioRow (fontSize 0.875 :: a)
+keyedColumn =
+    Element.Keyed.column
 
 
-inputOption : a -> Element msg -> Input.Option a msg
-inputOption a b =
-    Input.optionWith a
-        (\v ->
-            case v of
-                Input.Idle ->
-                    el [] b
+keyedEl =
+    Element.Keyed.el
 
-                Input.Focused ->
-                    el [] b
 
-                Input.Selected ->
-                    el [ fontColor primary ] b
-        )
+keyedRow =
+    Element.Keyed.row
 
 
 
 --
 
 
-labelStyle a =
-    fontSize 0.875 :: fontColor gray6 :: a
+lazy =
+    Element.Lazy.lazy
 
 
-labelRight a =
-    Input.labelRight (labelStyle a)
+lazy2 =
+    Element.Lazy.lazy2
 
 
-labelLeft a =
-    Input.labelLeft (labelStyle a)
+lazy3 =
+    Element.Lazy.lazy3
 
 
-labelAbove a =
-    Input.labelAbove (labelStyle a)
+lazy4 =
+    Element.Lazy.lazy4
 
 
-labelBelow a =
-    Input.labelBelow (labelStyle a)
-
-
-labelHidden =
-    Input.labelHidden
+lazy5 =
+    Element.Lazy.lazy5
 
 
 
--- Root
+--
 
 
-rootStyle a =
-    fontSize 1
-        :: fontFamilyDefault
-        :: fontColor gray9
-        :: bgColor gray1
-        :: a
+regionAnnounce =
+    Element.Region.announce
 
 
-
--- Helpers
-
-
-step : Float -> Int
-step a =
-    round (step_ a)
+regionAnnounceUrgently =
+    Element.Region.announceUrgently
 
 
-step_ : Float -> Float
-step_ a =
-    a * 16
+regionAside =
+    Element.Region.aside
+
+
+regionDescription =
+    Element.Region.description
+
+
+regionFooter =
+    Element.Region.footer
+
+
+regionHeading =
+    Element.Region.heading
+
+
+regionMainContent =
+    Element.Region.mainContent
+
+
+regionNavigation =
+    Element.Region.navigation
