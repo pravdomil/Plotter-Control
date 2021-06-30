@@ -5,6 +5,24 @@ import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 import PlotterControl.Interop.Decode
 
 
+type Status
+    = Ready
+    | Connecting
+    | Busy
+    | Error Error
+
+
+type Error
+    = OpenError
+    | WriterError
+    | WriteError
+    | DecodeError Decode.Error
+
+
+
+--
+
+
 port sendDataPort : String -> Cmd msg
 
 
@@ -33,21 +51,3 @@ statusSubscription fn =
                     Error (DecodeError b)
     in
     statusSubscriptionPort (decode >> fn)
-
-
-
---
-
-
-type Status
-    = Ready
-    | Connecting
-    | Busy
-    | Error Error
-
-
-type Error
-    = OpenError
-    | WriterError
-    | WriteError
-    | DecodeError Decode.Error
