@@ -6,7 +6,6 @@ module PlotterControl.Interop.Encode exposing (..)
 import PlotterControl.Interop as A 
 import Json.Encode as E 
 import Utils.Json.Encode_ as E_ exposing (Encoder)
-import Json.Decode.Encode  
 
 status : Encoder A.Status
 status  =
@@ -33,5 +32,5 @@ error  =
       A.WriteError  ->
         (E.object) ([("a", (E.int) (2))])
       A.DecodeError v2 ->
-        (E.object) ([("a", (E.int) (3)), ("b", ((Json.Decode.Encode.error)) (v2))])
+        (E.object) ([("a", (E.int) (3)), ("b", ((E.string)) (v2))])
     

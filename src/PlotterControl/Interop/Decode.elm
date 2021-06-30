@@ -6,7 +6,6 @@ module PlotterControl.Interop.Decode exposing (..)
 import PlotterControl.Interop as A 
 import Json.Decode as D exposing (Decoder)
 import Utils.Json.Decode_ as D_ 
-import Json.Decode.Decode  
 
 status : Decoder A.Status
 status  =
@@ -35,7 +34,7 @@ error  =
       2 ->
         (D.succeed) (A.WriteError)
       3 ->
-        (D.map) (A.DecodeError) ((D.field) ("b") ((Json.Decode.Decode.error)))
+        (D.map) (A.DecodeError) ((D.field) ("b") ((D.string)))
       _ ->
         (D.fail) ("I can't decode \"Error\", unknown variant with index " ++ (String.fromInt) (a___) ++ ".")
     ))

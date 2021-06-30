@@ -16,7 +16,7 @@ type Error
     = OpenError
     | WriterError
     | WriteError
-    | DecodeError Decode.Error
+    | DecodeError String
 
 
 
@@ -48,6 +48,6 @@ statusSubscription fn =
                     b
 
                 Err b ->
-                    Error (DecodeError b)
+                    Error (DecodeError (Decode.errorToString b))
     in
     statusSubscriptionPort (decode >> fn)
