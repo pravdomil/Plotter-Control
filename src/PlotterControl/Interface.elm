@@ -80,17 +80,14 @@ subscriptions _ =
 
 view : Model -> Element Msg
 view model =
-    column []
-        [ h6 []
-            [ text Translation.title
-            ]
-        , viewStatus model
+    column [ height fill, padding 32 ]
+        [ viewHeader model
         , viewFile model
         ]
 
 
-viewStatus : Model -> Element Msg
-viewStatus model =
+viewHeader : Model -> Element Msg
+viewHeader model =
     let
         color : Color
         color =
@@ -108,23 +105,22 @@ viewStatus model =
                     danger
     in
     column []
-        [ h6 [ fontColor grey4 ]
-            [ text (Translation.raw "Status")
+        [ h1 []
+            [ text Translation.title
             ]
-        , h3 [ fontColor color ]
+        , el [ paddingEach 0 0 0 16 ] none
+        , h2 [ fontColor color ]
             [ text (Translation.status model.status)
             ]
+        , el [ paddingEach 0 0 0 64 ] none
         ]
 
 
 viewFile : Model -> Element Msg
 viewFile model =
     column
-        []
-        [ h6 [ fontColor grey4 ]
-            [ text (Translation.raw "File")
-            ]
-        , case model.file of
+        [ height fill ]
+        [ case model.file of
             Just b ->
                 case b.filename of
                     Ok c ->
@@ -142,10 +138,12 @@ viewFile model =
 
             Nothing ->
                 h3 []
-                    [ text (Translation.raw "No file loaded.")
+                    [ text (Translation.raw "Drag and drop file to plot.")
                     ]
+        , el [ paddingEach 0 0 0 16 ] none
+        , el [ height fill ] none
         , p [ fontColor grey4 ]
-            [ text (Translation.raw "Filename:")
+            [ text (Translation.raw "Filename format:")
             , text " "
             , text Filename.format
             ]
