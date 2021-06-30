@@ -53,8 +53,6 @@ listToHpGl a =
         |> HpGl.fromString
 
 
-{-| To convert command to string.
--}
 toString : SummaCommand -> String
 toString a =
     case a of
