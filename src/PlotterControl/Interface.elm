@@ -115,7 +115,7 @@ viewHeader model =
                     primary
 
                 Status.Connecting ->
-                    primary
+                    danger
 
                 Status.Busy ->
                     danger
