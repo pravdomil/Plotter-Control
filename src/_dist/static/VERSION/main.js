@@ -34,40 +34,40 @@ async function sendData(a, send) {
     Error = 3
   let port, writer
 
-  send({ _: Connecting })
+  send({ a: Connecting })
 
   try {
     port = await getPort()
   } catch (e) {
-    send({ _: Ready })
+    send({ a: Ready })
     throw e
   }
 
   try {
     if (!port.writable) await port.open({ baudRate: 57600 })
   } catch (e) {
-    send({ _: Error, a: { _: 0 } })
+    send({ a: Error, b: { a: 0 } })
     throw e
   }
 
   try {
     writer = port.writable.getWriter()
   } catch (e) {
-    send({ _: Error, a: { _: 1 } })
+    send({ a: Error, b: { a: 1 } })
     throw e
   }
 
-  send({ _: Busy })
+  send({ a: Busy })
 
   try {
     await writer.write(new TextEncoder().encode(a))
     await writer.close()
   } catch (e) {
-    send({ _: Error, a: { _: 2 } })
+    send({ a: Error, b: { a: 2 } })
     throw e
   }
 
-  send({ _: Ready })
+  send({ a: Ready })
 }
 
 async function getPort() {
