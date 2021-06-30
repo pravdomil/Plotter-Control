@@ -1,6 +1,8 @@
 module PlotterControl.Interface exposing (..)
 
 import File exposing (File)
+import Html
+import Html.Attributes as Attributes
 import Html.Events as Events
 import Json.Decode as Decode
 import Parser exposing (Parser)
@@ -11,6 +13,7 @@ import PlotterControl.Interop.Status as Status exposing (Status)
 import PlotterControl.Translation as Translation
 import PlotterControl.Ui.Base exposing (..)
 import Task
+import Utils.DeadEnds as DeadEnds
 
 
 type alias Model =
@@ -147,12 +150,14 @@ viewFile model =
                         viewFilename c
 
                     Err c ->
-                        column []
+                        column [ spacing 8 ]
                             [ h3 [ fontColor primary ]
                                 [ text (b.name |> String.replace "_" "_\u{200B}")
                                 ]
                             , p [ fontColor danger, fontSemiBold ]
-                                [ text (Translation.raw "Can't parse filename.")
+                                [ text (Translation.raw "Can't parse filename.") ]
+                            , p [ fontColor grey4, htmlAttribute (Attributes.style "white-space" "pre") ]
+                                [ html (Html.text (DeadEnds.toString c))
                                 ]
                             ]
 
