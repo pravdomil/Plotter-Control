@@ -1,4 +1,4 @@
-module PlotterControl.PlotterControl exposing (..)
+module PlotterControl.Interface exposing (..)
 
 import File exposing (File)
 import Parser exposing (Parser)
