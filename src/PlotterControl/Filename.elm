@@ -21,14 +21,9 @@ format =
     "<Name>-<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>@<Speed>x<Copies>[perf].hpgl"
 
 
-fromString : String -> Result String Filename
+fromString : String -> Result (List Parser.DeadEnd) Filename
 fromString a =
-    case a |> Parser.run parser of
-        Ok b ->
-            Ok b
-
-        Err _ ->
-            Err a
+    Parser.run parser a
 
 
 toPlotData : Filename -> ( PlotData, PlotData )
