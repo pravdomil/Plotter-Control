@@ -1,4 +1,4 @@
-module Ui.Style exposing (..)
+module PlotterControl.Ui.Style exposing (..)
 
 import Element
 import Element.Font as Font

@@ -1,4 +1,4 @@
-module Ui.Base exposing (..)
+module PlotterControl.Ui.Base exposing (..)
 
 import Element
 import Element.Background
@@ -11,7 +11,7 @@ import Element.Lazy
 import Element.Region
 import Html
 import Html.Attributes
-import Ui.Style as A
+import PlotterControl.Ui.Style as A
 
 
 layout a =
