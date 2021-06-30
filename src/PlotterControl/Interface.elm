@@ -92,7 +92,7 @@ view model =
         dropDecoder : Decode.Decoder Msg
         dropDecoder =
             Decode.map GotFile
-                (Decode.at [ "dataTransfer", "files" ] File.decoder)
+                (Decode.at [ "dataTransfer", "files", "0" ] File.decoder)
     in
     column
         [ width fill
