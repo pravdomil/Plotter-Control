@@ -59,12 +59,17 @@ update msg model =
             )
 
         GotFileContent b c ->
+            let
+                data : HpGl
+                data =
+                    HpGl.fromString c
+            in
             ( { model
                 | file =
                     Just
                         { name = File.name b
                         , filename = Filename.fromString (File.name b)
-                        , data = HpGl.fromString c
+                        , data = data
                         }
               }
             , Cmd.none
