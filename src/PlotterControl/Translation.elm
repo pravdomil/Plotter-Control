@@ -3,84 +3,45 @@ module PlotterControl.Translation exposing (..)
 import PlotterControl.Interop exposing (Error(..), Status(..))
 
 
-type Translation
-    = A_Title
-    | A_Raw String
-      --
-    | Status_Ready
-    | Status_Connecting
-    | Status_Busy
-      --
-    | Interop_OpenError
-    | Interop_WriterError
-    | Interop_WriteError
-    | Interop_DecodeError
+raw a =
+    a
 
 
-t : Translation -> String
-t a =
-    case a of
-        A_Title ->
-            "Plotter Control"
-
-        A_Raw b ->
-            b
-
-        --
-        Status_Ready ->
-            "Ready."
-
-        Status_Connecting ->
-            "Connecting..."
-
-        Status_Busy ->
-            "Busy..."
-
-        --
-        Interop_OpenError ->
-            "Can't open serial port."
-
-        Interop_WriterError ->
-            "Serial port is busy."
-
-        Interop_WriteError ->
-            "Can't write data to serial port."
-
-        Interop_DecodeError ->
-            "Can't communicate with serial port."
+title =
+    "Plotter Control"
 
 
 
 --
 
 
-status : Status -> Translation
+status : Status -> String
 status a =
     case a of
         Ready ->
-            Status_Ready
+            "Ready."
 
         Connecting ->
-            Status_Connecting
+            "Connecting..."
 
         Busy ->
-            Status_Busy
+            "Busy..."
 
         Error b ->
             interopError b
 
 
-interopError : PlotterControl.Interop.Error -> Translation
+interopError : PlotterControl.Interop.Error -> String
 interopError a =
     case a of
         OpenError ->
-            Interop_OpenError
+            "Can't open serial port."
 
         WriterError ->
-            Interop_WriterError
+            "Serial port is busy."
 
         WriteError ->
-            Interop_WriteError
+            "Can't write data to serial port."
 
         DecodeError _ ->
-            Interop_DecodeError
+            "Can't communicate with serial port."
