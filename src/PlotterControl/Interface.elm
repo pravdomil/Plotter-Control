@@ -97,8 +97,8 @@ view model =
     column
         [ height fill
         , padding 32
-        , on "dragover" (Decode.succeed DragOver)
-        , on "drop" dropDecoder
+        , onWithPrevent "dragover" (Decode.succeed DragOver)
+        , onWithPrevent "drop" dropDecoder
         ]
         [ viewHeader model
         , viewFile model
@@ -203,8 +203,8 @@ viewFilename a =
 --
 
 
-on : String -> Decode.Decoder msg -> Attribute msg
-on event decoder =
+onWithPrevent : String -> Decode.Decoder msg -> Attribute msg
+onWithPrevent event decoder =
     htmlAttribute
         (Events.preventDefaultOn event
             (Decode.map (\v -> ( v, True )) decoder)
