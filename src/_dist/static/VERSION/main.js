@@ -28,6 +28,8 @@ function checkSerialPortSupport() {
 }
 
 async function sendData(a, send) {
+  if (!prompt("Are you sure?")) return
+
   const Ready = 0,
     Connecting = 1,
     Busy = 2,
