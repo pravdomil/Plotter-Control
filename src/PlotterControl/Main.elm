@@ -22,13 +22,13 @@ main =
 
 
 type alias Model =
-    { plotterControl : Interface.Model
+    { interface : Interface.Model
     }
 
 
 init : Decode.Value -> ( Model, Cmd Msg )
 init _ =
-    ( { plotterControl = Interface.init
+    ( { interface = Interface.init
       }
     , Cmd.none
     )
@@ -46,8 +46,8 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         PlotterControlMsg a ->
-            Interface.update a model.plotterControl
-                |> Tuple.mapBoth (\v -> { model | plotterControl = v }) (Cmd.map PlotterControlMsg)
+            Interface.update a model.interface
+                |> Tuple.mapBoth (\v -> { model | interface = v }) (Cmd.map PlotterControlMsg)
 
 
 
@@ -56,7 +56,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Interface.subscriptions model.plotterControl
+    Interface.subscriptions model.interface
         |> Sub.map PlotterControlMsg
 
 
@@ -69,7 +69,7 @@ view model =
     { title = Translation.title
     , body =
         [ layout []
-            (lazy Interface.view model.plotterControl
+            (lazy Interface.view model.interface
                 |> map PlotterControlMsg
             )
         ]
