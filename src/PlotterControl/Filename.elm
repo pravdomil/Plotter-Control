@@ -2,6 +2,7 @@ module PlotterControl.Filename exposing (..)
 
 import Parser exposing ((|.), (|=), Parser)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 import PlotterControl.Data.SummaCommand as SummaCommand
 
 
@@ -31,34 +32,34 @@ fromString a =
             Err a
 
 
-toHpGl : Filename -> HpGl -> HpGl
-toHpGl f a =
+toPlotData : Filename -> ( PlotData, PlotData )
+toPlotData a =
     let
-        prefix : HpGl
+        prefix : PlotData
         prefix =
             [ "MARKER_X_SIZE=" ++ String.fromInt (3 * 40)
             , "MARKER_Y_SIZE=" ++ String.fromInt (3 * 40)
 
             --
-            , "MARKER_Y_DIS=" ++ String.fromFloat (f.markerDistanceX * 40)
-            , "MARKER_X_DIS=" ++ String.fromFloat (f.markerDistanceY * 40)
-            , "MARKER_X_N=" ++ String.fromInt f.markerCount
+            , "MARKER_Y_DIS=" ++ String.fromFloat (a.markerDistanceX * 40)
+            , "MARKER_X_DIS=" ++ String.fromFloat (a.markerDistanceY * 40)
+            , "MARKER_X_N=" ++ String.fromInt a.markerCount
 
             --
-            , "VELOCITY=" ++ String.fromInt f.speed
+            , "VELOCITY=" ++ String.fromInt a.speed
             ]
                 |> List.map SummaCommand.Set
-                |> SummaCommand.listToHpGl
+                |> SummaCommand.listToPlotData
 
-        postfix : HpGl
+        postfix : PlotData
         postfix =
             SummaCommand.Recut
-                |> SummaCommand.toHpGl
-                |> HpGl.toString
-                |> String.repeat (f.copies - 1)
-                |> HpGl.fromString
+                |> SummaCommand.toPlotData
+                |> PlotData.toString
+                |> String.repeat (a.copies - 1)
+                |> PlotData.fromString
     in
-    HpGl.append (HpGl.append prefix a) postfix
+    ( prefix, postfix )
 
 
 
