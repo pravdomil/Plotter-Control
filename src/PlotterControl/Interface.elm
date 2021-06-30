@@ -4,7 +4,7 @@ import File exposing (File)
 import Parser exposing (Parser)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 import PlotterControl.Filename as Filename exposing (Filename)
-import PlotterControl.Interop
+import PlotterControl.Port
 import PlotterControl.Status exposing (Status)
 import PlotterControl.Translation as Translation
 import PlotterControl.Ui.Base exposing (..)
@@ -71,7 +71,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    PlotterControl.Interop.statusSubscription GotStatus
+    PlotterControl.Port.statusSubscription GotStatus
 
 
 

@@ -1,4 +1,4 @@
-port module PlotterControl.Interop exposing (sendData, statusSubscription)
+port module PlotterControl.Port exposing (sendData, statusSubscription)
 
 import Json.Decode as Decode exposing (Decoder)
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
