@@ -7,23 +7,11 @@ import PlotterControl.Data.SummaCommand as SummaCommand
 
 type alias Filename =
     { name : String
-
-    -- -
     , width : Float
-
-    -- x
     , length : Float
-
-    -- x
     , markers : Int
-
-    -- @
     , speed : Int
-
-    -- x
     , copies : Int
-
-    -- .hpgl
     }
 
 
