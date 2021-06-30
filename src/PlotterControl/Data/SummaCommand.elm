@@ -7,10 +7,10 @@ type SummaCommand
     = Query
       --
     | Menu
-    | SysMenu
+    | SystemMenu
       --
     | Set String
-    | SetSys String
+    | SetSystem String
       --
     | LoadMarkers
     | ReloadMarkers
@@ -66,13 +66,13 @@ toString a =
         Menu ->
             "MENU"
 
-        SysMenu ->
+        SystemMenu ->
             "SYS_MENU"
 
         Set b ->
             "SET " ++ b
 
-        SetSys b ->
+        SetSystem b ->
             "SETSYS " ++ b
 
         LoadMarkers ->
