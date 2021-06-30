@@ -22,7 +22,7 @@ type alias Model =
         Maybe
             { name : String
             , filename : Result (List Parser.DeadEnd) Filename
-            , content : HpGl
+            , data : HpGl
             }
     }
 
@@ -64,7 +64,7 @@ update msg model =
                     Just
                         { name = File.name b
                         , filename = Filename.fromString (File.name b)
-                        , content = HpGl.fromString c
+                        , data = HpGl.fromString c
                         }
               }
             , Cmd.none
