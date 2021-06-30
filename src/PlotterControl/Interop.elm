@@ -1,26 +1,9 @@
-port module PlotterControl.Interop exposing (Error(..), Status(..), sendData, statusSubscription)
+port module PlotterControl.Interop exposing (sendData, statusSubscription)
 
 import Json.Decode as Decode exposing (Decoder)
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
-import PlotterControl.Interop.Decode
-
-
-type Status
-    = Ready
-    | Connecting
-    | Busy
-    | Error Error
-
-
-type Error
-    = OpenError
-    | WriterError
-    | WriteError
-    | DecodeError String
-
-
-
---
+import PlotterControl.Status as Status exposing (Status)
+import PlotterControl.Status.Decode
 
 
 port sendDataPort : String -> Cmd msg
@@ -43,11 +26,11 @@ statusSubscription fn =
     let
         decode : Decode.Value -> Status
         decode a =
-            case a |> Decode.decodeValue PlotterControl.Interop.Decode.status of
+            case a |> Decode.decodeValue PlotterControl.Status.Decode.status of
                 Ok b ->
                     b
 
                 Err b ->
-                    Error (DecodeError (Decode.errorToString b))
+                    Status.Error (Status.DecodeError (Decode.errorToString b))
     in
     statusSubscriptionPort (decode >> fn)

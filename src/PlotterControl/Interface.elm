@@ -4,7 +4,8 @@ import File exposing (File)
 import Parser exposing (Parser)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 import PlotterControl.Filename as Filename exposing (Filename)
-import PlotterControl.Interop exposing (Status(..))
+import PlotterControl.Interop
+import PlotterControl.Status exposing (Status)
 import PlotterControl.Translation as Translation
 import PlotterControl.Ui.Base exposing (..)
 import Task
@@ -23,7 +24,7 @@ type alias Model =
 
 init : Model
 init =
-    { status = Ready
+    { status = PlotterControl.Status.Ready
     , file = Nothing
     }
 
@@ -94,16 +95,16 @@ viewStatus model =
         color : Color
         color =
             case model.status of
-                Ready ->
+                PlotterControl.Status.Ready ->
                     primary
 
-                Connecting ->
+                PlotterControl.Status.Connecting ->
                     primary
 
-                Busy ->
+                PlotterControl.Status.Busy ->
                     danger
 
-                Error _ ->
+                PlotterControl.Status.Error _ ->
                     danger
     in
     column []

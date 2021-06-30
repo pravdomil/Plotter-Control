@@ -1,6 +1,6 @@
 module PlotterControl.Translation exposing (..)
 
-import PlotterControl.Interop exposing (Error(..), Status(..))
+import PlotterControl.Status exposing (Status)
 
 
 raw a =
@@ -18,30 +18,30 @@ title =
 status : Status -> String
 status a =
     case a of
-        Ready ->
+        PlotterControl.Status.Ready ->
             "Ready."
 
-        Connecting ->
+        PlotterControl.Status.Connecting ->
             "Connecting..."
 
-        Busy ->
+        PlotterControl.Status.Busy ->
             "Busy..."
 
-        Error b ->
+        PlotterControl.Status.Error b ->
             interopError b
 
 
-interopError : PlotterControl.Interop.Error -> String
+interopError : PlotterControl.Status.Error -> String
 interopError a =
     case a of
-        OpenError ->
+        PlotterControl.Status.OpenError ->
             "Can't open serial port."
 
-        WriterError ->
+        PlotterControl.Status.WriterError ->
             "Serial port is busy."
 
-        WriteError ->
+        PlotterControl.Status.WriteError ->
             "Can't write data to serial port."
 
-        DecodeError _ ->
+        PlotterControl.Status.DecodeError _ ->
             "Can't communicate with serial port."
