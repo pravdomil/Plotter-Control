@@ -1,6 +1,8 @@
 module PlotterControl.Interface exposing (..)
 
 import File exposing (File)
+import Html.Events as Events
+import Json.Decode as Decode
 import Parser exposing (Parser)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 import PlotterControl.Filename as Filename exposing (Filename)
@@ -37,6 +39,7 @@ type Msg
     = GotStatus Status
     | GotFile File
     | GotFileContent File String
+    | DragOver
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -64,6 +67,11 @@ update msg model =
             , Cmd.none
             )
 
+        DragOver ->
+            ( model
+            , Cmd.none
+            )
+
 
 
 --
@@ -80,7 +88,18 @@ subscriptions _ =
 
 view : Model -> Element Msg
 view model =
-    column [ height fill, padding 32 ]
+    let
+        dropDecoder : Decode.Decoder Msg
+        dropDecoder =
+            Decode.map GotFile
+                (Decode.at [ "dataTransfer", "files" ] File.decoder)
+    in
+    column
+        [ height fill
+        , padding 32
+        , htmlAttribute (Events.on "dragover" (Decode.succeed DragOver))
+        , htmlAttribute (Events.on "drop" dropDecoder)
+        ]
         [ viewHeader model
         , viewFile model
         ]
