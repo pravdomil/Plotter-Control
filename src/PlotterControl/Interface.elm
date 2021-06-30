@@ -5,7 +5,7 @@ import Parser exposing (Parser)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 import PlotterControl.Filename as Filename exposing (Filename)
 import PlotterControl.Interop exposing (Status(..))
-import PlotterControl.Translation exposing (..)
+import PlotterControl.Translation as Translation
 import PlotterControl.Ui.Base exposing (..)
 import Task
 
@@ -81,7 +81,7 @@ view : Model -> Element Msg
 view model =
     column []
         [ h6 []
-            [ text (t A_Title)
+            [ text Translation.title
             ]
         , viewStatus model
         , viewFile model
@@ -108,10 +108,10 @@ viewStatus model =
     in
     column []
         [ h6 [ fontColor grey4 ]
-            [ text (t (A_Raw "Status"))
+            [ text (Translation.raw "Status")
             ]
         , h3 [ fontColor color ]
-            [ text (t (PlotterControl.Translation.status model.status))
+            [ text (Translation.status model.status)
             ]
         ]
 
@@ -121,7 +121,7 @@ viewFile model =
     column
         []
         [ h6 [ fontColor grey4 ]
-            [ text (t (A_Raw "File"))
+            [ text (Translation.raw "File")
             ]
         , case model.file of
             Just b ->
@@ -135,16 +135,16 @@ viewFile model =
                                 [ text (c |> String.replace "_" "_\u{200B}")
                                 ]
                             , p [ fontColor danger, fontSemiBold ]
-                                [ text (t (A_Raw "Can't parse filename."))
+                                [ text (Translation.raw "Can't parse filename.")
                                 ]
                             ]
 
             Nothing ->
                 h3 []
-                    [ text (t (A_Raw "No file loaded."))
+                    [ text (Translation.raw "No file loaded.")
                     ]
         , p [ fontColor grey4 ]
-            [ text (t (A_Raw "Filename:"))
+            [ text (Translation.raw "Filename:")
             , text " "
             , text Filename.format
             ]
@@ -158,23 +158,23 @@ viewFilename a =
             [ text a.name
             ]
         , row []
-            [ text (t (A_Raw "Width:"))
+            [ text (Translation.raw "Width:")
             , text (String.fromFloat a.markerDistanceX)
             , text "mm"
             ]
         , row []
-            [ text (t (A_Raw "Length:"))
+            [ text (Translation.raw "Length:")
             , text (String.fromFloat a.markerDistanceY)
             , text "mm"
             , text " x "
             ]
         , row []
-            [ text (t (A_Raw "Speed:"))
+            [ text (Translation.raw "Speed:")
             , text (String.fromInt a.speed)
             , text "mm/s"
             ]
         , row []
-            [ text (t (A_Raw "Copies:"))
+            [ text (Translation.raw "Copies:")
             , text (String.fromInt a.copies)
             , text "x"
             ]
