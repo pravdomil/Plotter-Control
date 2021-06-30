@@ -1,4 +1,4 @@
-module Ui exposing (..)
+module Ui.Base exposing (..)
 
 import Element
 import Element.Background
