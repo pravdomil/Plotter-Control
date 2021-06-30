@@ -1,13 +1,11 @@
 module PlotterControl.PlotterControl exposing (..)
 
-import Element exposing (Color)
-import Element.Font as Font
 import File exposing (File)
 import PlotterControl.Data.Filename as Filename exposing (Filename)
 import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 import PlotterControl.Interop exposing (Status(..))
 import PlotterControl.Translation exposing (..)
-import PlotterControl.Ui exposing (..)
+import PlotterControl.Ui.Base exposing (..)
 import Task
 
 
@@ -106,10 +104,10 @@ viewStatus model =
                     danger
     in
     column []
-        [ h6 [ Font.color gray600 ]
+        [ h6 [ fontColor grey4 ]
             [ text (t (A_Raw "Status"))
             ]
-        , h3 [ Font.color color ]
+        , h3 [ fontColor color ]
             [ text (t (PlotterControl.Translation.status model.status))
             ]
         ]
@@ -119,7 +117,7 @@ viewFile : Model -> Element Msg
 viewFile model =
     column
         []
-        [ h6 [ Font.color gray600 ]
+        [ h6 [ fontColor grey4 ]
             [ text (t (A_Raw "File"))
             ]
         , case model.file of
@@ -130,10 +128,10 @@ viewFile model =
 
                     Err c ->
                         column []
-                            [ h3 [ Font.color primary ]
+                            [ h3 [ fontColor primary ]
                                 [ text (c |> String.replace "_" "_\u{200B}")
                                 ]
-                            , p [ Font.color danger, Font.semiBold ]
+                            , p [ fontColor danger, fontSemiBold ]
                                 [ text (t (A_Raw "Can't parse filename."))
                                 ]
                             ]
@@ -142,7 +140,7 @@ viewFile model =
                 h3 []
                     [ text (t (A_Raw "No file loaded."))
                     ]
-        , p [ Font.color gray600 ]
+        , p [ fontColor grey4 ]
             [ text (t (A_Raw "Filename:"))
             , text " "
             , text Filename.format
@@ -153,7 +151,7 @@ viewFile model =
 viewFilename : Filename -> Element msg
 viewFilename a =
     column []
-        [ h3 [ Font.color primary ]
+        [ h3 [ fontColor primary ]
             [ text a.name
             ]
         , row []

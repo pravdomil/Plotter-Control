@@ -1,12 +1,10 @@
 module PlotterControl.Main exposing (..)
 
 import Browser exposing (Document)
-import Element
-import Element.Lazy as Lazy
 import Json.Decode as Decode
 import PlotterControl.PlotterControl
 import PlotterControl.Translation exposing (Translation(..), t)
-import PlotterControl.Ui exposing (..)
+import PlotterControl.Ui.Base exposing (..)
 
 
 main : Program Decode.Value Model Msg
@@ -70,9 +68,9 @@ view : Model -> Document Msg
 view model =
     { title = t A_Title
     , body =
-        [ Element.layout (PlotterControl.Ui.rootStyle [])
-            (Lazy.lazy PlotterControl.PlotterControl.view model.plotterControl
-                |> Element.map PlotterControlMsg
+        [ layout []
+            (lazy PlotterControl.PlotterControl.view model.plotterControl
+                |> map PlotterControlMsg
             )
         ]
     }
