@@ -18,7 +18,7 @@ type alias Filename =
 
 format : String
 format =
-    "<Name>-<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>@<Speed>x<Copies>[perf].hpgl"
+    "<Name>-<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>@<Speed>x<Copies>[cut|perf].hpgl"
 
 
 fromString : String -> Result (List Parser.DeadEnd) Filename
@@ -87,6 +87,7 @@ parser =
             [ Parser.succeed True
                 |. Parser.symbol "perf"
             , Parser.succeed False
+                |. Parser.symbol "cut"
             ]
         |. Parser.symbol ".hpgl"
         |. Parser.end
