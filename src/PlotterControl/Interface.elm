@@ -14,6 +14,7 @@ import PlotterControl.Interop.Port as Port
 import PlotterControl.Interop.Status as Status exposing (Status)
 import PlotterControl.Translation as Translation
 import PlotterControl.Ui.Base exposing (..)
+import PlotterControl.Ui.Style as Style
 import Task
 import Utils.DeadEnds as DeadEnds
 
@@ -51,6 +52,7 @@ type Msg
     | GotFile File
     | GotFileContent File String
     | DragOver
+    | Plot
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -97,16 +99,21 @@ update msg model =
                             )
             in
             ( { model | file = file }
-            , file
-                |> Result.toMaybe
-                |> Maybe.andThen (.data >> Result.toMaybe)
-                |> Maybe.map Port.sendData
-                |> Maybe.withDefault Cmd.none
+            , Cmd.none
             )
 
         DragOver ->
             ( model
             , Cmd.none
+            )
+
+        Plot ->
+            ( model
+            , model.file
+                |> Result.toMaybe
+                |> Maybe.andThen (.data >> Result.toMaybe)
+                |> Maybe.map Port.sendData
+                |> Maybe.withDefault Cmd.none
             )
 
 
@@ -202,12 +209,13 @@ viewFile model =
         ]
 
 
-viewFilename : Filename -> Element msg
+viewFilename : Filename -> Element Msg
 viewFilename a =
     column [ spacing 8, fontColor grey4 ]
-        [ h1 [ fontColor primary ]
-            [ text a.name
-            ]
+        [ link_ [ fontSize Style.h1FontSize ]
+            { label = text a.name
+            , onPress = Just Plot
+            }
         , p []
             [ text
                 (Translation.raw "Horizontal marker distance: "
