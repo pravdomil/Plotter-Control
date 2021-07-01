@@ -3,6 +3,10 @@ module PlotterControl.Data.Summa exposing (..)
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 
 
+type alias Summa =
+    List SummaCommand
+
+
 type SummaCommand
     = DeviceInfo
       --
