@@ -7,18 +7,34 @@ import PlotterControl.Data.SummaCommand as SummaCommand
 
 type alias Filename =
     { name : String
-    , markerDistanceX : Float
-    , markerDistanceY : Float
-    , markerCount : Int
-    , speed : Int
-    , copies : Int
-    , perforation : Bool
+    , markers :
+        Maybe
+            { x : Float
+            , y : Float
+            , count : Int
+            }
+    , speed : Maybe Int
+    , copies : Maybe Int
+    , tool : Maybe Tool
+    , flex : Maybe Bool
+    , format : Format
     }
+
+
+type Tool
+    = Pen
+    | Knife
+    | Pounce
+
+
+type Format
+    = Dmpl
+    | HpGL
 
 
 format : String
 format =
-    "<Name>-<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>@<Speed>x<Copies>[cut|perf].hpgl"
+    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>] [<Speed>mms] [<Copies>x] [pen|knife|pounce] [const|flex].[dmpl|hpgl]"
 
 
 fromString : String -> Result (List P.DeadEnd) Filename
