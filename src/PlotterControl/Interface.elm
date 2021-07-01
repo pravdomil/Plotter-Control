@@ -133,7 +133,7 @@ viewHeader model =
                     danger
     in
     column []
-        [ h1 []
+        [ h3 []
             [ text Translation.title
             ]
         , el [ paddingEach 0 0 0 16 ] none
@@ -180,7 +180,7 @@ viewFile model =
 viewFilename : Filename -> Element msg
 viewFilename a =
     column [ spacing 8, fontColor grey4 ]
-        [ h3 [ fontColor primary ]
+        [ h1 [ fontColor primary ]
             [ text a.name
             ]
         , p []
