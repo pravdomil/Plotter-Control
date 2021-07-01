@@ -1,7 +1,7 @@
 module PlotterControl.Data.PlotData exposing (..)
 
 import PlotterControl.Data.Dmpl as Dmpl exposing (Dmpl)
-import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Data.HpGl exposing (HpGl)
 import PlotterControl.Data.Summa as Summa exposing (Summa)
 
 
