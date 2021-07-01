@@ -94,7 +94,10 @@ update msg model =
                                     ( prefix, suffix ) =
                                         Filename.toSumma d
                                 in
-                                (PlotData.fromSumma prefix :: v :: List.map PlotData.fromSumma suffix)
+                                [ prefix |> PlotData.fromSumma
+                                , v
+                                , suffix |> PlotData.fromSumma
+                                ]
                                     |> PlotData.concat
                             )
             in

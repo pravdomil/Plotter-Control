@@ -35,7 +35,7 @@ fromString a =
     P.run parser a
 
 
-toSumma : Filename -> ( Summa, List Summa )
+toSumma : Filename -> ( Summa, Summa )
 toSumma a =
     let
         prefix : Summa
@@ -85,7 +85,7 @@ toSumma a =
                 |> List.filterMap identity
                 |> List.concat
 
-        postfix : List Summa
+        postfix : Summa
         postfix =
             let
                 copies : Int
@@ -93,8 +93,8 @@ toSumma a =
                     a.copies |> Maybe.withDefault 1
             in
             if copies > 1 then
-                [ Summa.Recut ]
-                    |> List.repeat (copies - 1)
+                [ Summa.Recut (copies - 1)
+                ]
 
             else
                 []
