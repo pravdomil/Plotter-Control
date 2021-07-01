@@ -19,6 +19,11 @@ toString (PlotData a) =
     a
 
 
+concat : List PlotData -> PlotData
+concat a =
+    a |> List.map toString |> String.join "" |> PlotData
+
+
 
 --
 
