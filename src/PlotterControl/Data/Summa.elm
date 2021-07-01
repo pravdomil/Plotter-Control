@@ -4,10 +4,10 @@ import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 
 
 type alias Summa =
-    List SummaCommand
+    List Command
 
 
-type SummaCommand
+type Command
     = DeviceInfo
       --
     | ShowMenu
@@ -69,19 +69,19 @@ type SystemValue
 --
 
 
-toPlotData : SummaCommand -> PlotData
+toPlotData : Command -> PlotData
 toPlotData a =
     listToPlotData [ a ]
 
 
-listToPlotData : List SummaCommand -> PlotData
+listToPlotData : List Command -> PlotData
 listToPlotData a =
     ([ "\u{001B};@:" ] ++ (a |> List.map toString) ++ [ "END", "" ])
         |> String.join "\n"
         |> PlotData.fromString
 
 
-toString : SummaCommand -> String
+toString : Command -> String
 toString a =
     case a of
         DeviceInfo ->
