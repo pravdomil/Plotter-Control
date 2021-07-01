@@ -1,7 +1,6 @@
 module PlotterControl.Data.HpGl exposing (..)
 
 import Parser as P exposing ((|.), (|=), Parser)
-import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 
 
 {-| <https://en.wikipedia.org/wiki/HP-GL>
