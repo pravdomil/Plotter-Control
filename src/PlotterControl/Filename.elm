@@ -32,11 +32,6 @@ type Format
     | HpGL
 
 
-format : String
-format =
-    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>] [<Speed>mms] [<Copies>x] [pen|knife|pounce] [const|flex].[dmpl|hpgl]"
-
-
 fromString : String -> Result (List P.DeadEnd) Filename
 fromString a =
     P.run parser a
@@ -83,6 +78,11 @@ toPlotData a =
 
 
 --
+
+
+format : String
+format =
+    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>] [<Speed>mms] [<Copies>x] [pen|knife|pounce] [const|flex].[dmpl|hpgl]"
 
 
 parser : Parser Filename
