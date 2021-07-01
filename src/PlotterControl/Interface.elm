@@ -6,7 +6,9 @@ import Html.Attributes as Attributes
 import Html.Events as Events
 import Json.Decode as Decode
 import Parser exposing (Parser)
-import PlotterControl.Data.PlotData exposing (PlotData)
+import PlotterControl.Data.Dmpl as Dmpl exposing (Dmpl)
+import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 import PlotterControl.Filename as Filename exposing (Filename)
 import PlotterControl.Interop.Port as Port
 import PlotterControl.Interop.Status as Status exposing (Status)
@@ -63,13 +65,22 @@ update msg model =
             , File.toString b |> Task.perform (GotFileContent b)
             )
 
-        GotFileContent b _ ->
+        GotFileContent b c ->
             let
                 file =
                     File.name b
                         |> Filename.fromString
-                        |> Result.map (\v -> { filename = v, data = Err [] })
+                        |> Result.map (\v -> { filename = v, data = toData v })
                         |> Result.mapError FilenameParserError
+
+                toData : Filename -> Result (List Parser.DeadEnd) PlotData
+                toData d =
+                    case d.format of
+                        Filename.Dmpl ->
+                            Dmpl.fromString c |> Result.map PlotData.fromDmpl
+
+                        Filename.HpGL ->
+                            HpGl.fromString c |> Result.map PlotData.fromHpGl
             in
             ( { model | file = file }
             , Cmd.none
