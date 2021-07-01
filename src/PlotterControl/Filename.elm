@@ -2,7 +2,7 @@ module PlotterControl.Filename exposing (..)
 
 import Parser as P exposing ((|.), (|=), Parser)
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
-import PlotterControl.Data.SummaCommand as SummaCommand
+import PlotterControl.Data.Summa as Summa
 
 
 type alias Filename =
@@ -15,7 +15,7 @@ type alias Filename =
             }
     , speed : Maybe Int
     , copies : Maybe Int
-    , tool : Maybe SummaCommand.Tool
+    , tool : Maybe Summa.Tool
     , cut : Maybe Cut
     , format : Format
     }
@@ -44,28 +44,28 @@ toPlotData a =
             [ a.markers
                 |> Maybe.map
                     (\v ->
-                        [ SummaCommand.SetValue (SummaCommand.MarkerYDistance v.x)
-                        , SummaCommand.SetValue (SummaCommand.MarkerXDistance v.y)
-                        , SummaCommand.SetValue (SummaCommand.MarkerXCount v.count)
+                        [ Summa.SetValue (Summa.MarkerYDistance v.x)
+                        , Summa.SetValue (Summa.MarkerXDistance v.y)
+                        , Summa.SetValue (Summa.MarkerXCount v.count)
                         ]
                     )
             , a.speed
                 |> Maybe.map
                     (\v ->
-                        [ SummaCommand.SetValue (SummaCommand.Velocity v)
+                        [ Summa.SetValue (Summa.Velocity v)
                         ]
                     )
             , a.tool
                 |> Maybe.map
                     (\v ->
-                        [ SummaCommand.SetValue (SummaCommand.Tool v)
+                        [ Summa.SetValue (Summa.Tool v)
                         ]
                     )
             , a.cut
                 |> Maybe.map
                     (\v ->
-                        [ SummaCommand.SetValue
-                            (SummaCommand.FlexCut
+                        [ Summa.SetValue
+                            (Summa.FlexCut
                                 (case v of
                                     ConstCut ->
                                         False
@@ -79,7 +79,7 @@ toPlotData a =
             ]
                 |> List.filterMap identity
                 |> List.concat
-                |> SummaCommand.listToPlotData
+                |> Summa.listToPlotData
 
         postfix : PlotData
         postfix =
@@ -89,8 +89,8 @@ toPlotData a =
                     a.copies |> Maybe.withDefault 1
             in
             if copies > 1 then
-                SummaCommand.Recut
-                    |> SummaCommand.toPlotData
+                Summa.Recut
+                    |> Summa.toPlotData
                     |> PlotData.toString
                     |> String.repeat (copies - 1)
                     |> PlotData.fromString
@@ -162,13 +162,13 @@ parser =
                 Nothing
             ]
         |= P.oneOf
-            [ P.succeed (Just SummaCommand.Pen)
+            [ P.succeed (Just Summa.Pen)
                 |. P.symbol "pen"
                 |. argEnd
-            , P.succeed (Just SummaCommand.Knife)
+            , P.succeed (Just Summa.Knife)
                 |. P.symbol "knife"
                 |. argEnd
-            , P.succeed (Just SummaCommand.Pouncer)
+            , P.succeed (Just Summa.Pouncer)
                 |. P.symbol "pouncer"
                 |. argEnd
             , P.succeed

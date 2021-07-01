@@ -1,4 +1,4 @@
-module PlotterControl.Data.SummaCommand exposing (..)
+module PlotterControl.Data.Summa exposing (..)
 
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 
