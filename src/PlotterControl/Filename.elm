@@ -79,7 +79,7 @@ toPlotData a =
             ]
                 |> List.filterMap identity
                 |> List.concat
-                |> Summa.listToPlotData
+                |> Summa.toPlotData
 
         postfix : PlotData
         postfix =
@@ -89,7 +89,7 @@ toPlotData a =
                     a.copies |> Maybe.withDefault 1
             in
             if copies > 1 then
-                Summa.Recut
+                [ Summa.Recut ]
                     |> Summa.toPlotData
                     |> PlotData.toString
                     |> String.repeat (copies - 1)
