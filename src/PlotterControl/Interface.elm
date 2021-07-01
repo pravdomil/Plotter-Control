@@ -77,12 +77,15 @@ update msg model =
 
                 toData : Filename -> Result (List Parser.DeadEnd) PlotData
                 toData d =
-                    case d.format of
+                    (case d.format of
                         Filename.Dmpl ->
-                            Dmpl.fromString c |> Result.map PlotData.fromDmpl
+                            Dmpl.fromString c
+                                |> Result.map PlotData.fromDmpl
 
                         Filename.HpGL ->
-                            HpGl.fromString c |> Result.map PlotData.fromHpGl
+                            HpGl.fromString c
+                                |> Result.map PlotData.fromHpGl
+                    )
             in
             ( { model | file = file }
             , Cmd.none
