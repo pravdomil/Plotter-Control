@@ -24,23 +24,23 @@ fromString a =
 
 toString : HpGl -> String
 toString a =
-    a |> List.map commandToString |> String.join ";"
+    a |> List.map commandToString |> String.join ""
 
 
 commandToString : Command -> String
 commandToString a =
     case a of
         Initialize ->
-            "IN"
+            "IN;"
 
         InputScalingPoint b ->
-            "IP" ++ (b |> List.map String.fromFloat |> String.join ",")
+            "IP" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
 
         PenUp b ->
-            "PU" ++ (b |> List.map String.fromFloat |> String.join ",")
+            "PU" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
 
         PenDown b ->
-            "PD" ++ (b |> List.map String.fromFloat |> String.join ",")
+            "PD" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
 
 
 
