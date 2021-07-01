@@ -1,6 +1,7 @@
 module PlotterControl.Data.Dmpl exposing (..)
 
 import Parser as P exposing ((|.), (|=), Parser)
+import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
 
 
 {-| <https://en.wikipedia.org/wiki/DMPL>
@@ -90,3 +91,32 @@ parser =
     P.succeed identity
         |. P.symbol ";:"
         |= P.loop [] loop
+
+
+
+--
+
+
+fromHpGl : HpGl -> Dmpl
+fromHpGl a =
+    a |> List.concatMap fromHpGlCommand
+
+
+fromHpGlCommand : HpGl.Command -> Dmpl
+fromHpGlCommand a =
+    case a of
+        HpGl.Initialize ->
+            [ Home
+            , ResetOrigin
+            , AbsolutePositioning
+            , CoordinateResolution
+            ]
+
+        HpGl.InputScalingPoint _ ->
+            []
+
+        HpGl.PenDown b ->
+            PenDown :: List.map (\( v1, v2 ) -> MoveTo ( round v1, round v2 )) b
+
+        HpGl.PenUp b ->
+            PenUp :: List.map (\( v1, v2 ) -> MoveTo ( round v1, round v2 )) b
