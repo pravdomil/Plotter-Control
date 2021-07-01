@@ -52,8 +52,8 @@ parser =
         loop : HpGl -> Parser (P.Step HpGl HpGl)
         loop acc =
             P.oneOf
-                [ P.succeed (P.Loop (Initialize :: acc))
-                    |. P.symbol "IN"
+                [ P.succeed (\_ -> P.Loop (Initialize :: acc))
+                    |= P.symbol "IN"
                     |. P.symbol ";"
                 , P.succeed (\v -> P.Loop (InputScalingPoint v :: acc))
                     |. P.symbol "IP"
@@ -67,10 +67,10 @@ parser =
                     |. P.symbol "PU"
                     |= listOfFloats
                     |. P.symbol ";"
-                , P.succeed (P.Loop acc)
-                    |. P.symbol ";"
-                , P.succeed (P.Done (List.reverse acc))
-                    |. P.end
+                , P.succeed (\_ -> P.Loop acc)
+                    |= P.symbol ";"
+                , P.succeed (\_ -> P.Done (List.reverse acc))
+                    |= P.end
                 ]
 
         listOfFloats : Parser (List Float)
@@ -80,9 +80,10 @@ parser =
                     P.oneOf
                         [ P.succeed (\v -> P.Loop (v :: acc))
                             |= P.float
-                        , P.succeed (P.Loop acc)
-                            |. P.symbol ","
-                        , P.succeed (P.Done (List.reverse acc))
+                        , P.succeed (\_ -> P.Loop acc)
+                            |= P.symbol ","
+                        , P.succeed (\_ -> P.Done (List.reverse acc))
+                            |= P.succeed ()
                         ]
                 )
     in
