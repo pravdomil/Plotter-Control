@@ -117,23 +117,23 @@ view model =
 viewHeader : Model -> Element Msg
 viewHeader model =
     let
-        color : Color
+        color : Attribute msg
         color =
             case model.status of
                 Status.Ready ->
-                    primary
+                    noneAttribute
 
                 Status.Connecting ->
-                    danger
+                    fontColor danger
 
                 Status.Busy ->
-                    danger
+                    fontColor danger
 
                 Status.Error _ ->
-                    danger
+                    fontColor danger
     in
     column []
-        [ h2 [ fontColor color ]
+        [ h2 [ color ]
             [ text (Translation.status model.status)
             ]
         , el [ paddingEach 0 0 0 64 ] none
@@ -151,13 +151,13 @@ viewFile model =
             Err b ->
                 case b of
                     NoFile ->
-                        h3 []
+                        h1 [ fontColor primary ]
                             [ text (Translation.raw "Drag and drop file to plot.")
                             ]
 
                     FilenameParserError c ->
                         column [ spacing 8 ]
-                            [ p [ fontColor danger, fontSemiBold ]
+                            [ h1 [ fontColor primary ]
                                 [ text (Translation.raw "Can't parse filename.") ]
                             , p [ fontColor grey4, htmlAttribute (Attributes.style "white-space" "pre") ]
                                 [ html (Html.text (DeadEnds.toString c))
