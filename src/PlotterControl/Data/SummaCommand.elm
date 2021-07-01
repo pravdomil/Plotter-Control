@@ -10,7 +10,7 @@ type SummaCommand
     | SystemMenu
       --
     | Set Value
-    | SetSystem String
+    | SetSystem SystemValue
       --
     | LoadMarkers
     | ReloadMarkers
@@ -55,6 +55,10 @@ type Tool
     = Pen
     | Knife
     | Pouncer
+
+
+type SystemValue
+    = Raw String String
 
 
 
