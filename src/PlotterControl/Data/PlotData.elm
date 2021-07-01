@@ -28,9 +28,11 @@ fromDmpl a =
     Dmpl.toString a |> PlotData
 
 
+{-| Since Summa D60 gets stuck in paneling mode we need to convert HP-GL to DMPL to support paneling.
+-}
 fromHpGl : HpGl -> PlotData
 fromHpGl a =
-    HpGl.toString a |> PlotData
+    Dmpl.fromHpGl a |> Dmpl.toString |> PlotData
 
 
 fromSumma : Summa -> PlotData
