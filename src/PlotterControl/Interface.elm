@@ -6,7 +6,7 @@ import Html.Attributes as Attributes
 import Html.Events as Events
 import Json.Decode as Decode
 import Parser exposing (Parser)
-import PlotterControl.Data.HpGl as HpGl exposing (HpGl)
+import PlotterControl.Data.PlotData exposing (PlotData)
 import PlotterControl.Filename as Filename exposing (Filename)
 import PlotterControl.Interop.Port as Port
 import PlotterControl.Interop.Status as Status exposing (Status)
@@ -19,18 +19,23 @@ import Utils.DeadEnds as DeadEnds
 type alias Model =
     { status : Status
     , file :
-        Maybe
-            { name : String
-            , filename : Result (List Parser.DeadEnd) Filename
-            , data : HpGl
+        Result
+            Error
+            { filename : Filename
+            , data : Result (List Parser.DeadEnd) PlotData
             }
     }
+
+
+type Error
+    = NoFile
+    | FilenameParserError (List Parser.DeadEnd)
 
 
 init : Model
 init =
     { status = Status.Ready
-    , file = Nothing
+    , file = Err NoFile
     }
 
 
@@ -58,21 +63,16 @@ update msg model =
             , File.toString b |> Task.perform (GotFileContent b)
             )
 
-        GotFileContent b c ->
+        GotFileContent b _ ->
             let
-                data : HpGl
-                data =
-                    HpGl.fromString c
+                file =
+                    File.name b
+                        |> Filename.fromString
+                        |> Result.map (\v -> { filename = v, data = Err [] })
+                        |> Result.mapError FilenameParserError
             in
-            ( { model
-                | file =
-                    Just
-                        { name = File.name b
-                        , filename = Filename.fromString (File.name b)
-                        , data = data
-                        }
-              }
-            , Port.sendData (HpGl.toPlotData data)
+            ( { model | file = file }
+            , Cmd.none
             )
 
         DragOver ->
@@ -149,27 +149,24 @@ viewFile model =
     column
         [ height fill ]
         [ case model.file of
-            Just b ->
-                case b.filename of
-                    Ok c ->
-                        viewFilename c
+            Ok b ->
+                viewFilename b.filename
 
-                    Err c ->
+            Err b ->
+                case b of
+                    NoFile ->
+                        h3 []
+                            [ text (Translation.raw "Drag and drop file to plot.")
+                            ]
+
+                    FilenameParserError c ->
                         column [ spacing 8 ]
-                            [ h3 [ fontColor primary ]
-                                [ text (b.name |> String.replace "_" "_\u{200B}")
-                                ]
-                            , p [ fontColor danger, fontSemiBold ]
+                            [ p [ fontColor danger, fontSemiBold ]
                                 [ text (Translation.raw "Can't parse filename.") ]
                             , p [ fontColor grey4, htmlAttribute (Attributes.style "white-space" "pre") ]
                                 [ html (Html.text (DeadEnds.toString c))
                                 ]
                             ]
-
-            Nothing ->
-                h3 []
-                    [ text (Translation.raw "Drag and drop file to plot.")
-                    ]
         , el [ paddingEach 0 0 0 16 ] none
         , el [ height fill ] none
         , p [ fontSize 14, fontColor grey4 ]
