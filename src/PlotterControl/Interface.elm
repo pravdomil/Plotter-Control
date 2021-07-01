@@ -20,18 +20,19 @@ import Utils.DeadEnds as DeadEnds
 
 type alias Model =
     { status : Status
-    , file :
-        Result
-            Error
-            { filename : Filename
-            , data : Result (List Parser.DeadEnd) PlotData
-            }
+    , file : Result Error File_
     }
 
 
 type Error
     = NoFile
     | FilenameParserError (List Parser.DeadEnd)
+
+
+type alias File_ =
+    { filename : Filename
+    , data : Result (List Parser.DeadEnd) PlotData
+    }
 
 
 init : Model
@@ -67,6 +68,7 @@ update msg model =
 
         GotFileContent b c ->
             let
+                file : Result Error File_
                 file =
                     File.name b
                         |> Filename.fromString
