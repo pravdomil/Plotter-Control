@@ -69,13 +69,8 @@ type SystemValue
 --
 
 
-toPlotData : Command -> PlotData
+toPlotData : Summa -> PlotData
 toPlotData a =
-    listToPlotData [ a ]
-
-
-listToPlotData : List Command -> PlotData
-listToPlotData a =
     ([ "\u{001B};@:" ] ++ (a |> List.map toString) ++ [ "END", "" ])
         |> String.join "\n"
         |> PlotData.fromString
