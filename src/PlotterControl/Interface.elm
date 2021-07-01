@@ -157,7 +157,7 @@ viewFile model =
 
                     FilenameParserError c ->
                         column [ spacing 8 ]
-                            [ h1 [ fontColor primary ]
+                            [ h1 [ fontColor danger ]
                                 [ text (Translation.raw "Can't parse filename.") ]
                             , p [ fontColor grey4, htmlAttribute (Attributes.style "white-space" "pre") ]
                                 [ html (Html.text (DeadEnds.toString c))
