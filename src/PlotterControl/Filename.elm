@@ -15,16 +15,10 @@ type alias Filename =
             }
     , speed : Maybe Int
     , copies : Maybe Int
-    , tool : Maybe Tool
+    , tool : Maybe SummaCommand.Tool
     , cut : Maybe Cut
     , format : Format
     }
-
-
-type Tool
-    = Pen
-    | Knife
-    | Pouncer
 
 
 type Cut
@@ -66,13 +60,13 @@ toPlotData a =
                     (\v ->
                         [ "TOOL="
                             ++ (case v of
-                                    Pen ->
+                                    SummaCommand.Pen ->
                                         "PEN"
 
-                                    Knife ->
+                                    SummaCommand.Knife ->
                                         "DRAG_KNIFE"
 
-                                    Pouncer ->
+                                    SummaCommand.Pouncer ->
                                         "POUNCER"
                                )
                         ]
@@ -177,13 +171,13 @@ parser =
                 Nothing
             ]
         |= P.oneOf
-            [ P.succeed (Just Pen)
+            [ P.succeed (Just SummaCommand.Pen)
                 |. P.symbol "pen"
                 |. argEnd
-            , P.succeed (Just Knife)
+            , P.succeed (Just SummaCommand.Knife)
                 |. P.symbol "knife"
                 |. argEnd
-            , P.succeed (Just Pouncer)
+            , P.succeed (Just SummaCommand.Pouncer)
                 |. P.symbol "pouncer"
                 |. argEnd
             , P.succeed
