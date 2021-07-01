@@ -16,6 +16,10 @@ type Command
     | PenUp (List Float)
 
 
+type alias Point =
+    ( Float, Float )
+
+
 fromString : String -> Result (List P.DeadEnd) HpGl
 fromString a =
     P.run parser a
