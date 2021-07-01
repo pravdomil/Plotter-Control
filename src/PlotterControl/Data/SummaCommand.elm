@@ -4,7 +4,7 @@ import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 
 
 type SummaCommand
-    = Query
+    = DeviceInfo
       --
     | Menu
     | SystemMenu
@@ -60,7 +60,7 @@ listToPlotData a =
 toString : SummaCommand -> String
 toString a =
     case a of
-        Query ->
+        DeviceInfo ->
             "QUERY"
 
         Menu ->
