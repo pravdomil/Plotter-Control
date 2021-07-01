@@ -90,10 +90,10 @@ toString a =
             "SYS_MENU"
 
         SetValue b ->
-            "SET " ++ b
+            "SET " ++ valueToString b
 
         SetSystemValue b ->
-            "SETSYS " ++ b
+            "SETSYS " ++ systemValueToString b
 
         LoadMarkers ->
             "LOAD_MARKERS"
@@ -145,3 +145,56 @@ toString a =
 
         End ->
             "END"
+
+
+valueToString : Value -> String
+valueToString a =
+    let
+        onOff : Bool -> String
+        onOff b =
+            if b then
+                "ON"
+
+            else
+                "OFF"
+    in
+    (case a of
+        Raw k v ->
+            [ k, v ]
+
+        FlexCut b ->
+            [ "FLEX_CUT", onOff b ]
+
+        MarkerXDistance b ->
+            [ "MARKER_X_DIS", String.fromInt (round (b * 40)) ]
+
+        MarkerXCount b ->
+            [ "MARKER_X_N", String.fromInt b ]
+
+        MarkerYDistance b ->
+            [ "MARKER_Y_DIS", String.fromInt (round (b * 40)) ]
+
+        Tool b ->
+            [ "TOOL"
+            , case b of
+                Pen ->
+                    "PEN"
+
+                Knife ->
+                    "DRAG_KNIFE"
+
+                Pouncer ->
+                    "POUNCER"
+            ]
+
+        Velocity b ->
+            [ "VELOCITY", String.fromInt b ]
+    )
+        |> String.join "="
+
+
+systemValueToString : SystemValue -> String
+systemValueToString a =
+    case a of
+        Raw_ k v ->
+            k ++ "=" ++ v
