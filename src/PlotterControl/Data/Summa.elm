@@ -1,7 +1,5 @@
 module PlotterControl.Data.Summa exposing (..)
 
-import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
-
 
 type alias Summa =
     List Command
@@ -69,15 +67,14 @@ type SystemValue
 --
 
 
-toPlotData : Summa -> PlotData
-toPlotData a =
-    ([ "\u{001B};@:" ] ++ (a |> List.map toString) ++ [ "END", "" ])
-        |> String.join "\n"
-        |> PlotData.fromString
-
-
-toString : Command -> String
+toString : Summa -> String
 toString a =
+    ([ "\u{001B};@:" ] ++ (a |> List.map commandToString) ++ [ "END", "" ])
+        |> String.join "\n"
+
+
+commandToString : Command -> String
+commandToString a =
     case a of
         DeviceInfo ->
             "QUERY"
