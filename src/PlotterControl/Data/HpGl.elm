@@ -12,8 +12,8 @@ type alias HpGl =
 type Command
     = Initialize
     | InputScalingPoint (List Float)
-    | PenUp (List Float)
     | PenDown (List Float)
+    | PenUp (List Float)
 
 
 fromString : String -> Result (List P.DeadEnd) HpGl
@@ -35,11 +35,11 @@ commandToString a =
         InputScalingPoint b ->
             "IP" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
 
-        PenUp b ->
-            "PU" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
-
         PenDown b ->
             "PD" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
+
+        PenUp b ->
+            "PU" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
 
 
 
