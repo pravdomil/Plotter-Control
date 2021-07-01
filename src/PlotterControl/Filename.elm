@@ -16,7 +16,7 @@ type alias Filename =
     , speed : Maybe Int
     , copies : Maybe Int
     , tool : Maybe Tool
-    , flex : Maybe Bool
+    , cut : Maybe Cut
     , format : Format
     }
 
@@ -25,6 +25,11 @@ type Tool
     = Pen
     | Knife
     | Pounce
+
+
+type Cut
+    = ConstCut
+    | FlexCut
 
 
 type Format
