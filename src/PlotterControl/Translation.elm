@@ -34,11 +34,11 @@ status a =
             "Plotter Control is busy..."
 
         Status.Error b ->
-            interopError b
+            statusError b
 
 
-interopError : Status.Error -> String
-interopError a =
+statusError : Status.Error -> String
+statusError a =
     case a of
         Status.OpenError ->
             "Plotter Control cannot open serial port."
