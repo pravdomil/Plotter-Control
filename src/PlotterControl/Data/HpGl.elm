@@ -22,6 +22,27 @@ fromString a =
     P.run parser a
 
 
+toString : HpGl -> String
+toString a =
+    a |> List.map commandToString |> String.join ";"
+
+
+commandToString : Command -> String
+commandToString a =
+    case a of
+        Initialize ->
+            "IN"
+
+        InputScalingPoint b ->
+            "IP" ++ (b |> List.map String.fromFloat |> String.join ",")
+
+        PenUp b ->
+            "PU" ++ (b |> List.map String.fromFloat |> String.join ",")
+
+        PenDown b ->
+            "PD" ++ (b |> List.map String.fromFloat |> String.join ",")
+
+
 
 --
 
