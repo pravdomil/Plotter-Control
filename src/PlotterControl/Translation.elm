@@ -25,13 +25,13 @@ status : Status -> String
 status a =
     case a of
         Status.Ready ->
-            "Ready."
+            "Plotter Control is ready."
 
         Status.Connecting ->
-            "Connecting..."
+            "Plotter Control is connecting..."
 
         Status.Busy ->
-            "Busy..."
+            "Plotter Control is busy..."
 
         Status.Error b ->
             interopError b
@@ -41,16 +41,16 @@ interopError : Status.Error -> String
 interopError a =
     case a of
         Status.OpenError ->
-            "Can't open serial port."
+            "Plotter Control cannot open serial port."
 
         Status.WriterError ->
-            "Serial port is busy."
+            "Plotter Control cannot write data to busy serial port."
 
         Status.WriteError ->
-            "Can't write data to serial port."
+            "Plotter Control cannot write data to serial port."
 
         Status.DecodeError _ ->
-            "Can't communicate with serial port."
+            "Plotter Control cannot communicate with serial port."
 
 
 tool : Summa.Tool -> String
