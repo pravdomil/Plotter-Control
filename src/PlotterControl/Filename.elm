@@ -1,8 +1,7 @@
 module PlotterControl.Filename exposing (..)
 
 import Parser as P exposing ((|.), (|=), Parser)
-import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
-import PlotterControl.Data.Summa as Summa
+import PlotterControl.Data.Summa as Summa exposing (Summa)
 
 
 type alias Filename =
@@ -36,10 +35,10 @@ fromString a =
     P.run parser a
 
 
-toPlotData : Filename -> ( PlotData, PlotData )
-toPlotData a =
+toSumma : Filename -> ( Summa, List Summa )
+toSumma a =
     let
-        prefix : PlotData
+        prefix : Summa
         prefix =
             [ a.markers
                 |> Maybe.map
@@ -79,9 +78,8 @@ toPlotData a =
             ]
                 |> List.filterMap identity
                 |> List.concat
-                |> Summa.toPlotData
 
-        postfix : PlotData
+        postfix : List Summa
         postfix =
             let
                 copies : Int
@@ -90,13 +88,10 @@ toPlotData a =
             in
             if copies > 1 then
                 [ Summa.Recut ]
-                    |> Summa.toPlotData
-                    |> PlotData.toString
-                    |> String.repeat (copies - 1)
-                    |> PlotData.fromString
+                    |> List.repeat (copies - 1)
 
             else
-                PlotData.fromString ""
+                []
     in
     ( prefix, postfix )
 
