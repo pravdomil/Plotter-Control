@@ -182,36 +182,80 @@ viewFile model =
 
 viewFilename : Filename -> Element msg
 viewFilename a =
-    let
-        onOff : Bool -> String
-        onOff b =
-            if b then
-                "on"
-
-            else
-                "off"
-    in
     column [ spacing 8, fontColor grey4 ]
         [ h3 [ fontColor primary ]
             [ text a.name
             ]
         , p []
-            [ text (Translation.raw "Horizontal marker distance: " ++ String.fromFloat a.markerDistanceX ++ "mm")
+            [ text
+                (Translation.raw "Horizontal marker distance: "
+                    ++ (a.markers
+                            |> Maybe.map (\v -> String.fromFloat v.x ++ "mm")
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
             ]
         , p []
-            [ text (Translation.raw "Vertical marker distance: " ++ String.fromFloat a.markerDistanceY ++ "mm")
+            [ text
+                (Translation.raw "Vertical marker distance: "
+                    ++ (a.markers
+                            |> Maybe.map (\v -> String.fromFloat v.y ++ "mm")
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
             ]
         , p []
-            [ text (Translation.raw "Number of markers: " ++ String.fromInt a.markerCount)
+            [ text
+                (Translation.raw "Number of markers: "
+                    ++ (a.markers
+                            |> Maybe.map (\v -> String.fromInt v.count)
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
             ]
         , p []
-            [ text (Translation.raw "Speed: " ++ String.fromInt a.speed ++ "mm/s")
+            [ text
+                (Translation.raw "Speed: "
+                    ++ (a.speed
+                            |> Maybe.map (\v -> String.fromInt v ++ "mm/s")
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
             ]
         , p []
-            [ text (Translation.raw "Copies: " ++ String.fromInt a.copies ++ "x")
+            [ text
+                (Translation.raw "Copies: "
+                    ++ (a.copies
+                            |> Maybe.map (\v -> String.fromInt v ++ "x")
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
             ]
         , p []
-            [ text (Translation.raw "Perforation: " ++ onOff a.perforation)
+            [ text
+                (Translation.raw "Tool: "
+                    ++ (a.tool
+                            |> Maybe.map Translation.tool
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
+            ]
+        , p []
+            [ text
+                (Translation.raw "Cut: "
+                    ++ (a.cut
+                            |> Maybe.map Translation.cut
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
+            ]
+        , p []
+            [ text
+                (Translation.raw "Format: "
+                    ++ (a.format
+                            |> Translation.format
+                       )
+                )
             ]
         ]
 
