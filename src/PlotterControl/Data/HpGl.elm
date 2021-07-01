@@ -46,10 +46,10 @@ commandToString a =
 --
 
 
-parser : Parser (List Command)
+parser : Parser HpGl
 parser =
     let
-        loop : List Command -> Parser (P.Step (List Command) (List Command))
+        loop : HpGl -> Parser (P.Step HpGl HpGl)
         loop acc =
             P.oneOf
                 [ P.succeed (P.Loop (Initialize :: acc))
