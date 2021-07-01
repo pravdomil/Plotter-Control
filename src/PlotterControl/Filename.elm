@@ -75,6 +75,12 @@ toSumma a =
                             )
                         ]
                     )
+            , a.markers
+                |> Maybe.map
+                    (\_ ->
+                        [ Summa.LoadMarkers
+                        ]
+                    )
             ]
                 |> List.filterMap identity
                 |> List.concat
