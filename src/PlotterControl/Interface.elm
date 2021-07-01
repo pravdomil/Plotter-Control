@@ -86,9 +86,22 @@ update msg model =
                             HpGl.fromString c
                                 |> Result.map PlotData.fromHpGl
                     )
+                        |> Result.map
+                            (\v ->
+                                let
+                                    ( prefix, suffix ) =
+                                        Filename.toSumma d
+                                in
+                                (PlotData.fromSumma prefix :: v :: List.map PlotData.fromSumma suffix)
+                                    |> PlotData.concat
+                            )
             in
             ( { model | file = file }
-            , Cmd.none
+            , file
+                |> Result.toMaybe
+                |> Maybe.andThen (.data >> Result.toMaybe)
+                |> Maybe.map Port.sendData
+                |> Maybe.withDefault Cmd.none
             )
 
         DragOver ->
