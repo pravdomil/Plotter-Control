@@ -236,7 +236,7 @@ viewFilename a =
             ]
         , p []
             [ text
-                (Translation.raw "Number of markers: "
+                (Translation.raw "Number of vertical markers: "
                     ++ (a.markers
                             |> Maybe.map (\v -> String.fromInt v.count)
                             |> Maybe.withDefault Translation.na
