@@ -254,15 +254,6 @@ viewFilename a =
             ]
         , p []
             [ text
-                (Translation.raw "Copies: "
-                    ++ (a.copies
-                            |> Maybe.map (\v -> String.fromInt v ++ "x")
-                            |> Maybe.withDefault Translation.na
-                       )
-                )
-            ]
-        , p []
-            [ text
                 (Translation.raw "Tool: "
                     ++ (a.tool
                             |> Maybe.map Translation.tool
@@ -275,6 +266,15 @@ viewFilename a =
                 (Translation.raw "Cut: "
                     ++ (a.cut
                             |> Maybe.map Translation.cut
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
+            ]
+        , p []
+            [ text
+                (Translation.raw "Copies: "
+                    ++ (a.copies
+                            |> Maybe.map (\v -> String.fromInt v ++ "x")
                             |> Maybe.withDefault Translation.na
                        )
                 )

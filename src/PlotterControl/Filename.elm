@@ -13,9 +13,9 @@ type alias Filename =
             , count : Int
             }
     , speed : Maybe Int
-    , copies : Maybe Int
     , tool : Maybe Summa.Tool
     , cut : Maybe Cut
+    , copies : Maybe Int
     , format : Format
     }
 
@@ -108,7 +108,7 @@ toSumma a =
 
 format : String
 format =
-    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [<Copies>x] [pen|knife|pouncer] [const|flex].[dmpl|hpgl]"
+    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [pen|knife|pouncer] [const|flex] [<Copies>x].[dmpl|hpgl]"
 
 
 parser : Parser Filename
@@ -155,14 +155,6 @@ parser =
                 Nothing
             ]
         |= P.oneOf
-            [ P.succeed Just
-                |= P.int
-                |. P.symbol "x"
-                |. argEnd
-            , P.succeed
-                Nothing
-            ]
-        |= P.oneOf
             [ P.succeed (Just Summa.Pen)
                 |. P.symbol "pen"
                 |. argEnd
@@ -181,6 +173,14 @@ parser =
                 |. argEnd
             , P.succeed (Just FlexCut)
                 |. P.symbol "flex"
+                |. argEnd
+            , P.succeed
+                Nothing
+            ]
+        |= P.oneOf
+            [ P.succeed Just
+                |= P.int
+                |. P.symbol "x"
                 |. argEnd
             , P.succeed
                 Nothing
