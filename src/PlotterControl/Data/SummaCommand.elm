@@ -9,7 +9,7 @@ type SummaCommand
     | Menu
     | SystemMenu
       --
-    | Set String
+    | Set Value
     | SetSystem String
       --
     | LoadMarkers
@@ -39,6 +39,22 @@ type SummaCommand
     | UpgradeFlash
       --
     | End
+
+
+type Value
+    = Raw String String
+    | FlexCut Bool
+    | MarkerXDistance Float
+    | MarkerXCount Int
+    | MarkerYDistance Float
+    | Tool Tool
+    | Velocity Int
+
+
+type Tool
+    = Pen
+    | Knife
+    | Pouncer
 
 
 
