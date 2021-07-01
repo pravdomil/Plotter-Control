@@ -1,5 +1,7 @@
 module PlotterControl.Translation exposing (..)
 
+import PlotterControl.Data.Summa as Summa
+import PlotterControl.Filename as Filename exposing (Filename)
 import PlotterControl.Interop.Status as Status exposing (Status)
 
 
@@ -9,6 +11,10 @@ raw a =
 
 title =
     "Plotter Control"
+
+
+na =
+    "n/a"
 
 
 
@@ -45,3 +51,36 @@ interopError a =
 
         Status.DecodeError _ ->
             "Can't communicate with serial port."
+
+
+tool : Summa.Tool -> String
+tool a =
+    case a of
+        Summa.Pen ->
+            "Pen"
+
+        Summa.Knife ->
+            "Knife"
+
+        Summa.Pouncer ->
+            "Pouncer"
+
+
+cut : Filename.Cut -> String
+cut a =
+    case a of
+        Filename.ConstCut ->
+            "Constant"
+
+        Filename.FlexCut ->
+            "Flex"
+
+
+format : Filename.Format -> String
+format a =
+    case a of
+        Filename.Dmpl ->
+            "DMPL"
+
+        Filename.HpGL ->
+            "HP-GL"
