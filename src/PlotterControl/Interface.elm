@@ -133,11 +133,7 @@ viewHeader model =
                     danger
     in
     column []
-        [ h3 []
-            [ text Translation.title
-            ]
-        , el [ paddingEach 0 0 0 16 ] none
-        , h2 [ fontColor color ]
+        [ h2 [ fontColor color ]
             [ text (Translation.status model.status)
             ]
         , el [ paddingEach 0 0 0 64 ] none
