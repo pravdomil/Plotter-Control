@@ -6,11 +6,11 @@ import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 type SummaCommand
     = DeviceInfo
       --
-    | Menu
-    | SystemMenu
+    | ShowMenu
+    | ShowSystemMenu
       --
-    | Set Value
-    | SetSystem SystemValue
+    | SetValue Value
+    | SetSystemValue SystemValue
       --
     | LoadMarkers
     | ReloadMarkers
@@ -83,16 +83,16 @@ toString a =
         DeviceInfo ->
             "QUERY"
 
-        Menu ->
+        ShowMenu ->
             "MENU"
 
-        SystemMenu ->
+        ShowSystemMenu ->
             "SYS_MENU"
 
-        Set b ->
+        SetValue b ->
             "SET " ++ b
 
-        SetSystem b ->
+        SetSystemValue b ->
             "SETSYS " ++ b
 
         LoadMarkers ->
