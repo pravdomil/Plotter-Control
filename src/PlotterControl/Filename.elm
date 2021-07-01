@@ -1,6 +1,6 @@
 module PlotterControl.Filename exposing (..)
 
-import Parser exposing ((|.), (|=), Parser)
+import Parser as P exposing ((|.), (|=), Parser)
 import PlotterControl.Data.PlotData as PlotData exposing (PlotData)
 import PlotterControl.Data.SummaCommand as SummaCommand
 
@@ -21,9 +21,9 @@ format =
     "<Name>-<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>@<Speed>x<Copies>[cut|perf].hpgl"
 
 
-fromString : String -> Result (List Parser.DeadEnd) Filename
+fromString : String -> Result (List P.DeadEnd) Filename
 fromString a =
-    Parser.run parser a
+    P.run parser a
 
 
 toPlotData : Filename -> ( PlotData, PlotData )
@@ -71,23 +71,23 @@ toPlotData a =
 
 parser : Parser Filename
 parser =
-    Parser.succeed Filename
-        |= Parser.getChompedString (Parser.chompUntil "-")
-        |. Parser.symbol "-"
-        |= Parser.float
-        |. Parser.symbol "x"
-        |= Parser.float
-        |. Parser.symbol "x"
-        |= Parser.int
-        |. Parser.symbol "@"
-        |= Parser.int
-        |. Parser.symbol "x"
-        |= Parser.int
-        |= Parser.oneOf
-            [ Parser.succeed False
-                |. Parser.symbol "cut"
-            , Parser.succeed True
-                |. Parser.symbol "perf"
+    P.succeed Filename
+        |= P.getChompedString (P.chompUntil "-")
+        |. P.symbol "-"
+        |= P.float
+        |. P.symbol "x"
+        |= P.float
+        |. P.symbol "x"
+        |= P.int
+        |. P.symbol "@"
+        |= P.int
+        |. P.symbol "x"
+        |= P.int
+        |= P.oneOf
+            [ P.succeed False
+                |. P.symbol "cut"
+            , P.succeed True
+                |. P.symbol "perf"
             ]
-        |. Parser.symbol ".hpgl"
-        |. Parser.end
+        |. P.symbol ".hpgl"
+        |. P.end
