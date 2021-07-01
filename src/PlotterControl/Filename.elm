@@ -24,7 +24,7 @@ type alias Filename =
 type Tool
     = Pen
     | Knife
-    | Pounce
+    | Pouncer
 
 
 type Cut
@@ -87,7 +87,7 @@ toPlotData a =
 
 format : String
 format =
-    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>] [<Speed>mms] [<Copies>x] [pen|knife|pounce] [const|flex].[dmpl|hpgl]"
+    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfMarkers>] [<Speed>mms] [<Copies>x] [pen|knife|pouncer] [const|flex].[dmpl|hpgl]"
 
 
 parser : Parser Filename
@@ -148,8 +148,8 @@ parser =
             , P.succeed (Just Knife)
                 |. P.symbol "knife"
                 |. argEnd
-            , P.succeed (Just Pounce)
-                |. P.symbol "pounce"
+            , P.succeed (Just Pouncer)
+                |. P.symbol "pouncer"
                 |. argEnd
             , P.succeed
                 Nothing
