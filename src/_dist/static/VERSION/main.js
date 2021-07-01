@@ -9,9 +9,7 @@ function main() {
   })
 
   app.ports.sendDataPort.subscribe(function (a) {
-    setTimeout(function () {
-      sendData(a, app.ports.statusSubscriptionPort.send)
-    }, 20)
+    sendData(a, app.ports.statusSubscriptionPort.send)
   })
 }
 
@@ -30,8 +28,6 @@ function checkSerialPortSupport() {
 }
 
 async function sendData(a, send) {
-  if (!confirm("Are you sure?")) return
-
   const Ready = 0,
     Connecting = 1,
     Busy = 2,
