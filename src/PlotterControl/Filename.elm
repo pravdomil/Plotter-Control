@@ -44,50 +44,41 @@ toPlotData a =
             [ a.markers
                 |> Maybe.map
                     (\v ->
-                        [ "MARKER_Y_DIS=" ++ String.fromFloat (v.x * 40)
-                        , "MARKER_X_DIS=" ++ String.fromFloat (v.y * 40)
-                        , "MARKER_X_N=" ++ String.fromInt v.count
+                        [ SummaCommand.SetValue (SummaCommand.MarkerYDistance v.x)
+                        , SummaCommand.SetValue (SummaCommand.MarkerXDistance v.y)
+                        , SummaCommand.SetValue (SummaCommand.MarkerXCount v.count)
                         ]
                     )
             , a.speed
                 |> Maybe.map
                     (\v ->
-                        [ "VELOCITY=" ++ String.fromInt v
+                        [ SummaCommand.SetValue (SummaCommand.Velocity v)
                         ]
                     )
             , a.tool
                 |> Maybe.map
                     (\v ->
-                        [ "TOOL="
-                            ++ (case v of
-                                    SummaCommand.Pen ->
-                                        "PEN"
-
-                                    SummaCommand.Knife ->
-                                        "DRAG_KNIFE"
-
-                                    SummaCommand.Pouncer ->
-                                        "POUNCER"
-                               )
+                        [ SummaCommand.SetValue (SummaCommand.Tool v)
                         ]
                     )
             , a.cut
                 |> Maybe.map
                     (\v ->
-                        [ "FLEX_CUT="
-                            ++ (case v of
+                        [ SummaCommand.SetValue
+                            (SummaCommand.FlexCut
+                                (case v of
                                     ConstCut ->
-                                        "OFF"
+                                        False
 
                                     FlexCut ->
-                                        "ON"
-                               )
+                                        True
+                                )
+                            )
                         ]
                     )
             ]
                 |> List.filterMap identity
                 |> List.concat
-                |> List.map SummaCommand.Set
                 |> SummaCommand.listToPlotData
 
         postfix : PlotData
