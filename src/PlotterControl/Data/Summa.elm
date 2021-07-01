@@ -24,7 +24,7 @@ type Command
     | SweepMediaSensors
       --
     | ReadLastFile
-    | Recut
+    | Recut Int
       --
     | SetOrigin
       --
@@ -112,8 +112,8 @@ commandToString a =
         ReadLastFile ->
             "READ_LAST_FILE"
 
-        Recut ->
-            "RECUT"
+        Recut b ->
+            "RECUT " ++ String.fromInt b
 
         SetOrigin ->
             "SET_ORIGIN"
