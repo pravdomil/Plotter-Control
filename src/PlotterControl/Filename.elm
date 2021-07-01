@@ -92,23 +92,83 @@ format =
 
 parser : Parser Filename
 parser =
+    let
+        argEnd : Parser ()
+        argEnd =
+            P.oneOf
+                [ P.symbol " "
+                , P.symbol "."
+                ]
+
+        chompOneOrMoreIf : (Char -> Bool) -> Parser ()
+        chompOneOrMoreIf v =
+            P.chompIf v |. P.chompWhile v
+    in
     P.succeed Filename
-        |= P.getChompedString (P.chompUntil "-")
-        |. P.symbol "-"
-        |= P.float
-        |. P.symbol "x"
-        |= P.float
-        |. P.symbol "x"
-        |= P.int
-        |. P.symbol "@"
-        |= P.int
-        |. P.symbol "x"
-        |= P.int
+        |= P.getChompedString (chompOneOrMoreIf (\v -> v /= ' ' && v /= '.'))
+        |. argEnd
         |= P.oneOf
-            [ P.succeed False
-                |. P.symbol "cut"
-            , P.succeed True
-                |. P.symbol "perf"
+            [ P.succeed
+                (\x y count ->
+                    Just
+                        { x = x
+                        , y = y
+                        , count = count
+                        }
+                )
+                |= P.float
+                |. P.symbol "x"
+                |= P.float
+                |. P.symbol "x"
+                |= P.int
+                |. argEnd
+            , P.succeed
+                Nothing
             ]
-        |. P.symbol ".hpgl"
-        |. P.end
+        |= P.oneOf
+            [ P.succeed Just
+                |= P.int
+                |. P.symbol "mms"
+                |. argEnd
+            , P.succeed
+                Nothing
+            ]
+        |= P.oneOf
+            [ P.succeed Just
+                |= P.int
+                |. P.symbol "x"
+                |. argEnd
+            , P.succeed
+                Nothing
+            ]
+        |= P.oneOf
+            [ P.succeed (Just Pen)
+                |. P.symbol "pen"
+                |. argEnd
+            , P.succeed (Just Knife)
+                |. P.symbol "knife"
+                |. argEnd
+            , P.succeed (Just Pounce)
+                |. P.symbol "pounce"
+                |. argEnd
+            , P.succeed
+                Nothing
+            ]
+        |= P.oneOf
+            [ P.succeed (Just ConstCut)
+                |. P.symbol "const"
+                |. argEnd
+            , P.succeed (Just FlexCut)
+                |. P.symbol "flex"
+                |. argEnd
+            , P.succeed
+                Nothing
+            ]
+        |= P.oneOf
+            [ P.succeed Dmpl
+                |. P.symbol "dmpl"
+                |. P.end
+            , P.succeed HpGL
+                |. P.symbol "hpgl"
+                |. P.end
+            ]
