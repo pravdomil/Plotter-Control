@@ -11,9 +11,9 @@ type alias HpGl =
 
 type Command
     = Initialize
-    | InputScalingPoint (List Float)
-    | PenDown (List Float)
-    | PenUp (List Float)
+    | InputScalingPoint (List Point)
+    | PenDown (List Point)
+    | PenUp (List Point)
 
 
 type alias Point =
@@ -37,13 +37,18 @@ commandToString a =
             "IN;"
 
         InputScalingPoint b ->
-            "IP" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
+            "IP" ++ (b |> List.map pointToString |> String.join ",") ++ ";"
 
         PenDown b ->
-            "PD" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
+            "PD" ++ (b |> List.map pointToString |> String.join ",") ++ ";"
 
         PenUp b ->
-            "PU" ++ (b |> List.map String.fromFloat |> String.join ",") ++ ";"
+            "PU" ++ (b |> List.map pointToString |> String.join ",") ++ ";"
+
+
+pointToString : Point -> String
+pointToString ( a, b ) =
+    String.fromFloat a ++ "," ++ String.fromFloat b
 
 
 
@@ -61,15 +66,15 @@ parser =
                     |. P.symbol ";"
                 , P.succeed (\v -> P.Loop (InputScalingPoint v :: acc))
                     |. P.symbol "IP"
-                    |= listOfFloats
+                    |= pointList
                     |. P.symbol ";"
                 , P.succeed (\v -> P.Loop (PenDown v :: acc))
                     |. P.symbol "PD"
-                    |= listOfFloats
+                    |= pointList
                     |. P.symbol ";"
                 , P.succeed (\v -> P.Loop (PenUp v :: acc))
                     |. P.symbol "PU"
-                    |= listOfFloats
+                    |= pointList
                     |. P.symbol ";"
                 , P.succeed (\_ -> P.Loop acc)
                     |= P.symbol ";"
@@ -77,13 +82,13 @@ parser =
                     |= P.end
                 ]
 
-        listOfFloats : Parser (List Float)
-        listOfFloats =
+        pointList : Parser (List Point)
+        pointList =
             P.loop []
                 (\acc ->
                     P.oneOf
                         [ P.succeed (\v -> P.Loop (v :: acc))
-                            |= P.float
+                            |= pointParser
                         , P.succeed (\_ -> P.Loop acc)
                             |= P.symbol ","
                         , P.succeed (\_ -> P.Done (List.reverse acc))
@@ -92,3 +97,11 @@ parser =
                 )
     in
     P.loop [] loop
+
+
+pointParser : Parser Point
+pointParser =
+    P.succeed Tuple.pair
+        |= P.float
+        |. P.symbol ","
+        |= P.float
