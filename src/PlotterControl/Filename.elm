@@ -47,36 +47,71 @@ toPlotData a =
     let
         prefix : PlotData
         prefix =
-            [ "MARKER_X_SIZE=" ++ String.fromInt (3 * 40)
-            , "MARKER_Y_SIZE=" ++ String.fromInt (3 * 40)
+            [ a.markers
+                |> Maybe.map
+                    (\v ->
+                        [ "MARKER_Y_DIS=" ++ String.fromFloat (v.x * 40)
+                        , "MARKER_X_DIS=" ++ String.fromFloat (v.y * 40)
+                        , "MARKER_X_N=" ++ String.fromInt v.count
+                        ]
+                    )
+            , a.speed
+                |> Maybe.map
+                    (\v ->
+                        [ "VELOCITY=" ++ String.fromInt v
+                        ]
+                    )
+            , a.tool
+                |> Maybe.map
+                    (\v ->
+                        [ "TOOL="
+                            ++ (case v of
+                                    Pen ->
+                                        "PEN"
 
-            --
-            , "MARKER_Y_DIS=" ++ String.fromFloat (a.markerDistanceX * 40)
-            , "MARKER_X_DIS=" ++ String.fromFloat (a.markerDistanceY * 40)
-            , "MARKER_X_N=" ++ String.fromInt a.markerCount
+                                    Knife ->
+                                        "DRAG_KNIFE"
 
-            --
-            , "VELOCITY=" ++ String.fromInt a.speed
-            , "FLEX_CUT=" ++ onOff a.perforation
+                                    Pouncer ->
+                                        "POUNCER"
+                               )
+                        ]
+                    )
+            , a.cut
+                |> Maybe.map
+                    (\v ->
+                        [ "FLEX_CUT="
+                            ++ (case v of
+                                    ConstCut ->
+                                        "OFF"
+
+                                    FlexCut ->
+                                        "ON"
+                               )
+                        ]
+                    )
             ]
+                |> List.filterMap identity
+                |> List.concat
                 |> List.map SummaCommand.Set
                 |> SummaCommand.listToPlotData
 
         postfix : PlotData
         postfix =
-            SummaCommand.Recut
-                |> SummaCommand.toPlotData
-                |> PlotData.toString
-                |> String.repeat (a.copies - 1)
-                |> PlotData.fromString
-
-        onOff : Bool -> String
-        onOff b =
-            if b then
-                "ON"
+            let
+                copies : Int
+                copies =
+                    a.copies |> Maybe.withDefault 1
+            in
+            if copies > 1 then
+                SummaCommand.Recut
+                    |> SummaCommand.toPlotData
+                    |> PlotData.toString
+                    |> String.repeat (copies - 1)
+                    |> PlotData.fromString
 
             else
-                "OFF"
+                PlotData.fromString ""
     in
     ( prefix, postfix )
 
