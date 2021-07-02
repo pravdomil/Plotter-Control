@@ -215,8 +215,8 @@ viewFile model =
 viewFilename : Filename -> Element Msg
 viewFilename a =
     column [ spacing 8, fontColor grey4 ]
-        [ link_ [ fontSize Style.h1FontSize ]
-            { label = text a.name
+        [ button [ fontSize Style.h1FontSize ]
+            { label = text (Translation.raw "Plot " ++ a.name)
             , onPress = Just Plot
             }
         , p []
