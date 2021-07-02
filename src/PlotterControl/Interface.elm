@@ -275,10 +275,8 @@ viewFilename a =
         , p []
             [ text
                 (Translation.raw "Copies: "
-                    ++ (a.copies
-                            |> Maybe.map (\v -> String.fromInt v ++ "x")
-                            |> Maybe.withDefault Translation.na
-                       )
+                    ++ String.fromInt a.copies
+                    ++ "x"
                 )
             ]
         , p []

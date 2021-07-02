@@ -15,7 +15,7 @@ type alias Filename =
     , speed : Maybe Int
     , tool : Maybe Summa.Tool
     , flexCut : Maybe Summa.FlexCut
-    , copies : Maybe Int
+    , copies : Int
     , format : Format
     }
 
@@ -73,13 +73,8 @@ toSumma a =
 
         postfix : Summa
         postfix =
-            let
-                copies : Int
-                copies =
-                    a.copies |> Maybe.withDefault 1
-            in
-            if copies > 1 then
-                [ Summa.Recut (copies - 1)
+            if a.copies > 1 then
+                [ Summa.Recut (a.copies - 1)
                 ]
 
             else
@@ -175,13 +170,12 @@ parser =
                 Nothing
             ]
         |= P.oneOf
-            [ P.succeed Just
-                |= P.int
+            [ P.int
                 |. P.symbol "x"
                 |. argEnd
                 |> P.backtrackable
             , P.succeed
-                Nothing
+                1
             ]
         |= P.oneOf
             [ P.succeed Dmpl
