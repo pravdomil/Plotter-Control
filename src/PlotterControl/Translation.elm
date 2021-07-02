@@ -69,13 +69,13 @@ tool a =
 flexCut : Summa.FlexCut -> String
 flexCut a =
     case a of
-        Summa.NoFlexCut ->
+        Summa.FlexCutOff ->
             "off"
 
-        Summa.FastFlexCut ->
+        Summa.FlexCutFast ->
             "fast"
 
-        Summa.AccurateFlexCut ->
+        Summa.FlexCutAccurate ->
             "accurate"
 
 

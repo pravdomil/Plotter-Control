@@ -54,9 +54,9 @@ type Value
 
 
 type FlexCut
-    = NoFlexCut
-    | FastFlexCut
-    | AccurateFlexCut
+    = FlexCutOff
+    | FlexCutFast
+    | FlexCutAccurate
 
 
 type Tool
@@ -158,13 +158,13 @@ valueToString a =
         FlexCut b ->
             [ "FLEX_CUT"
             , case b of
-                NoFlexCut ->
+                FlexCutOff ->
                     "OFF"
 
-                FastFlexCut ->
+                FlexCutFast ->
                     "MODE1"
 
-                AccurateFlexCut ->
+                FlexCutAccurate ->
                     "MODE2"
             ]
 

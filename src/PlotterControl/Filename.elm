@@ -89,7 +89,7 @@ toSumma a =
 
 format : String
 format =
-    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [pen|knife|pouncer] [noflex|fastflex|accurateflex] [<Copies>x].<dmpl|hpgl>"
+    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [pen|knife|pouncer] [flexoff|flexfast|flexaccurate] [<Copies>x].<dmpl|hpgl>"
 
 
 parser : Parser Filename
@@ -154,16 +154,16 @@ parser =
                 Nothing
             ]
         |= P.oneOf
-            [ P.succeed (Just Summa.NoFlexCut)
-                |. P.symbol "noflex"
+            [ P.succeed (Just Summa.FlexCutOff)
+                |. P.symbol "flexoff"
                 |. argEnd
                 |> P.backtrackable
-            , P.succeed (Just Summa.FastFlexCut)
-                |. P.symbol "fastflex"
+            , P.succeed (Just Summa.FlexCutFast)
+                |. P.symbol "flexfast"
                 |. argEnd
                 |> P.backtrackable
-            , P.succeed (Just Summa.AccurateFlexCut)
-                |. P.symbol "accurateflex"
+            , P.succeed (Just Summa.FlexCutAccurate)
+                |. P.symbol "flexaccurate"
                 |. argEnd
                 |> P.backtrackable
             , P.succeed
