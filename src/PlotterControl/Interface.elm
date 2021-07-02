@@ -204,8 +204,8 @@ viewFile model =
                             ]
         , el [ paddingEach 0 0 0 16 ] none
         , el [ height fill ] none
-        , p [ fontSize 14, fontColor grey4 ]
-            [ text (Translation.raw "Filename: ")
+        , p [ fontSize 12, fontColor grey4 ]
+            [ text (Translation.raw "Filename format: ")
             , text Filename.format
             ]
         ]
