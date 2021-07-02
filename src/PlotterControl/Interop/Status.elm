@@ -4,7 +4,7 @@ module PlotterControl.Interop.Status exposing (..)
 type Status
     = Ready
     | Connecting
-    | Busy
+    | Sending
     | Error Error
 
 

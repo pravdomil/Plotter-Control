@@ -30,8 +30,8 @@ status a =
         Status.Connecting ->
             "Plotter Control is connecting..."
 
-        Status.Busy ->
-            "Plotter Control is busy..."
+        Status.Sending ->
+            "Plotter Control is sending data..."
 
         Status.Error b ->
             statusError b

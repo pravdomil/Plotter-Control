@@ -30,7 +30,7 @@ function checkSerialPortSupport() {
 async function sendData(a, send) {
   const Ready = 0,
     Connecting = 1,
-    Busy = 2,
+    Sending = 2,
     Error = 3
   let port, writer
 
@@ -57,7 +57,7 @@ async function sendData(a, send) {
     throw e
   }
 
-  send({ a: Busy })
+  send({ a: Sending })
 
   try {
     await writer.write(new TextEncoder().encode(a))

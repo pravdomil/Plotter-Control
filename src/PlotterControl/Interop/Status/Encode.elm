@@ -15,7 +15,7 @@ status  =
         (E.object) ([("a", (E.int) (0))])
       A.Connecting  ->
         (E.object) ([("a", (E.int) (1))])
-      A.Busy  ->
+      A.Sending  ->
         (E.object) ([("a", (E.int) (2))])
       A.Error v2 ->
         (E.object) ([("a", (E.int) (3)), ("b", ((error)) (v2))])

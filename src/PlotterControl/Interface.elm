@@ -165,7 +165,7 @@ viewHeader model =
                 Status.Connecting ->
                     fontColor danger
 
-                Status.Busy ->
+                Status.Sending ->
                     fontColor danger
 
                 Status.Error _ ->

@@ -16,7 +16,7 @@ status  =
       1 ->
         (D.succeed) (A.Connecting)
       2 ->
-        (D.succeed) (A.Busy)
+        (D.succeed) (A.Sending)
       3 ->
         (D.map) (A.Error) ((D.field) ("b") ((error)))
       _ ->
