@@ -143,6 +143,7 @@ parser =
                 |. P.symbol "x"
                 |= P.int
                 |. argEnd
+                |> P.backtrackable
             , P.succeed
                 Nothing
             ]
@@ -151,6 +152,7 @@ parser =
                 |= P.int
                 |. P.symbol "mms"
                 |. argEnd
+                |> P.backtrackable
             , P.succeed
                 Nothing
             ]
@@ -158,12 +160,15 @@ parser =
             [ P.succeed (Just Summa.Pen)
                 |. P.symbol "pen"
                 |. argEnd
+                |> P.backtrackable
             , P.succeed (Just Summa.Knife)
                 |. P.symbol "knife"
                 |. argEnd
+                |> P.backtrackable
             , P.succeed (Just Summa.Pouncer)
                 |. P.symbol "pouncer"
                 |. argEnd
+                |> P.backtrackable
             , P.succeed
                 Nothing
             ]
@@ -171,9 +176,11 @@ parser =
             [ P.succeed (Just ConstCut)
                 |. P.symbol "const"
                 |. argEnd
+                |> P.backtrackable
             , P.succeed (Just FlexCut)
                 |. P.symbol "flex"
                 |. argEnd
+                |> P.backtrackable
             , P.succeed
                 Nothing
             ]
@@ -182,6 +189,7 @@ parser =
                 |= P.int
                 |. P.symbol "x"
                 |. argEnd
+                |> P.backtrackable
             , P.succeed
                 Nothing
             ]
