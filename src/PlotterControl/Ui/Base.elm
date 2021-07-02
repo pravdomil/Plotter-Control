@@ -90,6 +90,10 @@ noneAttribute =
     htmlAttribute (Html.Attributes.classList [])
 
 
+button a =
+    Element.Input.button (spacing A.buttonSpacing :: padding A.buttonPadding :: bgColor A.buttonBgColor :: fontColor A.buttonColor :: borderRounded A.buttonBorderRounded :: a)
+
+
 labelLeft a =
     Element.Input.labelLeft (fontColor A.labelColor :: fontSize A.labelFontSize :: a)
 
@@ -856,10 +860,6 @@ fontWordSpacing =
 
 
 --
-
-
-inputButton =
-    Element.Input.button
 
 
 inputCheckbox =
