@@ -57,13 +57,13 @@ tool : Summa.Tool -> String
 tool a =
     case a of
         Summa.Pen ->
-            "Pen"
+            "pen"
 
         Summa.Knife ->
-            "Knife"
+            "knife"
 
         Summa.Pouncer ->
-            "Pouncer"
+            "pouncer"
 
 
 cut : Filename.Cut -> String
