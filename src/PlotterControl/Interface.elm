@@ -265,9 +265,9 @@ viewFilename a =
             ]
         , p []
             [ text
-                (Translation.raw "Cut: "
-                    ++ (a.cut
-                            |> Maybe.map Translation.cut
+                (Translation.raw "FlexCut: "
+                    ++ (a.flexCut
+                            |> Maybe.map Translation.flexCut
                             |> Maybe.withDefault Translation.na
                        )
                 )

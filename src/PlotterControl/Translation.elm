@@ -66,14 +66,17 @@ tool a =
             "pouncer"
 
 
-cut : Filename.Cut -> String
-cut a =
+flexCut : Summa.FlexCut -> String
+flexCut a =
     case a of
-        Filename.ConstCut ->
-            "Constant"
+        Summa.NoFlexCut ->
+            "off"
 
-        Filename.FlexCut ->
-            "Flex"
+        Summa.FastFlexCut ->
+            "fast"
+
+        Summa.AccurateFlexCut ->
+            "accurate"
 
 
 format : Filename.Format -> String

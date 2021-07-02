@@ -14,15 +14,10 @@ type alias Filename =
             }
     , speed : Maybe Int
     , tool : Maybe Summa.Tool
-    , cut : Maybe Cut
+    , flexCut : Maybe Summa.FlexCut
     , copies : Maybe Int
     , format : Format
     }
-
-
-type Cut
-    = ConstCut
-    | FlexCut
 
 
 type Format
@@ -60,19 +55,10 @@ toSumma a =
                         [ Summa.SetValue (Summa.Tool v)
                         ]
                     )
-            , a.cut
+            , a.flexCut
                 |> Maybe.map
                     (\v ->
-                        [ Summa.SetValue
-                            (Summa.FlexCut
-                                (case v of
-                                    ConstCut ->
-                                        False
-
-                                    FlexCut ->
-                                        True
-                                )
-                            )
+                        [ Summa.SetValue (Summa.FlexCut v)
                         ]
                     )
             , a.markers
@@ -108,7 +94,7 @@ toSumma a =
 
 format : String
 format =
-    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [pen|knife|pouncer] [const|flex] [<Copies>x].<dmpl|hpgl>"
+    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [pen|knife|pouncer] [noflex|fastflex|accurateflex] [<Copies>x].<dmpl|hpgl>"
 
 
 parser : Parser Filename
@@ -173,12 +159,16 @@ parser =
                 Nothing
             ]
         |= P.oneOf
-            [ P.succeed (Just ConstCut)
-                |. P.symbol "const"
+            [ P.succeed (Just Summa.NoFlexCut)
+                |. P.symbol "noflex"
                 |. argEnd
                 |> P.backtrackable
-            , P.succeed (Just FlexCut)
-                |. P.symbol "flex"
+            , P.succeed (Just Summa.FastFlexCut)
+                |. P.symbol "fastflex"
+                |. argEnd
+                |> P.backtrackable
+            , P.succeed (Just Summa.AccurateFlexCut)
+                |. P.symbol "accurateflex"
                 |. argEnd
                 |> P.backtrackable
             , P.succeed
