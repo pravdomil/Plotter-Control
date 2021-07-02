@@ -45,12 +45,18 @@ type Command
 
 type Value
     = Raw String String
-    | FlexCut Bool
+    | FlexCut FlexCut
     | MarkerXDistance Float
     | MarkerXCount Int
     | MarkerYDistance Float
     | Tool Tool
     | Velocity Int
+
+
+type FlexCut
+    = Off
+    | Fast
+    | Accurate
 
 
 type Tool
@@ -145,21 +151,22 @@ commandToString a =
 
 valueToString : Value -> String
 valueToString a =
-    let
-        onOff : Bool -> String
-        onOff b =
-            if b then
-                "ON"
-
-            else
-                "OFF"
-    in
     (case a of
         Raw k v ->
             [ k, v ]
 
         FlexCut b ->
-            [ "FLEX_CUT", onOff b ]
+            [ "FLEX_CUT"
+            , case b of
+                Off ->
+                    "OFF"
+
+                Fast ->
+                    "MODE1"
+
+                Accurate ->
+                    "MODE2"
+            ]
 
         MarkerXDistance b ->
             [ "MARKER_X_DIS", String.fromInt (round (b * 40)) ]
