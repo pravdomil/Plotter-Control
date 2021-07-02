@@ -64,6 +64,26 @@ h6FontSize =
 --
 
 
+buttonSpacing =
+    8
+
+
+buttonPadding =
+    16
+
+
+buttonBgColor =
+    primary
+
+
+buttonColor =
+    grey10
+
+
+buttonBorderRounded =
+    16
+
+
 labelColor =
     grey4
 
