@@ -108,7 +108,7 @@ toSumma a =
 
 format : String
 format =
-    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [pen|knife|pouncer] [const|flex] [<Copies>x].[dmpl|hpgl]"
+    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [pen|knife|pouncer] [const|flex] [<Copies>x].<dmpl|hpgl>"
 
 
 parser : Parser Filename
