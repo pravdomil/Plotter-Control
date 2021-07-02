@@ -191,7 +191,7 @@ viewFile model =
                 case b of
                     NoFile ->
                         h1 [ fontColor primary ]
-                            [ text (Translation.raw "Drag and drop file to plot.")
+                            [ text (Translation.raw "Drag and drop plot file.")
                             ]
 
                     FilenameParserError c ->
