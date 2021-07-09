@@ -289,6 +289,15 @@ viewFilename a =
             ]
         , p []
             [ text
+                (Translation.raw "Recut offset: "
+                    ++ (a.recutOffset
+                            |> Maybe.map (\v -> String.fromInt v ++ "mm")
+                            |> Maybe.withDefault Translation.na
+                       )
+                )
+            ]
+        , p []
+            [ text
                 (Translation.raw "Format: "
                     ++ (a.format
                             |> Translation.format
