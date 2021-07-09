@@ -105,6 +105,60 @@ parser =
         chompOneOrMoreIf : (Char -> Bool) -> Parser ()
         chompOneOrMoreIf v =
             P.chompIf v |. P.chompWhile v
+
+        loop : Filename -> Parser (P.Step Filename Filename)
+        loop acc =
+            P.oneOf
+                [ P.succeed
+                    (\x y count -> P.Loop { acc | markers = Just { x = x, y = y, count = count } })
+                    |= P.float
+                    |. P.symbol "x"
+                    |= P.float
+                    |. P.symbol "x"
+                    |= P.int
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\v -> P.Loop { acc | speed = Just v })
+                    |= P.int
+                    |. P.symbol "mms"
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\_ -> P.Loop { acc | tool = Just Summa.Pen })
+                    |= P.symbol "pen"
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\_ -> P.Loop { acc | tool = Just Summa.Knife })
+                    |= P.symbol "knife"
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\_ -> P.Loop { acc | tool = Just Summa.Pouncer })
+                    |= P.symbol "pouncer"
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\_ -> P.Loop { acc | flexCut = Just Summa.FlexCutOff })
+                    |= P.symbol "flexoff"
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\_ -> P.Loop { acc | flexCut = Just Summa.FlexCutFast })
+                    |= P.symbol "flexfast"
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\_ -> P.Loop { acc | flexCut = Just Summa.FlexCutAccurate })
+                    |= P.symbol "flexaccurate"
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\v -> P.Loop { acc | copies = v })
+                    |= P.int
+                    |. P.symbol "x"
+                    |. argEnd
+                    |> P.backtrackable
+                , P.succeed (\_ -> P.Done { acc | format = Dmpl })
+                    |= P.symbol "dmpl"
+                    |. P.end
+                , P.succeed (\_ -> P.Done { acc | format = HpGL })
+                    |= P.symbol "hpgl"
+                    |. P.end
+                ]
     in
     P.succeed Filename
         |= P.getChompedString (chompOneOrMoreIf (\v -> v /= ' ' && v /= '.'))
