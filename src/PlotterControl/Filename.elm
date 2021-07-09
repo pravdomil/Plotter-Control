@@ -95,17 +95,6 @@ format =
 parser : Parser Filename
 parser =
     let
-        argEnd : Parser ()
-        argEnd =
-            P.oneOf
-                [ P.symbol " "
-                , P.symbol "."
-                ]
-
-        chompOneOrMoreIf : (Char -> Bool) -> Parser ()
-        chompOneOrMoreIf v =
-            P.chompIf v |. P.chompWhile v
-
         default : Filename
         default =
             { name = "plot"
@@ -169,6 +158,17 @@ parser =
                     |= P.symbol "hpgl"
                     |. P.end
                 ]
+
+        argEnd : Parser ()
+        argEnd =
+            P.oneOf
+                [ P.symbol " "
+                , P.symbol "."
+                ]
+
+        chompOneOrMoreIf : (Char -> Bool) -> Parser ()
+        chompOneOrMoreIf v =
+            P.chompIf v |. P.chompWhile v
     in
     P.succeed (\name v -> { v | name = name })
         |= P.getChompedString (chompOneOrMoreIf (\v -> v /= ' ' && v /= '.'))
