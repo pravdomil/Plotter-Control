@@ -120,8 +120,7 @@ parser =
         loop : Filename -> Parser (P.Step Filename Filename)
         loop acc =
             P.oneOf
-                [ P.succeed
-                    (\x y count -> P.Loop { acc | markers = Just { x = x, y = y, count = count } })
+                [ P.succeed (\x y count -> P.Loop { acc | markers = Just { x = x, y = y, count = count } })
                     |= P.float
                     |. P.symbol "x"
                     |= P.float
