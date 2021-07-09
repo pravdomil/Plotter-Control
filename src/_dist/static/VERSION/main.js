@@ -32,7 +32,7 @@ async function sendData(a, send) {
     Connecting = 1,
     Sending = 2,
     Error = 3
-  let port, writer
+  let port, writer, lock
 
   send({ a: Connecting })
 
@@ -60,8 +60,10 @@ async function sendData(a, send) {
   send({ a: Sending })
 
   try {
+    lock = await navigator.wakeLock.request()
     await writer.write(new TextEncoder().encode(a))
     await writer.close()
+    await lock.release()
   } catch (e) {
     send({ a: Error, b: { a: 2 } })
     throw e
