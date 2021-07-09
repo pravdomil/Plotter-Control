@@ -62,6 +62,12 @@ toSumma a =
                         [ Summa.SetValue (Summa.FlexCut v)
                         ]
                     )
+            , a.recutOffset
+                |> Maybe.map
+                    (\v ->
+                        [ Summa.SetValue (Summa.RecutOffset v)
+                        ]
+                    )
             , a.markers
                 |> Maybe.map
                     (\_ ->

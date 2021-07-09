@@ -49,6 +49,7 @@ type Value
     | MarkerXDistance Float
     | MarkerXCount Int
     | MarkerYDistance Float
+    | RecutOffset Int
     | Tool Tool
     | Velocity Int
 
@@ -176,6 +177,9 @@ valueToString a =
 
         MarkerYDistance b ->
             [ "MARKER_Y_DIS", String.fromInt (round (b * 40)) ]
+
+        RecutOffset b ->
+            [ "RECUT_OFFSET", String.fromInt b ]
 
         Tool b ->
             [ "TOOL"
