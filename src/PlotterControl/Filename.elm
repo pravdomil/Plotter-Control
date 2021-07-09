@@ -162,7 +162,7 @@ parser =
         argEnd : Parser ()
         argEnd =
             P.oneOf
-                [ P.symbol " "
+                [ chompOneOrMoreIf ((==) ' ')
                 , P.symbol "."
                 ]
 
