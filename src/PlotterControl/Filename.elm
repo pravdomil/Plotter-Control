@@ -16,6 +16,7 @@ type alias Filename =
     , tool : Maybe Summa.Tool
     , flexCut : Maybe Summa.FlexCut
     , copies : Int
+    , recutOffset : Maybe Int
     , format : Format
     }
 
@@ -95,6 +96,7 @@ format =
     , "[pen|knife|pouncer]"
     , "[flexoff|flexfast|flexaccurate]"
     , "[<Copies>x]"
+    , "[<RecutOffset>mm]"
     , ".<dmpl|hpgl>"
     ]
 
@@ -110,6 +112,7 @@ parser =
             , tool = Nothing
             , flexCut = Nothing
             , copies = 1
+            , recutOffset = Nothing
             , format = HpGL
             }
 
