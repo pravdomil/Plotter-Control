@@ -87,9 +87,16 @@ toSumma a =
 --
 
 
-format : String
+format : List String
 format =
-    "<Name> [<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>] [<Speed>mms] [pen|knife|pouncer] [flexoff|flexfast|flexaccurate] [<Copies>x].<dmpl|hpgl>"
+    [ "<Name>"
+    , "[<HorizontalMarkerDistance>x<VerticalMarkerDistance>x<NumberOfVerticalMarkers>]"
+    , "[<Speed>mms]"
+    , "[pen|knife|pouncer]"
+    , "[flexoff|flexfast|flexaccurate]"
+    , "[<Copies>x]"
+    , ".<dmpl|hpgl>"
+    ]
 
 
 parser : Parser Filename
