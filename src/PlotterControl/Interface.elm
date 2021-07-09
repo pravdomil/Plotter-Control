@@ -27,6 +27,7 @@ type alias Model =
 
 type Error
     = NoFile
+    | Loading
     | FilenameParserError (List Parser.DeadEnd)
 
 
@@ -64,7 +65,7 @@ update msg model =
             )
 
         GotFile b ->
-            ( model
+            ( { model | file = Err Loading }
             , File.toString b |> Task.perform (GotFileContent b)
             )
 
@@ -192,6 +193,11 @@ viewFile model =
                     NoFile ->
                         h1 [ fontColor primary ]
                             [ text (Translation.raw "Drag and drop plot file.")
+                            ]
+
+                    Loading ->
+                        h1 []
+                            [ text (Translation.raw "Loading...")
                             ]
 
                     FilenameParserError c ->
