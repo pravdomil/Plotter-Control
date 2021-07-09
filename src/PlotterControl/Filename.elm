@@ -106,6 +106,17 @@ parser =
         chompOneOrMoreIf v =
             P.chompIf v |. P.chompWhile v
 
+        default : Filename
+        default =
+            { name = "plot"
+            , markers = Nothing
+            , speed = Nothing
+            , tool = Nothing
+            , flexCut = Nothing
+            , copies = 1
+            , format = HpGL
+            }
+
         loop : Filename -> Parser (P.Step Filename Filename)
         loop acc =
             P.oneOf
