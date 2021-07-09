@@ -161,6 +161,11 @@ parser =
                     |. P.symbol "x"
                     |. argEnd
                     |> P.backtrackable
+                , P.succeed (\v -> P.Loop { acc | recutOffset = Just v })
+                    |= P.int
+                    |. P.symbol "mm"
+                    |. argEnd
+                    |> P.backtrackable
                 , P.succeed (\_ -> P.Done { acc | format = Dmpl })
                     |= P.symbol "dmpl"
                     |. P.end
