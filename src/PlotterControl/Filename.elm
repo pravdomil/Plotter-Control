@@ -119,66 +119,51 @@ parser =
         loop : Filename -> Parser (P.Step Filename Filename)
         loop acc =
             P.oneOf
-                [ P.succeed (\x y count -> P.Loop { acc | markers = Just { x = x, y = y, count = count } })
+                [ P.succeed (\_ -> P.Loop acc)
+                    |= chompOneOrMoreIf ((==) ' ')
+                , P.succeed (\x y count -> P.Loop { acc | markers = Just { x = x, y = y, count = count } })
                     |= P.float
                     |. P.symbol "x"
                     |= P.float
                     |. P.symbol "x"
                     |= P.int
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\v -> P.Loop { acc | speed = Just v })
                     |= P.int
                     |. P.symbol "mms"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\_ -> P.Loop { acc | tool = Just Summa.Pen })
                     |= P.symbol "pen"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\_ -> P.Loop { acc | tool = Just Summa.Knife })
                     |= P.symbol "knife"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\_ -> P.Loop { acc | tool = Just Summa.Pouncer })
                     |= P.symbol "pouncer"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\_ -> P.Loop { acc | flexCut = Just Summa.FlexCutOff })
                     |= P.symbol "flexoff"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\_ -> P.Loop { acc | flexCut = Just Summa.FlexCutFast })
                     |= P.symbol "flexfast"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\_ -> P.Loop { acc | flexCut = Just Summa.FlexCutAccurate })
                     |= P.symbol "flexaccurate"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\v -> P.Loop { acc | copies = v })
                     |= P.int
                     |. P.symbol "x"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\v -> P.Loop { acc | recutOffset = Just v })
                     |= P.int
                     |. P.symbol "mm"
-                    |. argEnd
                     |> P.backtrackable
                 , P.succeed (\_ -> P.Done { acc | format = Dmpl })
-                    |= P.symbol "dmpl"
+                    |= P.symbol ".dmpl"
                     |. P.end
                 , P.succeed (\_ -> P.Done { acc | format = HpGL })
-                    |= P.symbol "hpgl"
+                    |= P.symbol ".hpgl"
                     |. P.end
-                ]
-
-        argEnd : Parser ()
-        argEnd =
-            P.oneOf
-                [ chompOneOrMoreIf ((==) ' ')
-                , P.symbol "."
                 ]
 
         chompOneOrMoreIf : (Char -> Bool) -> Parser ()
@@ -187,5 +172,4 @@ parser =
     in
     P.succeed (\name v -> { v | name = name })
         |= P.getChompedString (chompOneOrMoreIf (\v -> v /= ' ' && v /= '.'))
-        |. argEnd
         |= P.loop default loop
