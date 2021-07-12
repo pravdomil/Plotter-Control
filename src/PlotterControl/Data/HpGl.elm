@@ -28,7 +28,7 @@ fromString a =
 
 toString : HpGl -> String
 toString a =
-    a |> List.map commandToString |> String.join ""
+    a |> List.map commandToString |> String.join "" |> (\v -> v ++ commandToString PageEnd)
 
 
 commandToString : Command -> String
