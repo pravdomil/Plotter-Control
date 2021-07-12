@@ -14,6 +14,7 @@ type Command
     | InputScalingPoint (List Point)
     | PenDown (List Point)
     | PenUp (List Point)
+    | PageEnd
 
 
 type alias Point =
@@ -44,6 +45,9 @@ commandToString a =
 
         PenUp b ->
             "PU" ++ (b |> List.map pointToString |> String.join ",") ++ ";"
+
+        PageEnd ->
+            "PG;"
 
 
 pointToString : Point -> String
