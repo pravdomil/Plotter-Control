@@ -9,10 +9,10 @@ set -u
 # Be in project root.
 cd "${0%/*}/.."
 
-# Build app first.
-source bin/build
+# Build application first.
+source bin/build.sh
 
 # Start development server.
 cp "src/_dist/static/VERSION/main.js" "dist/static/$VERSION/main.js"
 sed -i "" "s/<head>/<head><script src=\"static\/$VERSION\/elm.js\"><\/script>/" dist/index.html
-elm-live src/Main.elm --open --dir dist --hot -- --output="dist/static/$VERSION/elm.js"
+elm-serve src/Main.elm --open --root dist --output "dist/static/$VERSION/elm.js"
