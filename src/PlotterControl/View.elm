@@ -9,8 +9,11 @@ import Json.Decode
 import Length
 import PlotterControl.File
 import PlotterControl.Model
+import PlotterControl.SerialPort
 import PlotterControl.Settings
 import PlotterControl.UI exposing (..)
+import SerialPort
+import WakeLock
 
 
 view : PlotterControl.Model.Model -> Browser.Document PlotterControl.Model.Msg
@@ -133,9 +136,9 @@ viewInterface model =
         , case Ok () of
             Ok _ ->
                 form
-                    (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Marker Loading:"))
+                    (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Marker loading:"))
                     (inputRadio [ spacing 8 ]
-                        { label = labelHidden "Marker Loading:"
+                        { label = labelHidden "Marker loading:"
                         , options =
                             [ inputOption PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
                             , inputOption PlotterControl.Settings.LoadSequentially (text "Sequentially")
@@ -149,12 +152,41 @@ viewInterface model =
                 none
         , form
             none
-            (row [ spacing 8 ]
+            (column [ spacing 8 ]
                 [ button theme
                     [ paddingXY 16 12 ]
-                    { label = text "Send"
-                    , onPress = Nothing
+                    { label = text "Send File"
+                    , onPress = Just PlotterControl.Model.SendFile
                     }
+                , case model.serialPort of
+                    Ok _ ->
+                        text "Data sent."
+
+                    Err b ->
+                        case b of
+                            PlotterControl.Model.Ready ->
+                                none
+
+                            PlotterControl.Model.Sending ->
+                                text "Sending..."
+
+                            PlotterControl.Model.SerialPortError c ->
+                                case c of
+                                    PlotterControl.SerialPort.SerialPortError d ->
+                                        case d of
+                                            SerialPort.NotSupported ->
+                                                text "Your browser is not supported."
+
+                                            SerialPort.Busy ->
+                                                text "Cannot send data."
+
+                                            SerialPort.JavaScriptError _ ->
+                                                text "Internal error."
+
+                                    PlotterControl.SerialPort.WakeLockError d ->
+                                        case d of
+                                            WakeLock.JavaScriptError _ ->
+                                                text "Internal error."
                 ]
             )
         ]

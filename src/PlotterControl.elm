@@ -7,6 +7,7 @@ import Json.Decode
 import Length
 import PlotterControl.File
 import PlotterControl.Model
+import PlotterControl.SerialPort
 import PlotterControl.Settings
 import PlotterControl.View
 import Quantity
@@ -31,7 +32,7 @@ init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Mod
 init _ =
     ( { file = Err PlotterControl.Model.NotAsked
       , settings = PlotterControl.Settings.default
-      , serialPort = Err PlotterControl.Model.NotAsked_
+      , serialPort = Err PlotterControl.Model.Ready
       }
     , Cmd.none
     )
@@ -77,7 +78,8 @@ update msg model =
                 | settings =
                     (\v -> { v | preset = a }) model.settings
               }
-            , Cmd.none
+            , PlotterControl.SerialPort.send Nothing
+                |> Task.attempt PlotterControl.Model.FileSent
             )
 
         PlotterControl.Model.PlusCopies a ->
@@ -93,7 +95,8 @@ update msg model =
                 | settings =
                     (\v -> { v | copyDistance = v.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model.settings
               }
-            , Cmd.none
+            , PlotterControl.SerialPort.send Nothing
+                |> Task.attempt PlotterControl.Model.FileSent
             )
 
         PlotterControl.Model.ChangeMarkerLoading a ->
@@ -101,6 +104,18 @@ update msg model =
                 | settings =
                     (\v -> { v | markerLoading = a }) model.settings
               }
+            , PlotterControl.SerialPort.send Nothing
+                |> Task.attempt PlotterControl.Model.FileSent
+            )
+
+        PlotterControl.Model.SendFile ->
+            ( { model | serialPort = Err PlotterControl.Model.Sending }
+            , PlotterControl.SerialPort.send (model.file |> Result.toMaybe)
+                |> Task.attempt PlotterControl.Model.FileSent
+            )
+
+        PlotterControl.Model.FileSent a ->
+            ( { model | serialPort = a |> Result.mapError PlotterControl.Model.SerialPortError }
             , Cmd.none
             )
 

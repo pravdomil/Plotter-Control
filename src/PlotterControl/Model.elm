@@ -3,14 +3,14 @@ module PlotterControl.Model exposing (..)
 import File
 import Length
 import PlotterControl.File
+import PlotterControl.SerialPort
 import PlotterControl.Settings
-import SerialPort
 
 
 type alias Model =
     { file : Result FileError PlotterControl.File.File
     , settings : PlotterControl.Settings.Settings
-    , serialPort : Result SerialPortError SerialPort.Port
+    , serialPort : Result SerialPortError ()
     }
 
 
@@ -28,8 +28,9 @@ type FileError
 
 
 type SerialPortError
-    = NotAsked_
-    | Loading_
+    = Ready
+    | Sending
+    | SerialPortError PlotterControl.SerialPort.Error
 
 
 
@@ -41,7 +42,11 @@ type Msg
     | GotFile File.File
     | GotFileContent File.File String
     | DragOver
+      --
     | ChangePreset PlotterControl.Settings.Preset
     | PlusCopies PlotterControl.Settings.Copies
     | PlusCopyDistance Length.Length
     | ChangeMarkerLoading PlotterControl.Settings.MarkerLoading
+      --
+    | SendFile
+    | FileSent (Result PlotterControl.SerialPort.Error ())
