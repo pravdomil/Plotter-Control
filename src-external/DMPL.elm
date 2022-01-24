@@ -42,7 +42,7 @@ type Command
     | ToolUp
     | MoveTo Point
       --
-    | ChangeTool Int
+    | Tool Int
     | CutOff
     | End
     | MoveOrigin Int
@@ -89,7 +89,7 @@ commandToString a =
             pointToString b
 
         --
-        ChangeTool b ->
+        Tool b ->
             "P" ++ String.fromInt b
 
         CutOff ->
@@ -201,3 +201,90 @@ pointToString a =
 --
 
 
+parser : Parser.Parser DMPL
+parser =
+    let
+        loop : DMPL -> Parser.Parser (Parser.Step DMPL DMPL)
+        loop acc =
+            Parser.oneOf
+                [ commandParser
+                    |> Parser.map (\v -> Parser.Loop (v :: acc))
+                , Parser.chompIf (\v -> v == ' ' || v == '\n' || v == '\u{000D}')
+                    |> Parser.map (\_ -> Parser.Loop acc)
+                , Parser.end
+                    |> Parser.map (\_ -> Parser.Done (List.reverse acc))
+                ]
+    in
+    Parser.loop [] loop
+
+
+commandParser : Parser.Parser Command
+commandParser =
+    let
+        pointParser : Parser.Parser Point
+        pointParser =
+            Parser.succeed Point2d.xy
+                |= (Parser.int |> Parser.map (Quantity.int >> Quantity.toFloatQuantity))
+                |. Parser.symbol ","
+                |= (Parser.int |> Parser.map (Quantity.int >> Quantity.toFloatQuantity))
+
+        boundingBoxParser : Parser.Parser BoundingBox
+        boundingBoxParser =
+            Parser.succeed BoundingBox2d.from
+                |= pointParser
+                |. Parser.symbol " "
+                |= pointParser
+
+        windowParser : Parser.Parser Window
+        windowParser =
+            Parser.succeed Window
+                |= boundingBoxParser
+                |. Parser.symbol " "
+                |= boundingBoxParser
+
+        simpleCommands : List Command
+        simpleCommands =
+            [ SelectCutter
+            , DeselectCutter
+            , ResetCutter
+            , AbsoluteCoordinates
+            , RelativeCoordinates
+            , ToolDown
+            , ToolUp
+            , CutOff
+            , End
+            , Report
+            ]
+    in
+    Parser.oneOf
+        [ Parser.oneOf
+            (simpleCommands
+                |> List.map
+                    (\v ->
+                        Parser.symbol (commandToString v)
+                            |> Parser.map (\_ -> v)
+                    )
+            )
+        , Parser.oneOf
+            (allResolutions
+                |> List.map
+                    (\v ->
+                        Parser.symbol (resolutionToString v)
+                            |> Parser.map (\_ -> SetResolution v)
+                    )
+            )
+        , Parser.symbol "W"
+            |> Parser.andThen (\_ -> windowParser |> Parser.map SetWindow)
+        , Parser.symbol "P"
+            |> Parser.andThen (\_ -> Parser.int |> Parser.map Tool)
+        , Parser.symbol "F"
+            |> Parser.andThen (\_ -> Parser.int |> Parser.map MoveOrigin)
+        , Parser.symbol "EW"
+            |> Parser.andThen (\_ -> Parser.int |> Parser.map PlotLength)
+        , Parser.symbol "BP"
+            |> Parser.andThen (\_ -> Parser.int |> Parser.map Pressure)
+        , Parser.symbol "V"
+            |> Parser.andThen (\_ -> Parser.int |> Parser.map Velocity)
+        , pointParser
+            |> Parser.map MoveTo
+        ]
