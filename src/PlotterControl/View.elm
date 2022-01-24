@@ -133,15 +133,15 @@ viewInterface model =
         , case Ok () of
             Ok _ ->
                 form
-                    (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Markers Load:"))
+                    (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Marker Loading:"))
                     (inputRadio [ spacing 8 ]
-                        { label = labelHidden "Markers Load:"
+                        { label = labelHidden "Marker Loading:"
                         , options =
                             [ inputOption PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
                             , inputOption PlotterControl.Settings.LoadSequentially (text "Sequentially")
                             ]
-                        , selected = Just model.settings.markersLoad
-                        , onChange = PlotterControl.Model.ChangeMarkersLoad
+                        , selected = Just model.settings.markerLoading
+                        , onChange = PlotterControl.Model.ChangeMarkerLoading
                         }
                     )
 
