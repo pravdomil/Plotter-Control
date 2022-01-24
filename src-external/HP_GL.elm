@@ -122,3 +122,81 @@ pointToString a =
     (a |> Point2d.xCoordinate |> Quantity.toFloat |> String.fromFloat)
         ++ ","
         ++ (a |> Point2d.yCoordinate |> Quantity.toFloat |> String.fromFloat)
+
+
+
+--
+
+
+parser : Parser.Parser HP_GL
+parser =
+    let
+        loop : HP_GL -> Parser.Parser (Parser.Step HP_GL HP_GL)
+        loop acc =
+            Parser.oneOf
+                [ commandParser
+                    |> Parser.map (\v -> Parser.Loop (v :: acc))
+                , Parser.chompIf (\v -> v == ' ' || v == '\n' || v == '\u{000D}' || v == ';')
+                    |> Parser.map (\_ -> Parser.Loop acc)
+                , Parser.end
+                    |> Parser.map (\_ -> Parser.Done (List.reverse acc))
+                ]
+    in
+    Parser.loop [] loop
+
+
+commandParser : Parser.Parser Command
+commandParser =
+    let
+        pointParser : Parser.Parser Point
+        pointParser =
+            Parser.succeed Point2d.xy
+                |= (Parser.float |> Parser.map Quantity.float)
+                |. Parser.symbol ","
+                |= (Parser.float |> Parser.map Quantity.float)
+
+        boundingBoxParser : Parser.Parser BoundingBox
+        boundingBoxParser =
+            Parser.succeed BoundingBox2d.from
+                |= pointParser
+                |. Parser.symbol ","
+                |= pointParser
+
+        simpleCommands : List Command
+        simpleCommands =
+            [ Initialize, Begin, CutOff, End, Report ]
+    in
+    Parser.oneOf
+        [ Parser.oneOf
+            (simpleCommands
+                |> List.map
+                    (\v ->
+                        Parser.symbol (commandToString v)
+                            |> Parser.map (\_ -> v)
+                    )
+            )
+        , Parser.symbol "PA"
+            |> Parser.andThen
+                (\_ -> pointParser |> Parser.map MoveAbsolute)
+        , Parser.symbol "PR"
+            |> Parser.andThen
+                (\_ -> pointParser |> Parser.map MoveRelative)
+        , Parser.symbol "PD"
+            |> Parser.andThen
+                (\_ -> pointParser |> Parser.map ToolDown)
+        , Parser.symbol "PU"
+            |> Parser.andThen
+                (\_ -> pointParser |> Parser.map ToolUp)
+        , Parser.symbol "IP"
+            |> Parser.andThen
+                (\_ -> boundingBoxParser |> Parser.map InputViewport)
+        , Parser.symbol "FS"
+            |> Parser.andThen
+                (\_ -> Parser.int |> Parser.map Pressure)
+        , Parser.symbol "SP"
+            |> Parser.andThen
+                (\_ -> Parser.int |> Parser.map Tool)
+        , Parser.symbol "VS"
+            |> Parser.andThen
+                (\_ -> Parser.int |> Parser.map Velocity)
+        ]
