@@ -96,6 +96,14 @@ update msg model =
             , Cmd.none
             )
 
+        PlotterControl.Model.ChangeMarkersLoad a ->
+            ( { model
+                | settings =
+                    (\v -> { v | markersLoad = a }) model.settings
+              }
+            , Cmd.none
+            )
+
 
 
 --

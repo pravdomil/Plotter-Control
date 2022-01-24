@@ -7,6 +7,7 @@ type alias Settings =
     { preset : Preset
     , copies : Copies
     , copyDistance : Length.Length
+    , markersLoad : MarkersLoad
     }
 
 
@@ -15,6 +16,7 @@ default =
     { preset = Cut
     , copies = Copies 1
     , copyDistance = Length.millimeters 10
+    , markersLoad = LoadSequentially
     }
 
 
@@ -39,3 +41,12 @@ type Copies
 copiesPlus : Copies -> Copies -> Copies
 copiesPlus (Copies a) (Copies b) =
     a + b |> max 1 |> Copies
+
+
+
+--
+
+
+type MarkersLoad
+    = LoadAllAtOnce
+    | LoadSequentially

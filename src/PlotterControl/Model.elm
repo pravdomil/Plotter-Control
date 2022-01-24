@@ -44,3 +44,4 @@ type Msg
     | ChangePreset PlotterControl.Settings.Preset
     | PlusCopies PlotterControl.Settings.Copies
     | PlusCopyDistance Length.Length
+    | ChangeMarkersLoad PlotterControl.Settings.MarkersLoad
