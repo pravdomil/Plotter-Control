@@ -119,7 +119,7 @@ viewInterface model =
             (case Ok () of
                 Ok _ ->
                     row [ spacing 8 ]
-                        [ text "50mm × 50mm × 5"
+                        [ text "5 × 50mm × 50mm"
                         , linkWithOnPress theme
                             []
                             { label = text "Test"
@@ -151,12 +151,7 @@ viewInterface model =
             none
             (row [ spacing 8 ]
                 [ button theme
-                    []
-                    { label = text "Configure"
-                    , onPress = Nothing
-                    }
-                , button theme
-                    []
+                    [ paddingXY 16 12 ]
                     { label = text "Send"
                     , onPress = Nothing
                     }
