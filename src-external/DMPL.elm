@@ -31,6 +31,7 @@ type Command
     = SelectCutter
     | DeselectCutter
     | ResetCutter
+    | End
       --
     | SetResolution Resolution
     | SetWindow Window
@@ -44,7 +45,6 @@ type Command
       --
     | Tool Int
     | CutOff
-    | End
     | MoveOrigin Int
     | PlotLength Int
     | Pressure Int
@@ -63,6 +63,9 @@ commandToString a =
 
         ResetCutter ->
             "Z"
+
+        End ->
+            "e"
 
         --
         SetResolution b ->
@@ -94,9 +97,6 @@ commandToString a =
 
         CutOff ->
             "c"
-
-        End ->
-            "e"
 
         MoveOrigin b ->
             "F" ++ String.fromInt b
@@ -247,12 +247,12 @@ commandParser =
             [ SelectCutter
             , DeselectCutter
             , ResetCutter
+            , End
             , AbsoluteCoordinates
             , RelativeCoordinates
             , ToolDown
             , ToolUp
             , CutOff
-            , End
             , Report
             ]
     in
