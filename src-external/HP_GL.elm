@@ -31,10 +31,10 @@ type Command
     = Initialize
     | Begin
       --
-    | MoveAbsolute Point
-    | MoveRelative Point
-    | ToolDown Point
-    | ToolUp Point
+    | MoveAbsolute Points
+    | MoveRelative Points
+    | ToolDown Points
+    | ToolUp Points
       --
     | CutOff
     | End
@@ -56,16 +56,16 @@ commandToString a =
 
         --
         MoveAbsolute b ->
-            "PA" ++ pointToString b ++ ";"
+            "PA" ++ pointsToString b ++ ";"
 
         MoveRelative b ->
-            "PR" ++ pointToString b ++ ";"
+            "PR" ++ pointsToString b ++ ";"
 
         ToolDown b ->
-            "PD" ++ pointToString b ++ ";"
+            "PD" ++ pointsToString b ++ ";"
 
         ToolUp b ->
-            "PU" ++ pointToString b ++ ";"
+            "PU" ++ pointsToString b ++ ";"
 
         --
         CutOff ->
@@ -113,6 +113,19 @@ boundingBoxToString a =
 --
 
 
+type alias Points =
+    List Point
+
+
+pointsToString : Points -> String
+pointsToString a =
+    a |> List.map pointToString |> String.join ","
+
+
+
+--
+
+
 type alias Point =
     Point2d.Point2d Quantity.Unitless ()
 
@@ -148,6 +161,20 @@ parser =
 commandParser : Parser.Parser Command
 commandParser =
     let
+        pointsParser : Parser.Parser Points
+        pointsParser =
+            Parser.loop []
+                (\acc ->
+                    Parser.oneOf
+                        [ pointParser
+                            |> Parser.map (\v -> Parser.Loop (v :: acc))
+                        , Parser.symbol ","
+                            |> Parser.map (\_ -> Parser.Loop acc)
+                        , Parser.succeed ()
+                            |> Parser.map (\_ -> Parser.Done (List.reverse acc))
+                        ]
+                )
+
         pointParser : Parser.Parser Point
         pointParser =
             Parser.succeed Point2d.xy
@@ -177,16 +204,16 @@ commandParser =
             )
         , Parser.symbol "PA"
             |> Parser.andThen
-                (\_ -> pointParser |> Parser.map MoveAbsolute)
+                (\_ -> pointsParser |> Parser.map MoveAbsolute)
         , Parser.symbol "PR"
             |> Parser.andThen
-                (\_ -> pointParser |> Parser.map MoveRelative)
+                (\_ -> pointsParser |> Parser.map MoveRelative)
         , Parser.symbol "PD"
             |> Parser.andThen
-                (\_ -> pointParser |> Parser.map ToolDown)
+                (\_ -> pointsParser |> Parser.map ToolDown)
         , Parser.symbol "PU"
             |> Parser.andThen
-                (\_ -> pointParser |> Parser.map ToolUp)
+                (\_ -> pointsParser |> Parser.map ToolUp)
         , Parser.symbol "IP"
             |> Parser.andThen
                 (\_ -> boundingBoxParser |> Parser.map InputViewport)
