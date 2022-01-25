@@ -30,6 +30,7 @@ toString a =
 type Command
     = Initialize
     | Begin
+    | End
       --
     | MoveAbsolute Points
     | MoveRelative Points
@@ -37,7 +38,6 @@ type Command
     | ToolUp Points
       --
     | CutOff
-    | End
     | InputViewport BoundingBox
     | Pressure Int
     | Report
@@ -53,6 +53,9 @@ commandToString a =
 
         Begin ->
             "BP;"
+
+        End ->
+            "PG;"
 
         --
         MoveAbsolute b ->
@@ -70,9 +73,6 @@ commandToString a =
         --
         CutOff ->
             "EC;"
-
-        End ->
-            "PG;"
 
         InputViewport b ->
             "IP" ++ boundingBoxToString b ++ ";"
@@ -191,7 +191,7 @@ commandParser =
 
         simpleCommands : List Command
         simpleCommands =
-            [ Initialize, Begin, CutOff, End, Report ]
+            [ Initialize, Begin, End, CutOff, Report ]
     in
     Parser.oneOf
         [ Parser.oneOf
