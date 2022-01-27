@@ -1,4 +1,4 @@
-module PlotterControl.Data.HP_GL exposing (..)
+module HP_GL exposing (..)
 
 import BoundingBox2d
 import Parser exposing ((|.), (|=))
