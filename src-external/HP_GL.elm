@@ -1,6 +1,7 @@
 module HP_GL exposing (..)
 
 import BoundingBox2d
+import Length
 import Parser exposing ((|.), (|=))
 import Point2d
 import Quantity
@@ -21,6 +22,11 @@ fromString a =
 toString : HP_GL -> String
 toString a =
     a |> List.map commandToString |> String.join ""
+
+
+resolution : Quantity.Quantity Float (Quantity.Rate Quantity.Unitless Length.Meters)
+resolution =
+    Quantity.rate (Quantity.float 1) (Length.millimeters 0.025)
 
 
 
@@ -95,7 +101,7 @@ commandToString a =
 
 
 type alias BoundingBox =
-    BoundingBox2d.BoundingBox2d Quantity.Unitless ()
+    BoundingBox2d.BoundingBox2d Length.Meters ()
 
 
 boundingBoxToString : BoundingBox -> String
@@ -127,14 +133,19 @@ pointsToString a =
 
 
 type alias Point =
-    Point2d.Point2d Quantity.Unitless ()
+    Point2d.Point2d Length.Meters ()
 
 
 pointToString : Point -> String
 pointToString a =
-    (a |> Point2d.xCoordinate |> Quantity.toFloat |> String.fromFloat)
+    let
+        toString_ : Length.Length -> String
+        toString_ b =
+            b |> Quantity.at resolution |> Quantity.toFloat |> round |> String.fromInt
+    in
+    (a |> Point2d.xCoordinate |> toString_)
         ++ ","
-        ++ (a |> Point2d.yCoordinate |> Quantity.toFloat |> String.fromFloat)
+        ++ (a |> Point2d.yCoordinate |> toString_)
 
 
 
@@ -178,9 +189,9 @@ commandParser =
         pointParser : Parser.Parser Point
         pointParser =
             Parser.succeed Point2d.xy
-                |= (Parser.float |> Parser.map Quantity.float)
+                |= (Parser.float |> Parser.map (Quantity.float >> Quantity.at_ resolution))
                 |. Parser.symbol ","
-                |= (Parser.float |> Parser.map Quantity.float)
+                |= (Parser.float |> Parser.map (Quantity.float >> Quantity.at_ resolution))
 
         boundingBoxParser : Parser.Parser BoundingBox
         boundingBoxParser =
