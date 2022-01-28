@@ -21,6 +21,7 @@ type alias Model =
 type FileError
     = NotAsked
     | Loading
+    | FileError PlotterControl.File.Error
 
 
 
@@ -43,6 +44,7 @@ type Msg
     | GotFileContent File.File String
     | DragOver
       --
+    | TestMarkers
     | ChangePreset PlotterControl.Settings.Preset
     | PlusCopies PlotterControl.Settings.Copies
     | PlusCopyDistance Length.Length

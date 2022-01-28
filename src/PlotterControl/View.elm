@@ -72,12 +72,45 @@ viewInterface model =
 
                             PlotterControl.Model.Loading ->
                                 text "Loading..."
+
+                            PlotterControl.Model.FileError c ->
+                                case c of
+                                    PlotterControl.File.FileNotSupported ->
+                                        text "File type is not supported."
+
+                                    PlotterControl.File.InvalidMarkerCount ->
+                                        text "Failed to load markers."
+
+                                    PlotterControl.File.ParserError _ ->
+                                        text "Failed to parse file."
                 , linkWithOnPress theme
                     []
                     { label = text "Select"
                     , onPress = Just PlotterControl.Model.OpenFile
                     }
                 ]
+            )
+        , form
+            (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Markers:"))
+            (case model.file |> Result.toMaybe |> Maybe.andThen .markers of
+                Just a ->
+                    row [ spacing 8 ]
+                        [ text
+                            ([ a.count |> String.fromInt
+                             , a.yDistance |> mmToString
+                             , a.xDistance |> mmToString
+                             ]
+                                |> String.join " × "
+                            )
+                        , linkWithOnPress theme
+                            []
+                            { label = text "Test"
+                            , onPress = Just PlotterControl.Model.TestMarkers
+                            }
+                        ]
+
+                Nothing ->
+                    text "None"
             )
         , form (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Preset:"))
             (inputRadio [ spacing 8 ]
@@ -107,32 +140,9 @@ viewInterface model =
             { label = el (theme.label ++ [ width fill, fontAlignRight ]) (text "Distance between copies:")
             , value =
                 el [ fontVariant fontTabularNumbers ]
-                    (text
-                        (model.settings.copyDistance
-                            |> Length.inMillimeters
-                            |> round
-                            |> String.fromInt
-                            |> (\v -> v ++ " mm")
-                        )
-                    )
+                    (text (mmToString model.settings.copyDistance))
             , onChange = toFloat >> Length.millimeters >> PlotterControl.Model.PlusCopyDistance
             }
-        , form
-            (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Markers:"))
-            (case Ok () of
-                Ok _ ->
-                    row [ spacing 8 ]
-                        [ text "5 × 50mm × 50mm"
-                        , linkWithOnPress theme
-                            []
-                            { label = text "Test"
-                            , onPress = Nothing
-                            }
-                        ]
-
-                Err _ ->
-                    text "None"
-            )
         , case Ok () of
             Ok _ ->
                 form
@@ -248,3 +258,19 @@ onDrop msg =
             |> Json.Decode.map (\v -> ( msg v, True ))
         )
         |> htmlAttribute
+
+
+
+--
+
+
+mmToString : Length.Length -> String
+mmToString a =
+    a
+        |> Length.inMillimeters
+        |> (*) 10
+        |> round
+        |> toFloat
+        |> (\v -> v / 10)
+        |> String.fromFloat
+        |> (\v -> v ++ " mm")

@@ -3,6 +3,7 @@ module PlotterControl exposing (..)
 import Browser
 import File
 import File.Select
+import HP_GL
 import Json.Decode
 import Length
 import PlotterControl.File
@@ -11,6 +12,7 @@ import PlotterControl.SerialPort
 import PlotterControl.Settings
 import PlotterControl.View
 import Quantity
+import SummaEL
 import Task
 
 
@@ -56,15 +58,8 @@ update msg model =
                 |> Task.perform (PlotterControl.Model.GotFileContent a)
             )
 
-        PlotterControl.Model.GotFileContent a _ ->
-            let
-                file : PlotterControl.File.File
-                file =
-                    { name = a |> File.name |> PlotterControl.File.Name
-                    , data = Ok ()
-                    }
-            in
-            ( { model | file = Ok file }
+        PlotterControl.Model.GotFileContent a b ->
+            ( { model | file = PlotterControl.File.fromFile a b |> Result.mapError PlotterControl.Model.FileError }
             , Cmd.none
             )
 
@@ -73,12 +68,38 @@ update msg model =
             , Cmd.none
             )
 
+        PlotterControl.Model.TestMarkers ->
+            case model.file of
+                Ok b ->
+                    ( { model | serialPort = Err PlotterControl.Model.Sending }
+                    , ([ model.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEL.toString
+                       , b |> PlotterControl.File.toCommands |> Tuple.first |> SummaEL.toString
+                       ]
+                        |> String.join "\n"
+                      )
+                        |> PlotterControl.SerialPort.send
+                        |> Task.attempt PlotterControl.Model.FileSent
+                    )
+
+                Err _ ->
+                    ( model
+                    , Cmd.none
+                    )
+
         PlotterControl.Model.ChangePreset a ->
-            ( { model
-                | settings =
-                    (\v -> { v | preset = a }) model.settings
-              }
-            , PlotterControl.SerialPort.send Nothing
+            let
+                nextModel : PlotterControl.Model.Model
+                nextModel =
+                    { model
+                        | settings = model.settings |> (\v -> { v | preset = a })
+                    }
+            in
+            ( nextModel
+            , nextModel.settings
+                |> PlotterControl.Settings.toCommands
+                |> Tuple.first
+                |> SummaEL.toString
+                |> PlotterControl.SerialPort.send
                 |> Task.attempt PlotterControl.Model.FileSent
             )
 
@@ -95,24 +116,43 @@ update msg model =
                 | settings =
                     (\v -> { v | copyDistance = v.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model.settings
               }
-            , PlotterControl.SerialPort.send Nothing
-                |> Task.attempt PlotterControl.Model.FileSent
+            , Cmd.none
             )
 
         PlotterControl.Model.ChangeMarkerLoading a ->
             ( { model
                 | settings =
-                    (\v -> { v | markerLoading = a }) model.settings
+                    model.settings |> (\v -> { v | markerLoading = a })
               }
-            , PlotterControl.SerialPort.send Nothing
-                |> Task.attempt PlotterControl.Model.FileSent
+            , Cmd.none
             )
 
         PlotterControl.Model.SendFile ->
-            ( { model | serialPort = Err PlotterControl.Model.Sending }
-            , PlotterControl.SerialPort.send (model.file |> Result.toMaybe)
-                |> Task.attempt PlotterControl.Model.FileSent
-            )
+            case model.file of
+                Ok b ->
+                    ( { model | serialPort = Err PlotterControl.Model.Sending }
+                    , (let
+                        ( v, v2 ) =
+                            model.settings |> PlotterControl.Settings.toCommands
+
+                        ( v3, v4 ) =
+                            b |> PlotterControl.File.toCommands
+                       in
+                       [ v |> SummaEL.toString
+                       , v3 |> SummaEL.toString
+                       , v4 |> HP_GL.toString
+                       , v2 |> SummaEL.toString
+                       ]
+                        |> String.join "\n"
+                      )
+                        |> PlotterControl.SerialPort.send
+                        |> Task.attempt PlotterControl.Model.FileSent
+                    )
+
+                Err _ ->
+                    ( model
+                    , Cmd.none
+                    )
 
         PlotterControl.Model.FileSent a ->
             ( { model | serialPort = a |> Result.mapError PlotterControl.Model.SerialPortError }
