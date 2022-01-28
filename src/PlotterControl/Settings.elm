@@ -24,8 +24,10 @@ default =
 
 toCommands : Settings -> ( SummaEL.SummaEL, SummaEL.SummaEL )
 toCommands a =
-    ( [ SummaEL.SetSettings
-            (defaultSettings
+    let
+        settings : Dict.Dict String String
+        settings =
+            defaultSettings
                 |> Dict.insert "TOOL"
                     (case a.preset of
                         Cut ->
@@ -62,7 +64,8 @@ toCommands a =
                         LoadSequentially ->
                             "ON"
                     )
-            )
+    in
+    ( [ SummaEL.SetSettings settings
       ]
     , a.copies
         |> (\(Copies v) -> v)
