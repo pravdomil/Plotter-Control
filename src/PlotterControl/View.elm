@@ -113,16 +113,22 @@ viewInterface model =
                     text "None"
             )
         , form (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Preset:"))
-            (inputRadio [ spacing 8 ]
-                { label = labelHidden "Preset:"
-                , options =
-                    [ inputOption PlotterControl.Settings.Cut (text "Cut")
-                    , inputOption PlotterControl.Settings.Draw (text "Draw")
-                    , inputOption PlotterControl.Settings.Perforate (text "Perforate")
+            (column [ spacing 8 ]
+                [ inputRadio [ spacing 8 ]
+                    { label = labelHidden "Preset:"
+                    , options =
+                        [ inputOption PlotterControl.Settings.Cut (text "Cut")
+                        , inputOption PlotterControl.Settings.Draw (text "Draw")
+                        , inputOption PlotterControl.Settings.Perforate (text "Perforate")
+                        ]
+                    , selected = Just model.settings.preset
+                    , onChange = PlotterControl.Model.ChangePreset
+                    }
+                , paragraph theme
+                    [ mutedFontColor, fontSize 14 ]
+                    [ text "Set tool pressure, offset and velocity on plotter."
                     ]
-                , selected = Just model.settings.preset
-                , onChange = PlotterControl.Model.ChangePreset
-                }
+                ]
             )
         , inputNumber
             { label = el (theme.label ++ [ width fill, fontAlignRight ]) (text "Copies:")
@@ -163,11 +169,16 @@ viewInterface model =
         , form
             none
             (column [ spacing 8 ]
-                [ button theme
-                    [ paddingXY 16 12 ]
-                    { label = text "Send File"
-                    , onPress = Just PlotterControl.Model.SendFile
-                    }
+                [ case model.file of
+                    Ok _ ->
+                        button theme
+                            [ paddingXY 16 12 ]
+                            { label = text "Send File"
+                            , onPress = Just PlotterControl.Model.SendFile
+                            }
+
+                    Err _ ->
+                        none
                 , case model.serialPort of
                     Ok _ ->
                         text "Data sent."
