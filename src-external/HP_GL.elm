@@ -138,14 +138,22 @@ type alias Point =
 
 pointToString : Point -> String
 pointToString a =
-    let
-        toString_ : Length.Length -> String
-        toString_ b =
-            b |> Quantity.at resolution |> Quantity.toFloat |> round |> String.fromInt
-    in
-    (a |> Point2d.xCoordinate |> toString_)
+    (a |> Point2d.xCoordinate |> lengthToString)
         ++ ","
-        ++ (a |> Point2d.yCoordinate |> toString_)
+        ++ (a |> Point2d.yCoordinate |> lengthToString)
+
+
+
+--
+
+
+lengthToString : Length.Length -> String
+lengthToString a =
+    a
+        |> Quantity.at resolution
+        |> Quantity.toFloat
+        |> round
+        |> String.fromInt
 
 
 
