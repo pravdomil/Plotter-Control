@@ -4,6 +4,7 @@
         "src",
         "src-external",
         "node_modules/elm-ffi/src",
+        "node_modules/elm-ffi-browser/src",
         "node_modules/elm-utils/src",
         "node_modules/pravdomil-ui/src"
     ],
