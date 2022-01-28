@@ -1,6 +1,7 @@
 module PlotterControl.Settings exposing (..)
 
 import Dict
+import HP_GL
 import Length
 import SummaEL
 
@@ -50,6 +51,11 @@ toCommands a =
                         Perforate ->
                             "MODE2"
                     )
+                |> Dict.insert "FULL_PRESSURE" "300"
+                |> Dict.insert "CUT_LENGTH" (Length.millimeters 4 |> HP_GL.lengthToString)
+                |> Dict.insert "FLEX_PRESSURE" "200"
+                |> Dict.insert "FLEX_LENGTH" (Length.millimeters 0.5 |> HP_GL.lengthToString)
+                |> Dict.insert "FLEX_VELOCITY" "200"
                 |> Dict.insert "RECUT_OFFSET"
                     (a.copyDistance
                         |> Length.inMillimeters
@@ -64,6 +70,13 @@ toCommands a =
                         LoadSequentially ->
                             "ON"
                     )
+                --
+                |> Dict.insert "OVERCUT" "2"
+                |> Dict.insert "OPOS_LEVEL" "30"
+                |> Dict.remove "KNIFE_PRESSURE"
+                |> Dict.remove "PEN_PRESSURE"
+                |> Dict.remove "DRAG_OFFSET"
+                |> Dict.remove "VELOCITY"
     in
     ( [ SummaEL.SetSettings settings
       ]
