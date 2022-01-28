@@ -8,11 +8,11 @@ import Point2d
 import Quantity
 
 
-type alias Summa =
+type alias SummaEL =
     List Command
 
 
-toString : Summa -> String
+toString : SummaEL -> String
 toString a =
     a
         |> List.map commandToString
