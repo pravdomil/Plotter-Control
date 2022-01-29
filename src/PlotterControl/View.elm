@@ -201,6 +201,9 @@ viewInterface model =
                                             SerialPort.Busy ->
                                                 text "Device is busy."
 
+                                            SerialPort.Disconnected ->
+                                                text "Device has been disconnected."
+
                                             SerialPort.JavaScriptError _ ->
                                                 text "Internal error."
 
