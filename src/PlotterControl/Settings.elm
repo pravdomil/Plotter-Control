@@ -8,18 +8,18 @@ import SummaEL
 
 type alias Settings =
     { preset : Preset
+    , markerLoading : MarkerLoading
     , copies : Copies
     , copyDistance : Length.Length
-    , markerLoading : MarkerLoading
     }
 
 
 default : Settings
 default =
     { preset = Cut
+    , markerLoading = LoadAllAtOnce
     , copies = Copies 1
     , copyDistance = Length.millimeters 10
-    , markerLoading = LoadAllAtOnce
     }
 
 
@@ -56,12 +56,6 @@ toCommands a =
                 |> Dict.insert "FLEX_PRESSURE" "200"
                 |> Dict.insert "FLEX_LENGTH" (Length.millimeters 0.5 |> HP_GL.lengthToString)
                 |> Dict.insert "FLEX_VELOCITY" "200"
-                |> Dict.insert "RECUT_OFFSET"
-                    (a.copyDistance
-                        |> Length.inMillimeters
-                        |> round
-                        |> String.fromInt
-                    )
                 |> Dict.insert "OPOS_PANELLING"
                     (case a.markerLoading of
                         LoadAllAtOnce ->
@@ -69,6 +63,12 @@ toCommands a =
 
                         LoadSequentially ->
                             "ON"
+                    )
+                |> Dict.insert "RECUT_OFFSET"
+                    (a.copyDistance
+                        |> Length.inMillimeters
+                        |> round
+                        |> String.fromInt
                     )
                 --
                 |> Dict.insert "OVERCUT" "2"

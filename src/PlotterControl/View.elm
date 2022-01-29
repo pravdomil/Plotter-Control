@@ -130,6 +130,23 @@ viewInterface model =
                     ]
                 ]
             )
+        , case Ok () of
+            Ok _ ->
+                form
+                    (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Marker loading:"))
+                    (inputRadio [ spacing 8 ]
+                        { label = labelHidden "Marker loading:"
+                        , options =
+                            [ inputOption PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
+                            , inputOption PlotterControl.Settings.LoadSequentially (text "Sequentially")
+                            ]
+                        , selected = Just model.settings.markerLoading
+                        , onChange = PlotterControl.Model.ChangeMarkerLoading
+                        }
+                    )
+
+            Err _ ->
+                none
         , inputNumber
             { label = el (theme.label ++ [ width fill, fontAlignRight ]) (text "Copies:")
             , value =
@@ -149,23 +166,6 @@ viewInterface model =
                     (text (mmToString model.settings.copyDistance))
             , onChange = toFloat >> Length.millimeters >> PlotterControl.Model.PlusCopyDistance
             }
-        , case Ok () of
-            Ok _ ->
-                form
-                    (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Marker loading:"))
-                    (inputRadio [ spacing 8 ]
-                        { label = labelHidden "Marker loading:"
-                        , options =
-                            [ inputOption PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
-                            , inputOption PlotterControl.Settings.LoadSequentially (text "Sequentially")
-                            ]
-                        , selected = Just model.settings.markerLoading
-                        , onChange = PlotterControl.Model.ChangeMarkerLoading
-                        }
-                    )
-
-            Err _ ->
-                none
         , form
             none
             (column [ spacing 8 ]
