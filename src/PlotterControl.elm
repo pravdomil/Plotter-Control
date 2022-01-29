@@ -11,6 +11,7 @@ import PlotterControl.Model
 import PlotterControl.SerialPort
 import PlotterControl.Settings
 import PlotterControl.View
+import Process
 import Quantity
 import SummaEL
 import Task
@@ -54,7 +55,8 @@ update msg model =
 
         PlotterControl.Model.GotFile a ->
             ( { model | file = Err PlotterControl.Model.Loading }
-            , File.toString a
+            , Process.sleep 10
+                |> Task.andThen (\() -> File.toString a)
                 |> Task.perform (PlotterControl.Model.GotFileContent a)
             )
 
