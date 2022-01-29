@@ -125,8 +125,8 @@ viewInterface model =
                     , onChange = PlotterControl.Model.ChangePreset
                     }
                 , paragraph theme
-                    [ mutedFontColor, fontSize 14 ]
-                    [ text "Set tool pressure, offset and velocity on plotter."
+                    [ fontSize 14 ]
+                    [ text "Set depth, pressure, offset, velocity on plotter."
                     ]
                 ]
             )
