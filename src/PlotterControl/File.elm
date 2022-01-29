@@ -158,19 +158,24 @@ filterMarkersHelper a =
 
     else
         let
+            ( w, h ) =
+                markers
+                    |> List.concatMap Polyline2d.vertices
+                    |> BoundingBox2d.hullN
+                    |> Maybe.withDefault
+                        (BoundingBox2d.fromExtrema
+                            { minX = Quantity.zero
+                            , maxX = Quantity.zero
+                            , minY = Quantity.zero
+                            , maxY = Quantity.zero
+                            }
+                        )
+                    |> BoundingBox2d.dimensions
+
             markers_ : Markers
             markers_ =
-                { xDistance =
-                    box
-                        |> BoundingBox2d.dimensions
-                        |> Tuple.first
-                        |> Quantity.minus markerSize
-                        |> Quantity.divideBy (toFloat (markersCount // 2 - 1))
-                , yDistance =
-                    box
-                        |> BoundingBox2d.dimensions
-                        |> Tuple.second
-                        |> Quantity.minus markerSize
+                { xDistance = w |> Quantity.minus markerSize |> Quantity.divideBy (toFloat (markersCount // 2 - 1))
+                , yDistance = h |> Quantity.minus markerSize
                 , count = markersCount // 2
                 }
         in
