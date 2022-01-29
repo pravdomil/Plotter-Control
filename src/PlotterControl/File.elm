@@ -152,27 +152,28 @@ filterMarkersHelper a =
         markersCount : Int
         markersCount =
             markers |> List.length
-
-        markers_ : Markers
-        markers_ =
-            { xDistance =
-                box
-                    |> BoundingBox2d.dimensions
-                    |> Tuple.first
-                    |> Quantity.minus markerSize
-                    |> Quantity.divideBy (toFloat (markersCount // 2 - 1))
-            , yDistance =
-                box
-                    |> BoundingBox2d.dimensions
-                    |> Tuple.second
-                    |> Quantity.minus markerSize
-            , count = markersCount // 2
-            }
     in
     if markersCount < 4 || modBy 2 markersCount == 1 then
         Err InvalidMarkerCount
 
     else
+        let
+            markers_ : Markers
+            markers_ =
+                { xDistance =
+                    box
+                        |> BoundingBox2d.dimensions
+                        |> Tuple.first
+                        |> Quantity.minus markerSize
+                        |> Quantity.divideBy (toFloat (markersCount // 2 - 1))
+                , yDistance =
+                    box
+                        |> BoundingBox2d.dimensions
+                        |> Tuple.second
+                        |> Quantity.minus markerSize
+                , count = markersCount // 2
+                }
+        in
         Ok
             ( lines
             , Just markers_
