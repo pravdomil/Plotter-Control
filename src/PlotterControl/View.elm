@@ -199,7 +199,7 @@ viewInterface model =
                                                 text "Your browser is not supported."
 
                                             SerialPort.Busy ->
-                                                text "Cannot send data."
+                                                text "Device is busy."
 
                                             SerialPort.JavaScriptError _ ->
                                                 text "Internal error."
