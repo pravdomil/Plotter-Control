@@ -99,8 +99,8 @@ filterMarkers a =
                 |> Maybe.map
                     (\v ->
                         boxHasSameSizeAsMarker v
-                            && (v |> BoundingBox2d.minX |> Quantity.equalWithin (Length.millimeters 0.1) Quantity.zero)
-                            && (v |> BoundingBox2d.minY |> Quantity.equalWithin (Length.millimeters 0.1) Quantity.zero)
+                            && (v |> BoundingBox2d.minX |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero)
+                            && (v |> BoundingBox2d.minY |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero)
                     )
                 |> Maybe.withDefault False
     in
