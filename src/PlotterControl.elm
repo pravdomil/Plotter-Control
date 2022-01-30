@@ -163,7 +163,7 @@ update msg model =
                 Ok c ->
                     ( { model | plotter = Ok c }
                     , PlotterControl.Plotter.sendData a c
-                        |> Task.attempt PlotterControl.Model.PlotterDone
+                        |> Task.attempt PlotterControl.Model.DataSent
                     )
 
                 Err c ->
@@ -171,18 +171,7 @@ update msg model =
                     , Cmd.none
                     )
 
-        PlotterControl.Model.StopSending ->
-            ( model
-            , case model.plotter of
-                Ok b ->
-                    PlotterControl.Plotter.stop b
-                        |> Task.attempt PlotterControl.Model.PlotterDone
-
-                Err _ ->
-                    Cmd.none
-            )
-
-        PlotterControl.Model.PlotterDone a ->
+        PlotterControl.Model.DataSent a ->
             let
                 plotter : Result PlotterControl.Model.PlotterError PlotterControl.Plotter.Plotter
                 plotter =
@@ -194,6 +183,22 @@ update msg model =
                             Err (b |> PlotterControl.Model.PlotterError)
             in
             ( { model | plotter = plotter }
+            , Cmd.none
+            )
+
+        PlotterControl.Model.StopSending ->
+            ( model
+            , case model.plotter of
+                Ok b ->
+                    PlotterControl.Plotter.stop b
+                        |> Task.attempt PlotterControl.Model.SendingStopped
+
+                Err _ ->
+                    Cmd.none
+            )
+
+        PlotterControl.Model.SendingStopped _ ->
+            ( model
             , Cmd.none
             )
 

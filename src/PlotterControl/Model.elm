@@ -55,5 +55,6 @@ type Msg
       --
     | SendData String
     | GotPlotterSendData String (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
+    | DataSent (Result PlotterControl.Plotter.Error ())
     | StopSending
-    | PlotterDone (Result PlotterControl.Plotter.Error ())
+    | SendingStopped (Result PlotterControl.Plotter.Error ())
