@@ -3,14 +3,14 @@ module PlotterControl.Model exposing (..)
 import File
 import Length
 import PlotterControl.File
-import PlotterControl.SerialPort
+import PlotterControl.Plotter
 import PlotterControl.Settings
 
 
 type alias Model =
     { file : Result FileError PlotterControl.File.File
     , settings : PlotterControl.Settings.Settings
-    , serialPort : Result SerialPortError ()
+    , plotter : Result PlotterError PlotterControl.Plotter.Plotter
     }
 
 
@@ -28,10 +28,10 @@ type FileError
 --
 
 
-type SerialPortError
+type PlotterError
     = Ready
-    | Sending
-    | SerialPortError PlotterControl.SerialPort.Error
+    | Connecting
+    | PlotterError PlotterControl.Plotter.Error
 
 
 
@@ -51,4 +51,8 @@ type Msg
     | ChangeMarkerLoading PlotterControl.Settings.MarkerLoading
       --
     | SendFile
-    | FileSent (Result PlotterControl.SerialPort.Error ())
+      --
+    | SendData String
+    | GotPlotterSendData String (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
+    | StopSending
+    | PlotterDone (Result PlotterControl.Plotter.Error ())

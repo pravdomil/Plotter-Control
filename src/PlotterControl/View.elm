@@ -9,10 +9,10 @@ import Json.Decode
 import Length
 import PlotterControl.File
 import PlotterControl.Model
-import PlotterControl.SerialPort
+import PlotterControl.Plotter
 import PlotterControl.Settings
 import PlotterControl.UI exposing (..)
-import SerialPort
+import USB.Device
 import WakeLock
 
 
@@ -181,12 +181,20 @@ viewInterface model =
 
                         Err _ ->
                             none
+
+                cancelButton : Element PlotterControl.Model.Msg
+                cancelButton =
+                    button theme
+                        [ paddingXY 16 12, dangerBackground ]
+                        { label = text "Stop"
+                        , onPress = Just PlotterControl.Model.StopSending
+                        }
              in
              column [ spacing 8 ]
-                (case model.serialPort of
+                (case model.plotter of
                     Ok _ ->
-                        [ sendButton
-                        , text "Data sent."
+                        [ cancelButton
+                        , text "Sending..."
                         ]
 
                     Err b ->
@@ -195,28 +203,28 @@ viewInterface model =
                                 [ sendButton
                                 ]
 
-                            PlotterControl.Model.Sending ->
-                                [ text "Sending..."
+                            PlotterControl.Model.Connecting ->
+                                [ text "Connecting..."
                                 ]
 
-                            PlotterControl.Model.SerialPortError c ->
+                            PlotterControl.Model.PlotterError c ->
                                 [ sendButton
                                 , case c of
-                                    PlotterControl.SerialPort.SerialPortError d ->
+                                    PlotterControl.Plotter.USBDeviceError d ->
                                         case d of
-                                            SerialPort.NotSupported ->
+                                            USB.Device.NotSupported ->
                                                 text "Your browser is not supported."
 
-                                            SerialPort.Busy ->
-                                                text "Device is busy."
+                                            USB.Device.NothingSelected ->
+                                                none
 
-                                            SerialPort.Disconnected ->
-                                                text "Device has been disconnected."
+                                            USB.Device.TransferAborted ->
+                                                text "Sending has been stopped."
 
-                                            SerialPort.JavaScriptError _ ->
+                                            USB.Device.JavaScriptError _ ->
                                                 text "Internal error."
 
-                                    PlotterControl.SerialPort.WakeLockError d ->
+                                    PlotterControl.Plotter.WakeLockError d ->
                                         case d of
                                             WakeLock.JavaScriptError _ ->
                                                 text "Internal error."

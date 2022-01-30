@@ -6,9 +6,10 @@ import File.Select
 import HP_GL
 import Json.Decode
 import Length
+import Platform.Extra
 import PlotterControl.File
 import PlotterControl.Model
-import PlotterControl.SerialPort
+import PlotterControl.Plotter
 import PlotterControl.Settings
 import PlotterControl.View
 import Process
@@ -35,7 +36,7 @@ init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Mod
 init _ =
     ( { file = Err PlotterControl.Model.NotAsked
       , settings = PlotterControl.Settings.default
-      , serialPort = Err PlotterControl.Model.Ready
+      , plotter = Err PlotterControl.Model.Ready
       }
     , Cmd.none
     )
@@ -71,22 +72,20 @@ update msg model =
             )
 
         PlotterControl.Model.TestMarkers ->
-            case model.file of
+            ( model
+            , case model.file of
                 Ok b ->
-                    ( { model | serialPort = Err PlotterControl.Model.Sending }
-                    , ([ model.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEL.toString
-                       , b |> PlotterControl.File.toCommands |> Tuple.first |> SummaEL.toString
-                       ]
+                    ([ model.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEL.toString
+                     , b |> PlotterControl.File.toCommands |> Tuple.first |> SummaEL.toString
+                     ]
                         |> String.join "\n"
-                      )
-                        |> PlotterControl.SerialPort.send
-                        |> Task.attempt PlotterControl.Model.FileSent
                     )
+                        |> PlotterControl.Model.SendData
+                        |> Platform.Extra.sendMsg
 
                 Err _ ->
-                    ( model
-                    , Cmd.none
-                    )
+                    Cmd.none
+            )
 
         PlotterControl.Model.ChangePreset a ->
             let
@@ -101,8 +100,8 @@ update msg model =
                 |> PlotterControl.Settings.toCommands
                 |> Tuple.first
                 |> SummaEL.toString
-                |> PlotterControl.SerialPort.send
-                |> Task.attempt PlotterControl.Model.FileSent
+                |> PlotterControl.Model.SendData
+                |> Platform.Extra.sendMsg
             )
 
         PlotterControl.Model.PlusCopies a ->
@@ -130,34 +129,71 @@ update msg model =
             )
 
         PlotterControl.Model.SendFile ->
-            case model.file of
+            ( model
+            , case model.file of
                 Ok b ->
-                    ( { model | serialPort = Err PlotterControl.Model.Sending }
-                    , (let
+                    let
                         ( v, v2 ) =
                             model.settings |> PlotterControl.Settings.toCommands
 
                         ( v3, v4 ) =
                             b |> PlotterControl.File.toCommands
-                       in
-                       [ v |> SummaEL.toString
-                       , v3 |> SummaEL.toString
-                       , v4 |> HP_GL.toString
-                       , v2 |> SummaEL.toString
-                       ]
+                    in
+                    [ v |> SummaEL.toString
+                    , v3 |> SummaEL.toString
+                    , v4 |> HP_GL.toString
+                    , v2 |> SummaEL.toString
+                    ]
                         |> String.join "\n"
-                      )
-                        |> PlotterControl.SerialPort.send
-                        |> Task.attempt PlotterControl.Model.FileSent
-                    )
+                        |> PlotterControl.Model.SendData
+                        |> Platform.Extra.sendMsg
 
                 Err _ ->
-                    ( model
+                    Cmd.none
+            )
+
+        PlotterControl.Model.SendData a ->
+            ( { model | plotter = Err PlotterControl.Model.Connecting }
+            , PlotterControl.Plotter.get
+                |> Task.attempt (PlotterControl.Model.GotPlotterSendData a)
+            )
+
+        PlotterControl.Model.GotPlotterSendData a b ->
+            case b of
+                Ok c ->
+                    ( { model | plotter = Ok c }
+                    , PlotterControl.Plotter.sendData a c
+                        |> Task.attempt PlotterControl.Model.PlotterDone
+                    )
+
+                Err c ->
+                    ( { model | plotter = Err (c |> PlotterControl.Model.PlotterError) }
                     , Cmd.none
                     )
 
-        PlotterControl.Model.FileSent a ->
-            ( { model | serialPort = a |> Result.mapError PlotterControl.Model.SerialPortError }
+        PlotterControl.Model.StopSending ->
+            ( model
+            , case model.plotter of
+                Ok b ->
+                    PlotterControl.Plotter.stop b
+                        |> Task.attempt PlotterControl.Model.PlotterDone
+
+                Err _ ->
+                    Cmd.none
+            )
+
+        PlotterControl.Model.PlotterDone a ->
+            let
+                plotter : Result PlotterControl.Model.PlotterError PlotterControl.Plotter.Plotter
+                plotter =
+                    case a of
+                        Ok _ ->
+                            Err PlotterControl.Model.Ready
+
+                        Err b ->
+                            Err (b |> PlotterControl.Model.PlotterError)
+            in
+            ( { model | plotter = plotter }
             , Cmd.none
             )
 

@@ -8,3 +8,6 @@ theme =
     Element.PravdomilUI.LightTheme.theme
 
 
+dangerBackground : Attribute msg
+dangerBackground =
+    bgColor danger
