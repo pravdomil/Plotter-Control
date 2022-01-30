@@ -168,31 +168,40 @@ viewInterface model =
             }
         , form
             none
-            (column [ spacing 8 ]
-                [ case model.file of
-                    Ok _ ->
-                        button theme
-                            [ paddingXY 16 12 ]
-                            { label = text "Send File"
-                            , onPress = Just PlotterControl.Model.SendFile
-                            }
+            (let
+                sendButton : Element PlotterControl.Model.Msg
+                sendButton =
+                    case model.file of
+                        Ok _ ->
+                            button theme
+                                [ paddingXY 16 12 ]
+                                { label = text "Send File"
+                                , onPress = Just PlotterControl.Model.SendFile
+                                }
 
-                    Err _ ->
-                        none
-                , case model.serialPort of
+                        Err _ ->
+                            none
+             in
+             column [ spacing 8 ]
+                (case model.serialPort of
                     Ok _ ->
-                        text "Data sent."
+                        [ sendButton
+                        , text "Data sent."
+                        ]
 
                     Err b ->
                         case b of
                             PlotterControl.Model.Ready ->
-                                none
+                                [ sendButton
+                                ]
 
                             PlotterControl.Model.Sending ->
-                                text "Sending..."
+                                [ text "Sending..."
+                                ]
 
                             PlotterControl.Model.SerialPortError c ->
-                                case c of
+                                [ sendButton
+                                , case c of
                                     PlotterControl.SerialPort.SerialPortError d ->
                                         case d of
                                             SerialPort.NotSupported ->
@@ -211,7 +220,8 @@ viewInterface model =
                                         case d of
                                             WakeLock.JavaScriptError _ ->
                                                 text "Internal error."
-                ]
+                                ]
+                )
             )
         ]
 
