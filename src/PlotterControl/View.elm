@@ -207,6 +207,11 @@ viewInterface model =
                                 [ text "Connecting..."
                                 ]
 
+                            PlotterControl.Model.FileSent ->
+                                [ sendButton
+                                , text "File sent."
+                                ]
+
                             PlotterControl.Model.PlotterError c ->
                                 [ sendButton
                                 , case c of

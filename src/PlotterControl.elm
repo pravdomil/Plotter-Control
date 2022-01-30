@@ -188,7 +188,7 @@ update msg model =
                 plotter =
                     case a of
                         Ok _ ->
-                            Err PlotterControl.Model.Ready
+                            Err PlotterControl.Model.FileSent
 
                         Err b ->
                             Err (b |> PlotterControl.Model.PlotterError)
