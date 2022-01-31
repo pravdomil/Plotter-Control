@@ -1,6 +1,7 @@
 module PlotterControl.Plotter exposing (..)
 
 import Task
+import Task.Extra
 import USB.Device
 import WakeLock
 
@@ -46,18 +47,13 @@ doNotSleep a =
         |> Task.andThen
             (\lock ->
                 a
-                    |> taskAndThenWithResult
+                    |> Task.Extra.taskAndThenWithResult
                         (\v ->
                             WakeLock.release lock
                                 |> Task.mapError WakeLockError
                                 |> Task.andThen
                                     (\_ ->
-                                        case v of
-                                            Ok v2 ->
-                                                Task.succeed v2
-
-                                            Err v2 ->
-                                                Task.fail v2
+                                        Task.Extra.fromResult v
                                     )
                         )
             )
@@ -70,15 +66,3 @@ doNotSleep a =
 type Error
     = USBDeviceError USB.Device.Error
     | WakeLockError WakeLock.Error
-
-
-
---
-
-
-taskAndThenWithResult : (Result x a -> Task.Task y b) -> Task.Task x a -> Task.Task y b
-taskAndThenWithResult next a =
-    a
-        |> Task.map Ok
-        |> Task.onError (Err >> Task.succeed)
-        |> Task.andThen next
