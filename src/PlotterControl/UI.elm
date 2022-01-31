@@ -1,13 +1,13 @@
 module PlotterControl.UI exposing (..)
 
 import Element.PravdomilUI exposing (..)
-import Element.PravdomilUI.LightTheme exposing (..)
+import Element.PravdomilUI.Theme.Light
 
 
 theme =
-    Element.PravdomilUI.LightTheme.theme
+    Element.PravdomilUI.Theme.Light.theme Element.PravdomilUI.Theme.Light.style
 
 
 dangerBackground : Attribute msg
 dangerBackground =
-    bgColor danger
+    bgColor Element.PravdomilUI.Theme.Light.style.danger
