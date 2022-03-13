@@ -72,7 +72,6 @@ toCommands a =
                     )
                 --
                 |> Dict.insert "OVERCUT" "2"
-                |> Dict.insert "OPOS_LEVEL" "30"
                 |> Dict.remove "KNIFE_PRESSURE"
                 |> Dict.remove "PEN_PRESSURE"
                 |> Dict.remove "DRAG_OFFSET"
