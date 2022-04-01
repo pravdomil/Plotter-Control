@@ -126,7 +126,7 @@ viewInterface model =
                     }
                 , paragraph theme
                     [ fontSize 14 ]
-                    [ text "Set depth, pressure, offset, velocity on plotter."
+                    [ text "Set depth, pressure, offset, velocity, sensitivity on plotter."
                     ]
                 ]
             )
