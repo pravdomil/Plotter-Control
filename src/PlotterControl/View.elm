@@ -250,6 +250,11 @@ inputNumber config =
         (row [ spacing 8 ]
             [ linkWithOnPress theme
                 []
+                { label = FeatherIcons.minus |> FeatherIcons.withSize 30 |> FeatherIcons.toHtml [] |> html
+                , onPress = config.onChange -10 |> Just
+                }
+            , linkWithOnPress theme
+                []
                 { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> FeatherIcons.toHtml [] |> html
                 , onPress = config.onChange -1 |> Just
                 }
@@ -258,6 +263,11 @@ inputNumber config =
                 []
                 { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> FeatherIcons.toHtml [] |> html
                 , onPress = config.onChange 1 |> Just
+                }
+            , linkWithOnPress theme
+                []
+                { label = FeatherIcons.plus |> FeatherIcons.withSize 30 |> FeatherIcons.toHtml [] |> html
+                , onPress = config.onChange 10 |> Just
                 }
             ]
         )
