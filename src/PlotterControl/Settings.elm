@@ -53,9 +53,9 @@ toCommands a =
                     )
                 |> Dict.insert "FULL_PRESSURE" "400"
                 |> Dict.insert "CUT_LENGTH" (Length.millimeters 4 |> HP_GL.lengthToString)
-                |> Dict.insert "FLEX_PRESSURE" "250"
+                |> Dict.insert "FLEX_PRESSURE" "180"
                 |> Dict.insert "FLEX_LENGTH" (Length.millimeters 2.6 |> HP_GL.lengthToString)
-                |> Dict.insert "FLEX_VELOCITY" "200"
+                |> Dict.insert "FLEX_VELOCITY" "100"
                 |> Dict.insert "OPOS_PANELLING"
                     (case a.markerLoading of
                         LoadAllAtOnce ->
