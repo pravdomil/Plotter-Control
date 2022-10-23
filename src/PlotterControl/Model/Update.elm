@@ -15,7 +15,7 @@ import PlotterControl.Queue.Update
 init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 init _ =
     ( PlotterControl.Model.Model
-        (Err PlotterControl.Model.NoDirectory)
+        (Err ())
         Dict.Any.empty
         (Err PlotterControl.Model.Ready)
         Dict.Any.empty
