@@ -144,7 +144,7 @@ viewInterface model =
             Ok _ ->
                 form
                     (el (theme.label [ width fill, fontAlignRight ]) (text "Marker loading:"))
-                    (inputRadio theme
+                    (inputRadioRow theme
                         [ spacing 8 ]
                         { label = labelHidden "Marker loading:"
                         , options =
@@ -261,23 +261,23 @@ inputNumber config =
         (row [ spacing 8 ]
             [ textButton theme
                 []
-                { label = FeatherIcons.minus |> FeatherIcons.withSize 30 |> FeatherIcons.toHtml [] |> html
+                { label = el [] (FeatherIcons.minus |> FeatherIcons.withSize 30 |> FeatherIcons.toHtml [] |> html)
                 , onPress = config.onChange -10 |> Just
                 }
             , textButton theme
                 []
-                { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> FeatherIcons.toHtml [] |> html
+                { label = el [] (FeatherIcons.minus |> FeatherIcons.withSize 20 |> FeatherIcons.toHtml [] |> html)
                 , onPress = config.onChange -1 |> Just
                 }
             , config.value
             , textButton theme
                 []
-                { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> FeatherIcons.toHtml [] |> html
+                { label = el [] (FeatherIcons.plus |> FeatherIcons.withSize 20 |> FeatherIcons.toHtml [] |> html)
                 , onPress = config.onChange 1 |> Just
                 }
             , textButton theme
                 []
-                { label = FeatherIcons.plus |> FeatherIcons.withSize 30 |> FeatherIcons.toHtml [] |> html
+                { label = el [] (FeatherIcons.plus |> FeatherIcons.withSize 30 |> FeatherIcons.toHtml [] |> html)
                 , onPress = config.onChange 10 |> Just
                 }
             ]
