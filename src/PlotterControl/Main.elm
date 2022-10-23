@@ -14,7 +14,7 @@ import PlotterControl.Settings
 import PlotterControl.View
 import Process
 import Quantity
-import SummaEL
+import SummaEl
 import Task
 
 
@@ -75,8 +75,8 @@ update msg model =
             ( model
             , case model.file of
                 Ok b ->
-                    ([ model.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEL.toString
-                     , b |> PlotterControl.File.toCommands |> Tuple.first |> SummaEL.toString
+                    ([ model.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEl.toString
+                     , b |> PlotterControl.File.toCommands |> Tuple.first |> SummaEl.toString
                      ]
                         |> String.join "\n"
                     )
@@ -99,7 +99,7 @@ update msg model =
             , nextModel.settings
                 |> PlotterControl.Settings.toCommands
                 |> Tuple.first
-                |> SummaEL.toString
+                |> SummaEl.toString
                 |> PlotterControl.Model.SendData
                 |> Platform.Extra.sendMsg
             )
@@ -139,10 +139,10 @@ update msg model =
                         ( v3, v4 ) =
                             b |> PlotterControl.File.toCommands
                     in
-                    [ v |> SummaEL.toString
-                    , v3 |> SummaEL.toString
+                    [ v |> SummaEl.toString
+                    , v3 |> SummaEl.toString
                     , v4 |> HpGl.toString
-                    , v2 |> SummaEL.toString
+                    , v2 |> SummaEl.toString
                     ]
                         |> String.join "\n"
                         |> PlotterControl.Model.SendData

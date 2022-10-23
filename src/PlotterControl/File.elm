@@ -9,7 +9,7 @@ import Length
 import Parser
 import Polyline2d
 import Quantity
-import SummaEL
+import SummaEl
 
 
 type alias File =
@@ -44,11 +44,11 @@ fromHP_GLFile a b =
             )
 
 
-toCommands : File -> ( SummaEL.SummaEL, HpGl.HpGl )
+toCommands : File -> ( SummaEl.SummaEL, HpGl.HpGl )
 toCommands a =
     ( case a.markers of
         Just b ->
-            [ SummaEL.SetSettings
+            [ SummaEl.SetSettings
                 (Dict.fromList
                     [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
                     , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
@@ -57,7 +57,7 @@ toCommands a =
                     , ( "MARKER_X_N", b.count |> String.fromInt )
                     ]
                 )
-            , SummaEL.LoadMarkers
+            , SummaEl.LoadMarkers
             ]
 
         Nothing ->

@@ -1,4 +1,4 @@
-module SummaEL exposing (..)
+module SummaEl exposing (..)
 
 {-| Summa Encapsulated Language
 -}

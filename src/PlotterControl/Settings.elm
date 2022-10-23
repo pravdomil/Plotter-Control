@@ -3,7 +3,7 @@ module PlotterControl.Settings exposing (..)
 import Dict
 import HpGl
 import Length
-import SummaEL
+import SummaEl
 
 
 type alias Settings =
@@ -23,7 +23,7 @@ default =
     }
 
 
-toCommands : Settings -> ( SummaEL.SummaEL, SummaEL.SummaEL )
+toCommands : Settings -> ( SummaEl.SummaEL, SummaEl.SummaEL )
 toCommands a =
     let
         settings : Dict.Dict String String
@@ -78,13 +78,13 @@ toCommands a =
                 |> Dict.remove "DRAG_OFFSET"
                 |> Dict.remove "VELOCITY"
     in
-    ( [ SummaEL.SetSettings settings
+    ( [ SummaEl.SetSettings settings
       ]
     , a.copies
         |> (\(Copies v) -> v)
         |> (\v ->
                 if v > 1 then
-                    [ SummaEL.Recut (v - 1)
+                    [ SummaEl.Recut (v - 1)
                     ]
 
                 else
@@ -129,7 +129,7 @@ type MarkerLoading
 --
 
 
-defaultSettings : SummaEL.Settings
+defaultSettings : SummaEl.Settings
 defaultSettings =
     [ ( "KNIFE_PRESSURE", "90" )
     , ( "PEN_PRESSURE", "40" )
