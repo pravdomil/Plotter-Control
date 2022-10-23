@@ -146,7 +146,7 @@ viewInterface model =
                     (el (theme.label [ width fill, fontAlignRight ]) (text "Marker loading:"))
                     (inputRadioRow theme
                         [ spacing 8 ]
-                        { label = labelHidden "Marker loading:"
+                        { label = labelHidden "Marker Loading:"
                         , options =
                             [ inputRadioBlockOption theme [] PlotterControl.Settings.LoadSequentially (text "Sequentially")
                             , inputRadioBlockOption theme [] PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
@@ -171,7 +171,7 @@ viewInterface model =
             , onChange = PlotterControl.Settings.Copies >> PlotterControl.Msg.CopiesChanged
             }
         , inputNumber
-            { label = el (theme.label [ width fill, fontAlignRight ]) (text "Distance between copies:")
+            { label = el (theme.label [ width fill, fontAlignRight ]) (text "Copy Distance:")
             , value =
                 el [ fontVariant fontTabularNumbers ]
                     (text (mmToString model.settings.copyDistance))
