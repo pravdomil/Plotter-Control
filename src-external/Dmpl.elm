@@ -9,16 +9,16 @@ import Quantity
 {-| Digital Microprocessor Plotter Language
 <https://en.wikipedia.org/wiki/DMPL>
 -}
-type alias DMPL =
+type alias Dmpl =
     List Command
 
 
-fromString : String -> Result (List Parser.DeadEnd) DMPL
+fromString : String -> Result (List Parser.DeadEnd) Dmpl
 fromString a =
     a |> Parser.run parser
 
 
-toString : DMPL -> String
+toString : Dmpl -> String
 toString a =
     a |> List.map commandToString |> String.join " "
 
@@ -201,10 +201,10 @@ pointToString a =
 --
 
 
-parser : Parser.Parser DMPL
+parser : Parser.Parser Dmpl
 parser =
     let
-        loop : DMPL -> Parser.Parser (Parser.Step DMPL DMPL)
+        loop : Dmpl -> Parser.Parser (Parser.Step Dmpl Dmpl)
         loop acc =
             Parser.oneOf
                 [ commandParser
