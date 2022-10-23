@@ -76,7 +76,7 @@ plotterStatus model =
         stopButton =
             button theme
                 [ bgColor style.danger ]
-                { label = text "Stop Sending..."
+                { label = text "Stop Sending"
                 , onPress = Just PlotterControl.Msg.StopSendingRequested
                 }
     in
