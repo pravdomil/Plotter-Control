@@ -113,9 +113,19 @@ type Copies
     = Copies Int
 
 
+intToCopies : Int -> Copies
+intToCopies =
+    Copies
+
+
+copiesToInt : Copies -> Int
+copiesToInt (Copies a) =
+    a
+
+
 copiesPlus : Copies -> Copies -> Copies
 copiesPlus (Copies a) (Copies b) =
-    a + b |> max 1 |> Copies
+    a + b |> max 1 |> intToCopies
 
 
 
