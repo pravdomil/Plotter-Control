@@ -10,6 +10,7 @@ import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter
+import PlotterControl.Plotter.Update
 import PlotterControl.Plotter.Utils
 import PlotterControl.Settings
 import Process
@@ -161,20 +162,10 @@ update msg model =
             )
 
         PlotterControl.Msg.StopSendingRequested ->
-            ( model
-            , case model.plotter of
-                Ok b ->
-                    PlotterControl.Plotter.stop b
-                        |> Task.attempt PlotterControl.Msg.SendingStopped
-
-                Err _ ->
-                    Cmd.none
-            )
+            PlotterControl.Plotter.Update.stopPlotter model
 
         PlotterControl.Msg.SendingStopped _ ->
-            ( model
-            , Cmd.none
-            )
+            Platform.Extra.noOperation model
 
 
 
