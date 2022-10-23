@@ -17,7 +17,7 @@ init _ =
     ( PlotterControl.Model.Model
         (Err ())
         Dict.Any.empty
-        (Err PlotterControl.Model.Ready)
+        (Err PlotterControl.Model.NoPlotter)
         Dict.Any.empty
     , Cmd.none
     )
