@@ -6,6 +6,7 @@ type Item
     | RollGuidesLock
     | ToolOffset
     | ToolPressure
+    | FlexPressure
     | ToolDepth
     | ToolVelocity
     | MarkerSensitivity
@@ -19,6 +20,7 @@ items =
     , RollGuidesLock
     , ToolOffset
     , ToolPressure
+    , FlexPressure
     , ToolDepth
     , ToolVelocity
     , MarkerSensitivity
@@ -41,6 +43,9 @@ toComparable a =
 
         ToolPressure ->
             3
+
+        FlexPressure ->
+            4
 
         ToolDepth ->
             5

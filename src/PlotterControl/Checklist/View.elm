@@ -45,6 +45,9 @@ viewItem checked item =
                 PlotterControl.Checklist.ToolPressure ->
                     text "Tool Pressure"
 
+                PlotterControl.Checklist.FlexPressure ->
+                    text "Flex Pressure"
+
                 PlotterControl.Checklist.ToolDepth ->
                     text "Tool Depth"
 
