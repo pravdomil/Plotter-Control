@@ -148,8 +148,8 @@ viewInterface model =
                         [ spacing 8 ]
                         { label = labelHidden "Marker loading:"
                         , options =
-                            [ inputRadioBlockOption theme [] PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
-                            , inputRadioBlockOption theme [] PlotterControl.Settings.LoadSequentially (text "Sequentially")
+                            [ inputRadioBlockOption theme [] PlotterControl.Settings.LoadSequentially (text "Sequentially")
+                            , inputRadioBlockOption theme [] PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
                             ]
                         , selected = Just model.settings.markerLoading
                         , onChange = PlotterControl.Msg.MarkerLoadingChanged

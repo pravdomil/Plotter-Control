@@ -17,7 +17,7 @@ type alias Settings =
 default : Settings
 default =
     { preset = Cut
-    , markerLoading = LoadAllAtOnce
+    , markerLoading = LoadSequentially
     , copies = Copies 1
     , copyDistance = Length.millimeters 10
     }
