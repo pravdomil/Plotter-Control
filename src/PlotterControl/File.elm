@@ -91,26 +91,6 @@ hpGlFileToReady a =
             )
 
 
-readyToMarkerSettings : Ready -> List SummaEl.Command
-readyToMarkerSettings a =
-    case a.markers of
-        Just b ->
-            [ SummaEl.SetSettings
-                (Dict.fromList
-                    [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
-                    , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
-                    , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
-                    , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
-                    , ( "MARKER_X_N", b.count |> String.fromInt )
-                    ]
-                )
-            , SummaEl.LoadMarkers
-            ]
-
-        Nothing ->
-            []
-
-
 readyToPlotterData : Ready -> String
 readyToPlotterData a =
     let
@@ -141,6 +121,21 @@ type alias Markers =
     , yDistance : Length.Length
     , count : Int
     }
+
+
+markersToSettings : Markers -> List SummaEl.Command
+markersToSettings a =
+    [ SummaEl.SetSettings
+        (Dict.fromList
+            [ ( "MARKER_X_DIS", a.xDistance |> HpGl.lengthToString )
+            , ( "MARKER_Y_DIS", a.yDistance |> HpGl.lengthToString )
+            , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
+            , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
+            , ( "MARKER_X_N", a.count |> String.fromInt )
+            ]
+        )
+    , SummaEl.LoadMarkers
+    ]
 
 
 filterMarkers :
