@@ -20,7 +20,6 @@ type Msg
       --
     | SendFileRequested
       --
-    | SendData String
     | PlotterReceived String (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
     | DataSent (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested

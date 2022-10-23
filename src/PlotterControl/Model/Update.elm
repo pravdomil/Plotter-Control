@@ -10,6 +10,7 @@ import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter
+import PlotterControl.Plotter.Utils
 import PlotterControl.Settings
 import Process
 import Quantity
@@ -55,37 +56,33 @@ update msg model =
             )
 
         PlotterControl.Msg.MarkerTestRequested ->
-            ( model
-            , case model.file of
+            case model.file of
                 Ok b ->
-                    ([ model.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEl.toString
-                     , b |> PlotterControl.File.toCommands |> Tuple.first |> SummaEl.toString
-                     ]
-                        |> String.join "\n"
-                    )
-                        |> PlotterControl.Msg.SendData
-                        |> sendMsg
+                    let
+                        data : String
+                        data =
+                            [ model.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEl.toString
+                            , b |> PlotterControl.File.toCommands |> Tuple.first |> SummaEl.toString
+                            ]
+                                |> String.join "\n"
+                    in
+                    PlotterControl.Plotter.Utils.sendData data model
 
                 Err _ ->
-                    Cmd.none
-            )
+                    Platform.Extra.noOperation model
 
         PlotterControl.Msg.PresetChanged a ->
-            let
-                nextModel : PlotterControl.Model.Model
-                nextModel =
-                    { model
-                        | settings = model.settings |> (\x -> { x | preset = a })
-                    }
-            in
-            ( nextModel
-            , nextModel.settings
-                |> PlotterControl.Settings.toCommands
-                |> Tuple.first
-                |> SummaEl.toString
-                |> PlotterControl.Msg.SendData
-                |> sendMsg
+            ( { model
+                | settings = model.settings |> (\x -> { x | preset = a })
+              }
+            , Cmd.none
             )
+                |> Platform.Extra.andThen
+                    (\x ->
+                        PlotterControl.Plotter.Utils.sendData
+                            (x.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEl.toString)
+                            x
+                    )
 
         PlotterControl.Msg.CopiesChanged a ->
             ( { model
@@ -112,8 +109,7 @@ update msg model =
             )
 
         PlotterControl.Msg.SendFileRequested ->
-            ( model
-            , case model.file of
+            case model.file of
                 Ok b ->
                     let
                         ( x, x2 ) =
@@ -121,25 +117,20 @@ update msg model =
 
                         ( x3, x4 ) =
                             b |> PlotterControl.File.toCommands
+
+                        data : String
+                        data =
+                            String.join "\n"
+                                [ x |> SummaEl.toString
+                                , x3 |> SummaEl.toString
+                                , x4 |> HpGl.toString
+                                , x2 |> SummaEl.toString
+                                ]
                     in
-                    [ x |> SummaEl.toString
-                    , x3 |> SummaEl.toString
-                    , x4 |> HpGl.toString
-                    , x2 |> SummaEl.toString
-                    ]
-                        |> String.join "\n"
-                        |> PlotterControl.Msg.SendData
-                        |> sendMsg
+                    PlotterControl.Plotter.Utils.sendData data model
 
                 Err _ ->
-                    Cmd.none
-            )
-
-        PlotterControl.Msg.SendData a ->
-            ( { model | plotter = Err PlotterControl.Model.Connecting }
-            , PlotterControl.Plotter.get
-                |> Task.attempt (PlotterControl.Msg.PlotterReceived a)
-            )
+                    Platform.Extra.noOperation model
 
         PlotterControl.Msg.PlotterReceived a b ->
             case b of
@@ -193,12 +184,3 @@ update msg model =
 subscriptions : PlotterControl.Model.Model -> Sub PlotterControl.Msg.Msg
 subscriptions _ =
     Sub.none
-
-
-
---
-
-
-sendMsg : a -> Cmd a
-sendMsg msg =
-    Task.succeed () |> Task.perform (\() -> msg)
