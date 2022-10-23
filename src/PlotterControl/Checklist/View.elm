@@ -39,17 +39,17 @@ viewItem checked item =
                 PlotterControl.Checklist.RollGuidesLock ->
                     text "Roll Guides Lock"
 
-                PlotterControl.Checklist.ToolOffset ->
-                    text "Tool Offset"
-
                 PlotterControl.Checklist.ToolPressure ->
                     text "Tool Pressure"
 
-                PlotterControl.Checklist.FlexPressure ->
-                    text "Flex Pressure"
-
                 PlotterControl.Checklist.ToolDepth ->
                     text "Tool Depth"
+
+                PlotterControl.Checklist.ToolOffset ->
+                    text "Tool Offset"
+
+                PlotterControl.Checklist.FlexPressure ->
+                    text "Flex Pressure"
 
                 PlotterControl.Checklist.ToolVelocity ->
                     text "Tool Velocity"
