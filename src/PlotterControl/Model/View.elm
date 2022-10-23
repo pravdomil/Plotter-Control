@@ -63,7 +63,7 @@ viewInterface model =
                     Ok b ->
                         paragraph theme
                             []
-                            [ text (b.name |> (\(PlotterControl.File.Name v) -> v))
+                            [ text (b.name |> (\(PlotterControl.File.Name x) -> x))
                             ]
 
                     Err b ->
@@ -156,7 +156,7 @@ viewInterface model =
                 el [ fontVariant fontTabularNumbers ]
                     (text
                         (model.settings.copies
-                            |> (\(PlotterControl.Settings.Copies v) -> v)
+                            |> (\(PlotterControl.Settings.Copies x) -> x)
                             |> String.fromInt
                         )
                     )
@@ -305,7 +305,7 @@ onDrop msg =
     Html.Events.preventDefaultOn
         "drop"
         (Json.Decode.at [ "dataTransfer", "files", "0" ] File.decoder
-            |> Json.Decode.map (\v -> ( msg v, True ))
+            |> Json.Decode.map (\x -> ( msg x, True ))
         )
         |> htmlAttribute
 
@@ -321,6 +321,6 @@ mmToString a =
         |> (*) 10
         |> round
         |> toFloat
-        |> (\v -> v / 10)
+        |> (\x -> x / 10)
         |> String.fromFloat
-        |> (\v -> v ++ " mm")
+        |> (\x -> x ++ " mm")

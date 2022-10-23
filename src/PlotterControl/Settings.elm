@@ -81,10 +81,10 @@ toCommands a =
     ( [ SummaEl.SetSettings settings
       ]
     , a.copies
-        |> (\(Copies v) -> v)
-        |> (\v ->
-                if v > 1 then
-                    [ SummaEl.Recut (v - 1)
+        |> (\(Copies x) -> x)
+        |> (\x ->
+                if x > 1 then
+                    [ SummaEl.Recut (x - 1)
                     ]
 
                 else

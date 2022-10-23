@@ -64,7 +64,7 @@ toCommands a =
             []
     , a.polylines
         |> HpGl.Geometry.fromPolylines
-        |> (\v -> [ HpGl.Initialize ] ++ v ++ [ HpGl.End ])
+        |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
     )
 
 
@@ -97,10 +97,10 @@ filterMarkers a =
             b
                 |> Polyline2d.boundingBox
                 |> Maybe.map
-                    (\v ->
-                        boxHasSameSizeAsMarker v
-                            && (v |> BoundingBox2d.minX |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero)
-                            && (v |> BoundingBox2d.minY |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero)
+                    (\x ->
+                        boxHasSameSizeAsMarker x
+                            && (x |> BoundingBox2d.minX |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero)
+                            && (x |> BoundingBox2d.minY |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero)
                     )
                 |> Maybe.withDefault False
     in
@@ -138,10 +138,10 @@ filterMarkersHelper a =
             b
                 |> Polyline2d.boundingBox
                 |> Maybe.map
-                    (\v ->
-                        boxHasSameSizeAsMarker v
-                            && ((v |> BoundingBox2d.minY |> Quantity.equalWithin tolerance (box |> BoundingBox2d.minY))
-                                    || (v |> BoundingBox2d.maxY |> Quantity.equalWithin tolerance (box |> BoundingBox2d.maxY))
+                    (\x ->
+                        boxHasSameSizeAsMarker x
+                            && ((x |> BoundingBox2d.minY |> Quantity.equalWithin tolerance (box |> BoundingBox2d.minY))
+                                    || (x |> BoundingBox2d.maxY |> Quantity.equalWithin tolerance (box |> BoundingBox2d.maxY))
                                )
                     )
                 |> Maybe.withDefault False

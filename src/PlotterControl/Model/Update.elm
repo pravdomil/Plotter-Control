@@ -76,7 +76,7 @@ update msg model =
                 nextModel : PlotterControl.Model.Model
                 nextModel =
                     { model
-                        | settings = model.settings |> (\v -> { v | preset = a })
+                        | settings = model.settings |> (\x -> { x | preset = a })
                     }
             in
             ( nextModel
@@ -91,7 +91,7 @@ update msg model =
         PlotterControl.Msg.PlusCopies a ->
             ( { model
                 | settings =
-                    (\v -> { v | copies = v.copies |> PlotterControl.Settings.copiesPlus a }) model.settings
+                    (\x -> { x | copies = x.copies |> PlotterControl.Settings.copiesPlus a }) model.settings
               }
             , Cmd.none
             )
@@ -99,7 +99,7 @@ update msg model =
         PlotterControl.Msg.PlusCopyDistance a ->
             ( { model
                 | settings =
-                    (\v -> { v | copyDistance = v.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model.settings
+                    (\x -> { x | copyDistance = x.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model.settings
               }
             , Cmd.none
             )
@@ -107,7 +107,7 @@ update msg model =
         PlotterControl.Msg.ChangeMarkerLoading a ->
             ( { model
                 | settings =
-                    model.settings |> (\v -> { v | markerLoading = a })
+                    model.settings |> (\x -> { x | markerLoading = a })
               }
             , Cmd.none
             )
@@ -117,16 +117,16 @@ update msg model =
             , case model.file of
                 Ok b ->
                     let
-                        ( v, v2 ) =
+                        ( x, x2 ) =
                             model.settings |> PlotterControl.Settings.toCommands
 
-                        ( v3, v4 ) =
+                        ( x3, x4 ) =
                             b |> PlotterControl.File.toCommands
                     in
-                    [ v |> SummaEl.toString
-                    , v3 |> SummaEl.toString
-                    , v4 |> HpGl.toString
-                    , v2 |> SummaEl.toString
+                    [ x |> SummaEl.toString
+                    , x3 |> SummaEl.toString
+                    , x4 |> HpGl.toString
+                    , x2 |> SummaEl.toString
                     ]
                         |> String.join "\n"
                         |> PlotterControl.Msg.SendData

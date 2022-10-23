@@ -48,12 +48,12 @@ doNotSleep a =
             (\lock ->
                 a
                     |> Task.Extra.andAlwaysThen
-                        (\v ->
+                        (\x ->
                             WakeLock.release lock
                                 |> Task.mapError WakeLockError
                                 |> Task.andThen
                                     (\_ ->
-                                        Task.Extra.fromResult v
+                                        Task.Extra.fromResult x
                                     )
                         )
             )
