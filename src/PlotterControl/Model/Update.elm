@@ -69,9 +69,6 @@ update msg model =
             PlotterControl.File.Update.changeMarkerLoading a b model
 
         --
-        PlotterControl.Msg.SendQueueRequested ->
-            PlotterControl.Plotter.Update.sendQueue model
-
         PlotterControl.Msg.QueueItemReceived a ->
             PlotterControl.Queue.Update.addItemToQueue a model
 
@@ -79,6 +76,9 @@ update msg model =
             PlotterControl.Queue.Update.removeItemFromQueue a model
 
         --
+        PlotterControl.Msg.SendQueueRequested ->
+            PlotterControl.Plotter.Update.sendQueue model
+
         PlotterControl.Msg.PlotterConnected a ->
             PlotterControl.Plotter.Update.plotterConnected a model
 

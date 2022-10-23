@@ -26,10 +26,10 @@ type Msg
     | CopyDistanceChanged PlotterControl.File.Name Length.Length
     | MarkerLoadingChanged PlotterControl.File.Name PlotterControl.Settings.MarkerLoading
       --
-    | SendQueueRequested
     | QueueItemReceived ( Id.Id PlotterControl.Queue.Item, PlotterControl.Queue.Item )
     | QueueItemRemoveRequested (Id.Id PlotterControl.Queue.Item)
       --
+    | SendQueueRequested
     | PlotterConnected (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
     | QueueItemSent PlotterControl.Plotter.Plotter (Id.Id PlotterControl.Queue.Item) (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested
