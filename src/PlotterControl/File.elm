@@ -49,32 +49,6 @@ fromHpGlFile a b =
             )
 
 
-toCommands : File -> { settings : SummaEl.SummaEl, data : HpGl.HpGl }
-toCommands a =
-    { settings =
-        case a.markers of
-            Just b ->
-                [ SummaEl.SetSettings
-                    (Dict.fromList
-                        [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
-                        , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
-                        , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
-                        , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
-                        , ( "MARKER_X_N", b.count |> String.fromInt )
-                        ]
-                    )
-                , SummaEl.LoadMarkers
-                ]
-
-            Nothing ->
-                []
-    , data =
-        a.polylines
-            |> HpGl.Geometry.fromPolylines
-            |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
-    }
-
-
 
 --
 
@@ -101,6 +75,32 @@ type alias Ready =
     { polylines : List (Polyline2d.Polyline2d Length.Meters ())
     , markers : Maybe Markers
     , settings : PlotterControl.Settings.Settings
+    }
+
+
+toCommands : File -> { settings : SummaEl.SummaEl, data : HpGl.HpGl }
+toCommands a =
+    { settings =
+        case a.markers of
+            Just b ->
+                [ SummaEl.SetSettings
+                    (Dict.fromList
+                        [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
+                        , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
+                        , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
+                        , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
+                        , ( "MARKER_X_N", b.count |> String.fromInt )
+                        ]
+                    )
+                , SummaEl.LoadMarkers
+                ]
+
+            Nothing ->
+                []
+    , data =
+        a.polylines
+            |> HpGl.Geometry.fromPolylines
+            |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
     }
 
 
