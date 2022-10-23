@@ -2,6 +2,8 @@ module PlotterControl.Msg exposing (..)
 
 import File
 import Length
+import PlotterControl.Checklist
+import PlotterControl.File
 import PlotterControl.Plotter
 import PlotterControl.Settings
 
@@ -9,18 +11,24 @@ import PlotterControl.Settings
 type Msg
     = NothingHappened
       --
+    | OpenDirectoryRequested
+    | FileActivated PlotterControl.File.Name
+      --
     | OpenFileRequested
     | FileReceived File.File
     | FileContentReceived File.File String
-    | SendFileRequested
+    | AddToQueueRequested
       --
-    | MarkerTestRequested
-    | PresetChanged PlotterControl.Settings.Preset
-    | CopiesChanged PlotterControl.Settings.Copies
-    | CopyDistanceChanged Length.Length
-    | MarkerLoadingChanged PlotterControl.Settings.MarkerLoading
+    | MarkerTestRequested PlotterControl.File.Name
+    | PresetChanged PlotterControl.File.Name PlotterControl.Settings.Preset
+    | CopiesChanged PlotterControl.File.Name PlotterControl.Settings.Copies
+    | CopyDistanceChanged PlotterControl.File.Name Length.Length
+    | MarkerLoadingChanged PlotterControl.File.Name PlotterControl.Settings.MarkerLoading
       --
+    | SendQueueRequested
     | PlotterReceived (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
     | QueueSent (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested
     | SendingStopped (Result PlotterControl.Plotter.Error ())
+      --
+    | ChecklistItemChecked PlotterControl.Checklist.Item Bool
