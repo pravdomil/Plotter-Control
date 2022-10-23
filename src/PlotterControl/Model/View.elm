@@ -1,4 +1,4 @@
-module PlotterControl.View exposing (..)
+module PlotterControl.Model.View exposing (..)
 
 import Browser
 import Element.PravdomilUI exposing (..)
