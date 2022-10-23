@@ -27,13 +27,18 @@ fromFile : File.File -> Task.Task x File
 fromFile a =
     Task.map2
         File
-        (if a |> File.name |> String.endsWith ".hpgl" then
+        (if a |> File.name |> String.endsWith supportedExtension then
             hpGlFileToReady a
 
          else
             Task.succeed (Err FileNotSupported)
         )
         Time.now
+
+
+supportedExtension : String
+supportedExtension =
+    ".hpgl"
 
 
 
