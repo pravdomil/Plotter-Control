@@ -115,7 +115,7 @@ viewInterface model =
             )
         , form (el (theme.label [ width fill, fontAlignRight ]) (text "Preset:"))
             (column [ spacing 8 ]
-                [ inputRadio theme
+                [ inputRadioRow theme
                     [ spacing 8 ]
                     { label = labelHidden "Preset:"
                     , options =
