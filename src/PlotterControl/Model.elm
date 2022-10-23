@@ -20,7 +20,7 @@ type alias Model =
 
 
 type PlotterError
-    = Ready
-    | Connecting
-    | QueueSent
+    = NoPlotter
+    | PlotterConnecting
+    | PlotterSending PlotterControl.Plotter.Plotter
     | PlotterError PlotterControl.Plotter.Error
