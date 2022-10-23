@@ -13,11 +13,11 @@ import PlotterControl.Settings
 type Msg
     = NothingHappened
       --
-    | FileReceived File.File
-    | FileContentReceived File.File String
+    | OpenFilesRequested
+    | RawFilesReceived (List File.File)
+    | FilesReceived (List ( PlotterControl.File.Name, PlotterControl.File.File ))
     | FileActivated PlotterControl.File.Name
       --
-    | OpenFileRequested
     | AddToQueueRequested PlotterControl.File.Name
     | MarkerTestRequested PlotterControl.File.Name
     | PresetChanged PlotterControl.File.Name PlotterControl.Settings.Preset

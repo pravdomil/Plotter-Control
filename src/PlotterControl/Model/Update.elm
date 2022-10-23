@@ -34,14 +34,14 @@ update msg model =
             Platform.Extra.noOperation model
 
         --
-        PlotterControl.Msg.OpenFileRequested ->
-            PlotterControl.Directory.Update.openFile model
+        PlotterControl.Msg.OpenFilesRequested ->
+            PlotterControl.Directory.Update.openFiles model
 
-        PlotterControl.Msg.FileReceived a ->
-            PlotterControl.Directory.Update.fileReceived a model
+        PlotterControl.Msg.RawFilesReceived a ->
+            PlotterControl.Directory.Update.rawFilesReceived a model
 
-        PlotterControl.Msg.FileContentReceived a b ->
-            PlotterControl.Directory.Update.fileContentReceived a b model
+        PlotterControl.Msg.FilesReceived a ->
+            PlotterControl.Directory.Update.filesReceived a model
 
         PlotterControl.Msg.FileActivated a ->
             PlotterControl.Directory.Update.activateFile a model
