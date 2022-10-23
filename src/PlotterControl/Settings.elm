@@ -18,7 +18,7 @@ default : Settings
 default =
     { preset = Cut
     , markerLoading = LoadSequentially
-    , copies = Copies 1
+    , copies = intToCopies 1
     , copyDistance = Length.millimeters 10
     }
 
@@ -83,7 +83,7 @@ toCommands a =
         ]
     , recut =
         a.copies
-            |> (\(Copies x) -> x)
+            |> copiesToInt
             |> (\x ->
                     if x > 1 then
                         [ SummaEl.Recut (x - 1)
