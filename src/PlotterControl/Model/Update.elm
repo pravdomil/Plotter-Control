@@ -50,24 +50,23 @@ update msg model =
         PlotterControl.Msg.FileContentReceived a b ->
             PlotterControl.File.Update.fileContentReceived a b model
 
-        PlotterControl.Msg.MarkerTestRequested ->
-            PlotterControl.File.Update.testMarkers model
+        PlotterControl.Msg.AddToQueueRequested a ->
+            PlotterControl.File.Update.addToQueue a model
 
-        --
-        PlotterControl.Msg.SendFileRequested ->
-            PlotterControl.File.Update.sendFile model
+        PlotterControl.Msg.MarkerTestRequested a ->
+            PlotterControl.File.Update.testMarkers a model
 
-        PlotterControl.Msg.PresetChanged a ->
-            PlotterControl.Settings.Update.changePreset a model
+        PlotterControl.Msg.PresetChanged a b ->
+            PlotterControl.File.Update.changePreset a b model
 
-        PlotterControl.Msg.CopiesChanged a ->
-            PlotterControl.Settings.Update.changeCopies a model
+        PlotterControl.Msg.CopiesChanged a b ->
+            PlotterControl.File.Update.changeCopies a b model
 
-        PlotterControl.Msg.CopyDistanceChanged a ->
-            PlotterControl.Settings.Update.changeCopyDistance a model
+        PlotterControl.Msg.CopyDistanceChanged a b ->
+            PlotterControl.File.Update.changeCopyDistance a b model
 
-        PlotterControl.Msg.MarkerLoadingChanged a ->
-            PlotterControl.Settings.Update.changeMarkerLoading a model
+        PlotterControl.Msg.MarkerLoadingChanged a b ->
+            PlotterControl.File.Update.changeMarkerLoading a b model
 
         --
         PlotterControl.Msg.SendQueueRequested ->
