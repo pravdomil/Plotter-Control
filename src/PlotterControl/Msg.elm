@@ -19,7 +19,6 @@ type Msg
     | FileActivated PlotterControl.File.Name
       --
     | AddFileToQueueRequested PlotterControl.File.Name
-    | QueueItemReceived ( Id.Id PlotterControl.Queue.Item, PlotterControl.Queue.Item )
     | MarkerTestRequested PlotterControl.File.Name
     | PresetChanged PlotterControl.File.Name PlotterControl.Settings.Preset
     | CopiesChanged PlotterControl.File.Name PlotterControl.Settings.Copies
@@ -27,6 +26,7 @@ type Msg
     | MarkerLoadingChanged PlotterControl.File.Name PlotterControl.Settings.MarkerLoading
       --
     | SendQueueRequested
+    | QueueItemReceived ( Id.Id PlotterControl.Queue.Item, PlotterControl.Queue.Item )
     | QueueItemRemoveRequested (Id.Id PlotterControl.Queue.Item)
       --
     | PlotterReceived (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
