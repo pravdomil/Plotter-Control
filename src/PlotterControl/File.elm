@@ -91,31 +91,32 @@ hpGlFileToReady a =
             )
 
 
+readyToMarkerSettings : Ready -> List SummaEl.Command
+readyToMarkerSettings a =
+    case a.markers of
+        Just b ->
+            [ SummaEl.SetSettings
+                (Dict.fromList
+                    [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
+                    , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
+                    , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
+                    , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
+                    , ( "MARKER_X_N", b.count |> String.fromInt )
+                    ]
+                )
+            , SummaEl.LoadMarkers
+            ]
+
+        Nothing ->
+            []
+
+
 readyToPlotterData : Ready -> String
 readyToPlotterData a =
     let
         settings : { settings : SummaEl.SummaEl, recut : SummaEl.SummaEl }
         settings =
             PlotterControl.Settings.toCommands a.settings
-
-        markers : List SummaEl.Command
-        markers =
-            case a.markers of
-                Just b ->
-                    [ SummaEl.SetSettings
-                        (Dict.fromList
-                            [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
-                            , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
-                            , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
-                            , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
-                            , ( "MARKER_X_N", b.count |> String.fromInt )
-                            ]
-                        )
-                    , SummaEl.LoadMarkers
-                    ]
-
-                Nothing ->
-                    []
 
         data : List HpGl.Command
         data =
@@ -125,7 +126,7 @@ readyToPlotterData a =
     in
     String.join "\n"
         [ settings.settings |> SummaEl.toString
-        , markers |> SummaEl.toString
+        , readyToMarkerSettings a |> SummaEl.toString
         , data |> HpGl.toString
         , settings.recut |> SummaEl.toString
         ]
