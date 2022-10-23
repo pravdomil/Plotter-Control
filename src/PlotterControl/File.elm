@@ -91,6 +91,13 @@ hpGlFileToReady a =
             )
 
 
+readyToSettings : Ready -> SummaEl.Settings
+readyToSettings a =
+    Dict.union
+        (a.markers |> Maybe.map markersToSettings |> Maybe.withDefault Dict.empty)
+        (a.settings |> PlotterControl.Settings.toSettings)
+
+
 readyToPlotterData : Ready -> String
 readyToPlotterData a =
     let
