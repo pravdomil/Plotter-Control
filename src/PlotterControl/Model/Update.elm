@@ -12,6 +12,7 @@ import PlotterControl.Msg
 import PlotterControl.Plotter.Update
 import PlotterControl.Plotter.Utils
 import PlotterControl.Settings
+import PlotterControl.Settings.Update
 import Process
 import Quantity
 import SummaEl
@@ -73,17 +74,7 @@ update msg model =
                     Platform.Extra.noOperation model
 
         PlotterControl.Msg.PresetChanged a ->
-            ( { model
-                | settings = model.settings |> (\x -> { x | preset = a })
-              }
-            , Cmd.none
-            )
-                |> Platform.Extra.andThen
-                    (\x ->
-                        PlotterControl.Plotter.Utils.sendData
-                            (x.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEl.toString)
-                            x
-                    )
+            PlotterControl.Settings.Update.presetChanged a model
 
         PlotterControl.Msg.CopiesChanged a ->
             ( { model
