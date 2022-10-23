@@ -36,24 +36,6 @@ fromFile a =
         Time.now
 
 
-hpGlFileToReady : File.File -> Task.Task x (Result Error Ready)
-hpGlFileToReady a =
-    a
-        |> File.toString
-        |> Task.map
-            (\x ->
-                x
-                    |> HpGl.fromString
-                    |> Result.mapError ParserError
-                    |> Result.map HpGl.Geometry.polylines
-                    |> Result.andThen filterMarkers
-                    |> Result.map
-                        (\( polylines, markers ) ->
-                            Ready polylines markers PlotterControl.Settings.default
-                        )
-            )
-
-
 
 --
 
@@ -81,6 +63,24 @@ type alias Ready =
     , markers : Maybe Markers
     , settings : PlotterControl.Settings.Settings
     }
+
+
+hpGlFileToReady : File.File -> Task.Task x (Result Error Ready)
+hpGlFileToReady a =
+    a
+        |> File.toString
+        |> Task.map
+            (\x ->
+                x
+                    |> HpGl.fromString
+                    |> Result.mapError ParserError
+                    |> Result.map HpGl.Geometry.polylines
+                    |> Result.andThen filterMarkers
+                    |> Result.map
+                        (\( polylines, markers ) ->
+                            Ready polylines markers PlotterControl.Settings.default
+                        )
+            )
 
 
 readyToPlotterData : Ready -> String
