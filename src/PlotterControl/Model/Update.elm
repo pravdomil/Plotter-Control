@@ -53,6 +53,7 @@ update msg model =
         PlotterControl.Msg.MarkerTestRequested ->
             PlotterControl.File.Update.testMarkers model
 
+        --
         PlotterControl.Msg.SendFileRequested ->
             PlotterControl.File.Update.sendFile model
 
@@ -68,6 +69,7 @@ update msg model =
         PlotterControl.Msg.MarkerLoadingChanged a ->
             PlotterControl.Settings.Update.changeMarkerLoading a model
 
+        --
         PlotterControl.Msg.PlotterReceived a ->
             PlotterControl.Plotter.Update.plotterReceived a model
 
