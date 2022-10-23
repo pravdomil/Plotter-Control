@@ -11,41 +11,46 @@ import PlotterControl.Settings
 import Polyline2d
 import Quantity
 import SummaEl
+import Task
+import Time
 
 
 type alias File =
-    { name : Name
-    , ready : Result Error Ready
+    { ready : Result Error Ready
+
+    --
+    , created : Time.Posix
     }
 
 
-fromFile : File.File -> String -> Result Error File
-fromFile a b =
-    if a |> File.name |> String.endsWith ".hpgl" then
-        fromHpGlFile a b
+fromFile : File.File -> Task.Task x File
+fromFile a =
+    Task.map2
+        File
+        (if a |> File.name |> String.endsWith ".hpgl" then
+            hpGlFileToReady a
 
-    else
-        Err FileNotSupported
+         else
+            Task.succeed (Err FileNotSupported)
+        )
+        Time.now
 
 
-fromHpGlFile : File.File -> String -> Result Error File
-fromHpGlFile a b =
-    b
-        |> HpGl.fromString
-        |> Result.mapError ParserError
-        |> Result.map HpGl.Geometry.polylines
-        |> Result.andThen filterMarkers
-        |> Result.map
-            (\( polylines, markers ) ->
-                File
-                    (a |> File.name |> stringToName)
-                    (Ok
-                        (Ready
-                            polylines
-                            markers
-                            PlotterControl.Settings.default
+hpGlFileToReady : File.File -> Task.Task x (Result Error Ready)
+hpGlFileToReady a =
+    a
+        |> File.toString
+        |> Task.map
+            (\x ->
+                x
+                    |> HpGl.fromString
+                    |> Result.mapError ParserError
+                    |> Result.map HpGl.Geometry.polylines
+                    |> Result.andThen filterMarkers
+                    |> Result.map
+                        (\( polylines, markers ) ->
+                            Ready polylines markers PlotterControl.Settings.default
                         )
-                    )
             )
 
 
