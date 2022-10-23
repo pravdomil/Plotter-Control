@@ -106,7 +106,7 @@ readyToPlotterData a =
     in
     String.join "\n"
         [ settings.settings |> SummaEl.toString
-        , readyToMarkerSettings a |> SummaEl.toString
+        , a.markers |> Maybe.map (markersToSettings >> SummaEl.toString) |> Maybe.withDefault ""
         , data |> HpGl.toString
         , settings.recut |> SummaEl.toString
         ]
