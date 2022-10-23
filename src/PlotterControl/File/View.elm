@@ -54,7 +54,7 @@ view model =
                     ]
                 , statusParagraph theme
                     []
-                    [ text "No file selected."
+                    [ text "No selected."
                     ]
                 ]
         )
