@@ -18,7 +18,8 @@ type Msg
     | FilesReceived (List ( PlotterControl.File.Name, PlotterControl.File.File ))
     | FileActivated PlotterControl.File.Name
       --
-    | AddToQueueRequested PlotterControl.File.Name
+    | AddFileToQueueRequested PlotterControl.File.Name
+    | QueueItemReceived ( Id.Id PlotterControl.Queue.Item, PlotterControl.Queue.Item )
     | MarkerTestRequested PlotterControl.File.Name
     | PresetChanged PlotterControl.File.Name PlotterControl.Settings.Preset
     | CopiesChanged PlotterControl.File.Name PlotterControl.Settings.Copies

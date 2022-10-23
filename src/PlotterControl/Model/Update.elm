@@ -47,8 +47,11 @@ update msg model =
             PlotterControl.Directory.Update.activateFile a model
 
         --
-        PlotterControl.Msg.AddToQueueRequested a ->
-            PlotterControl.File.Update.addToQueue a model
+        PlotterControl.Msg.AddFileToQueueRequested a ->
+            PlotterControl.File.Update.addFileToQueue a model
+
+        PlotterControl.Msg.QueueItemReceived a ->
+            PlotterControl.File.Update.addItemToQueue a model
 
         PlotterControl.Msg.MarkerTestRequested a ->
             PlotterControl.File.Update.testMarkers a model
