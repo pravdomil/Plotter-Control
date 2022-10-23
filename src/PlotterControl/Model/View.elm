@@ -316,19 +316,3 @@ onDrop msg =
             |> Json.Decode.map (\x -> ( msg x, True ))
         )
         |> htmlAttribute
-
-
-
---
-
-
-mmToString : Length.Length -> String
-mmToString a =
-    a
-        |> Length.inMillimeters
-        |> (*) 10
-        |> round
-        |> toFloat
-        |> (\x -> x / 10)
-        |> String.fromFloat
-        |> (\x -> x ++ " mm")
