@@ -41,19 +41,19 @@ stop a =
 
 
 doNotSleepDuringTask : Task.Task Error a -> Task.Task Error a
-doNotSleepDuringTask a =
+doNotSleepDuringTask task =
     WakeLock.acquire
         |> Task.mapError WakeLockError
         |> Task.andThen
             (\lock ->
-                a
+                task
                     |> Task.Extra.andAlwaysThen
-                        (\x ->
+                        (\taskResult ->
                             WakeLock.release lock
                                 |> Task.mapError WakeLockError
                                 |> Task.andThen
                                     (\_ ->
-                                        Task.Extra.fromResult x
+                                        Task.Extra.fromResult taskResult
                                     )
                         )
             )
