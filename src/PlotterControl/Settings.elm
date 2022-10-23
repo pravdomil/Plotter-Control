@@ -14,9 +14,18 @@ type alias Settings =
     }
 
 
-default : Settings
-default =
-    { preset = Cut
+default : String -> Settings
+default name =
+    let
+        preset : Preset
+        preset =
+            if name |> String.words |> List.member "perf" then
+                Perforate
+
+            else
+                Cut
+    in
+    { preset = preset
     , markerLoading = LoadSequentially
     , copies = intToCopies 1
     , copyDistance = Length.millimeters 10
