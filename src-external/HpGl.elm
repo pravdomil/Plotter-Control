@@ -1,4 +1,4 @@
-module HP_GL exposing (..)
+module HpGl exposing (..)
 
 import BoundingBox2d
 import Length
@@ -10,16 +10,16 @@ import Quantity
 {-| Hewlett-Packard Graphics Language
 <https://en.wikipedia.org/wiki/HP-GL>
 -}
-type alias HP_GL =
+type alias HpGl =
     List Command
 
 
-fromString : String -> Result (List Parser.DeadEnd) HP_GL
+fromString : String -> Result (List Parser.DeadEnd) HpGl
 fromString a =
     a |> Parser.run parser
 
 
-toString : HP_GL -> String
+toString : HpGl -> String
 toString a =
     a |> List.map commandToString |> String.join ""
 
@@ -160,10 +160,10 @@ lengthToString a =
 --
 
 
-parser : Parser.Parser HP_GL
+parser : Parser.Parser HpGl
 parser =
     let
-        loop : HP_GL -> Parser.Parser (Parser.Step HP_GL HP_GL)
+        loop : HpGl -> Parser.Parser (Parser.Step HpGl HpGl)
         loop acc =
             Parser.oneOf
                 [ commandParser

@@ -3,7 +3,7 @@ module PlotterControl.Main exposing (..)
 import Browser
 import File
 import File.Select
-import HP_GL
+import HpGl
 import Json.Decode
 import Length
 import Platform.Extra
@@ -141,7 +141,7 @@ update msg model =
                     in
                     [ v |> SummaEL.toString
                     , v3 |> SummaEL.toString
-                    , v4 |> HP_GL.toString
+                    , v4 |> HpGl.toString
                     , v2 |> SummaEL.toString
                     ]
                         |> String.join "\n"

@@ -3,8 +3,8 @@ module PlotterControl.File exposing (..)
 import BoundingBox2d
 import Dict
 import File
-import HP_GL
-import HP_GL.Geometry
+import HpGl
+import HpGl.Geometry
 import Length
 import Parser
 import Polyline2d
@@ -31,9 +31,9 @@ fromFile a b =
 fromHP_GLFile : File.File -> String -> Result Error File
 fromHP_GLFile a b =
     b
-        |> HP_GL.fromString
+        |> HpGl.fromString
         |> Result.mapError ParserError
-        |> Result.map HP_GL.Geometry.polylines
+        |> Result.map HpGl.Geometry.polylines
         |> Result.andThen filterMarkers
         |> Result.map
             (\( polylines, markers ) ->
@@ -44,16 +44,16 @@ fromHP_GLFile a b =
             )
 
 
-toCommands : File -> ( SummaEL.SummaEL, HP_GL.HP_GL )
+toCommands : File -> ( SummaEL.SummaEL, HpGl.HpGl )
 toCommands a =
     ( case a.markers of
         Just b ->
             [ SummaEL.SetSettings
                 (Dict.fromList
-                    [ ( "MARKER_X_DIS", b.xDistance |> HP_GL.lengthToString )
-                    , ( "MARKER_Y_DIS", b.yDistance |> HP_GL.lengthToString )
-                    , ( "MARKER_X_SIZE", markerSize |> HP_GL.lengthToString )
-                    , ( "MARKER_Y_SIZE", markerSize |> HP_GL.lengthToString )
+                    [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
+                    , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
+                    , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
+                    , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
                     , ( "MARKER_X_N", b.count |> String.fromInt )
                     ]
                 )
@@ -63,8 +63,8 @@ toCommands a =
         Nothing ->
             []
     , a.polylines
-        |> HP_GL.Geometry.fromPolylines
-        |> (\v -> [ HP_GL.Initialize ] ++ v ++ [ HP_GL.End ])
+        |> HpGl.Geometry.fromPolylines
+        |> (\v -> [ HpGl.Initialize ] ++ v ++ [ HpGl.End ])
     )
 
 
@@ -192,7 +192,7 @@ markerSize =
 
 tolerance : Length.Length
 tolerance =
-    Quantity.float 1 |> Quantity.at_ HP_GL.resolution
+    Quantity.float 1 |> Quantity.at_ HpGl.resolution
 
 
 boxHasSameSizeAsMarker : BoundingBox2d.BoundingBox2d Length.Meters coordinates -> Bool

@@ -1,21 +1,21 @@
-module HP_GL.Geometry exposing (..)
+module HpGl.Geometry exposing (..)
 
-import HP_GL
+import HpGl
 import Length
 import Point2d
 import Polyline2d
 
 
-polylines : HP_GL.HP_GL -> List (Polyline2d.Polyline2d Length.Meters ())
+polylines : HpGl.HpGl -> List (Polyline2d.Polyline2d Length.Meters ())
 polylines a =
     let
         fold :
-            HP_GL.Command
+            HpGl.Command
             -> List (List (Point2d.Point2d Length.Meters ()))
             -> List (List (Point2d.Point2d Length.Meters ()))
         fold b acc =
             case b of
-                HP_GL.ToolDown points ->
+                HpGl.ToolDown points ->
                     case acc of
                         [] ->
                             [ points
@@ -24,7 +24,7 @@ polylines a =
                         c :: rest ->
                             (points ++ c) :: rest
 
-                HP_GL.ToolUp points ->
+                HpGl.ToolUp points ->
                     case points |> List.reverse |> List.head of
                         Just last ->
                             [ last ] :: acc
@@ -48,18 +48,18 @@ polylines a =
         |> List.reverse
 
 
-fromPolylines : List (Polyline2d.Polyline2d Length.Meters ()) -> HP_GL.HP_GL
+fromPolylines : List (Polyline2d.Polyline2d Length.Meters ()) -> HpGl.HpGl
 fromPolylines a =
     let
-        toCommands : Polyline2d.Polyline2d Length.Meters () -> HP_GL.HP_GL
+        toCommands : Polyline2d.Polyline2d Length.Meters () -> HpGl.HpGl
         toCommands b =
             case b |> Polyline2d.vertices of
                 [] ->
                     []
 
                 first :: rest ->
-                    [ HP_GL.ToolUp [ first ]
-                    , HP_GL.ToolDown rest
+                    [ HpGl.ToolUp [ first ]
+                    , HpGl.ToolDown rest
                     ]
     in
     a |> List.concatMap toCommands
