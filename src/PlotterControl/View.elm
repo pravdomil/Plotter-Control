@@ -11,7 +11,7 @@ import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Plotter
 import PlotterControl.Settings
-import PlotterControl.UI exposing (..)
+import PlotterControl.Ui exposing (..)
 import USB.Device
 import WakeLock
 

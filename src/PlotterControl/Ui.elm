@@ -1,4 +1,4 @@
-module PlotterControl.UI exposing (..)
+module PlotterControl.Ui exposing (..)
 
 import Element.PravdomilUI exposing (..)
 import Element.PravdomilUI.Theme.Light
