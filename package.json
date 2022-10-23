@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "elm-codec": "github:pravdomil/elm-codec",
+    "elm-data": "github:pravdomil/elm-data",
     "elm-ffi": "github:pravdomil/elm-ffi",
     "elm-ffi-browser": "github:pravdomil/elm-ffi-browser",
     "elm-utils": "github:pravdomil/elm-utils",
