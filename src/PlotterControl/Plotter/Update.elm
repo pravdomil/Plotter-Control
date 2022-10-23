@@ -20,7 +20,7 @@ sendQueue model =
         Err PlotterControl.Model.NoPlotter ->
             connect model
 
-        Err PlotterControl.Model.PlotterError ->
+        Err (PlotterControl.Model.PlotterError _) ->
             connect model
 
         _ ->
