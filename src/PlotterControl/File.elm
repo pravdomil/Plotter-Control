@@ -123,19 +123,15 @@ type alias Markers =
     }
 
 
-markersToSettings : Markers -> List SummaEl.Command
+markersToSettings : Markers -> SummaEl.Settings
 markersToSettings a =
-    [ SummaEl.SetSettings
-        (Dict.fromList
-            [ ( "MARKER_X_DIS", a.xDistance |> HpGl.lengthToString )
-            , ( "MARKER_Y_DIS", a.yDistance |> HpGl.lengthToString )
-            , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
-            , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
-            , ( "MARKER_X_N", a.count |> String.fromInt )
-            ]
-        )
-    , SummaEl.LoadMarkers
-    ]
+    Dict.fromList
+        [ ( "MARKER_X_DIS", a.xDistance |> HpGl.lengthToString )
+        , ( "MARKER_Y_DIS", a.yDistance |> HpGl.lengthToString )
+        , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
+        , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
+        , ( "MARKER_X_N", a.count |> String.fromInt )
+        ]
 
 
 filterMarkers :
