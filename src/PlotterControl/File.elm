@@ -78,30 +78,44 @@ type alias Ready =
     }
 
 
-toCommands : File -> { settings : SummaEl.SummaEl, data : HpGl.HpGl }
-toCommands a =
-    { settings =
-        case a.markers of
-            Just b ->
-                [ SummaEl.SetSettings
-                    (Dict.fromList
-                        [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
-                        , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
-                        , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
-                        , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
-                        , ( "MARKER_X_N", b.count |> String.fromInt )
-                        ]
-                    )
-                , SummaEl.LoadMarkers
-                ]
+readyToPlotterData : Ready -> String
+readyToPlotterData a =
+    let
+        settings : { settings : SummaEl.SummaEl, recut : SummaEl.SummaEl }
+        settings =
+            PlotterControl.Settings.toCommands a.settings
 
-            Nothing ->
-                []
-    , data =
-        a.polylines
-            |> HpGl.Geometry.fromPolylines
-            |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
-    }
+        markers : List SummaEl.Command
+        markers =
+            case a.markers of
+                Just b ->
+                    [ SummaEl.SetSettings
+                        (Dict.fromList
+                            [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
+                            , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
+                            , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
+                            , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
+                            , ( "MARKER_X_N", b.count |> String.fromInt )
+                            ]
+                        )
+                    , SummaEl.LoadMarkers
+                    ]
+
+                Nothing ->
+                    []
+
+        data : List HpGl.Command
+        data =
+            a.polylines
+                |> HpGl.Geometry.fromPolylines
+                |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
+    in
+    String.join "\n"
+        [ settings.settings |> SummaEl.toString
+        , markers |> SummaEl.toString
+        , data |> HpGl.toString
+        , settings.recut |> SummaEl.toString
+        ]
 
 
 
