@@ -18,14 +18,14 @@ items : List Item
 items =
     [ RollAlignment
     , RollGuidesLock
+    , ToolVelocity
     , ToolPressure
+    , FlexPressure
     , ToolDepth
     , ToolOffset
-    , FlexPressure
-    , ToolVelocity
-    , MarkerSensitivity
     , KnifeSecureNut
     , ToolHolderKnob
+    , MarkerSensitivity
     ]
 
 
