@@ -2,37 +2,57 @@ module PlotterControl.Checklist exposing (..)
 
 
 type Item
-    = Depth
-    | Pressure
-    | Offset
-    | Velocity
-    | Sensitivity
+    = RollAlignment
+    | RollGuidesLock
+    | ToolDepth
+    | ToolPressure
+    | ToolOffset
+    | ToolVelocity
+    | MarkerSensorSensitivity
+    | KnifeSecureNut
+    | ToolHolderKnob
 
 
 items : List Item
 items =
-    [ Depth
-    , Pressure
-    , Offset
-    , Velocity
-    , Sensitivity
+    [ RollAlignment
+    , RollGuidesLock
+    , ToolDepth
+    , ToolPressure
+    , ToolOffset
+    , ToolVelocity
+    , MarkerSensorSensitivity
+    , KnifeSecureNut
+    , ToolHolderKnob
     ]
 
 
 toComparable : Item -> Int
 toComparable a =
     case a of
-        Depth ->
+        RollAlignment ->
             0
 
-        Pressure ->
+        RollGuidesLock ->
             1
 
-        Offset ->
+        ToolDepth ->
             2
 
-        Velocity ->
+        ToolPressure ->
             3
 
-        Sensitivity ->
+        ToolOffset ->
             4
+
+        ToolVelocity ->
+            5
+
+        MarkerSensorSensitivity ->
+            6
+
+        KnifeSecureNut ->
+            7
+
+        ToolHolderKnob ->
+            8
