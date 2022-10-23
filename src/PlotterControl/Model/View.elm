@@ -36,7 +36,7 @@ viewDropArea model =
         [ width fill
         , height fill
         , onDragOver PlotterControl.Msg.NothingHappened
-        , onDrop PlotterControl.Msg.FileReceived
+        , onDrop PlotterControl.Msg.RawFilesReceived
         ]
         (viewInterface model)
 
@@ -308,11 +308,11 @@ onDragOver msg =
         |> htmlAttribute
 
 
-onDrop : (File.File -> msg) -> Attribute msg
+onDrop : (List File.File -> msg) -> Attribute msg
 onDrop msg =
     Html.Events.preventDefaultOn
         "drop"
-        (Json.Decode.at [ "dataTransfer", "files", "0" ] File.decoder
+        (Json.Decode.at [ "dataTransfer", "files" ] (Json.Decode.list File.decoder)
             |> Json.Decode.map (\x -> ( msg x, True ))
         )
         |> htmlAttribute
