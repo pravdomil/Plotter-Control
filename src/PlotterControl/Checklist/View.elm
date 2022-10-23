@@ -33,35 +33,35 @@ viewItem checked item =
         label : Element msg
         label =
             case item of
+                PlotterControl.Checklist.ToolDepth ->
+                    text "Tool Depth"
+
+                PlotterControl.Checklist.ToolHolderKnob ->
+                    text "Tool Holder Knob"
+
+                PlotterControl.Checklist.ToolOffset ->
+                    text "Tool Offset"
+
+                PlotterControl.Checklist.ToolPressure ->
+                    text "Tool Pressure"
+
+                PlotterControl.Checklist.ToolVelocity ->
+                    text "Tool Velocity"
+
                 PlotterControl.Checklist.RollAlignment ->
                     text "Roll Alignment"
 
                 PlotterControl.Checklist.RollGuidesLock ->
                     text "Roll Guides Lock"
 
-                PlotterControl.Checklist.ToolPressure ->
-                    text "Tool Pressure"
-
-                PlotterControl.Checklist.ToolDepth ->
-                    text "Tool Depth"
-
-                PlotterControl.Checklist.ToolOffset ->
-                    text "Tool Offset"
-
-                PlotterControl.Checklist.FlexPressure ->
-                    text "Flex Pressure"
-
-                PlotterControl.Checklist.ToolVelocity ->
-                    text "Tool Velocity"
+                PlotterControl.Checklist.KnifeSecureNut ->
+                    text "Knife Secure Nut"
 
                 PlotterControl.Checklist.MarkerSensitivity ->
                     text "Marker Sensitivity"
 
-                PlotterControl.Checklist.KnifeSecureNut ->
-                    text "Knife Secure Nut"
-
-                PlotterControl.Checklist.ToolHolderKnob ->
-                    text "Tool Holder Knob"
+                PlotterControl.Checklist.FlexPressure ->
+                    text "Flex Pressure"
     in
     inputCheckbox
         theme
