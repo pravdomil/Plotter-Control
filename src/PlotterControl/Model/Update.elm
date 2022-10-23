@@ -9,7 +9,6 @@ import Platform.Extra
 import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Msg
-import PlotterControl.Plotter
 import PlotterControl.Plotter.Update
 import PlotterControl.Plotter.Utils
 import PlotterControl.Settings
@@ -24,6 +23,7 @@ init _ =
     ( { file = Err PlotterControl.Model.NotAsked
       , settings = PlotterControl.Settings.default
       , plotter = Err PlotterControl.Model.Ready
+      , queue = ""
       }
     , Cmd.none
     )
@@ -133,18 +133,8 @@ update msg model =
                 Err _ ->
                     Platform.Extra.noOperation model
 
-        PlotterControl.Msg.PlotterReceived a b ->
-            case b of
-                Ok c ->
-                    ( { model | plotter = Ok c }
-                    , PlotterControl.Plotter.sendData a c
-                        |> Task.attempt PlotterControl.Msg.DataSent
-                    )
-
-                Err c ->
-                    ( { model | plotter = Err (c |> PlotterControl.Model.PlotterError) }
-                    , Cmd.none
-                    )
+        PlotterControl.Msg.PlotterReceived a ->
+            PlotterControl.Plotter.Update.plotterReceived a model
 
         PlotterControl.Msg.DataSent a ->
             PlotterControl.Plotter.Update.dataSent a model

@@ -7,6 +7,22 @@ import PlotterControl.Plotter
 import Task
 
 
+plotterReceived : Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+plotterReceived a model =
+    ( { model
+        | plotter = a |> Result.mapError PlotterControl.Model.PlotterError
+        , queue = ""
+      }
+    , case a of
+        Ok b ->
+            PlotterControl.Plotter.sendData model.queue b
+                |> Task.attempt PlotterControl.Msg.DataSent
+
+        Err _ ->
+            Cmd.none
+    )
+
+
 dataSent : Result PlotterControl.Plotter.Error () -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd msg )
 dataSent a model =
     let

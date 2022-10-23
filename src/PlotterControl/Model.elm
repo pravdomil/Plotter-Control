@@ -9,6 +9,7 @@ type alias Model =
     { file : Result FileError PlotterControl.File.File
     , settings : PlotterControl.Settings.Settings
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
+    , queue : String
     }
 
 
