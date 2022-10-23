@@ -78,6 +78,16 @@ type Name
     = Name String
 
 
+stringToName : String -> Name
+stringToName =
+    Name
+
+
+nameToString : Name -> String
+nameToString (Name a) =
+    a
+
+
 
 --
 
