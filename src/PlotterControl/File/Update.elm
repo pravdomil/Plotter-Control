@@ -44,8 +44,8 @@ testMarkers model =
             let
                 data : String
                 data =
-                    [ model.settings |> PlotterControl.Settings.toCommands |> .start |> SummaEl.toString
-                    , b |> PlotterControl.File.toCommands |> Tuple.first |> SummaEl.toString
+                    [ model.settings |> PlotterControl.Settings.toCommands |> .settings |> SummaEl.toString
+                    , b |> PlotterControl.File.toCommands |> .settings |> SummaEl.toString
                     ]
                         |> String.join "\n"
             in
@@ -60,19 +60,19 @@ sendFile model =
     case model.file of
         Ok b ->
             let
-                x =
+                settings =
                     model.settings |> PlotterControl.Settings.toCommands
 
-                ( x3, x4 ) =
+                file =
                     b |> PlotterControl.File.toCommands
 
                 data : String
                 data =
                     String.join "\n"
-                        [ x.start |> SummaEl.toString
-                        , x3 |> SummaEl.toString
-                        , x4 |> HpGl.toString
-                        , x.end |> SummaEl.toString
+                        [ settings.settings |> SummaEl.toString
+                        , file.settings |> SummaEl.toString
+                        , file.data |> HpGl.toString
+                        , settings.recut |> SummaEl.toString
                         ]
             in
             PlotterControl.Plotter.Utils.sendData data model

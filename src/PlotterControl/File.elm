@@ -44,28 +44,30 @@ fromHpGlFile a b =
             )
 
 
-toCommands : File -> ( SummaEl.SummaEL, HpGl.HpGl )
+toCommands : File -> { settings : SummaEl.SummaEL, data : HpGl.HpGl }
 toCommands a =
-    ( case a.markers of
-        Just b ->
-            [ SummaEl.SetSettings
-                (Dict.fromList
-                    [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
-                    , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
-                    , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
-                    , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
-                    , ( "MARKER_X_N", b.count |> String.fromInt )
-                    ]
-                )
-            , SummaEl.LoadMarkers
-            ]
+    { settings =
+        case a.markers of
+            Just b ->
+                [ SummaEl.SetSettings
+                    (Dict.fromList
+                        [ ( "MARKER_X_DIS", b.xDistance |> HpGl.lengthToString )
+                        , ( "MARKER_Y_DIS", b.yDistance |> HpGl.lengthToString )
+                        , ( "MARKER_X_SIZE", markerSize |> HpGl.lengthToString )
+                        , ( "MARKER_Y_SIZE", markerSize |> HpGl.lengthToString )
+                        , ( "MARKER_X_N", b.count |> String.fromInt )
+                        ]
+                    )
+                , SummaEl.LoadMarkers
+                ]
 
-        Nothing ->
-            []
-    , a.polylines
-        |> HpGl.Geometry.fromPolylines
-        |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
-    )
+            Nothing ->
+                []
+    , data =
+        a.polylines
+            |> HpGl.Geometry.fromPolylines
+            |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
+    }
 
 
 
