@@ -28,8 +28,9 @@ type Msg
       --
     | SendQueueRequested
     | QueueItemRemoveRequested (Id.Id PlotterControl.Queue.Item)
+      --
     | PlotterReceived (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
-    | QueueSent (Result PlotterControl.Plotter.Error ())
+    | PlotterDataSent (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested
     | SendingStopped (Result PlotterControl.Plotter.Error ())
       --

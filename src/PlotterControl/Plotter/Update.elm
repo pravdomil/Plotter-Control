@@ -16,7 +16,7 @@ plotterReceived a model =
     , case a of
         Ok b ->
             PlotterControl.Plotter.sendData model.queue b
-                |> Task.attempt PlotterControl.Msg.QueueSent
+                |> Task.attempt PlotterControl.Msg.PlotterDataSent
 
         Err _ ->
             Cmd.none
