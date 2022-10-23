@@ -7,6 +7,23 @@ import PlotterControl.Plotter
 import Task
 
 
+dataSent : Result PlotterControl.Plotter.Error () -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd msg )
+dataSent a model =
+    let
+        plotter : Result PlotterControl.Model.PlotterError PlotterControl.Plotter.Plotter
+        plotter =
+            case a of
+                Ok () ->
+                    Err PlotterControl.Model.FileSent
+
+                Err b ->
+                    Err (PlotterControl.Model.PlotterError b)
+    in
+    ( { model | plotter = plotter }
+    , Cmd.none
+    )
+
+
 stopPlotter : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 stopPlotter model =
     case model.plotter of

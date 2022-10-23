@@ -147,19 +147,7 @@ update msg model =
                     )
 
         PlotterControl.Msg.DataSent a ->
-            let
-                plotter : Result PlotterControl.Model.PlotterError PlotterControl.Plotter.Plotter
-                plotter =
-                    case a of
-                        Ok _ ->
-                            Err PlotterControl.Model.FileSent
-
-                        Err b ->
-                            Err (b |> PlotterControl.Model.PlotterError)
-            in
-            ( { model | plotter = plotter }
-            , Cmd.none
-            )
+            PlotterControl.Plotter.Update.dataSent a model
 
         PlotterControl.Msg.StopSendingRequested ->
             PlotterControl.Plotter.Update.stopPlotter model
