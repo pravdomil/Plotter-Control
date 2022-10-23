@@ -22,14 +22,14 @@ type alias File =
 fromFile : File.File -> String -> Result Error File
 fromFile a b =
     if a |> File.name |> String.endsWith ".hpgl" then
-        fromHP_GLFile a b
+        fromHpGlFile a b
 
     else
         Err FileNotSupported
 
 
-fromHP_GLFile : File.File -> String -> Result Error File
-fromHP_GLFile a b =
+fromHpGlFile : File.File -> String -> Result Error File
+fromHpGlFile a b =
     b
         |> HpGl.fromString
         |> Result.mapError ParserError
