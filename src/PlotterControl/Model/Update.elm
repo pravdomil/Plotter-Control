@@ -71,18 +71,6 @@ update msg model =
                 Err _ ->
                     Platform.Extra.noOperation model
 
-        PlotterControl.Msg.PresetChanged a ->
-            PlotterControl.Settings.Update.presetChanged a model
-
-        PlotterControl.Msg.CopiesChanged a ->
-            PlotterControl.Settings.Update.copiesChanged a model
-
-        PlotterControl.Msg.CopyDistanceChanged a ->
-            PlotterControl.Settings.Update.copyDistanceChanged a model
-
-        PlotterControl.Msg.MarkerLoadingChanged a ->
-            PlotterControl.Settings.Update.markerLoadingChanged a model
-
         PlotterControl.Msg.SendFileRequested ->
             case model.file of
                 Ok b ->
@@ -106,6 +94,18 @@ update msg model =
 
                 Err _ ->
                     Platform.Extra.noOperation model
+
+        PlotterControl.Msg.PresetChanged a ->
+            PlotterControl.Settings.Update.presetChanged a model
+
+        PlotterControl.Msg.CopiesChanged a ->
+            PlotterControl.Settings.Update.copiesChanged a model
+
+        PlotterControl.Msg.CopyDistanceChanged a ->
+            PlotterControl.Settings.Update.copyDistanceChanged a model
+
+        PlotterControl.Msg.MarkerLoadingChanged a ->
+            PlotterControl.Settings.Update.markerLoadingChanged a model
 
         PlotterControl.Msg.PlotterReceived a ->
             PlotterControl.Plotter.Update.plotterReceived a model

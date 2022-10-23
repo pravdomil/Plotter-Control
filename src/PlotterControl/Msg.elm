@@ -11,14 +11,13 @@ type Msg
     | OpenFileRequested
     | FileReceived File.File
     | FileContentReceived File.File String
+    | SendFileRequested
       --
     | MarkerTestRequested
     | PresetChanged PlotterControl.Settings.Preset
     | CopiesChanged PlotterControl.Settings.Copies
     | CopyDistanceChanged Length.Length
     | MarkerLoadingChanged PlotterControl.Settings.MarkerLoading
-      --
-    | SendFileRequested
       --
     | PlotterReceived (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
     | QueueSent (Result PlotterControl.Plotter.Error ())
