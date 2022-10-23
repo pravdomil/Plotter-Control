@@ -8,6 +8,7 @@ import PlotterControl.Settings
 
 type Msg
     = NothingHappened
+      --
     | OpenFileRequested
     | FileReceived File.File
     | FileContentReceived File.File String
