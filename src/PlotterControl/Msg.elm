@@ -14,11 +14,11 @@ type Msg
     = NothingHappened
       --
     | OpenDirectoryRequested
+    | FileReceived File.File
+    | FileContentReceived File.File String
     | FileActivated PlotterControl.File.Name
       --
     | OpenFileRequested
-    | FileReceived File.File
-    | FileContentReceived File.File String
     | AddToQueueRequested PlotterControl.File.Name
     | MarkerTestRequested PlotterControl.File.Name
     | PresetChanged PlotterControl.File.Name PlotterControl.Settings.Preset

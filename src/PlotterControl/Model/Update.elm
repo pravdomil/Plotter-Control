@@ -37,19 +37,19 @@ update msg model =
         PlotterControl.Msg.OpenDirectoryRequested ->
             PlotterControl.Directory.Update.openDirectory model
 
+        PlotterControl.Msg.OpenFileRequested ->
+            PlotterControl.Directory.Update.openFile model
+
+        PlotterControl.Msg.FileReceived a ->
+            PlotterControl.Directory.Update.fileReceived a model
+
+        PlotterControl.Msg.FileContentReceived a b ->
+            PlotterControl.Directory.Update.fileContentReceived a b model
+
         PlotterControl.Msg.FileActivated a ->
             PlotterControl.Directory.Update.activateFile a model
 
         --
-        PlotterControl.Msg.OpenFileRequested ->
-            PlotterControl.File.Update.openFile model
-
-        PlotterControl.Msg.FileReceived a ->
-            PlotterControl.File.Update.fileReceived a model
-
-        PlotterControl.Msg.FileContentReceived a b ->
-            PlotterControl.File.Update.fileContentReceived a b model
-
         PlotterControl.Msg.AddToQueueRequested a ->
             PlotterControl.File.Update.addToQueue a model
 
