@@ -82,8 +82,8 @@ update msg model =
         PlotterControl.Msg.PlotterReceived a ->
             PlotterControl.Plotter.Update.plotterReceived a model
 
-        PlotterControl.Msg.QueueItemSent a ->
-            PlotterControl.Plotter.Update.queueItemSent a model
+        PlotterControl.Msg.QueueItemSent a b c ->
+            PlotterControl.Plotter.Update.queueItemSent a b c model
 
         PlotterControl.Msg.StopSendingRequested ->
             PlotterControl.Plotter.Update.stopPlotter model

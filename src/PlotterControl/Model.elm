@@ -22,5 +22,5 @@ type alias Model =
 type PlotterError
     = NoPlotter
     | PlotterConnecting
-    | PlotterSending PlotterControl.Plotter.Plotter
+    | PlotterSending
     | PlotterError PlotterControl.Plotter.Error
