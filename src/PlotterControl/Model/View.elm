@@ -1,7 +1,7 @@
 module PlotterControl.Model.View exposing (..)
 
 import Browser
-import Element.PravdomilUI exposing (..)
+import Element.PravdomilUi exposing (..)
 import FeatherIcons
 import File
 import Html.Events
@@ -9,14 +9,15 @@ import Json.Decode
 import Length
 import PlotterControl.File
 import PlotterControl.Model
+import PlotterControl.Msg
 import PlotterControl.Plotter
 import PlotterControl.Settings
 import PlotterControl.Utills.Theme exposing (..)
-import USB.Device
+import Usb.Device
 import WakeLock
 
 
-view : PlotterControl.Model.Model -> Browser.Document PlotterControl.Model.Msg
+view : PlotterControl.Model.Model -> Browser.Document PlotterControl.Msg.Msg
 view model =
     { title = "Plotter Control"
     , body =
@@ -25,18 +26,18 @@ view model =
     }
 
 
-viewDropArea : PlotterControl.Model.Model -> Element PlotterControl.Model.Msg
+viewDropArea : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 viewDropArea model =
     el
         [ width fill
         , height fill
-        , onDragOver PlotterControl.Model.DragOver
-        , onDrop PlotterControl.Model.GotFile
+        , onDragOver PlotterControl.Msg.DragOver
+        , onDrop PlotterControl.Msg.GotFile
         ]
         (viewInterface model)
 
 
-viewInterface : PlotterControl.Model.Model -> Element PlotterControl.Model.Msg
+viewInterface : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 viewInterface model =
     column
         [ alignTop
@@ -169,7 +170,7 @@ viewInterface model =
         , form
             none
             (let
-                sendButton : Element PlotterControl.Model.Msg
+                sendButton : Element PlotterControl.Msg.Msg
                 sendButton =
                     case model.file of
                         Ok _ ->
@@ -182,7 +183,7 @@ viewInterface model =
                         Err _ ->
                             none
 
-                cancelButton : Element PlotterControl.Model.Msg
+                cancelButton : Element PlotterControl.Msg.Msg
                 cancelButton =
                     button theme
                         [ paddingXY 16 12, dangerBackground ]
@@ -217,16 +218,16 @@ viewInterface model =
                                 , case c of
                                     PlotterControl.Plotter.USBDeviceError d ->
                                         case d of
-                                            USB.Device.NotSupported ->
+                                            Usb.Device.NotSupported ->
                                                 text "Your browser is not supported."
 
-                                            USB.Device.NothingSelected ->
+                                            Usb.Device.NothingSelected ->
                                                 none
 
-                                            USB.Device.TransferAborted ->
+                                            Usb.Device.TransferAborted ->
                                                 text "Sending has been stopped."
 
-                                            USB.Device.JavaScriptError _ ->
+                                            Usb.Device.JavaScriptError _ ->
                                                 text "Internal error."
 
                                     PlotterControl.Plotter.WakeLockError d ->
