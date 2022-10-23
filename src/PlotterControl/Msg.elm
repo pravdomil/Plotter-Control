@@ -19,8 +19,7 @@ type Msg
     | OpenFileRequested
     | FileReceived File.File
     | FileContentReceived File.File String
-    | AddToQueueRequested
-      --
+    | AddToQueueRequested PlotterControl.File.Name
     | MarkerTestRequested PlotterControl.File.Name
     | PresetChanged PlotterControl.File.Name PlotterControl.Settings.Preset
     | CopiesChanged PlotterControl.File.Name PlotterControl.Settings.Copies
