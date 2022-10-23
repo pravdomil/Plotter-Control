@@ -13,7 +13,6 @@ import PlotterControl.Settings
 type Msg
     = NothingHappened
       --
-    | OpenDirectoryRequested
     | FileReceived File.File
     | FileContentReceived File.File String
     | FileActivated PlotterControl.File.Name

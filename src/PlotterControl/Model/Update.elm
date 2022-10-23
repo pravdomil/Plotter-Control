@@ -34,9 +34,6 @@ update msg model =
             Platform.Extra.noOperation model
 
         --
-        PlotterControl.Msg.OpenDirectoryRequested ->
-            PlotterControl.Directory.Update.openDirectory model
-
         PlotterControl.Msg.OpenFileRequested ->
             PlotterControl.Directory.Update.openFile model
 
