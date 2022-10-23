@@ -7,7 +7,6 @@ import HpGl
 import HpGl.Geometry
 import Length
 import Parser
-import PlotterControl.File
 import PlotterControl.Settings
 import Polyline2d
 import Quantity
