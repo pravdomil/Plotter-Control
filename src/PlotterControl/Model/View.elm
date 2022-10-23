@@ -171,7 +171,7 @@ viewInterface model =
             , onChange = PlotterControl.Settings.Copies >> PlotterControl.Msg.CopiesChanged
             }
         , inputNumber
-            { label = el (theme.label [ width fill, fontAlignRight ]) (text "Copy Distance:")
+            { label = el (theme.label [ width fill, fontAlignRight ]) (text "Copy Gap:")
             , value =
                 el [ fontVariant fontTabularNumbers ]
                     (text (mmToString model.settings.copyDistance))
