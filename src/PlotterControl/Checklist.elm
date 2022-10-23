@@ -8,7 +8,7 @@ type Item
     | ToolPressure
     | ToolDepth
     | ToolVelocity
-    | MarkerSensorSensitivity
+    | MarkerSensitivity
     | KnifeSecureNut
     | ToolHolderKnob
 
@@ -21,7 +21,7 @@ items =
     , ToolPressure
     , ToolDepth
     , ToolVelocity
-    , MarkerSensorSensitivity
+    , MarkerSensitivity
     , KnifeSecureNut
     , ToolHolderKnob
     ]
@@ -48,7 +48,7 @@ toComparable a =
         ToolVelocity ->
             6
 
-        MarkerSensorSensitivity ->
+        MarkerSensitivity ->
             7
 
         KnifeSecureNut ->
