@@ -23,8 +23,8 @@ plotterReceived a model =
     )
 
 
-queueSent : Result PlotterControl.Plotter.Error () -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd msg )
-queueSent a model =
+dataSent : Result PlotterControl.Plotter.Error () -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd msg )
+dataSent a model =
     let
         plotter : Result PlotterControl.Model.PlotterError PlotterControl.Plotter.Plotter
         plotter =
