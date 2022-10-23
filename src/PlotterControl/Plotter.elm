@@ -10,8 +10,8 @@ type alias Plotter =
     Usb.Device.Device
 
 
-get : Task.Task Error Plotter
-get =
+connect : Task.Task Error Plotter
+connect =
     Usb.Device.request
         [ Usb.Device.Filter (Just 0x099F) (Just 0x0100) Nothing Nothing Nothing Nothing
         ]

@@ -7,6 +7,14 @@ import PlotterControl.Plotter
 import Task
 
 
+connect : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+connect model =
+    ( { model | plotter = Err PlotterControl.Model.Connecting }
+    , PlotterControl.Plotter.connect
+        |> Task.attempt PlotterControl.Msg.PlotterReceived
+    )
+
+
 plotterReceived : Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 plotterReceived a model =
     ( { model
