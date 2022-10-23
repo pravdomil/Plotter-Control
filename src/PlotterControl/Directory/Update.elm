@@ -3,6 +3,7 @@ module PlotterControl.Directory.Update exposing (..)
 import Dict.Any
 import File
 import File.Select
+import List.Extra
 import PlotterControl.Directory
 import PlotterControl.File
 import PlotterControl.Model
@@ -46,7 +47,7 @@ filesReceived a model =
         directory =
             PlotterControl.Directory.Directory
                 (a |> List.foldl (\( k, v ) -> Dict.Any.insert PlotterControl.File.nameToString k v) files)
-                (a |> List.head |> Maybe.map Tuple.first)
+                (a |> List.Extra.last |> Maybe.map Tuple.first)
     in
     ( { model | directory = Ok directory }
     , Cmd.none
