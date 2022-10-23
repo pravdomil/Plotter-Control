@@ -1,4 +1,4 @@
-module PlotterControl exposing (..)
+module PlotterControl.Main exposing (..)
 
 import Browser
 import File

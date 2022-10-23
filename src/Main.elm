@@ -1,7 +1,7 @@
 module Main exposing (..)
 
-import PlotterControl
+import PlotterControl.Main
 
 
 main =
-    PlotterControl.main
+    PlotterControl.Main.main
