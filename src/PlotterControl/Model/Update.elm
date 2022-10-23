@@ -1,5 +1,6 @@
 module PlotterControl.Model.Update exposing (..)
 
+import Dict.Any
 import Json.Decode
 import Platform.Extra
 import PlotterControl.Checklist.Update
@@ -9,16 +10,15 @@ import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter.Update
 import PlotterControl.Queue.Update
-import PlotterControl.Settings
 
 
 init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 init _ =
-    ( { file = Err PlotterControl.Model.NotAsked
-      , settings = PlotterControl.Settings.default
-      , plotter = Err PlotterControl.Model.Ready
-      , queue = ""
-      }
+    ( PlotterControl.Model.Model
+        (Err PlotterControl.Model.NotAsked)
+        Dict.Any.empty
+        (Err PlotterControl.Model.Ready)
+        Dict.Any.empty
     , Cmd.none
     )
 
