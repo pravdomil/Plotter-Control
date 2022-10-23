@@ -31,7 +31,7 @@ viewDropArea model =
     el
         [ width fill
         , height fill
-        , onDragOver PlotterControl.Msg.DragOver
+        , onDragOver PlotterControl.Msg.NothingHappened
         , onDrop PlotterControl.Msg.GotFile
         ]
         (viewInterface model)

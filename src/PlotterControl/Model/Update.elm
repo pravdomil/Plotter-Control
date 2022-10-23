@@ -5,6 +5,7 @@ import File.Select
 import HpGl
 import Json.Decode
 import Length
+import Platform.Extra
 import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -33,6 +34,9 @@ init _ =
 update : PlotterControl.Msg.Msg -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 update msg model =
     case msg of
+        PlotterControl.Msg.NothingHappened ->
+            Platform.Extra.noOperation model
+
         PlotterControl.Msg.OpenFile ->
             ( model
             , File.Select.file [] PlotterControl.Msg.GotFile
@@ -47,11 +51,6 @@ update msg model =
 
         PlotterControl.Msg.GotFileContent a b ->
             ( { model | file = PlotterControl.File.fromFile a b |> Result.mapError PlotterControl.Model.FileError }
-            , Cmd.none
-            )
-
-        PlotterControl.Msg.DragOver ->
-            ( model
             , Cmd.none
             )
 

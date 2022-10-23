@@ -7,10 +7,10 @@ import PlotterControl.Settings
 
 
 type Msg
-    = OpenFile
+    = NothingHappened
+    | OpenFile
     | GotFile File.File
     | GotFileContent File.File String
-    | DragOver
       --
     | TestMarkers
     | ChangePreset PlotterControl.Settings.Preset
