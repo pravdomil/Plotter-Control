@@ -4,7 +4,6 @@ import File
 import File.Select
 import HpGl
 import Json.Decode
-import Length
 import Platform.Extra
 import PlotterControl.File
 import PlotterControl.Model
@@ -14,7 +13,6 @@ import PlotterControl.Plotter.Utils
 import PlotterControl.Settings
 import PlotterControl.Settings.Update
 import Process
-import Quantity
 import SummaEl
 import Task
 
@@ -77,28 +75,13 @@ update msg model =
             PlotterControl.Settings.Update.presetChanged a model
 
         PlotterControl.Msg.CopiesChanged a ->
-            ( { model
-                | settings =
-                    (\x -> { x | copies = x.copies |> PlotterControl.Settings.copiesPlus a }) model.settings
-              }
-            , Cmd.none
-            )
+            PlotterControl.Settings.Update.copiesChanged a model
 
         PlotterControl.Msg.CopyDistanceChanged a ->
-            ( { model
-                | settings =
-                    (\x -> { x | copyDistance = x.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model.settings
-              }
-            , Cmd.none
-            )
+            PlotterControl.Settings.Update.copyDistanceChanged a model
 
         PlotterControl.Msg.MarkerLoadingChanged a ->
-            ( { model
-                | settings =
-                    model.settings |> (\x -> { x | markerLoading = a })
-              }
-            , Cmd.none
-            )
+            PlotterControl.Settings.Update.markerLoadingChanged a model
 
         PlotterControl.Msg.SendFileRequested ->
             case model.file of
