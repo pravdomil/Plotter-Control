@@ -78,7 +78,10 @@ hpGlFileToReady a =
                     |> Result.andThen filterMarkers
                     |> Result.map
                         (\( polylines, markers ) ->
-                            Ready polylines markers PlotterControl.Settings.default
+                            Ready
+                                polylines
+                                markers
+                                PlotterControl.Settings.default
                         )
             )
 
