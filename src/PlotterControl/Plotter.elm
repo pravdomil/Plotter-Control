@@ -26,7 +26,7 @@ send data a =
         |> Task.andThen (Usb.Device.transferOut 1 data)
         |> Task.mapError UsbDeviceError
         |> Task.map (\_ -> ())
-        |> doNotSleep
+        |> doNotSleepDuringTask
 
 
 stop : Plotter -> Task.Task Error ()
@@ -40,8 +40,8 @@ stop a =
 --
 
 
-doNotSleep : Task.Task Error a -> Task.Task Error a
-doNotSleep a =
+doNotSleepDuringTask : Task.Task Error a -> Task.Task Error a
+doNotSleepDuringTask a =
     WakeLock.acquire
         |> Task.mapError WakeLockError
         |> Task.andThen
