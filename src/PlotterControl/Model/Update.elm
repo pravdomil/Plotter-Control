@@ -33,29 +33,29 @@ init _ =
 update : PlotterControl.Msg.Msg -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 update msg model =
     case msg of
-        PlotterControl.Model.OpenFile ->
+        PlotterControl.Msg.OpenFile ->
             ( model
-            , File.Select.file [] PlotterControl.Model.GotFile
+            , File.Select.file [] PlotterControl.Msg.GotFile
             )
 
-        PlotterControl.Model.GotFile a ->
+        PlotterControl.Msg.GotFile a ->
             ( { model | file = Err PlotterControl.Model.Loading }
             , Process.sleep 10
                 |> Task.andThen (\() -> File.toString a)
-                |> Task.perform (PlotterControl.Model.GotFileContent a)
+                |> Task.perform (PlotterControl.Msg.GotFileContent a)
             )
 
-        PlotterControl.Model.GotFileContent a b ->
+        PlotterControl.Msg.GotFileContent a b ->
             ( { model | file = PlotterControl.File.fromFile a b |> Result.mapError PlotterControl.Model.FileError }
             , Cmd.none
             )
 
-        PlotterControl.Model.DragOver ->
+        PlotterControl.Msg.DragOver ->
             ( model
             , Cmd.none
             )
 
-        PlotterControl.Model.TestMarkers ->
+        PlotterControl.Msg.TestMarkers ->
             ( model
             , case model.file of
                 Ok b ->
@@ -64,14 +64,14 @@ update msg model =
                      ]
                         |> String.join "\n"
                     )
-                        |> PlotterControl.Model.SendData
+                        |> PlotterControl.Msg.SendData
                         |> Platform.Extra.sendMsg
 
                 Err _ ->
                     Cmd.none
             )
 
-        PlotterControl.Model.ChangePreset a ->
+        PlotterControl.Msg.ChangePreset a ->
             let
                 nextModel : PlotterControl.Model.Model
                 nextModel =
@@ -84,11 +84,11 @@ update msg model =
                 |> PlotterControl.Settings.toCommands
                 |> Tuple.first
                 |> SummaEl.toString
-                |> PlotterControl.Model.SendData
+                |> PlotterControl.Msg.SendData
                 |> Platform.Extra.sendMsg
             )
 
-        PlotterControl.Model.PlusCopies a ->
+        PlotterControl.Msg.PlusCopies a ->
             ( { model
                 | settings =
                     (\v -> { v | copies = v.copies |> PlotterControl.Settings.copiesPlus a }) model.settings
@@ -96,7 +96,7 @@ update msg model =
             , Cmd.none
             )
 
-        PlotterControl.Model.PlusCopyDistance a ->
+        PlotterControl.Msg.PlusCopyDistance a ->
             ( { model
                 | settings =
                     (\v -> { v | copyDistance = v.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model.settings
@@ -104,7 +104,7 @@ update msg model =
             , Cmd.none
             )
 
-        PlotterControl.Model.ChangeMarkerLoading a ->
+        PlotterControl.Msg.ChangeMarkerLoading a ->
             ( { model
                 | settings =
                     model.settings |> (\v -> { v | markerLoading = a })
@@ -112,7 +112,7 @@ update msg model =
             , Cmd.none
             )
 
-        PlotterControl.Model.SendFile ->
+        PlotterControl.Msg.SendFile ->
             ( model
             , case model.file of
                 Ok b ->
@@ -129,25 +129,25 @@ update msg model =
                     , v2 |> SummaEl.toString
                     ]
                         |> String.join "\n"
-                        |> PlotterControl.Model.SendData
+                        |> PlotterControl.Msg.SendData
                         |> Platform.Extra.sendMsg
 
                 Err _ ->
                     Cmd.none
             )
 
-        PlotterControl.Model.SendData a ->
+        PlotterControl.Msg.SendData a ->
             ( { model | plotter = Err PlotterControl.Model.Connecting }
             , PlotterControl.Plotter.get
-                |> Task.attempt (PlotterControl.Model.GotPlotterSendData a)
+                |> Task.attempt (PlotterControl.Msg.GotPlotterSendData a)
             )
 
-        PlotterControl.Model.GotPlotterSendData a b ->
+        PlotterControl.Msg.GotPlotterSendData a b ->
             case b of
                 Ok c ->
                     ( { model | plotter = Ok c }
                     , PlotterControl.Plotter.sendData a c
-                        |> Task.attempt PlotterControl.Model.DataSent
+                        |> Task.attempt PlotterControl.Msg.DataSent
                     )
 
                 Err c ->
@@ -155,7 +155,7 @@ update msg model =
                     , Cmd.none
                     )
 
-        PlotterControl.Model.DataSent a ->
+        PlotterControl.Msg.DataSent a ->
             let
                 plotter : Result PlotterControl.Model.PlotterError PlotterControl.Plotter.Plotter
                 plotter =
@@ -170,18 +170,18 @@ update msg model =
             , Cmd.none
             )
 
-        PlotterControl.Model.StopSending ->
+        PlotterControl.Msg.StopSending ->
             ( model
             , case model.plotter of
                 Ok b ->
                     PlotterControl.Plotter.stop b
-                        |> Task.attempt PlotterControl.Model.SendingStopped
+                        |> Task.attempt PlotterControl.Msg.SendingStopped
 
                 Err _ ->
                     Cmd.none
             )
 
-        PlotterControl.Model.SendingStopped _ ->
+        PlotterControl.Msg.SendingStopped _ ->
             ( model
             , Cmd.none
             )
