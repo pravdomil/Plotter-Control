@@ -23,74 +23,57 @@ default =
     }
 
 
-toSettings : Settings -> { settings : SummaEl.Settings, recut : SummaEl.SummaEl }
+toSettings : Settings -> SummaEl.Settings
 toSettings a =
-    let
-        settings : Dict.Dict String String
-        settings =
-            defaultSettings
-                |> Dict.insert "TOOL"
-                    (case a.preset of
-                        Cut ->
-                            "DRAG_KNIFE"
+    defaultSettings
+        |> Dict.insert "TOOL"
+            (case a.preset of
+                Cut ->
+                    "DRAG_KNIFE"
 
-                        Draw ->
-                            "PEN"
+                Draw ->
+                    "PEN"
 
-                        Perforate ->
-                            "DRAG_KNIFE"
-                    )
-                |> Dict.insert "FLEX_CUT"
-                    (case a.preset of
-                        Cut ->
-                            "OFF"
+                Perforate ->
+                    "DRAG_KNIFE"
+            )
+        |> Dict.insert "FLEX_CUT"
+            (case a.preset of
+                Cut ->
+                    "OFF"
 
-                        Draw ->
-                            "OFF"
+                Draw ->
+                    "OFF"
 
-                        Perforate ->
-                            "MODE2"
-                    )
-                |> Dict.insert "FULL_PRESSURE" "400"
-                |> Dict.insert "CUT_LENGTH" (Length.millimeters 4 |> HpGl.lengthToString)
-                |> Dict.insert "FLEX_PRESSURE" "180"
-                |> Dict.insert "FLEX_LENGTH" (Length.millimeters 2.6 |> HpGl.lengthToString)
-                |> Dict.insert "FLEX_VELOCITY" "100"
-                |> Dict.insert "OPOS_PANELLING"
-                    (case a.markerLoading of
-                        LoadAllAtOnce ->
-                            "OFF"
+                Perforate ->
+                    "MODE2"
+            )
+        |> Dict.insert "FULL_PRESSURE" "400"
+        |> Dict.insert "CUT_LENGTH" (Length.millimeters 4 |> HpGl.lengthToString)
+        |> Dict.insert "FLEX_PRESSURE" "180"
+        |> Dict.insert "FLEX_LENGTH" (Length.millimeters 2.6 |> HpGl.lengthToString)
+        |> Dict.insert "FLEX_VELOCITY" "100"
+        |> Dict.insert "OPOS_PANELLING"
+            (case a.markerLoading of
+                LoadAllAtOnce ->
+                    "OFF"
 
-                        LoadSequentially ->
-                            "ON"
-                    )
-                |> Dict.insert "RECUT_OFFSET"
-                    (a.copyDistance
-                        |> Length.inMillimeters
-                        |> round
-                        |> String.fromInt
-                    )
-                --
-                |> Dict.insert "OVERCUT" "2"
-                |> Dict.remove "OPOS_LEVEL"
-                |> Dict.remove "KNIFE_PRESSURE"
-                |> Dict.remove "PEN_PRESSURE"
-                |> Dict.remove "DRAG_OFFSET"
-                |> Dict.remove "VELOCITY"
-    in
-    { settings = settings
-    , recut =
-        a.copies
-            |> copiesToInt
-            |> (\x ->
-                    if x > 1 then
-                        [ SummaEl.Recut (x - 1)
-                        ]
-
-                    else
-                        []
-               )
-    }
+                LoadSequentially ->
+                    "ON"
+            )
+        |> Dict.insert "RECUT_OFFSET"
+            (a.copyDistance
+                |> Length.inMillimeters
+                |> round
+                |> String.fromInt
+            )
+        --
+        |> Dict.insert "OVERCUT" "2"
+        |> Dict.remove "OPOS_LEVEL"
+        |> Dict.remove "KNIFE_PRESSURE"
+        |> Dict.remove "PEN_PRESSURE"
+        |> Dict.remove "DRAG_OFFSET"
+        |> Dict.remove "VELOCITY"
 
 
 
