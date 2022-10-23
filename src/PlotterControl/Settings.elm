@@ -23,7 +23,7 @@ default =
     }
 
 
-toCommands : Settings -> ( SummaEl.SummaEL, SummaEl.SummaEL )
+toCommands : Settings -> { start : SummaEl.SummaEL, end : SummaEl.SummaEL }
 toCommands a =
     let
         settings : Dict.Dict String String
@@ -78,19 +78,21 @@ toCommands a =
                 |> Dict.remove "DRAG_OFFSET"
                 |> Dict.remove "VELOCITY"
     in
-    ( [ SummaEl.SetSettings settings
-      ]
-    , a.copies
-        |> (\(Copies x) -> x)
-        |> (\x ->
-                if x > 1 then
-                    [ SummaEl.Recut (x - 1)
-                    ]
+    { start =
+        [ SummaEl.SetSettings settings
+        ]
+    , end =
+        a.copies
+            |> (\(Copies x) -> x)
+            |> (\x ->
+                    if x > 1 then
+                        [ SummaEl.Recut (x - 1)
+                        ]
 
-                else
-                    []
-           )
-    )
+                    else
+                        []
+               )
+    }
 
 
 

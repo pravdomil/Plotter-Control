@@ -10,5 +10,5 @@ import SummaEl
 configurePlotter : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 configurePlotter model =
     PlotterControl.Plotter.Utils.sendData
-        (model.settings |> PlotterControl.Settings.toCommands |> Tuple.first |> SummaEl.toString)
+        (model.settings |> PlotterControl.Settings.toCommands |> .start |> SummaEl.toString)
         model
