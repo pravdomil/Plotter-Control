@@ -65,7 +65,7 @@ update msg model =
                         |> String.join "\n"
                     )
                         |> PlotterControl.Msg.SendData
-                        |> Platform.Extra.sendMsg
+                        |> sendMsg
 
                 Err _ ->
                     Cmd.none
@@ -85,7 +85,7 @@ update msg model =
                 |> Tuple.first
                 |> SummaEl.toString
                 |> PlotterControl.Msg.SendData
-                |> Platform.Extra.sendMsg
+                |> sendMsg
             )
 
         PlotterControl.Msg.PlusCopies a ->
@@ -130,7 +130,7 @@ update msg model =
                     ]
                         |> String.join "\n"
                         |> PlotterControl.Msg.SendData
-                        |> Platform.Extra.sendMsg
+                        |> sendMsg
 
                 Err _ ->
                     Cmd.none
@@ -194,3 +194,12 @@ update msg model =
 subscriptions : PlotterControl.Model.Model -> Sub PlotterControl.Msg.Msg
 subscriptions _ =
     Sub.none
+
+
+
+--
+
+
+sendMsg : a -> Cmd a
+sendMsg msg =
+    Task.succeed () |> Task.perform (\() -> msg)
