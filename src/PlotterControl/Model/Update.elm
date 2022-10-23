@@ -70,7 +70,7 @@ update msg model =
 
         --
         PlotterControl.Msg.SendQueueRequested ->
-            PlotterControl.Queue.Update.sendQueue model
+            PlotterControl.Plotter.Update.sendQueue model
 
         PlotterControl.Msg.QueueItemReceived a ->
             PlotterControl.Queue.Update.addItemToQueue a model
@@ -79,8 +79,8 @@ update msg model =
             PlotterControl.Queue.Update.removeItemFromQueue a model
 
         --
-        PlotterControl.Msg.PlotterReceived a ->
-            PlotterControl.Plotter.Update.plotterReceived a model
+        PlotterControl.Msg.PlotterConnected a ->
+            PlotterControl.Plotter.Update.plotterConnected a model
 
         PlotterControl.Msg.QueueItemSent a b c ->
             PlotterControl.Plotter.Update.queueItemSent a b c model

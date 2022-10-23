@@ -11,7 +11,7 @@ connect : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd Plotte
 connect model =
     ( { model | plotter = Err PlotterControl.Model.PlotterConnecting }
     , PlotterControl.Plotter.connect
-        |> Task.attempt PlotterControl.Msg.PlotterReceived
+        |> Task.attempt PlotterControl.Msg.PlotterConnected
     )
 
 

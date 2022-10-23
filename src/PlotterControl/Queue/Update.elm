@@ -5,7 +5,6 @@ import Id
 import Id.Random
 import PlotterControl.Model
 import PlotterControl.Msg
-import PlotterControl.Plotter.Update
 import PlotterControl.Queue
 import Task
 
@@ -25,11 +24,6 @@ addItemToQueue ( id, a ) model =
     ( { model | queue = Dict.Any.insert Id.toString id a model.queue }
     , Cmd.none
     )
-
-
-sendQueue : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-sendQueue model =
-    PlotterControl.Plotter.Update.connect model
 
 
 removeItemFromQueue : Id.Id PlotterControl.Queue.Item -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
