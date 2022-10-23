@@ -101,21 +101,49 @@ readyToSettings a =
 readyToPlotterData : Ready -> String
 readyToPlotterData a =
     let
-        settings : { settings : SummaEl.SummaEl, recut : SummaEl.SummaEl }
-        settings =
-            PlotterControl.Settings.toCommands a.settings
+        setSettings : String
+        setSettings =
+            SummaEl.toString
+                [ SummaEl.SetSettings (readyToSettings a)
+                ]
 
-        data : List HpGl.Command
+        maybeLoadMarkers : String
+        maybeLoadMarkers =
+            case a.markers of
+                Just _ ->
+                    SummaEl.toString
+                        [ SummaEl.LoadMarkers
+                        ]
+
+                Nothing ->
+                    ""
+
+        data : String
         data =
             a.polylines
                 |> HpGl.Geometry.fromPolylines
                 |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
+                |> HpGl.toString
+
+        maybeRecut : String
+        maybeRecut =
+            a.settings.copies
+                |> PlotterControl.Settings.copiesToInt
+                |> (\x ->
+                        if x > 1 then
+                            SummaEl.toString
+                                [ SummaEl.Recut (x - 1)
+                                ]
+
+                        else
+                            ""
+                   )
     in
     String.join "\n"
-        [ settings.settings |> SummaEl.toString
-        , a.markers |> Maybe.map (markersToSettings >> SummaEl.toString) |> Maybe.withDefault ""
-        , data |> HpGl.toString
-        , settings.recut |> SummaEl.toString
+        [ setSettings
+        , maybeLoadMarkers
+        , data
+        , maybeRecut
         ]
 
 
