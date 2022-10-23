@@ -9,6 +9,7 @@ import Length
 import Platform.Extra
 import PlotterControl.File
 import PlotterControl.Model
+import PlotterControl.Msg
 import PlotterControl.Plotter
 import PlotterControl.Settings
 import PlotterControl.View
@@ -18,7 +19,7 @@ import SummaEl
 import Task
 
 
-main : Program Json.Decode.Value PlotterControl.Model.Model PlotterControl.Model.Msg
+main : Program Json.Decode.Value PlotterControl.Model.Model PlotterControl.Msg.Msg
 main =
     Browser.document
         { init = init
@@ -32,7 +33,7 @@ main =
 --
 
 
-init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Model.Msg )
+init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 init _ =
     ( { file = Err PlotterControl.Model.NotAsked
       , settings = PlotterControl.Settings.default
@@ -46,7 +47,7 @@ init _ =
 --
 
 
-update : PlotterControl.Model.Msg -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Model.Msg )
+update : PlotterControl.Msg.Msg -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 update msg model =
     case msg of
         PlotterControl.Model.OpenFile ->
@@ -207,6 +208,6 @@ update msg model =
 --
 
 
-subscriptions : PlotterControl.Model.Model -> Sub PlotterControl.Model.Msg
+subscriptions : PlotterControl.Model.Model -> Sub PlotterControl.Msg.Msg
 subscriptions _ =
     Sub.none
