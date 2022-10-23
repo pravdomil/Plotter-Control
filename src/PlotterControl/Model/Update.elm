@@ -82,8 +82,8 @@ update msg model =
         PlotterControl.Msg.PlotterReceived a ->
             PlotterControl.Plotter.Update.plotterReceived a model
 
-        PlotterControl.Msg.PlotterDataSent a ->
-            PlotterControl.Plotter.Update.dataSent a model
+        PlotterControl.Msg.PlotterItemSent a ->
+            PlotterControl.Plotter.Update.itemSent a model
 
         PlotterControl.Msg.StopSendingRequested ->
             PlotterControl.Plotter.Update.stopPlotter model

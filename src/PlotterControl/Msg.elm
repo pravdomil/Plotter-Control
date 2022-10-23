@@ -31,7 +31,7 @@ type Msg
     | QueueItemRemoveRequested (Id.Id PlotterControl.Queue.Item)
       --
     | PlotterReceived (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
-    | PlotterDataSent (Result PlotterControl.Plotter.Error ())
+    | PlotterItemSent (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested
     | SendingStopped (Result PlotterControl.Plotter.Error ())
       --
