@@ -8,6 +8,7 @@ import PlotterControl.File.Update
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter.Update
+import PlotterControl.Queue.Update
 import PlotterControl.Settings
 import PlotterControl.Settings.Update
 
@@ -68,6 +69,13 @@ update msg model =
 
         PlotterControl.Msg.MarkerLoadingChanged a ->
             PlotterControl.Settings.Update.changeMarkerLoading a model
+
+        --
+        PlotterControl.Msg.SendQueueRequested ->
+            PlotterControl.Queue.Update.sendQueue model
+
+        PlotterControl.Msg.QueueItemRemoveRequested a ->
+            PlotterControl.Queue.Update.removeItemFromQueue a model
 
         --
         PlotterControl.Msg.PlotterReceived a ->
