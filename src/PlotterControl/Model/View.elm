@@ -57,7 +57,7 @@ viewInterface model =
                 ]
             )
         , form
-            (el (theme.label ++ [ width fill, fontAlignRight ]) (text "File:"))
+            (el (theme.label [ width fill, fontAlignRight ]) (text "File:"))
             (row [ spacing 8 ]
                 [ case model.file of
                     Ok b ->
@@ -84,15 +84,15 @@ viewInterface model =
 
                                     PlotterControl.File.ParserError _ ->
                                         text "Failed to parse file."
-                , linkWithOnPress theme
+                , textButton theme
                     []
                     { label = text "Select"
-                    , onPress = Just PlotterControl.Model.OpenFile
+                    , onPress = Just PlotterControl.Msg.OpenFile
                     }
                 ]
             )
         , form
-            (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Markers:"))
+            (el (theme.label [ width fill, fontAlignRight ]) (text "Markers:"))
             (case model.file |> Result.toMaybe |> Maybe.andThen .markers of
                 Just a ->
                     row [ spacing 8 ]
@@ -103,27 +103,28 @@ viewInterface model =
                              ]
                                 |> String.join " × "
                             )
-                        , linkWithOnPress theme
+                        , textButton theme
                             []
                             { label = text "Test"
-                            , onPress = Just PlotterControl.Model.TestMarkers
+                            , onPress = Just PlotterControl.Msg.TestMarkers
                             }
                         ]
 
                 Nothing ->
                     text "None"
             )
-        , form (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Preset:"))
+        , form (el (theme.label [ width fill, fontAlignRight ]) (text "Preset:"))
             (column [ spacing 8 ]
-                [ inputRadio [ spacing 8 ]
+                [ inputRadio theme
+                    [ spacing 8 ]
                     { label = labelHidden "Preset:"
                     , options =
-                        [ inputOption PlotterControl.Settings.Cut (text "Cut")
-                        , inputOption PlotterControl.Settings.Draw (text "Draw")
-                        , inputOption PlotterControl.Settings.Perforate (text "Perforate")
+                        [ inputRadioBlockOption theme [] PlotterControl.Settings.Cut (text "Cut")
+                        , inputRadioBlockOption theme [] PlotterControl.Settings.Draw (text "Draw")
+                        , inputRadioBlockOption theme [] PlotterControl.Settings.Perforate (text "Perforate")
                         ]
                     , selected = Just model.settings.preset
-                    , onChange = PlotterControl.Model.ChangePreset
+                    , onChange = PlotterControl.Msg.ChangePreset
                     }
                 , paragraph theme
                     [ fontSize 14 ]
@@ -134,22 +135,23 @@ viewInterface model =
         , case Ok () of
             Ok _ ->
                 form
-                    (el (theme.label ++ [ width fill, fontAlignRight ]) (text "Marker loading:"))
-                    (inputRadio [ spacing 8 ]
+                    (el (theme.label [ width fill, fontAlignRight ]) (text "Marker loading:"))
+                    (inputRadio theme
+                        [ spacing 8 ]
                         { label = labelHidden "Marker loading:"
                         , options =
-                            [ inputOption PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
-                            , inputOption PlotterControl.Settings.LoadSequentially (text "Sequentially")
+                            [ inputRadioBlockOption theme [] PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
+                            , inputRadioBlockOption theme [] PlotterControl.Settings.LoadSequentially (text "Sequentially")
                             ]
                         , selected = Just model.settings.markerLoading
-                        , onChange = PlotterControl.Model.ChangeMarkerLoading
+                        , onChange = PlotterControl.Msg.ChangeMarkerLoading
                         }
                     )
 
             Err _ ->
                 none
         , inputNumber
-            { label = el (theme.label ++ [ width fill, fontAlignRight ]) (text "Copies:")
+            { label = el (theme.label [ width fill, fontAlignRight ]) (text "Copies:")
             , value =
                 el [ fontVariant fontTabularNumbers ]
                     (text
@@ -158,14 +160,14 @@ viewInterface model =
                             |> String.fromInt
                         )
                     )
-            , onChange = PlotterControl.Settings.Copies >> PlotterControl.Model.PlusCopies
+            , onChange = PlotterControl.Settings.Copies >> PlotterControl.Msg.PlusCopies
             }
         , inputNumber
-            { label = el (theme.label ++ [ width fill, fontAlignRight ]) (text "Distance between copies:")
+            { label = el (theme.label [ width fill, fontAlignRight ]) (text "Distance between copies:")
             , value =
                 el [ fontVariant fontTabularNumbers ]
                     (text (mmToString model.settings.copyDistance))
-            , onChange = toFloat >> Length.millimeters >> PlotterControl.Model.PlusCopyDistance
+            , onChange = toFloat >> Length.millimeters >> PlotterControl.Msg.PlusCopyDistance
             }
         , form
             none
@@ -177,7 +179,7 @@ viewInterface model =
                             button theme
                                 [ paddingXY 16 12 ]
                                 { label = text "Send File"
-                                , onPress = Just PlotterControl.Model.SendFile
+                                , onPress = Just PlotterControl.Msg.SendFile
                                 }
 
                         Err _ ->
@@ -186,9 +188,9 @@ viewInterface model =
                 cancelButton : Element PlotterControl.Msg.Msg
                 cancelButton =
                     button theme
-                        [ paddingXY 16 12, dangerBackground ]
+                        [ paddingXY 16 12, bgColor style.danger ]
                         { label = text "Stop"
-                        , onPress = Just PlotterControl.Model.StopSending
+                        , onPress = Just PlotterControl.Msg.StopSending
                         }
              in
              column [ spacing 8 ]
@@ -249,23 +251,23 @@ inputNumber config =
     form
         config.label
         (row [ spacing 8 ]
-            [ linkWithOnPress theme
+            [ textButton theme
                 []
                 { label = FeatherIcons.minus |> FeatherIcons.withSize 30 |> FeatherIcons.toHtml [] |> html
                 , onPress = config.onChange -10 |> Just
                 }
-            , linkWithOnPress theme
+            , textButton theme
                 []
                 { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> FeatherIcons.toHtml [] |> html
                 , onPress = config.onChange -1 |> Just
                 }
             , config.value
-            , linkWithOnPress theme
+            , textButton theme
                 []
                 { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> FeatherIcons.toHtml [] |> html
                 , onPress = config.onChange 1 |> Just
                 }
-            , linkWithOnPress theme
+            , textButton theme
                 []
                 { label = FeatherIcons.plus |> FeatherIcons.withSize 30 |> FeatherIcons.toHtml [] |> html
                 , onPress = config.onChange 10 |> Just
