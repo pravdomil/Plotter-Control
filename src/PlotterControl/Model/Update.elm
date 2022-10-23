@@ -10,7 +10,6 @@ import PlotterControl.Msg
 import PlotterControl.Plotter.Update
 import PlotterControl.Queue.Update
 import PlotterControl.Settings
-import PlotterControl.Settings.Update
 
 
 init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
