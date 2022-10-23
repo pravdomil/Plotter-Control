@@ -23,7 +23,7 @@ default =
     }
 
 
-toCommands : Settings -> { settings : SummaEl.SummaEL, recut : SummaEl.SummaEL }
+toCommands : Settings -> { settings : SummaEl.SummaEl, recut : SummaEl.SummaEl }
 toCommands a =
     let
         settings : Dict.Dict String String

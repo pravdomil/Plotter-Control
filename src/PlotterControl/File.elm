@@ -44,7 +44,7 @@ fromHpGlFile a b =
             )
 
 
-toCommands : File -> { settings : SummaEl.SummaEL, data : HpGl.HpGl }
+toCommands : File -> { settings : SummaEl.SummaEl, data : HpGl.HpGl }
 toCommands a =
     { settings =
         case a.markers of
