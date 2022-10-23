@@ -1,7 +1,6 @@
 module PlotterControl.Model exposing (..)
 
 import Dict.Any
-import JavaScript
 import PlotterControl.Checklist
 import PlotterControl.Directory
 import PlotterControl.Plotter
@@ -9,20 +8,11 @@ import PlotterControl.Queue
 
 
 type alias Model =
-    { directory : Result DirectoryError PlotterControl.Directory.Directory
+    { directory : Result () PlotterControl.Directory.Directory
     , queue : PlotterControl.Queue.Queue
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
     , checkList : Dict.Any.Dict PlotterControl.Checklist.Item ()
     }
-
-
-
---
-
-
-type DirectoryError
-    = NoDirectory
-    | LoadingDirectory
 
 
 
