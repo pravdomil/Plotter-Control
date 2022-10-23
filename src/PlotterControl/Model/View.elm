@@ -26,6 +26,10 @@ view model =
     }
 
 
+
+--
+
+
 viewDropArea : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 viewDropArea model =
     el
@@ -35,6 +39,10 @@ viewDropArea model =
         , onDrop PlotterControl.Msg.FileReceived
         ]
         (viewInterface model)
+
+
+
+--
 
 
 viewInterface : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
