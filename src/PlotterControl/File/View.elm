@@ -22,7 +22,7 @@ view model =
             Just ( name, a ) ->
                 case a.ready of
                     Ok ready ->
-                        column [ spacing 32 ]
+                        column [ spacing 16 ]
                             [ button theme
                                 []
                                 { label = text "Add to Queue"
