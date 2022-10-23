@@ -8,20 +8,20 @@ import PlotterControl.Settings
 
 type Msg
     = NothingHappened
-    | OpenFile
-    | GotFile File.File
-    | GotFileContent File.File String
+    | OpenFileRequested
+    | FileReceived File.File
+    | FileContentReceived File.File String
       --
-    | TestMarkers
-    | ChangePreset PlotterControl.Settings.Preset
-    | PlusCopies PlotterControl.Settings.Copies
-    | PlusCopyDistance Length.Length
-    | ChangeMarkerLoading PlotterControl.Settings.MarkerLoading
+    | MarkerTestRequested
+    | PresetChanged PlotterControl.Settings.Preset
+    | CopiesChanged PlotterControl.Settings.Copies
+    | CopyDistanceChanged Length.Length
+    | MarkerLoadingChanged PlotterControl.Settings.MarkerLoading
       --
-    | SendFile
+    | SendFileRequested
       --
     | SendData String
-    | GotPlotterSendData String (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
+    | PlotterReceived String (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
     | DataSent (Result PlotterControl.Plotter.Error ())
-    | StopSending
+    | StopSendingRequested
     | SendingStopped (Result PlotterControl.Plotter.Error ())

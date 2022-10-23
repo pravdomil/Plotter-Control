@@ -37,24 +37,24 @@ update msg model =
         PlotterControl.Msg.NothingHappened ->
             Platform.Extra.noOperation model
 
-        PlotterControl.Msg.OpenFile ->
+        PlotterControl.Msg.OpenFileRequested ->
             ( model
-            , File.Select.file [] PlotterControl.Msg.GotFile
+            , File.Select.file [] PlotterControl.Msg.FileReceived
             )
 
-        PlotterControl.Msg.GotFile a ->
+        PlotterControl.Msg.FileReceived a ->
             ( { model | file = Err PlotterControl.Model.Loading }
             , Process.sleep 10
                 |> Task.andThen (\() -> File.toString a)
-                |> Task.perform (PlotterControl.Msg.GotFileContent a)
+                |> Task.perform (PlotterControl.Msg.FileContentReceived a)
             )
 
-        PlotterControl.Msg.GotFileContent a b ->
+        PlotterControl.Msg.FileContentReceived a b ->
             ( { model | file = PlotterControl.File.fromFile a b |> Result.mapError PlotterControl.Model.FileError }
             , Cmd.none
             )
 
-        PlotterControl.Msg.TestMarkers ->
+        PlotterControl.Msg.MarkerTestRequested ->
             ( model
             , case model.file of
                 Ok b ->
@@ -70,7 +70,7 @@ update msg model =
                     Cmd.none
             )
 
-        PlotterControl.Msg.ChangePreset a ->
+        PlotterControl.Msg.PresetChanged a ->
             let
                 nextModel : PlotterControl.Model.Model
                 nextModel =
@@ -87,7 +87,7 @@ update msg model =
                 |> sendMsg
             )
 
-        PlotterControl.Msg.PlusCopies a ->
+        PlotterControl.Msg.CopiesChanged a ->
             ( { model
                 | settings =
                     (\x -> { x | copies = x.copies |> PlotterControl.Settings.copiesPlus a }) model.settings
@@ -95,7 +95,7 @@ update msg model =
             , Cmd.none
             )
 
-        PlotterControl.Msg.PlusCopyDistance a ->
+        PlotterControl.Msg.CopyDistanceChanged a ->
             ( { model
                 | settings =
                     (\x -> { x | copyDistance = x.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model.settings
@@ -103,7 +103,7 @@ update msg model =
             , Cmd.none
             )
 
-        PlotterControl.Msg.ChangeMarkerLoading a ->
+        PlotterControl.Msg.MarkerLoadingChanged a ->
             ( { model
                 | settings =
                     model.settings |> (\x -> { x | markerLoading = a })
@@ -111,7 +111,7 @@ update msg model =
             , Cmd.none
             )
 
-        PlotterControl.Msg.SendFile ->
+        PlotterControl.Msg.SendFileRequested ->
             ( model
             , case model.file of
                 Ok b ->
@@ -138,10 +138,10 @@ update msg model =
         PlotterControl.Msg.SendData a ->
             ( { model | plotter = Err PlotterControl.Model.Connecting }
             , PlotterControl.Plotter.get
-                |> Task.attempt (PlotterControl.Msg.GotPlotterSendData a)
+                |> Task.attempt (PlotterControl.Msg.PlotterReceived a)
             )
 
-        PlotterControl.Msg.GotPlotterSendData a b ->
+        PlotterControl.Msg.PlotterReceived a b ->
             case b of
                 Ok c ->
                     ( { model | plotter = Ok c }
@@ -169,7 +169,7 @@ update msg model =
             , Cmd.none
             )
 
-        PlotterControl.Msg.StopSending ->
+        PlotterControl.Msg.StopSendingRequested ->
             ( model
             , case model.plotter of
                 Ok b ->

@@ -32,7 +32,7 @@ viewDropArea model =
         [ width fill
         , height fill
         , onDragOver PlotterControl.Msg.NothingHappened
-        , onDrop PlotterControl.Msg.GotFile
+        , onDrop PlotterControl.Msg.FileReceived
         ]
         (viewInterface model)
 
@@ -87,7 +87,7 @@ viewInterface model =
                 , textButton theme
                     []
                     { label = text "Select"
-                    , onPress = Just PlotterControl.Msg.OpenFile
+                    , onPress = Just PlotterControl.Msg.OpenFileRequested
                     }
                 ]
             )
@@ -106,7 +106,7 @@ viewInterface model =
                         , textButton theme
                             []
                             { label = text "Test"
-                            , onPress = Just PlotterControl.Msg.TestMarkers
+                            , onPress = Just PlotterControl.Msg.MarkerTestRequested
                             }
                         ]
 
@@ -124,7 +124,7 @@ viewInterface model =
                         , inputRadioBlockOption theme [] PlotterControl.Settings.Perforate (text "Perforate")
                         ]
                     , selected = Just model.settings.preset
-                    , onChange = PlotterControl.Msg.ChangePreset
+                    , onChange = PlotterControl.Msg.PresetChanged
                     }
                 , paragraph theme
                     [ fontSize 14 ]
@@ -144,7 +144,7 @@ viewInterface model =
                             , inputRadioBlockOption theme [] PlotterControl.Settings.LoadSequentially (text "Sequentially")
                             ]
                         , selected = Just model.settings.markerLoading
-                        , onChange = PlotterControl.Msg.ChangeMarkerLoading
+                        , onChange = PlotterControl.Msg.MarkerLoadingChanged
                         }
                     )
 
@@ -160,14 +160,14 @@ viewInterface model =
                             |> String.fromInt
                         )
                     )
-            , onChange = PlotterControl.Settings.Copies >> PlotterControl.Msg.PlusCopies
+            , onChange = PlotterControl.Settings.Copies >> PlotterControl.Msg.CopiesChanged
             }
         , inputNumber
             { label = el (theme.label [ width fill, fontAlignRight ]) (text "Distance between copies:")
             , value =
                 el [ fontVariant fontTabularNumbers ]
                     (text (mmToString model.settings.copyDistance))
-            , onChange = toFloat >> Length.millimeters >> PlotterControl.Msg.PlusCopyDistance
+            , onChange = toFloat >> Length.millimeters >> PlotterControl.Msg.CopyDistanceChanged
             }
         , form
             none
@@ -179,7 +179,7 @@ viewInterface model =
                             button theme
                                 [ paddingXY 16 12 ]
                                 { label = text "Send File"
-                                , onPress = Just PlotterControl.Msg.SendFile
+                                , onPress = Just PlotterControl.Msg.SendFileRequested
                                 }
 
                         Err _ ->
@@ -190,7 +190,7 @@ viewInterface model =
                     button theme
                         [ paddingXY 16 12, bgColor style.danger ]
                         { label = text "Stop"
-                        , onPress = Just PlotterControl.Msg.StopSending
+                        , onPress = Just PlotterControl.Msg.StopSendingRequested
                         }
              in
              column [ spacing 8 ]
