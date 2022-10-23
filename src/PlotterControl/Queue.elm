@@ -2,6 +2,7 @@ module PlotterControl.Queue exposing (..)
 
 import Dict.Any
 import Id
+import Time
 
 
 type alias Queue =
@@ -11,4 +12,7 @@ type alias Queue =
 type alias Item =
     { name : String
     , data : String
+
+    --
+    , created : Time.Posix
     }
