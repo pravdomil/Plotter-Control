@@ -5,11 +5,11 @@ import FeatherIcons
 import PlotterControl.Utils.Theme exposing (..)
 
 
-twoColumns : Element msg -> Element msg -> Element msg
-twoColumns a b =
-    row [ spacing 8 ]
-        [ el (theme.label [ width fill, fontAlignRight ]) a
-        , el [ width fill ] b
+twoRows : Element msg -> Element msg -> Element msg
+twoRows a b =
+    column [ width fill, spacing 8 ]
+        [ el (theme.label []) a
+        , b
         ]
 
 
