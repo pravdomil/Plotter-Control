@@ -1,11 +1,11 @@
 module PlotterControl.Model.Update exposing (..)
 
 import File
-import File.Select
 import HpGl
 import Json.Decode
 import Platform.Extra
 import PlotterControl.File
+import PlotterControl.File.Update
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter.Update
@@ -39,9 +39,7 @@ update msg model =
             Platform.Extra.noOperation model
 
         PlotterControl.Msg.OpenFileRequested ->
-            ( model
-            , File.Select.file [] PlotterControl.Msg.FileReceived
-            )
+            PlotterControl.File.Update.openFile model
 
         PlotterControl.Msg.FileReceived a ->
             ( { model | file = Err PlotterControl.Model.Loading }
