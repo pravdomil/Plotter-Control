@@ -41,10 +41,10 @@ update msg model =
             PlotterControl.File.Update.fileContentReceived a b model
 
         PlotterControl.Msg.MarkerTestRequested ->
-            PlotterControl.File.Update.markerTestRequested model
+            PlotterControl.File.Update.testMarkers model
 
         PlotterControl.Msg.SendFileRequested ->
-            PlotterControl.File.Update.sendFileRequested model
+            PlotterControl.File.Update.sendFile model
 
         PlotterControl.Msg.PresetChanged a ->
             PlotterControl.Settings.Update.changePreset a model

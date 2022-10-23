@@ -37,8 +37,8 @@ fileContentReceived a b model =
     )
 
 
-markerTestRequested : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-markerTestRequested model =
+testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+testMarkers model =
     case model.file of
         Ok b ->
             let
@@ -55,8 +55,8 @@ markerTestRequested model =
             Platform.Extra.noOperation model
 
 
-sendFileRequested : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-sendFileRequested model =
+sendFile : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+sendFile model =
     case model.file of
         Ok b ->
             let
