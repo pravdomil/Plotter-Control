@@ -26,7 +26,7 @@ inputNumber value onChange =
             { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> iconToElement
             , onPress = onChange -1 |> Just
             }
-        , value
+        , el [ fontVariant fontTabularNumbers ] value
         , textButton theme
             []
             { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> iconToElement
