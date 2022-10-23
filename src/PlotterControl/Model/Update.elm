@@ -50,9 +50,6 @@ update msg model =
         PlotterControl.Msg.AddFileToQueueRequested a ->
             PlotterControl.File.Update.addFileToQueue a model
 
-        PlotterControl.Msg.QueueItemReceived a ->
-            PlotterControl.File.Update.addItemToQueue a model
-
         PlotterControl.Msg.MarkerTestRequested a ->
             PlotterControl.File.Update.testMarkers a model
 
@@ -71,6 +68,9 @@ update msg model =
         --
         PlotterControl.Msg.SendQueueRequested ->
             PlotterControl.Queue.Update.sendQueue model
+
+        PlotterControl.Msg.QueueItemReceived a ->
+            PlotterControl.Queue.Update.addItemToQueue a model
 
         PlotterControl.Msg.QueueItemRemoveRequested a ->
             PlotterControl.Queue.Update.removeItemFromQueue a model
