@@ -8,7 +8,7 @@ import Task
 
 sendData : String -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 sendData a model =
-    ( { model | plotter = Err PlotterControl.Model.Connecting }
+    ( { model | plotter = Err PlotterControl.Model.Connecting, queue = a }
     , PlotterControl.Plotter.get
-        |> Task.attempt (PlotterControl.Msg.PlotterReceived a)
+        |> Task.attempt PlotterControl.Msg.PlotterReceived
     )
