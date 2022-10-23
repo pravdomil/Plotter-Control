@@ -1,15 +1,18 @@
 module PlotterControl.Model exposing (..)
 
-import PlotterControl.File
+import Dict.Any
+import JavaScript
+import PlotterControl.Checklist
+import PlotterControl.Directory
 import PlotterControl.Plotter
-import PlotterControl.Settings
+import PlotterControl.Queue
 
 
 type alias Model =
-    { file : Result FileError PlotterControl.File.File
-    , settings : PlotterControl.Settings.Settings
+    { directory : Result DirectoryError PlotterControl.Directory.Directory
+    , queue : PlotterControl.Queue.Queue
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
-    , queue : String
+    , checkList : Dict.Any.Dict PlotterControl.Checklist.Item ()
     }
 
 
@@ -17,10 +20,10 @@ type alias Model =
 --
 
 
-type FileError
+type DirectoryError
     = NotAsked
     | Loading
-    | FileError PlotterControl.File.Error
+    | DirectoryError JavaScript.Error
 
 
 
