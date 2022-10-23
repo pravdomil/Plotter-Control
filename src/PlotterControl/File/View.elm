@@ -14,13 +14,13 @@ import PlotterControl.Utils.View
 view : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 view model =
     column [ width fill, spacing 16, padding 16 ]
-        [ heading1 theme
-            []
-            [ text "File"
-            ]
-        , case PlotterControl.Directory.Utils.activeFile model of
+        (case PlotterControl.Directory.Utils.activeFile model of
             Just ( name, a ) ->
-                case a.ready of
+                [ heading1 theme
+                    []
+                    [ textEllipsis [] (name |> PlotterControl.File.nameToString)
+                    ]
+                , case a.ready of
                     Ok ready ->
                         column [ spacing 16 ]
                             [ button theme
@@ -45,13 +45,19 @@ view model =
                                 PlotterControl.File.ParserError _ ->
                                     text "Failed to parse file."
                             ]
+                ]
 
             Nothing ->
-                statusParagraph theme
+                [ heading1 theme
+                    []
+                    [ text "File"
+                    ]
+                , statusParagraph theme
                     []
                     [ text "No file selected."
                     ]
-        ]
+                ]
+        )
 
 
 markers : PlotterControl.File.Name -> PlotterControl.File.Ready -> Element PlotterControl.Msg.Msg
