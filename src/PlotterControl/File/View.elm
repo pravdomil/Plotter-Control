@@ -17,7 +17,7 @@ view model =
         (case PlotterControl.Directory.Utils.activeFile model of
             Just ( name, a ) ->
                 [ heading1 theme
-                    []
+                    [ fontVariant fontTabularNumbers ]
                     [ textEllipsis [] (name |> PlotterControl.File.nameToString)
                     ]
                 , case a.ready of
