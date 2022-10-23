@@ -17,7 +17,7 @@ toString a =
     a
         |> List.map commandToString
         |> String.join "\n"
-        |> (\v -> "\u{001B};@:\n" ++ v ++ "\nEND\n")
+        |> (\x -> "\u{001B};@:\n" ++ x ++ "\nEND\n")
 
 
 

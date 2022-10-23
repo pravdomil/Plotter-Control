@@ -38,12 +38,12 @@ polylines a =
     a
         |> List.foldl fold []
         |> List.filterMap
-            (\v ->
-                if List.length v < 2 then
+            (\x ->
+                if List.length x < 2 then
                     Nothing
 
                 else
-                    v |> List.reverse |> Polyline2d.fromVertices |> Just
+                    x |> List.reverse |> Polyline2d.fromVertices |> Just
             )
         |> List.reverse
 

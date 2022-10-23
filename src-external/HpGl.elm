@@ -167,8 +167,8 @@ parser =
         loop acc =
             Parser.oneOf
                 [ commandParser
-                    |> Parser.map (\v -> Parser.Loop (v :: acc))
-                , Parser.chompIf (\v -> v == ' ' || v == '\n' || v == '\u{000D}' || v == ';')
+                    |> Parser.map (\x -> Parser.Loop (x :: acc))
+                , Parser.chompIf (\x -> x == ' ' || x == '\n' || x == '\u{000D}' || x == ';')
                     |> Parser.map (\_ -> Parser.Loop acc)
                 , Parser.end
                     |> Parser.map (\_ -> Parser.Done (List.reverse acc))
@@ -186,7 +186,7 @@ commandParser =
                 (\acc ->
                     Parser.oneOf
                         [ pointParser
-                            |> Parser.map (\v -> Parser.Loop (v :: acc))
+                            |> Parser.map (\x -> Parser.Loop (x :: acc))
                         , Parser.symbol ","
                             |> Parser.map (\_ -> Parser.Loop acc)
                         , Parser.succeed ()
@@ -216,9 +216,9 @@ commandParser =
         [ Parser.oneOf
             (simpleCommands
                 |> List.map
-                    (\v ->
-                        Parser.symbol (commandToString v)
-                            |> Parser.map (\_ -> v)
+                    (\x ->
+                        Parser.symbol (commandToString x)
+                            |> Parser.map (\_ -> x)
                     )
             )
         , Parser.symbol "PA"
