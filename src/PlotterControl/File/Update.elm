@@ -88,38 +88,21 @@ sendFile model =
 --
 
 
-changePreset : PlotterControl.Settings.Preset -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-changePreset a model =
-    ( { model
-        | settings = model.settings |> (\x -> { x | preset = a })
-      }
-    , Cmd.none
-    )
-        |> Platform.Extra.andThen PlotterControl.Settings.Utils.configurePlotter
+changePreset : PlotterControl.File.Name -> PlotterControl.Settings.Preset -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changePreset name a model =
+    updateSettings name (\x -> { x | preset = a }) model
 
 
-changeCopies : PlotterControl.Settings.Copies -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-changeCopies a model =
-    ( { model
-        | settings = (\x -> { x | copies = x.copies |> PlotterControl.Settings.copiesPlus a }) model.settings
-      }
-    , Cmd.none
-    )
+changeCopies : PlotterControl.File.Name -> PlotterControl.Settings.Copies -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeCopies name a model =
+    updateSettings name (\x -> { x | copies = x.copies |> PlotterControl.Settings.copiesPlus a }) model
 
 
-changeCopyDistance : Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-changeCopyDistance a model =
-    ( { model
-        | settings = (\x -> { x | copyDistance = x.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model.settings
-      }
-    , Cmd.none
-    )
+changeCopyDistance : PlotterControl.File.Name -> Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeCopyDistance name a model =
+    updateSettings name (\x -> { x | copyDistance = x.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model
 
 
-changeMarkerLoading : PlotterControl.Settings.MarkerLoading -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-changeMarkerLoading a model =
-    ( { model
-        | settings = model.settings |> (\x -> { x | markerLoading = a })
-      }
-    , Cmd.none
-    )
+changeMarkerLoading : PlotterControl.File.Name -> PlotterControl.Settings.MarkerLoading -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeMarkerLoading name a model =
+    updateSettings name (\x -> { x | markerLoading = a }) model
