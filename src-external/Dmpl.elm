@@ -1,4 +1,4 @@
-module DMPL exposing (..)
+module Dmpl exposing (..)
 
 import BoundingBox2d
 import Parser exposing ((|.), (|=))
