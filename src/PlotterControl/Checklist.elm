@@ -4,9 +4,9 @@ module PlotterControl.Checklist exposing (..)
 type Item
     = RollAlignment
     | RollGuidesLock
-    | ToolDepth
-    | ToolPressure
     | ToolOffset
+    | ToolPressure
+    | ToolDepth
     | ToolVelocity
     | MarkerSensorSensitivity
     | KnifeSecureNut
@@ -17,9 +17,9 @@ items : List Item
 items =
     [ RollAlignment
     , RollGuidesLock
-    , ToolDepth
-    , ToolPressure
     , ToolOffset
+    , ToolPressure
+    , ToolDepth
     , ToolVelocity
     , MarkerSensorSensitivity
     , KnifeSecureNut
@@ -36,23 +36,23 @@ toComparable a =
         RollGuidesLock ->
             1
 
-        ToolDepth ->
+        ToolOffset ->
             2
 
         ToolPressure ->
             3
 
-        ToolOffset ->
-            4
-
-        ToolVelocity ->
+        ToolDepth ->
             5
 
-        MarkerSensorSensitivity ->
+        ToolVelocity ->
             6
 
-        KnifeSecureNut ->
+        MarkerSensorSensitivity ->
             7
 
-        ToolHolderKnob ->
+        KnifeSecureNut ->
             8
+
+        ToolHolderKnob ->
+            9
