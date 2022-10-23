@@ -7,6 +7,7 @@ import HpGl
 import HpGl.Geometry
 import Length
 import Parser
+import PlotterControl.File
 import PlotterControl.Settings
 import Polyline2d
 import Quantity
@@ -86,7 +87,7 @@ hpGlFileToReady a =
                             Ready
                                 polylines
                                 markers
-                                PlotterControl.Settings.default
+                                (PlotterControl.Settings.default (File.name a))
                         )
             )
 
