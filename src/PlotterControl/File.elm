@@ -7,6 +7,7 @@ import HpGl
 import HpGl.Geometry
 import Length
 import Parser
+import PlotterControl.Settings
 import Polyline2d
 import Quantity
 import SummaEl
@@ -14,8 +15,7 @@ import SummaEl
 
 type alias File =
     { name : Name
-    , polylines : List (Polyline2d.Polyline2d Length.Meters ())
-    , markers : Maybe Markers
+    , ready : Result Error Ready
     }
 
 
@@ -86,6 +86,17 @@ stringToName =
 nameToString : Name -> String
 nameToString (Name a) =
     a
+
+
+
+--
+
+
+type alias Ready =
+    { polylines : List (Polyline2d.Polyline2d Length.Meters ())
+    , markers : Maybe Markers
+    , settings : PlotterControl.Settings.Settings
+    }
 
 
 
