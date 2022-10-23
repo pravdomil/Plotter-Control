@@ -1,0 +1,20 @@
+module PlotterControl.Checklist.Update exposing (..)
+
+import Dict.Any
+import PlotterControl.Checklist
+import PlotterControl.Model
+import PlotterControl.Msg
+
+
+checkItem : PlotterControl.Checklist.Item -> Bool -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+checkItem item checked model =
+    ( { model
+        | checkList =
+            if checked then
+                Dict.Any.insert PlotterControl.Checklist.toComparable item () model.checkList
+
+            else
+                Dict.Any.remove PlotterControl.Checklist.toComparable item model.checkList
+      }
+    , Cmd.none
+    )
