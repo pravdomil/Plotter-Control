@@ -1,5 +1,6 @@
 module PlotterControl.File.Update exposing (..)
 
+import Dict.Any
 import File
 import File.Select
 import HpGl
@@ -82,6 +83,36 @@ sendFile model =
 
         Err _ ->
             Platform.Extra.noOperation model
+
+
+
+--
+
+
+update : PlotterControl.File.Name -> (PlotterControl.File.File -> PlotterControl.File.File) -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+update name fn model =
+    ( { model
+        | directory =
+            Result.map
+                (\x ->
+                    { x
+                        | files = Dict.Any.update PlotterControl.File.nameToString name (Maybe.map fn) x.files
+                    }
+                )
+                model.directory
+      }
+    , Cmd.none
+    )
+
+
+updateReady : PlotterControl.File.Name -> (PlotterControl.File.Ready -> PlotterControl.File.Ready) -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+updateReady name fn model =
+    update name (\x -> { x | ready = Result.map fn x.ready }) model
+
+
+updateSettings : PlotterControl.File.Name -> (PlotterControl.Settings.Settings -> PlotterControl.Settings.Settings) -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+updateSettings name fn model =
+    updateReady name (\x -> { x | settings = fn x.settings }) model
 
 
 
