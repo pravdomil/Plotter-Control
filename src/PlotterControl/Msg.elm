@@ -1,10 +1,12 @@
 module PlotterControl.Msg exposing (..)
 
 import File
+import Id
 import Length
 import PlotterControl.Checklist
 import PlotterControl.File
 import PlotterControl.Plotter
+import PlotterControl.Queue
 import PlotterControl.Settings
 
 
@@ -26,6 +28,7 @@ type Msg
     | MarkerLoadingChanged PlotterControl.File.Name PlotterControl.Settings.MarkerLoading
       --
     | SendQueueRequested
+    | QueueItemRemoveRequested (Id.Id PlotterControl.Queue.Item)
     | PlotterReceived (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
     | QueueSent (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested
