@@ -12,7 +12,7 @@ import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter
 import PlotterControl.Settings
-import PlotterControl.Utills.Theme exposing (..)
+import PlotterControl.Utils.Theme exposing (..)
 import Usb.Device
 import WakeLock
 
