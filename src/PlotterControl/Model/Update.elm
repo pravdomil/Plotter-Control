@@ -2,6 +2,8 @@ module PlotterControl.Model.Update exposing (..)
 
 import Json.Decode
 import Platform.Extra
+import PlotterControl.Checklist.Update
+import PlotterControl.Directory.Update
 import PlotterControl.File.Update
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -31,6 +33,14 @@ update msg model =
         PlotterControl.Msg.NothingHappened ->
             Platform.Extra.noOperation model
 
+        --
+        PlotterControl.Msg.OpenDirectoryRequested ->
+            PlotterControl.Directory.Update.openDirectory model
+
+        PlotterControl.Msg.FileActivated a ->
+            PlotterControl.Directory.Update.activateFile a model
+
+        --
         PlotterControl.Msg.OpenFileRequested ->
             PlotterControl.File.Update.openFile model
 
@@ -69,6 +79,10 @@ update msg model =
 
         PlotterControl.Msg.SendingStopped _ ->
             Platform.Extra.noOperation model
+
+        --
+        PlotterControl.Msg.ChecklistItemChecked a b ->
+            PlotterControl.Checklist.Update.checkItem a b model
 
 
 
