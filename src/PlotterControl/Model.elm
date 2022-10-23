@@ -21,9 +21,8 @@ type alias Model =
 
 
 type DirectoryError
-    = NotAsked
-    | Loading
-    | DirectoryError JavaScript.Error
+    = NoDirectory
+    | LoadingDirectory
 
 
 
