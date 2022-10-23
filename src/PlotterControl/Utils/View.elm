@@ -15,7 +15,7 @@ twoRows a b =
 
 inputNumber : Element msg -> (Int -> msg) -> Element msg
 inputNumber value onChange =
-    row [ spacing 8 ]
+    row [ width fill, spacing 8 ]
         [ textButton theme
             []
             { label = FeatherIcons.minus |> FeatherIcons.withSize 30 |> iconToElement
@@ -26,7 +26,7 @@ inputNumber value onChange =
             { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> iconToElement
             , onPress = onChange -1 |> Just
             }
-        , el [ fontVariant fontTabularNumbers ] value
+        , el [ width fill, fontCenter, fontVariant fontTabularNumbers ] value
         , textButton theme
             []
             { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> iconToElement

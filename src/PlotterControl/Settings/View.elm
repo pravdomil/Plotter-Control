@@ -13,7 +13,7 @@ import PlotterControl.Utils.View
 
 view : PlotterControl.Model.Model -> PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element PlotterControl.Msg.Msg
 view _ a b =
-    column [ spacing 16 ]
+    column [ width fill, spacing 16 ]
         [ preset a b
         , markerLoading a b
         , copies a b

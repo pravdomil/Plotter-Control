@@ -15,7 +15,7 @@ view model =
             []
             [ text "Checklist"
             ]
-        , column []
+        , column [ width fill ]
             (PlotterControl.Checklist.items
                 |> List.map
                     (\x ->
