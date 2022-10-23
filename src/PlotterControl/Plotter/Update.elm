@@ -16,21 +16,21 @@ plotterReceived a model =
     , case a of
         Ok b ->
             PlotterControl.Plotter.sendData model.queue b
-                |> Task.attempt PlotterControl.Msg.DataSent
+                |> Task.attempt PlotterControl.Msg.QueueSent
 
         Err _ ->
             Cmd.none
     )
 
 
-dataSent : Result PlotterControl.Plotter.Error () -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd msg )
-dataSent a model =
+queueSent : Result PlotterControl.Plotter.Error () -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd msg )
+queueSent a model =
     let
         plotter : Result PlotterControl.Model.PlotterError PlotterControl.Plotter.Plotter
         plotter =
             case a of
                 Ok () ->
-                    Err PlotterControl.Model.FileSent
+                    Err PlotterControl.Model.QueueSent
 
                 Err b ->
                     Err (PlotterControl.Model.PlotterError b)

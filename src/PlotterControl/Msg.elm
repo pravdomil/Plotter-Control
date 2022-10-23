@@ -21,6 +21,6 @@ type Msg
     | SendFileRequested
       --
     | PlotterReceived (Result PlotterControl.Plotter.Error PlotterControl.Plotter.Plotter)
-    | DataSent (Result PlotterControl.Plotter.Error ())
+    | QueueSent (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested
     | SendingStopped (Result PlotterControl.Plotter.Error ())

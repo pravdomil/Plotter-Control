@@ -30,5 +30,5 @@ type FileError
 type PlotterError
     = Ready
     | Connecting
-    | FileSent
+    | QueueSent
     | PlotterError PlotterControl.Plotter.Error

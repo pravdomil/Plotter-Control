@@ -210,7 +210,7 @@ viewInterface model =
                                 [ text "Connecting..."
                                 ]
 
-                            PlotterControl.Model.FileSent ->
+                            PlotterControl.Model.QueueSent ->
                                 [ sendButton
                                 , text "File sent."
                                 ]
