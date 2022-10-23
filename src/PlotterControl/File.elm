@@ -37,10 +37,15 @@ fromHpGlFile a b =
         |> Result.andThen filterMarkers
         |> Result.map
             (\( polylines, markers ) ->
-                { name = a |> File.name |> Name
-                , polylines = polylines
-                , markers = markers
-                }
+                File
+                    (a |> File.name |> stringToName)
+                    (Ok
+                        (Ready
+                            polylines
+                            markers
+                            PlotterControl.Settings.default
+                        )
+                    )
             )
 
 
