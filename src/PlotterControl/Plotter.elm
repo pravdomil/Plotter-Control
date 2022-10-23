@@ -18,8 +18,8 @@ connect =
         |> Task.mapError UsbDeviceError
 
 
-sendData : String -> Plotter -> Task.Task Error ()
-sendData data a =
+send : String -> Plotter -> Task.Task Error ()
+send data a =
     Usb.Device.open a
         |> Task.andThen (Usb.Device.selectConfiguration 1)
         |> Task.andThen (Usb.Device.claimInterface 0)
