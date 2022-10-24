@@ -27,7 +27,7 @@ fromFile : File.File -> Task.Task x ( Name, File )
 fromFile a =
     Task.map2
         (\x x2 ->
-            ( stringToName (File.name a)
+            ( stringToName (String.dropRight (String.length supportedExtension) (File.name a))
             , File x x2
             )
         )
