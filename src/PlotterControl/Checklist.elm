@@ -20,12 +20,12 @@ items =
     , RollGuidesLock
     , ToolVelocity
     , ToolPressure
-    , FlexPressure
     , ToolDepth
-    , ToolOffset
     , KnifeSecureNut
     , ToolHolderKnob
+    , ToolOffset
     , MarkerSensitivity
+    , FlexPressure
     ]
 
 
