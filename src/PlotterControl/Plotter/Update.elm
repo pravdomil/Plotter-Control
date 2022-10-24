@@ -57,7 +57,7 @@ sendNextItemInQueue model =
             in
             case nextItem of
                 Just ( id, b ) ->
-                    ( { model | plotter = Err PlotterControl.Model.PlotterSending }
+                    ( { model | plotter = Err (PlotterControl.Model.PlotterSending a) }
                     , PlotterControl.Plotter.send b.data a
                         |> Task.attempt (PlotterControl.Msg.QueueItemSent a id)
                     )
@@ -91,11 +91,11 @@ queueItemSent plotter id a model =
 stopPlotter : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 stopPlotter model =
     case model.plotter of
-        Ok b ->
+        Err (PlotterControl.Model.PlotterSending b) ->
             ( model
             , PlotterControl.Plotter.stop b
                 |> Task.attempt PlotterControl.Msg.SendingStopped
             )
 
-        Err _ ->
+        _ ->
             Platform.Extra.noOperation model

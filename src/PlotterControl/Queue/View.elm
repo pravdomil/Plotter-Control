@@ -95,7 +95,7 @@ plotterStatus model =
                         [ text "Connecting..."
                         ]
 
-                PlotterControl.Model.PlotterSending ->
+                PlotterControl.Model.PlotterSending _ ->
                     stopButton
 
                 PlotterControl.Model.PlotterError c ->
