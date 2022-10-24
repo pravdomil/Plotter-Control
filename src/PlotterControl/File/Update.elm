@@ -114,7 +114,19 @@ changePreset name a model =
 
 changeCopies : PlotterControl.File.Name -> PlotterControl.Settings.Copies -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeCopies name a model =
-    updateSettings name (\x -> { x | copies = x.copies |> PlotterControl.Settings.copiesPlus a }) model
+    let
+        updateFn : PlotterControl.Settings.Settings -> PlotterControl.Settings.Settings
+        updateFn b =
+            { b
+                | copies =
+                    if PlotterControl.Settings.copiesToInt b.copies == 1 && PlotterControl.Settings.copiesToInt a == 10 then
+                        PlotterControl.Settings.intToCopies 10
+
+                    else
+                        PlotterControl.Settings.copiesPlus a b.copies
+            }
+    in
+    updateSettings name updateFn model
 
 
 changeCopyDistance : PlotterControl.File.Name -> Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
