@@ -23,10 +23,14 @@ type alias File =
     }
 
 
-fromFile : File.File -> Task.Task x File
+fromFile : File.File -> Task.Task x ( Name, File )
 fromFile a =
     Task.map2
-        File
+        (\x x2 ->
+            ( stringToName (File.name a)
+            , File x x2
+            )
+        )
         (if a |> File.name |> String.endsWith supportedExtension then
             hpGlFileToReady a
 

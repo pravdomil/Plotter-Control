@@ -23,12 +23,7 @@ rawFilesReceived a model =
     ( model
     , a
         |> List.reverse
-        |> List.map
-            (\x ->
-                x
-                    |> PlotterControl.File.fromFile
-                    |> Task.map (Tuple.pair (PlotterControl.File.stringToName (File.name x)))
-            )
+        |> List.map PlotterControl.File.fromFile
         |> Task.sequence
         |> Task.perform PlotterControl.Msg.FilesReceived
     )
