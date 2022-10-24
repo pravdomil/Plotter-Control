@@ -3,6 +3,7 @@ module PlotterControl.Settings exposing (..)
 import Dict
 import HpGl
 import Length
+import Regex
 import SummaEl
 
 
@@ -17,9 +18,13 @@ type alias Settings =
 default : String -> Settings
 default name =
     let
+        nonAlphaNum : Regex.Regex
+        nonAlphaNum =
+            Regex.fromString "[^0-9A-Za-z]" |> Maybe.withDefault Regex.never
+
         preset : Preset
         preset =
-            if name |> String.words |> List.member "perf" then
+            if name |> Regex.split nonAlphaNum |> List.member "perf" then
                 Perforate
 
             else
