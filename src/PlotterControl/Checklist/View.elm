@@ -36,11 +36,16 @@ view model =
 
 viewChecklist : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg -> List PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
 viewChecklist model label items =
-    column [ width fill ]
-        (items
-            |> List.map (\x -> viewItem (model.checkList |> Dict.Any.member PlotterControl.Checklist.toComparable x) x)
-            |> (\x -> el (theme.label []) label :: x)
-        )
+    column [ width fill, spacing 8 ]
+        [ el (theme.label []) label
+        , column [ width fill ]
+            (items
+                |> List.map
+                    (\x ->
+                        viewItem (model.checkList |> Dict.Any.member PlotterControl.Checklist.toComparable x) x
+                    )
+            )
+        ]
 
 
 viewItem : Bool -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
@@ -50,34 +55,34 @@ viewItem checked item =
         label =
             case item of
                 PlotterControl.Checklist.ToolDepth ->
-                    text "Tool Depth"
+                    text "Tool depth is ok."
 
                 PlotterControl.Checklist.ToolHolderKnob ->
-                    text "Tool Holder Knob"
+                    text "Tool holder knob is tight."
 
                 PlotterControl.Checklist.ToolOffset ->
-                    text "Tool Offset"
+                    text "Tool offset is corrected."
 
                 PlotterControl.Checklist.ToolPressure ->
-                    text "Tool Pressure"
+                    text "Tool pressure is ok."
 
                 PlotterControl.Checklist.ToolVelocity ->
-                    text "Tool Velocity"
+                    text "Tool velocity is ok."
 
                 PlotterControl.Checklist.RollAlignment ->
-                    text "Roll Alignment"
+                    text "Roll is aligned."
 
                 PlotterControl.Checklist.RollGuidesLock ->
-                    text "Roll Guides Lock"
+                    text "Roll is secured with guides."
 
                 PlotterControl.Checklist.KnifeSecureNut ->
-                    text "Knife Secure Nut"
+                    text "Knife depth is secured with nut."
 
                 PlotterControl.Checklist.MarkerSensitivity ->
-                    text "Marker Sensitivity"
+                    text "Marker test succeed."
 
                 PlotterControl.Checklist.FlexPressure ->
-                    text "Flex Pressure"
+                    text "Flex pressure is just enough."
     in
     inputCheckbox
         theme
