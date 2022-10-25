@@ -14,18 +14,38 @@ type Item
     | FlexPressure
 
 
-items : List Item
-items =
+rollChecklist : List Item
+rollChecklist =
     [ RollAlignment
     , RollGuidesLock
-    , ToolVelocity
+    ]
+
+
+markersChecklist : List Item
+markersChecklist =
+    [ MarkerSensitivity
+    ]
+
+
+cutChecklist : List Item
+cutChecklist =
+    [ ToolVelocity
     , ToolPressure
     , ToolDepth
     , KnifeSecureNut
     , ToolHolderKnob
     , ToolOffset
-    , MarkerSensitivity
+    ]
+
+
+perforationChecklist : List Item
+perforationChecklist =
+    [ ToolVelocity
+    , ToolDepth
     , FlexPressure
+    , KnifeSecureNut
+    , ToolHolderKnob
+    , ToolOffset
     ]
 
 
