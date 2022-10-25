@@ -95,6 +95,9 @@ update msg model =
         PlotterControl.Msg.ChecklistItemChecked a b ->
             PlotterControl.Checklist.Update.checkItem a b model
 
+        PlotterControl.Msg.ResetChecklist ->
+            PlotterControl.Checklist.Update.resetChecklist model
+
 
 
 --

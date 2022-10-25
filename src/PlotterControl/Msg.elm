@@ -36,3 +36,4 @@ type Msg
     | SendingStopped (Result PlotterControl.Plotter.Error ())
       --
     | ChecklistItemChecked PlotterControl.Checklist.Item Bool
+    | ResetChecklist

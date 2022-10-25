@@ -18,3 +18,10 @@ checkItem item checked model =
       }
     , Cmd.none
     )
+
+
+resetChecklist : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+resetChecklist model =
+    ( { model | checkList = Dict.Any.empty }
+    , Cmd.none
+    )

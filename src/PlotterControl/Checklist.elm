@@ -12,12 +12,14 @@ type Item
     | KnifeSecureNut
     | MarkerSensitivity
     | FlexPressure
+    | RollerLeverArmDown
 
 
 rollChecklist : List Item
 rollChecklist =
     [ RollAlignment
     , RollGuidesLock
+    , RollerLeverArmDown
     ]
 
 
@@ -81,3 +83,6 @@ toComparable a =
 
         FlexPressure ->
             9
+
+        RollerLeverArmDown ->
+            10

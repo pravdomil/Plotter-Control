@@ -11,26 +11,22 @@ import PlotterControl.Utils.Theme exposing (..)
 view : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 view model =
     column [ width fill, spacing 16, padding 16 ]
-        [ heading1 theme
-            []
-            [ text "Checklist"
+        [ row [ width fill, spacing 8 ]
+            [ heading1 theme
+                []
+                [ text "Checklist"
+                ]
+            , el [ width fill ] none
+            , textButton theme
+                []
+                { label = text "Reset"
+                , onPress = Just PlotterControl.Msg.ResetChecklist
+                }
             ]
-        , viewChecklist
-            model
-            (text "For Roll")
-            PlotterControl.Checklist.rollChecklist
-        , viewChecklist
-            model
-            (text "For Markers")
-            PlotterControl.Checklist.markersChecklist
-        , viewChecklist
-            model
-            (text "For Cut")
-            PlotterControl.Checklist.cutChecklist
-        , viewChecklist
-            model
-            (text "For Perforation")
-            PlotterControl.Checklist.perforationChecklist
+        , viewChecklist model (text "Roll") PlotterControl.Checklist.rollChecklist
+        , viewChecklist model (text "Markers") PlotterControl.Checklist.markersChecklist
+        , viewChecklist model (text "Cut") PlotterControl.Checklist.cutChecklist
+        , viewChecklist model (text "Perforation") PlotterControl.Checklist.perforationChecklist
         ]
 
 
@@ -83,6 +79,9 @@ viewItem checked item =
 
                 PlotterControl.Checklist.FlexPressure ->
                     text "Flex pressure is just enough."
+
+                PlotterControl.Checklist.RollerLeverArmDown ->
+                    text "Lever arm is down."
     in
     inputCheckbox
         theme
