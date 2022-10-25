@@ -27,8 +27,8 @@ rollChecklist =
 
 mediaChecklist : List Item
 mediaChecklist =
-    [ MarkerSensitivity
-    , ToolVelocity
+    [ ToolVelocity
+    , MarkerSensitivity
     ]
 
 
