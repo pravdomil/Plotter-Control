@@ -24,7 +24,7 @@ view model =
                 }
             ]
         , viewChecklist model (text "Roll") PlotterControl.Checklist.rollChecklist
-        , viewChecklist model (text "Markers") PlotterControl.Checklist.markersChecklist
+        , viewChecklist model (text "Media") PlotterControl.Checklist.mediaChecklist
         , viewChecklist model (text "Cut") PlotterControl.Checklist.cutChecklist
         , viewChecklist model (text "Perforation") PlotterControl.Checklist.perforationChecklist
         ]

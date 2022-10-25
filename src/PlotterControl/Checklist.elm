@@ -25,16 +25,16 @@ rollChecklist =
     ]
 
 
-markersChecklist : List Item
-markersChecklist =
+mediaChecklist : List Item
+mediaChecklist =
     [ MarkerSensitivity
+    , ToolVelocity
     ]
 
 
 cutChecklist : List Item
 cutChecklist =
     [ CutKnife
-    , ToolVelocity
     , ToolPressure
     , ToolDepth
     , KnifeSecureNut
@@ -46,7 +46,6 @@ cutChecklist =
 perforationChecklist : List Item
 perforationChecklist =
     [ PerforationKnife
-    , ToolVelocity
     , ToolDepth
     , FlexPressure
     , KnifeSecureNut
