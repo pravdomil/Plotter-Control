@@ -82,6 +82,12 @@ viewItem checked item =
 
                 PlotterControl.Checklist.RollerLeverArmDown ->
                     text "Lever arm is down."
+
+                PlotterControl.Checklist.CutKnife ->
+                    text "Cutting knife is in tool holder."
+
+                PlotterControl.Checklist.PerforationKnife ->
+                    text "Perforation knife is in tool holder."
     in
     inputCheckbox
         theme

@@ -13,6 +13,8 @@ type Item
     | MarkerSensitivity
     | FlexPressure
     | RollerLeverArmDown
+    | CutKnife
+    | PerforationKnife
 
 
 rollChecklist : List Item
@@ -31,7 +33,8 @@ markersChecklist =
 
 cutChecklist : List Item
 cutChecklist =
-    [ ToolVelocity
+    [ CutKnife
+    , ToolVelocity
     , ToolPressure
     , ToolDepth
     , KnifeSecureNut
@@ -42,7 +45,8 @@ cutChecklist =
 
 perforationChecklist : List Item
 perforationChecklist =
-    [ ToolVelocity
+    [ PerforationKnife
+    , ToolVelocity
     , ToolDepth
     , FlexPressure
     , KnifeSecureNut
@@ -86,3 +90,9 @@ toComparable a =
 
         RollerLeverArmDown ->
             10
+
+        CutKnife ->
+            11
+
+        PerforationKnife ->
+            12
