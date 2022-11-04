@@ -1,6 +1,7 @@
 module PlotterControl.Model.Update exposing (..)
 
 import Dict.Any
+import Element.PravdomilUi.Application
 import Json.Decode
 import Platform.Extra
 import PlotterControl.Checklist.Update
@@ -13,8 +14,9 @@ import PlotterControl.Queue.Update
 
 
 init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-init _ =
+init flags =
     ( PlotterControl.Model.Model
+        (Element.PravdomilUi.Application.flagsToViewportSize flags)
         (Err ())
         Dict.Any.empty
         (Err PlotterControl.Model.NoPlotter)
@@ -32,6 +34,9 @@ update msg model =
     case msg of
         PlotterControl.Msg.NothingHappened ->
             Platform.Extra.noOperation model
+
+        PlotterControl.Msg.ViewportSizeChanged a ->
+            ( { model | viewportSize = a }, Cmd.none )
 
         --
         PlotterControl.Msg.OpenFilesRequested ->
@@ -105,4 +110,4 @@ update msg model =
 
 subscriptions : PlotterControl.Model.Model -> Sub PlotterControl.Msg.Msg
 subscriptions _ =
-    Sub.none
+    Element.PravdomilUi.Application.onViewportSizeChange PlotterControl.Msg.ViewportSizeChanged
