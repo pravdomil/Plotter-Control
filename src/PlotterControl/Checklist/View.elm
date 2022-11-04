@@ -2,32 +2,50 @@ module PlotterControl.Checklist.View exposing (..)
 
 import Dict.Any
 import Element.PravdomilUi exposing (..)
+import Element.PravdomilUi.Application
+import Element.PravdomilUi.Application.Block
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Utils.Theme exposing (..)
 
 
-view : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
+view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view model =
-    column [ width fill, spacing 16, padding 16 ]
-        [ row [ width fill, spacing 8 ]
-            [ heading1 theme
-                []
-                [ text "Checklist"
+    { size = \x -> { x | width = max 240 (x.width // 4) }
+    , header =
+        Just
+            { attributes = []
+            , left = []
+            , center = textEllipsis [ fontCenter ] "Checklist"
+            , right = []
+            }
+    , toolbar = Nothing
+    , body =
+        Element.PravdomilUi.Application.Blocks
+            [ Element.PravdomilUi.Application.Block.Block
+                Nothing
+                [ column [ width fill, spacing 16, padding 16 ]
+                    [ row [ width fill, spacing 8 ]
+                        [ heading1 theme
+                            []
+                            [ text "Checklist"
+                            ]
+                        , el [ width fill ] none
+                        , textButton theme
+                            []
+                            { label = text "Reset"
+                            , onPress = Just PlotterControl.Msg.ResetChecklist
+                            }
+                        ]
+                    , viewChecklist model (text "Roll") PlotterControl.Checklist.rollChecklist
+                    , viewChecklist model (text "Media") PlotterControl.Checklist.mediaChecklist
+                    , viewChecklist model (text "Cut") PlotterControl.Checklist.cutChecklist
+                    , viewChecklist model (text "Perforation") PlotterControl.Checklist.perforationChecklist
+                    ]
                 ]
-            , el [ width fill ] none
-            , textButton theme
-                []
-                { label = text "Reset"
-                , onPress = Just PlotterControl.Msg.ResetChecklist
-                }
             ]
-        , viewChecklist model (text "Roll") PlotterControl.Checklist.rollChecklist
-        , viewChecklist model (text "Media") PlotterControl.Checklist.mediaChecklist
-        , viewChecklist model (text "Cut") PlotterControl.Checklist.cutChecklist
-        , viewChecklist model (text "Perforation") PlotterControl.Checklist.perforationChecklist
-        ]
+    }
 
 
 viewChecklist : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg -> List PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
