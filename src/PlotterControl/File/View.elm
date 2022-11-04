@@ -62,7 +62,7 @@ view model =
                 Just
                     { attributes = []
                     , left = []
-                    , center = textEllipsis [] "File"
+                    , center = textEllipsis [ fontCenter ] "File"
                     , right = []
                     }
             , toolbar = Nothing
