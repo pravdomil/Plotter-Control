@@ -19,7 +19,7 @@ view model =
         Just
             { attributes = []
             , left = []
-            , center = text "Plotter Control"
+            , center = textEllipsis [] "Plotter Control"
             , right =
                 [ button theme
                     []
