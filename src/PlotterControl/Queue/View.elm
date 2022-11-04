@@ -2,6 +2,8 @@ module PlotterControl.Queue.View exposing (..)
 
 import Dict.Any
 import Element.PravdomilUi exposing (..)
+import Element.PravdomilUi.Application
+import Element.PravdomilUi.Application.Block
 import FeatherIcons
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -14,51 +16,60 @@ import Usb.Device
 import WakeLock
 
 
-view : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
+view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view model =
-    column [ width fill, spacing 16, padding 16 ]
-        [ heading1 theme
-            []
-            [ text "Queue"
-            ]
-        , case model.queue |> Dict.Any.isEmpty of
-            True ->
-                statusParagraph theme
-                    []
-                    [ text "Is empty."
+    { size = \x -> { x | width = max 240 (x.width // 4) }
+    , header =
+        Just
+            { attributes = []
+            , left = []
+            , center = textEllipsis [ fontCenter ] "Queue"
+            , right = []
+            }
+    , toolbar = Nothing
+    , body =
+        Element.PravdomilUi.Application.Blocks
+            (case model.queue |> Dict.Any.isEmpty of
+                True ->
+                    [ Element.PravdomilUi.Application.Block.Status
+                        [ text "Queue is empty."
+                        ]
                     ]
 
-            False ->
-                column [ width fill, spacing 16 ]
-                    [ plotterStatus model
-                    , inputRadio theme
-                        [ width fill ]
-                        { label = labelAbove theme [ paddingEach 0 0 0 8 ] (text "Items")
-                        , options =
-                            model.queue
-                                |> Dict.Any.toList
-                                |> List.sortBy (\( _, x ) -> x.created |> Time.posixToMillis)
-                                |> List.map
-                                    (\( id, x ) ->
-                                        inputRadioBlockOption
-                                            theme
-                                            [ width fill ]
-                                            id
-                                            (row [ width fill ]
-                                                [ textEllipsis [] (PlotterControl.Queue.itemNameToString x.name)
-                                                , textButton theme
-                                                    []
-                                                    { label = FeatherIcons.x |> PlotterControl.Utils.View.iconToElement
-                                                    , onPress = Just (PlotterControl.Msg.QueueItemRemoveRequested id)
-                                                    }
-                                                ]
-                                            )
-                                    )
-                        , selected = Nothing
-                        , onChange = always PlotterControl.Msg.NothingHappened
-                        }
+                False ->
+                    [ Element.PravdomilUi.Application.Block.Block
+                        (Just "Items")
+                        [ plotterStatus model
+                        , inputRadio theme
+                            [ width fill ]
+                            { label = labelHidden "Items"
+                            , options =
+                                model.queue
+                                    |> Dict.Any.toList
+                                    |> List.sortBy (\( _, x ) -> x.created |> Time.posixToMillis)
+                                    |> List.map
+                                        (\( id, x ) ->
+                                            inputRadioBlockOption
+                                                theme
+                                                [ width fill ]
+                                                id
+                                                (row [ width fill ]
+                                                    [ textEllipsis [] (PlotterControl.Queue.itemNameToString x.name)
+                                                    , textButton theme
+                                                        []
+                                                        { label = FeatherIcons.x |> PlotterControl.Utils.View.iconToElement
+                                                        , onPress = Just (PlotterControl.Msg.QueueItemRemoveRequested id)
+                                                        }
+                                                    ]
+                                                )
+                                        )
+                            , selected = Nothing
+                            , onChange = always PlotterControl.Msg.NothingHappened
+                            }
+                        ]
                     ]
-        ]
+            )
+    }
 
 
 plotterStatus : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
