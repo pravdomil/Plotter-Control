@@ -14,7 +14,7 @@ import Time
 
 view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view model =
-    { size = identity
+    { size = \x -> { x | width = max 320 (x.width // 4) }
     , header =
         Just
             { attributes = []
