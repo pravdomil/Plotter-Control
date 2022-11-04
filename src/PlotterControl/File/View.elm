@@ -1,6 +1,8 @@
 module PlotterControl.File.View exposing (..)
 
 import Element.PravdomilUi exposing (..)
+import Element.PravdomilUi.Application
+import Element.PravdomilUi.Application.Block
 import PlotterControl.Directory.Utils
 import PlotterControl.File
 import PlotterControl.Model
@@ -8,65 +10,75 @@ import PlotterControl.Msg
 import PlotterControl.Settings.View
 import PlotterControl.Utils.Theme exposing (..)
 import PlotterControl.Utils.Utils
-import PlotterControl.Utils.View
 
 
-view : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
+view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view model =
-    column [ width fill, spacing 16, padding 16 ]
-        (case PlotterControl.Directory.Utils.activeFile model of
-            Just ( name, a ) ->
-                [ heading1 theme
-                    [ fontVariant fontTabularNumbers ]
-                    [ textEllipsis [] (name |> PlotterControl.File.nameToString)
-                    ]
-                , case a.ready of
-                    Ok ready ->
-                        column [ width fill, spacing 16 ]
-                            [ button theme
-                                []
-                                { label = text "Add to Queue"
-                                , onPress = Just (PlotterControl.Msg.AddFileToQueueRequested name)
-                                }
-                            , markers name ready
-                            , PlotterControl.Settings.View.view model name ready.settings
-                            ]
-
-                    Err b ->
-                        statusParagraph theme
+    case PlotterControl.Directory.Utils.activeFile model of
+        Just ( name, a ) ->
+            { size = \x -> { x | width = max 320 (x.width // 4) }
+            , header =
+                Just
+                    { attributes = []
+                    , left = []
+                    , center = textEllipsis [ fontVariant fontTabularNumbers ] (PlotterControl.File.nameToString name)
+                    , right =
+                        [ button theme
                             []
-                            [ case b of
-                                PlotterControl.File.FileNotSupported ->
-                                    text ("Only " ++ PlotterControl.File.supportedExtension ++ " files are supported.")
+                            { label = text "Add to Queue"
+                            , onPress = Just (PlotterControl.Msg.AddFileToQueueRequested name)
+                            }
+                        ]
+                    }
+            , toolbar = Nothing
+            , body =
+                Element.PravdomilUi.Application.Blocks
+                    (case a.ready of
+                        Ok ready ->
+                            markers name ready
+                                :: PlotterControl.Settings.View.view model name ready.settings
 
-                                PlotterControl.File.InvalidMarkerCount ->
-                                    text "Failed to load markers."
+                        Err b ->
+                            Element.PravdomilUi.Application.Block.Status
+                                [ case b of
+                                    PlotterControl.File.FileNotSupported ->
+                                        text ("Only " ++ PlotterControl.File.supportedExtension ++ " files are supported.")
 
-                                PlotterControl.File.ParserError _ ->
-                                    text "Failed to parse file."
-                            ]
-                ]
+                                    PlotterControl.File.InvalidMarkerCount ->
+                                        text "Failed to load markers."
 
-            Nothing ->
-                [ heading1 theme
-                    []
-                    [ text "File"
+                                    PlotterControl.File.ParserError _ ->
+                                        text "Failed to parse file."
+                                ]
+                    )
+            }
+
+        Nothing ->
+            { size = \x -> { x | width = max 320 (x.width // 4) }
+            , header =
+                Just
+                    { attributes = []
+                    , left = []
+                    , center = textEllipsis [] "File"
+                    , right = []
+                    }
+            , toolbar = Nothing
+            , body =
+                Element.PravdomilUi.Application.Blocks
+                    [ Element.PravdomilUi.Application.Block.Status
+                        [ text "No file selected."
+                        ]
                     ]
-                , statusParagraph theme
-                    []
-                    [ text "No selected."
-                    ]
-                ]
-        )
+            }
 
 
-markers : PlotterControl.File.Name -> PlotterControl.File.Ready -> Element PlotterControl.Msg.Msg
+markers : PlotterControl.File.Name -> PlotterControl.File.Ready -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
 markers name a =
-    PlotterControl.Utils.View.twoRows
-        (text "Markers:")
+    Element.PravdomilUi.Application.Block.Block
+        (Just "Markers:")
         (case a.markers of
             Just b ->
-                row [ spacing 8 ]
+                [ row [ spacing 8 ]
                     [ text
                         ([ b.count |> String.fromInt
                          , b.yDistance |> PlotterControl.Utils.Utils.mmToString
@@ -80,7 +92,9 @@ markers name a =
                         , onPress = Just (PlotterControl.Msg.MarkerTestRequested name)
                         }
                     ]
+                ]
 
             Nothing ->
-                text "None"
+                [ text "None"
+                ]
         )
