@@ -2,6 +2,8 @@ module PlotterControl.Directory.View exposing (..)
 
 import Dict.Any
 import Element.PravdomilUi exposing (..)
+import Element.PravdomilUi.Application
+import Element.PravdomilUi.Application.Block
 import PlotterControl.Directory
 import PlotterControl.File
 import PlotterControl.Model
@@ -10,32 +12,43 @@ import PlotterControl.Utils.Theme exposing (..)
 import Time
 
 
-view : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
+view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view model =
-    column [ width fill, spacing 16, padding 16 ]
-        [ heading1 theme
-            []
-            [ text "Plotter Control"
-            ]
-        , button theme
-            []
-            { label = text "Open Files"
-            , onPress = Just PlotterControl.Msg.OpenFilesRequested
+    { size = identity
+    , header =
+        Just
+            { attributes = []
+            , left = []
+            , center = text "Plotter Control"
+            , right =
+                [ button theme
+                    []
+                    { label = text "Open Files"
+                    , onPress = Just PlotterControl.Msg.OpenFilesRequested
+                    }
+                ]
             }
-        , case model.directory of
-            Ok a ->
-                viewFiles model a
+    , toolbar = Nothing
+    , body =
+        Element.PravdomilUi.Application.Blocks
+            (case model.directory of
+                Ok b ->
+                    [ Element.PravdomilUi.Application.Block.Block
+                        (Just "Files")
+                        [ viewFiles model b ]
+                    ]
 
-            Err () ->
-                none
-        ]
+                Err () ->
+                    []
+            )
+    }
 
 
 viewFiles : PlotterControl.Model.Model -> PlotterControl.Directory.Directory -> Element PlotterControl.Msg.Msg
 viewFiles _ a =
     inputRadio theme
         [ width fill ]
-        { label = labelAbove theme [ paddingEach 0 0 0 8 ] (text "Files")
+        { label = labelHidden "Files"
         , options =
             a.files
                 |> Dict.Any.toList
