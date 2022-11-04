@@ -41,7 +41,7 @@ view model =
                             ]
 
                         Err b ->
-                            Element.PravdomilUi.Application.Block.Status
+                            [ Element.PravdomilUi.Application.Block.Status
                                 [ case b of
                                     PlotterControl.File.FileNotSupported ->
                                         text ("Only " ++ PlotterControl.File.supportedExtension ++ " files are supported.")
@@ -52,6 +52,7 @@ view model =
                                     PlotterControl.File.ParserError _ ->
                                         text "Failed to parse file."
                                 ]
+                            ]
                     )
             }
 
@@ -98,7 +99,6 @@ fileInfo name a =
                         ]
 
                 Nothing ->
-                    [ text "None"
-                    ]
+                    text "None"
             )
         ]
