@@ -25,8 +25,8 @@ view model =
                     , center = textEllipsis [ fontCenter, fontVariant fontTabularNumbers ] (PlotterControl.File.nameToString name)
                     , right =
                         [ textButton theme
-                            []
-                            { label = text "Add to Queue"
+                            [ fontSemiBold ]
+                            { label = text "Enqueue"
                             , onPress = Just (PlotterControl.Msg.AddFileToQueueRequested name)
                             }
                         ]
