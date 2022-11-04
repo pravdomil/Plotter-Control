@@ -35,7 +35,8 @@ view model =
                 Ok b ->
                     [ Element.PravdomilUi.Application.Block.Block
                         (Just "Files")
-                        [ viewFiles model b ]
+                        [ viewFiles model b
+                        ]
                     ]
 
                 Err () ->
