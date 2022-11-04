@@ -1,5 +1,6 @@
 module PlotterControl.Msg exposing (..)
 
+import Element.PravdomilUi.Application
 import File
 import Id
 import Length
@@ -12,6 +13,7 @@ import PlotterControl.Settings
 
 type Msg
     = NothingHappened
+    | ViewportSizeChanged Element.PravdomilUi.Application.ViewportSize
       --
     | OpenFilesRequested
     | RawFilesReceived (List File.File)
