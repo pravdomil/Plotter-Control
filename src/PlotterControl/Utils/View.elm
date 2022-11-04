@@ -7,7 +7,7 @@ import PlotterControl.Utils.Theme exposing (..)
 
 twoRows : Element msg -> Element msg -> Element msg
 twoRows a b =
-    column [ width fill, spacing 8 ]
+    column [ width fill, paddingXY 0 8, spacing 8 ]
         [ el (theme.label []) a
         , b
         ]
