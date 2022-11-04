@@ -10,6 +10,7 @@ import PlotterControl.Msg
 import PlotterControl.Settings.View
 import PlotterControl.Utils.Theme exposing (..)
 import PlotterControl.Utils.Utils
+import PlotterControl.Utils.View
 
 
 view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
@@ -35,8 +36,9 @@ view model =
                 Element.PravdomilUi.Application.Blocks
                     (case a.ready of
                         Ok ready ->
-                            markers name ready
-                                :: PlotterControl.Settings.View.view model name ready.settings
+                            [ fileInfo name ready
+                            , PlotterControl.Settings.View.view model name ready.settings
+                            ]
 
                         Err b ->
                             Element.PravdomilUi.Application.Block.Status
@@ -72,29 +74,31 @@ view model =
             }
 
 
-markers : PlotterControl.File.Name -> PlotterControl.File.Ready -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
-markers name a =
+fileInfo : PlotterControl.File.Name -> PlotterControl.File.Ready -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+fileInfo name a =
     Element.PravdomilUi.Application.Block.Block
-        (Just "Markers:")
-        (case a.markers of
-            Just b ->
-                [ row [ spacing 8 ]
-                    [ text
-                        ([ b.count |> String.fromInt
-                         , b.yDistance |> PlotterControl.Utils.Utils.mmToString
-                         , b.xDistance |> PlotterControl.Utils.Utils.mmToString
-                         ]
-                            |> String.join " × "
-                        )
-                    , textButton theme
-                        []
-                        { label = text "Test"
-                        , onPress = Just (PlotterControl.Msg.MarkerTestRequested name)
-                        }
-                    ]
-                ]
+        (Just "Info")
+        [ PlotterControl.Utils.View.twoRows
+            (text "Markers:")
+            (case a.markers of
+                Just b ->
+                    row [ spacing 8 ]
+                        [ text
+                            ([ b.count |> String.fromInt
+                             , b.yDistance |> PlotterControl.Utils.Utils.mmToString
+                             , b.xDistance |> PlotterControl.Utils.Utils.mmToString
+                             ]
+                                |> String.join " × "
+                            )
+                        , textButton theme
+                            []
+                            { label = text "Test"
+                            , onPress = Just (PlotterControl.Msg.MarkerTestRequested name)
+                            }
+                        ]
 
-            Nothing ->
-                [ text "None"
-                ]
-        )
+                Nothing ->
+                    [ text "None"
+                    ]
+            )
+        ]
