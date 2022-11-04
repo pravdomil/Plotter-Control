@@ -14,16 +14,16 @@ import Time
 
 view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view model =
-    { size = \x -> { x | width = max 320 (x.width // 4) }
+    { size = \x -> { x | width = max 240 (x.width // 4) }
     , header =
         Just
             { attributes = []
             , left = []
-            , center = textEllipsis [] "Plotter Control"
+            , center = text "Plotter Control"
             , right =
-                [ button theme
-                    []
-                    { label = text "Open Files"
+                [ textButton theme
+                    [ fontSemiBold ]
+                    { label = text "Open"
                     , onPress = Just PlotterControl.Msg.OpenFilesRequested
                     }
                 ]
