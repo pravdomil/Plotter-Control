@@ -17,14 +17,14 @@ view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column Plot
 view model =
     case PlotterControl.Directory.Utils.activeFile model of
         Just ( name, a ) ->
-            { size = \x -> { x | width = max 320 (x.width // 4) }
+            { size = \x -> { x | width = max 240 (x.width // 4) }
             , header =
                 Just
                     { attributes = []
                     , left = []
                     , center = textEllipsis [ fontVariant fontTabularNumbers ] (PlotterControl.File.nameToString name)
                     , right =
-                        [ button theme
+                        [ textButton theme
                             []
                             { label = text "Add to Queue"
                             , onPress = Just (PlotterControl.Msg.AddFileToQueueRequested name)
