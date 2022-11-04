@@ -1,6 +1,7 @@
 module PlotterControl.Settings.View exposing (..)
 
 import Element.PravdomilUi exposing (..)
+import Element.PravdomilUi.Application.Block
 import Length
 import PlotterControl.File
 import PlotterControl.Model
@@ -11,9 +12,10 @@ import PlotterControl.Utils.Utils
 import PlotterControl.Utils.View
 
 
-view : PlotterControl.Model.Model -> PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element PlotterControl.Msg.Msg
+view : PlotterControl.Model.Model -> PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
 view _ a b =
-    column [ width fill, spacing 16 ]
+    Element.PravdomilUi.Application.Block.Block
+        (Just "Settings")
         [ preset a b
         , markerLoading a b
         , copies a b
