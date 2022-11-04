@@ -2,6 +2,7 @@ module PlotterControl.Model.View exposing (..)
 
 import Browser
 import Element.PravdomilUi exposing (..)
+import Element.PravdomilUi.Application
 import File
 import Html.Events
 import Json.Decode
@@ -16,9 +17,31 @@ import PlotterControl.Utils.Theme exposing (..)
 
 view : PlotterControl.Model.Model -> Browser.Document PlotterControl.Msg.Msg
 view model =
+    let
+        ( attrs, body ) =
+            Element.PravdomilUi.Application.view
+                (Element.PravdomilUi.Application.Config
+                    style
+                    theme
+                    model.viewportSize
+                    (viewColumns model)
+                    []
+                    Nothing
+                    Nothing
+                    Nothing
+                    (always PlotterControl.Msg.NothingHappened)
+                    PlotterControl.Msg.NothingHappened
+                    PlotterControl.Msg.NothingHappened
+                )
+    in
     { title = "Plotter Control"
     , body =
-        [ layout theme [ width fill, height fill ] (lazy viewColumns model)
+        [ layout theme
+            (onDragOver PlotterControl.Msg.NothingHappened
+                :: onDrop PlotterControl.Msg.RawFilesReceived
+                :: attrs
+            )
+            body
         ]
     }
 
@@ -27,27 +50,13 @@ view model =
 --
 
 
-viewColumns : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
+viewColumns : PlotterControl.Model.Model -> List (Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg)
 viewColumns model =
-    let
-        separator : Element msg
-        separator =
-            el [ height fill, borderWidthEach 1 0 0 0, borderColor style.back50 ] none
-    in
-    row
-        [ width fill
-        , height fill
-        , onDragOver PlotterControl.Msg.NothingHappened
-        , onDrop PlotterControl.Msg.RawFilesReceived
-        ]
-        ([ PlotterControl.Directory.View.view model
-         , PlotterControl.File.View.view model
-         , PlotterControl.Queue.View.view model
-         , PlotterControl.Checklist.View.view model
-         ]
-            |> List.map (\x -> el [ width fill, height fill, scrollbars ] x)
-            |> List.intersperse separator
-        )
+    [ PlotterControl.Directory.View.view model
+    , PlotterControl.File.View.view model
+    , PlotterControl.Queue.View.view model
+    , PlotterControl.Checklist.View.view model
+    ]
 
 
 
