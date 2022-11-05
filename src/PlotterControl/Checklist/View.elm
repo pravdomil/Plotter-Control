@@ -55,8 +55,32 @@ viewItem checked item =
         label : Element msg
         label =
             case item of
+                PlotterControl.Checklist.RollRollersAlignment ->
+                    text "Roll and rollers are aligned."
+
+                PlotterControl.Checklist.RollGuidesLock ->
+                    text "Roll is secured with guides."
+
+                PlotterControl.Checklist.RollerLeverArmDown ->
+                    text "Lever arm is down."
+
+                PlotterControl.Checklist.MediaToolVelocity ->
+                    text "Tool velocity is ok."
+
+                PlotterControl.Checklist.MediaMarkerSensitivity ->
+                    text "Marker test succeed."
+
+                PlotterControl.Checklist.CutKnife ->
+                    text "Cutting knife is in tool holder."
+
+                PlotterControl.Checklist.CutToolPressure ->
+                    text "Tool pressure is ok."
+
                 PlotterControl.Checklist.CutToolDepth ->
                     text "Tool depth is ok."
+
+                PlotterControl.Checklist.CutKnifeSecureNut ->
+                    text "Knife depth is secured with nut."
 
                 PlotterControl.Checklist.CutToolHolderKnob ->
                     text "Tool holder knob is tight."
@@ -64,35 +88,23 @@ viewItem checked item =
                 PlotterControl.Checklist.CutToolOffset ->
                     text "Tool offset is corrected."
 
-                PlotterControl.Checklist.CutToolPressure ->
-                    text "Tool pressure is ok."
-
-                PlotterControl.Checklist.MediaToolVelocity ->
-                    text "Tool velocity is ok."
-
-                PlotterControl.Checklist.RollRollersAlignment ->
-                    text "Roll and rollers are aligned."
-
-                PlotterControl.Checklist.RollGuidesLock ->
-                    text "Roll is secured with guides."
-
-                PlotterControl.Checklist.KnifeSecureNut ->
-                    text "Knife depth is secured with nut."
-
-                PlotterControl.Checklist.MediaMarkerSensitivity ->
-                    text "Marker test succeed."
-
-                PlotterControl.Checklist.FlexPressure ->
-                    text "Flex pressure is just enough."
-
-                PlotterControl.Checklist.RollerLeverArmDown ->
-                    text "Lever arm is down."
-
-                PlotterControl.Checklist.CutKnife ->
-                    text "Cutting knife is in tool holder."
-
                 PlotterControl.Checklist.PerfKnife ->
                     text "Perforation knife is in tool holder."
+
+                PlotterControl.Checklist.PerfToolDepth ->
+                    text ""
+
+                PlotterControl.Checklist.PerfFlexPressure ->
+                    text "Flex pressure is just enough."
+
+                PlotterControl.Checklist.PerfKnifeSecureNut ->
+                    text ""
+
+                PlotterControl.Checklist.PerfToolHolderKnob ->
+                    text ""
+
+                PlotterControl.Checklist.PerfToolOffset ->
+                    text ""
     in
     inputCheckbox
         theme
