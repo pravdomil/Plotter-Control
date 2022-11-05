@@ -91,7 +91,7 @@ viewItem checked item =
                     text "Knife offset is corrected."
 
                 --
-                PlotterControl.Checklist.PerfKnife ->
+                PlotterControl.Checklist.PerfKnifeInHolder ->
                     text "Perforation knife is in tool holder."
 
                 PlotterControl.Checklist.PerfToolDepth ->

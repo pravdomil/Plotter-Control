@@ -16,7 +16,7 @@ type Item
     | CutToolHolderKnob
     | CutKnifeOffset
       --
-    | PerfKnife
+    | PerfKnifeInHolder
     | PerfToolDepth
     | PerfFlexPressure
     | PerfKnifeSecureNut
@@ -52,7 +52,7 @@ cutChecklist =
 
 perforationChecklist : List Item
 perforationChecklist =
-    [ PerfKnife
+    [ PerfKnifeInHolder
     , PerfToolDepth
     , PerfFlexPressure
     , PerfKnifeSecureNut
@@ -97,7 +97,7 @@ toComparable a =
         CutKnifeOffset ->
             10
 
-        PerfKnife ->
+        PerfKnifeInHolder ->
             11
 
         PerfToolDepth ->
