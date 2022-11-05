@@ -7,7 +7,7 @@ type Item
     | ToolOffset
     | ToolPressure
     | ToolVelocity
-    | RollAlignment
+    | RollRollersAlignment
     | RollGuidesLock
     | KnifeSecureNut
     | MarkerSensitivity
@@ -19,7 +19,7 @@ type Item
 
 rollChecklist : List Item
 rollChecklist =
-    [ RollAlignment
+    [ RollRollersAlignment
     , RollGuidesLock
     , RollerLeverArmDown
     ]
@@ -72,7 +72,7 @@ toComparable a =
         ToolVelocity ->
             4
 
-        RollAlignment ->
+        RollRollersAlignment ->
             5
 
         RollGuidesLock ->

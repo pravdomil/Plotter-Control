@@ -70,8 +70,8 @@ viewItem checked item =
                 PlotterControl.Checklist.ToolVelocity ->
                     text "Tool velocity is ok."
 
-                PlotterControl.Checklist.RollAlignment ->
-                    text "Roll is aligned."
+                PlotterControl.Checklist.RollRollersAlignment ->
+                    text "Roll and rollers are aligned."
 
                 PlotterControl.Checklist.RollGuidesLock ->
                     text "Roll is secured with guides."
