@@ -75,10 +75,10 @@ viewItem checked item =
                 PlotterControl.Checklist.CutKnife ->
                     text "Cutting knife is in tool holder."
 
-                PlotterControl.Checklist.CutToolPressure ->
+                PlotterControl.Checklist.CutKnifePressure ->
                     text "Knife pressure is ok."
 
-                PlotterControl.Checklist.CutToolDepth ->
+                PlotterControl.Checklist.CutKnifeDepth ->
                     text "Knife depth is ok."
 
                 PlotterControl.Checklist.CutKnifeSecureNut ->
@@ -87,7 +87,7 @@ viewItem checked item =
                 PlotterControl.Checklist.CutToolHolderKnob ->
                     text "Tool holder knob is tight."
 
-                PlotterControl.Checklist.CutToolOffset ->
+                PlotterControl.Checklist.CutKnifeOffset ->
                     text "Knife offset is corrected."
 
                 --
