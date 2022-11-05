@@ -64,20 +64,22 @@ viewItem checked item =
                 PlotterControl.Checklist.RollerLeverArmDown ->
                     text "Lever arm is down."
 
+                --
                 PlotterControl.Checklist.MediaToolVelocity ->
                     text "Tool velocity is ok."
 
                 PlotterControl.Checklist.MediaMarkerSensitivity ->
                     text "Marker test succeed."
 
+                --
                 PlotterControl.Checklist.CutKnife ->
                     text "Cutting knife is in tool holder."
 
                 PlotterControl.Checklist.CutToolPressure ->
-                    text "Tool pressure is ok."
+                    text "Knife pressure is ok."
 
                 PlotterControl.Checklist.CutToolDepth ->
-                    text "Tool depth is ok."
+                    text "Knife depth is ok."
 
                 PlotterControl.Checklist.CutKnifeSecureNut ->
                     text "Knife depth is secured with nut."
@@ -86,8 +88,9 @@ viewItem checked item =
                     text "Tool holder knob is tight."
 
                 PlotterControl.Checklist.CutToolOffset ->
-                    text "Tool offset is corrected."
+                    text "Knife offset is corrected."
 
+                --
                 PlotterControl.Checklist.PerfKnife ->
                     text "Perforation knife is in tool holder."
 
