@@ -55,19 +55,19 @@ viewItem checked item =
         label : Element msg
         label =
             case item of
-                PlotterControl.Checklist.ToolDepth ->
+                PlotterControl.Checklist.CutToolDepth ->
                     text "Tool depth is ok."
 
-                PlotterControl.Checklist.ToolHolderKnob ->
+                PlotterControl.Checklist.CutToolHolderKnob ->
                     text "Tool holder knob is tight."
 
-                PlotterControl.Checklist.ToolOffset ->
+                PlotterControl.Checklist.CutToolOffset ->
                     text "Tool offset is corrected."
 
-                PlotterControl.Checklist.ToolPressure ->
+                PlotterControl.Checklist.CutToolPressure ->
                     text "Tool pressure is ok."
 
-                PlotterControl.Checklist.ToolVelocity ->
+                PlotterControl.Checklist.MediaToolVelocity ->
                     text "Tool velocity is ok."
 
                 PlotterControl.Checklist.RollRollersAlignment ->
@@ -79,7 +79,7 @@ viewItem checked item =
                 PlotterControl.Checklist.KnifeSecureNut ->
                     text "Knife depth is secured with nut."
 
-                PlotterControl.Checklist.MarkerSensitivity ->
+                PlotterControl.Checklist.MediaMarkerSensitivity ->
                     text "Marker test succeed."
 
                 PlotterControl.Checklist.FlexPressure ->
@@ -91,7 +91,7 @@ viewItem checked item =
                 PlotterControl.Checklist.CutKnife ->
                     text "Cutting knife is in tool holder."
 
-                PlotterControl.Checklist.PerforationKnife ->
+                PlotterControl.Checklist.PerfKnife ->
                     text "Perforation knife is in tool holder."
     in
     inputCheckbox

@@ -2,19 +2,26 @@ module PlotterControl.Checklist exposing (..)
 
 
 type Item
-    = ToolDepth
-    | ToolHolderKnob
-    | ToolOffset
-    | ToolPressure
-    | ToolVelocity
-    | RollRollersAlignment
+    = RollRollersAlignment
     | RollGuidesLock
-    | KnifeSecureNut
-    | MarkerSensitivity
-    | FlexPressure
     | RollerLeverArmDown
+      --
+    | MediaToolVelocity
+    | MediaMarkerSensitivity
+      --
     | CutKnife
-    | PerforationKnife
+    | CutToolPressure
+    | CutToolDepth
+    | CutKnifeSecureNut
+    | CutToolHolderKnob
+    | CutToolOffset
+      --
+    | PerfKnife
+    | PerfToolDepth
+    | PerfFlexPressure
+    | PerfKnifeSecureNut
+    | PerfToolHolderKnob
+    | PerfToolOffset
 
 
 rollChecklist : List Item
@@ -27,71 +34,83 @@ rollChecklist =
 
 mediaChecklist : List Item
 mediaChecklist =
-    [ ToolVelocity
-    , MarkerSensitivity
+    [ MediaToolVelocity
+    , MediaMarkerSensitivity
     ]
 
 
 cutChecklist : List Item
 cutChecklist =
     [ CutKnife
-    , ToolPressure
-    , ToolDepth
-    , KnifeSecureNut
-    , ToolHolderKnob
-    , ToolOffset
+    , CutToolPressure
+    , CutToolDepth
+    , CutKnifeSecureNut
+    , CutToolHolderKnob
+    , CutToolOffset
     ]
 
 
 perforationChecklist : List Item
 perforationChecklist =
-    [ PerforationKnife
-    , ToolDepth
-    , FlexPressure
-    , KnifeSecureNut
-    , ToolHolderKnob
-    , ToolOffset
+    [ PerfKnife
+    , PerfToolDepth
+    , PerfFlexPressure
+    , PerfKnifeSecureNut
+    , PerfToolHolderKnob
+    , PerfToolOffset
     ]
 
 
 toComparable : Item -> Int
 toComparable a =
     case a of
-        ToolDepth ->
+        RollRollersAlignment ->
             0
 
-        ToolHolderKnob ->
+        RollGuidesLock ->
             1
 
-        ToolOffset ->
+        RollerLeverArmDown ->
             2
 
-        ToolPressure ->
+        MediaToolVelocity ->
             3
 
-        ToolVelocity ->
+        MediaMarkerSensitivity ->
             4
 
-        RollRollersAlignment ->
+        CutKnife ->
             5
 
-        RollGuidesLock ->
+        CutToolPressure ->
             6
 
-        KnifeSecureNut ->
+        CutToolDepth ->
             7
 
-        MarkerSensitivity ->
+        CutKnifeSecureNut ->
             8
 
-        FlexPressure ->
+        CutToolHolderKnob ->
             9
 
-        RollerLeverArmDown ->
+        CutToolOffset ->
             10
 
-        CutKnife ->
+        PerfKnife ->
             11
 
-        PerforationKnife ->
+        PerfToolDepth ->
             12
+
+        PerfFlexPressure ->
+            13
+
+        PerfKnifeSecureNut ->
+            14
+
+        PerfToolHolderKnob ->
+            15
+
+        PerfToolOffset ->
+            16
