@@ -72,7 +72,7 @@ viewItem checked item =
                     text "Marker test succeed."
 
                 --
-                PlotterControl.Checklist.CutKnife ->
+                PlotterControl.Checklist.CutKnifeInserted ->
                     text "Cutting knife is in tool holder."
 
                 PlotterControl.Checklist.CutKnifePressure ->
