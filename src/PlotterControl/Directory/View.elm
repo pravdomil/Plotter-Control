@@ -40,7 +40,10 @@ view model =
                     ]
 
                 Err () ->
-                    []
+                    [ Element.PravdomilUi.Application.Block.Status
+                        [ text "Open file first."
+                        ]
+                    ]
             )
     }
 
