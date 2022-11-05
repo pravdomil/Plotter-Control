@@ -22,7 +22,7 @@ view model =
                 Just
                     { attributes = []
                     , left = []
-                    , center = textEllipsis [ fontCenter, fontVariant fontTabularNumbers ] (PlotterControl.File.nameToString name)
+                    , center = textEllipsis [ fontCenter, fontVariant fontTabularNumbers ] ("File " ++ PlotterControl.File.nameToString name)
                     , right =
                         [ textButton theme
                             [ fontSemiBold ]
