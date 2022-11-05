@@ -24,7 +24,9 @@ view model =
             { attributes = []
             , left = []
             , center = textEllipsis [ fontCenter ] "Queue"
-            , right = []
+            , right =
+                [ mainButton model
+                ]
             }
     , toolbar = Nothing
     , body =
@@ -37,10 +39,10 @@ view model =
                     ]
 
                 False ->
-                    [ Element.PravdomilUi.Application.Block.Block
+                    [ plotterStatus model
+                    , Element.PravdomilUi.Application.Block.Block
                         (Just "Items")
-                        [ plotterStatus model
-                        , inputRadio theme
+                        [ inputRadio theme
                             [ width fill ]
                             { label = labelHidden "Items"
                             , options =
@@ -72,56 +74,78 @@ view model =
     }
 
 
-plotterStatus : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
-plotterStatus model =
+mainButton : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
+mainButton model =
     let
         sendButton : Element PlotterControl.Msg.Msg
         sendButton =
-            button theme
-                []
-                { label = text "Send Queue"
+            textButton theme
+                [ fontSemiBold ]
+                { label = text "Send"
                 , onPress = Just PlotterControl.Msg.SendQueueRequested
                 }
 
         stopButton : Element PlotterControl.Msg.Msg
         stopButton =
-            button theme
-                [ bgColor style.danger ]
-                { label = text "Stop Sending"
+            textButton theme
+                [ fontSemiBold, bgColor style.danger ]
+                { label = text "Stop"
                 , onPress = Just PlotterControl.Msg.StopSendingRequested
                 }
     in
-    case model.plotter of
-        Ok _ ->
-            sendButton
+    if model.queue |> Dict.Any.isEmpty then
+        none
 
-        Err b ->
-            case b of
-                PlotterControl.Model.NoPlotter ->
-                    sendButton
+    else
+        case model.plotter of
+            Ok _ ->
+                sendButton
 
-                PlotterControl.Model.PlotterConnecting ->
-                    statusParagraph theme
-                        []
-                        [ text "Connecting..."
-                        ]
+            Err b ->
+                case b of
+                    PlotterControl.Model.NoPlotter ->
+                        sendButton
 
-                PlotterControl.Model.PlotterSending _ ->
-                    stopButton
+                    PlotterControl.Model.PlotterConnecting ->
+                        none
 
-                PlotterControl.Model.PlotterError c ->
-                    column [ spacing 16 ]
-                        [ sendButton
-                        , statusParagraph theme
-                            []
-                            [ case c of
+                    PlotterControl.Model.PlotterSending _ ->
+                        stopButton
+
+                    PlotterControl.Model.PlotterError _ ->
+                        sendButton
+
+
+plotterStatus : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+plotterStatus model =
+    Element.PravdomilUi.Application.Block.Block
+        (Just "Status")
+        [ paragraph theme
+            [ paddingXY 8 8 ]
+            [ case model.plotter of
+                Ok _ ->
+                    text "Ready."
+
+                Err b ->
+                    case b of
+                        PlotterControl.Model.NoPlotter ->
+                            text "Ready."
+
+                        PlotterControl.Model.PlotterConnecting ->
+                            text "Connecting..."
+
+                        PlotterControl.Model.PlotterSending _ ->
+                            text "Sending..."
+
+                        PlotterControl.Model.PlotterError c ->
+                            case c of
                                 PlotterControl.Plotter.UsbDeviceError d ->
                                     case d of
                                         Usb.Device.NotSupported ->
                                             text "Your browser is not supported."
 
                                         Usb.Device.NothingSelected ->
-                                            none
+                                            text "Ready."
 
                                         Usb.Device.TransferAborted ->
                                             text "Sending has been stopped."
@@ -133,5 +157,5 @@ plotterStatus model =
                                     case d of
                                         WakeLock.JavaScriptError _ ->
                                             text "Internal error."
-                            ]
-                        ]
+            ]
+        ]
