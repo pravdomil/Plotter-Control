@@ -101,19 +101,19 @@ viewItem checked item =
                     text "Perforation knife is in tool holder."
 
                 PlotterControl.Checklist.PerfToolDepth ->
-                    text ""
+                    text "Knife depth is ok."
 
                 PlotterControl.Checklist.PerfFlexPressure ->
                     text "Flex pressure is just enough."
 
                 PlotterControl.Checklist.PerfKnifeSecureNut ->
-                    text ""
+                    text "Knife depth is secured with nut."
 
                 PlotterControl.Checklist.PerfToolHolderKnob ->
-                    text ""
+                    text "Tool holder knob is tight."
 
                 PlotterControl.Checklist.PerfToolOffset ->
-                    text ""
+                    text "Knife offset is corrected."
     in
     inputCheckbox
         theme
