@@ -2,9 +2,11 @@ module PlotterControl.Checklist exposing (..)
 
 
 type Item
-    = RollRollersAlignment
-    | RollGuidesLock
-    | RollerLeverArmDown
+    = LoadMediumRollersAlignment
+    | LoadMediaFlangesLock
+    | LoadLeverArmDown
+    | LoadMediaCalibration
+    | LoadToolCalibration
       --
     | MediaToolVelocity
     | MediaMarkerSensitivity
@@ -24,11 +26,13 @@ type Item
     | PerfToolOffset
 
 
-rollChecklist : List Item
-rollChecklist =
-    [ RollRollersAlignment
-    , RollGuidesLock
-    , RollerLeverArmDown
+loadChecklist : List Item
+loadChecklist =
+    [ LoadMediumRollersAlignment
+    , LoadMediaFlangesLock
+    , LoadLeverArmDown
+    , LoadMediaCalibration
+    , LoadToolCalibration
     ]
 
 
@@ -64,53 +68,59 @@ perforationChecklist =
 toComparable : Item -> Int
 toComparable a =
     case a of
-        RollRollersAlignment ->
+        LoadMediumRollersAlignment ->
             0
 
-        RollGuidesLock ->
+        LoadMediaFlangesLock ->
             1
 
-        RollerLeverArmDown ->
+        LoadLeverArmDown ->
             2
 
-        MediaToolVelocity ->
+        LoadMediaCalibration ->
             3
 
-        MediaMarkerSensitivity ->
+        LoadToolCalibration ->
             4
 
-        CutKnifeInHolder ->
+        MediaToolVelocity ->
             5
 
-        CutKnifePressure ->
+        MediaMarkerSensitivity ->
             6
 
-        CutKnifeDepth ->
+        CutKnifeInHolder ->
             7
 
-        CutKnifeSecureNut ->
+        CutKnifePressure ->
             8
 
-        CutToolHolderKnob ->
+        CutKnifeDepth ->
             9
 
-        CutKnifeOffset ->
+        CutKnifeSecureNut ->
             10
 
-        PerfKnifeInHolder ->
+        CutToolHolderKnob ->
             11
 
-        PerfToolDepth ->
+        CutKnifeOffset ->
             12
 
-        PerfFlexPressure ->
+        PerfKnifeInHolder ->
             13
 
-        PerfKnifeSecureNut ->
+        PerfToolDepth ->
             14
 
-        PerfToolHolderKnob ->
+        PerfFlexPressure ->
             15
 
-        PerfToolOffset ->
+        PerfKnifeSecureNut ->
             16
+
+        PerfToolHolderKnob ->
+            17
+
+        PerfToolOffset ->
+            18
