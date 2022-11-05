@@ -18,48 +18,35 @@ view model =
             { attributes = []
             , left = []
             , center = textEllipsis [ fontCenter ] "Checklist"
-            , right = []
+            , right =
+                [ textButton theme
+                    [ fontSemiBold ]
+                    { label = text "Reset"
+                    , onPress = Just PlotterControl.Msg.ResetChecklist
+                    }
+                ]
             }
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            [ Element.PravdomilUi.Application.Block.Block
-                Nothing
-                [ column [ width fill, spacing 16, padding 16 ]
-                    [ row [ width fill, spacing 8 ]
-                        [ heading1 theme
-                            []
-                            [ text "Checklist"
-                            ]
-                        , el [ width fill ] none
-                        , textButton theme
-                            []
-                            { label = text "Reset"
-                            , onPress = Just PlotterControl.Msg.ResetChecklist
-                            }
-                        ]
-                    , viewChecklist model (text "Roll") PlotterControl.Checklist.rollChecklist
-                    , viewChecklist model (text "Media") PlotterControl.Checklist.mediaChecklist
-                    , viewChecklist model (text "Cut") PlotterControl.Checklist.cutChecklist
-                    , viewChecklist model (text "Perforation") PlotterControl.Checklist.perforationChecklist
-                    ]
-                ]
+            [ viewChecklist model "Roll Load" PlotterControl.Checklist.rollChecklist
+            , viewChecklist model "Media Calibration" PlotterControl.Checklist.mediaChecklist
+            , viewChecklist model "Cut Calibration" PlotterControl.Checklist.cutChecklist
+            , viewChecklist model "Perforation Calibration" PlotterControl.Checklist.perforationChecklist
             ]
     }
 
 
-viewChecklist : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg -> List PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
+viewChecklist : PlotterControl.Model.Model -> String -> List PlotterControl.Checklist.Item -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
 viewChecklist model label items =
-    column [ width fill, spacing 8 ]
-        [ el (theme.label []) label
-        , column [ width fill ]
-            (items
-                |> List.map
-                    (\x ->
-                        viewItem (model.checkList |> Dict.Any.member PlotterControl.Checklist.toComparable x) x
-                    )
-            )
-        ]
+    Element.PravdomilUi.Application.Block.Block
+        (Just label)
+        (items
+            |> List.map
+                (\x ->
+                    viewItem (model.checkList |> Dict.Any.member PlotterControl.Checklist.toComparable x) x
+                )
+        )
 
 
 viewItem : Bool -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
