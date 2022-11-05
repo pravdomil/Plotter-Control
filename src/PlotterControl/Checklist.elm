@@ -9,7 +9,7 @@ type Item
     | MediaToolVelocity
     | MediaMarkerSensitivity
       --
-    | CutKnifeInserted
+    | CutKnifeInHolder
     | CutKnifePressure
     | CutKnifeDepth
     | CutKnifeSecureNut
@@ -41,7 +41,7 @@ mediaChecklist =
 
 cutChecklist : List Item
 cutChecklist =
-    [ CutKnifeInserted
+    [ CutKnifeInHolder
     , CutKnifePressure
     , CutKnifeDepth
     , CutKnifeSecureNut
@@ -79,7 +79,7 @@ toComparable a =
         MediaMarkerSensitivity ->
             4
 
-        CutKnifeInserted ->
+        CutKnifeInHolder ->
             5
 
         CutKnifePressure ->
