@@ -6,7 +6,7 @@ type Item
     | LoadMediaFlangesLock
     | LoadLeverArmDown
     | LoadMarkersCalibration
-    | LoadToolCalibration
+    | LoadPresetCalibration
       --
     | MarkersTestOk
       --
@@ -36,7 +36,7 @@ loadChecklist =
     , LoadMediaFlangesLock
     , LoadLeverArmDown
     , LoadMarkersCalibration
-    , LoadToolCalibration
+    , LoadPresetCalibration
     ]
 
 
@@ -94,8 +94,8 @@ toComparable a =
         LoadMarkersCalibration ->
             "LoadMarkersCalibration"
 
-        LoadToolCalibration ->
-            "LoadToolCalibration"
+        LoadPresetCalibration ->
+            "LoadPresetCalibration"
 
         MarkersTestOk ->
             "MarkersTestOk"

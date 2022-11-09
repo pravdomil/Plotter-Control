@@ -77,8 +77,8 @@ viewLabel a =
         PlotterControl.Checklist.LoadMarkersCalibration ->
             text "Markers are calibrated."
 
-        PlotterControl.Checklist.LoadToolCalibration ->
-            text "Tool is calibrated."
+        PlotterControl.Checklist.LoadPresetCalibration ->
+            text "Preset is calibrated."
 
         --
         PlotterControl.Checklist.MarkersTestOk ->
