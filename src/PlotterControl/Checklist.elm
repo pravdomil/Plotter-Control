@@ -8,8 +8,7 @@ type Item
     | LoadMediaCalibration
     | LoadToolCalibration
       --
-    | MediaToolVelocity
-    | MediaMarkerSensitivity
+    | MarkersTestOk
       --
     | CutKnifeInHolder
     | CutKnifePressure
@@ -36,10 +35,9 @@ loadChecklist =
     ]
 
 
-mediaChecklist : List Item
-mediaChecklist =
-    [ MediaToolVelocity
-    , MediaMarkerSensitivity
+markersChecklist : List Item
+markersChecklist =
+    [ MarkersTestOk
     ]
 
 
@@ -83,10 +81,7 @@ toComparable a =
         LoadToolCalibration ->
             4
 
-        MediaToolVelocity ->
-            5
-
-        MediaMarkerSensitivity ->
+        MarkersTestOk ->
             6
 
         CutKnifeInHolder ->

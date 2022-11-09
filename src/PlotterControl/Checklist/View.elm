@@ -30,7 +30,7 @@ view model =
     , body =
         Element.PravdomilUi.Application.Blocks
             [ viewChecklist model "Media Load" PlotterControl.Checklist.loadChecklist
-            , viewChecklist model "Media Calibration" PlotterControl.Checklist.mediaChecklist
+            , viewChecklist model "Markers Calibration" PlotterControl.Checklist.markersChecklist
             , viewChecklist model "Cut Calibration" PlotterControl.Checklist.cutChecklist
             , viewChecklist model "Perforation Calibration" PlotterControl.Checklist.perforationChecklist
             ]
@@ -80,10 +80,7 @@ viewLabel a =
             text "Tool is calibrated."
 
         --
-        PlotterControl.Checklist.MediaToolVelocity ->
-            text "Tool velocity is ok."
-
-        PlotterControl.Checklist.MediaMarkerSensitivity ->
+        PlotterControl.Checklist.MarkersTestOk ->
             text "Marker test succeed."
 
         --
