@@ -5,7 +5,7 @@ type Item
     = LoadMediumRollersAlignment
     | LoadMediaFlangesLock
     | LoadLeverArmDown
-    | LoadMediaCalibration
+    | LoadMarkersCalibration
     | LoadToolCalibration
       --
     | MarkersTestOk
@@ -30,7 +30,7 @@ loadChecklist =
     [ LoadMediumRollersAlignment
     , LoadMediaFlangesLock
     , LoadLeverArmDown
-    , LoadMediaCalibration
+    , LoadMarkersCalibration
     , LoadToolCalibration
     ]
 
@@ -75,7 +75,7 @@ toComparable a =
         LoadLeverArmDown ->
             2
 
-        LoadMediaCalibration ->
+        LoadMarkersCalibration ->
             3
 
         LoadToolCalibration ->

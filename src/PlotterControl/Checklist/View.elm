@@ -73,8 +73,8 @@ viewLabel a =
         PlotterControl.Checklist.LoadLeverArmDown ->
             text "Lever arm is down."
 
-        PlotterControl.Checklist.LoadMediaCalibration ->
-            text "Media is calibrated."
+        PlotterControl.Checklist.LoadMarkersCalibration ->
+            text "Markers are calibrated."
 
         PlotterControl.Checklist.LoadToolCalibration ->
             text "Tool is calibrated."
