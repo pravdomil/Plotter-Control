@@ -10,6 +10,11 @@ type Item
       --
     | MarkersTestOk
       --
+    | DrawPenInHolder
+    | DrawPenPressure
+    | DrawPenDepth
+    | DrawToolHolderKnob
+      --
     | CutKnifeInHolder
     | CutKnifePressure
     | CutKnifeDepth
@@ -41,6 +46,17 @@ markersChecklist =
     ]
 
 
+drawChecklist : List Item
+drawChecklist =
+    [ CutKnifeInHolder
+    , CutKnifePressure
+    , CutKnifeDepth
+    , CutKnifeSecureNut
+    , CutToolHolderKnob
+    , CutKnifeOffset
+    ]
+
+
 cutChecklist : List Item
 cutChecklist =
     [ CutKnifeInHolder
@@ -63,59 +79,71 @@ perforationChecklist =
     ]
 
 
-toComparable : Item -> Int
+toComparable : Item -> String
 toComparable a =
     case a of
         LoadMediumRollersAlignment ->
-            0
+            "LoadMediumRollersAlignment"
 
         LoadMediaFlangesLock ->
-            1
+            "LoadMediaFlangesLock"
 
         LoadLeverArmDown ->
-            2
+            "LoadLeverArmDown"
 
         LoadMarkersCalibration ->
-            3
+            "LoadMarkersCalibration"
 
         LoadToolCalibration ->
-            4
+            "LoadToolCalibration"
 
         MarkersTestOk ->
-            6
+            "MarkersTestOk"
+
+        DrawPenInHolder ->
+            "DrawPenInHolder"
+
+        DrawPenPressure ->
+            "DrawPenPressure"
+
+        DrawPenDepth ->
+            "DrawPenDepth"
+
+        DrawToolHolderKnob ->
+            "DrawToolHolderKnob"
 
         CutKnifeInHolder ->
-            7
+            "CutKnifeInHolder"
 
         CutKnifePressure ->
-            8
+            "CutKnifePressure"
 
         CutKnifeDepth ->
-            9
+            "CutKnifeDepth"
 
         CutKnifeSecureNut ->
-            10
+            "CutKnifeSecureNut"
 
         CutToolHolderKnob ->
-            11
+            "CutToolHolderKnob"
 
         CutKnifeOffset ->
-            12
+            "CutKnifeOffset"
 
         PerfKnifeInHolder ->
-            13
+            "PerfKnifeInHolder"
 
         PerfToolDepth ->
-            14
+            "PerfToolDepth"
 
         PerfFlexPressure ->
-            15
+            "PerfFlexPressure"
 
         PerfKnifeSecureNut ->
-            16
+            "PerfKnifeSecureNut"
 
         PerfToolHolderKnob ->
-            17
+            "PerfToolHolderKnob"
 
         PerfToolOffset ->
-            18
+            "PerfToolOffset"

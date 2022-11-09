@@ -31,6 +31,7 @@ view model =
         Element.PravdomilUi.Application.Blocks
             [ viewChecklist model "Media Load" PlotterControl.Checklist.loadChecklist
             , viewChecklist model "Markers Calibration" PlotterControl.Checklist.markersChecklist
+            , viewChecklist model "Draw Calibration" PlotterControl.Checklist.drawChecklist
             , viewChecklist model "Cut Calibration" PlotterControl.Checklist.cutChecklist
             , viewChecklist model "Perforation Calibration" PlotterControl.Checklist.perforationChecklist
             ]
@@ -82,6 +83,19 @@ viewLabel a =
         --
         PlotterControl.Checklist.MarkersTestOk ->
             text "Marker test succeed."
+
+        --
+        PlotterControl.Checklist.DrawPenInHolder ->
+            text "Drawing pen is in tool holder."
+
+        PlotterControl.Checklist.DrawPenPressure ->
+            text "Pen pressure is ok."
+
+        PlotterControl.Checklist.DrawPenDepth ->
+            text "Pen depth is ok."
+
+        PlotterControl.Checklist.DrawToolHolderKnob ->
+            text "Tool holder knob is tight."
 
         --
         PlotterControl.Checklist.CutKnifeInHolder ->
