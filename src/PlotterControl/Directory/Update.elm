@@ -41,8 +41,24 @@ filesReceived a model =
         directory : PlotterControl.Directory.Directory
         directory =
             PlotterControl.Directory.Directory
-                (a |> List.foldl (\( k, v ) -> Dict.Any.insert PlotterControl.File.nameToString k v) files)
+                (a |> List.foldl (\( k, v ) -> Dict.Any.update PlotterControl.File.nameToString k (fileUpdate v)) files)
                 (a |> List.Extra.last |> Maybe.map Tuple.first)
+
+        fileUpdate : PlotterControl.File.File -> Maybe PlotterControl.File.File -> Maybe PlotterControl.File.File
+        fileUpdate new old =
+            case old of
+                Just old_ ->
+                    Just
+                        { new
+                            | ready =
+                                Result.map2
+                                    (\x x2 -> { x | settings = x2.settings })
+                                    new.ready
+                                    old_.ready
+                        }
+
+                Nothing ->
+                    Just new
     in
     ( { model | directory = Ok directory }
     , Cmd.none
