@@ -41,21 +41,21 @@ toSettings a =
     defaultSettings
         |> Dict.insert "TOOL"
             (case a.preset of
-                Cut ->
-                    "DRAG_KNIFE"
-
                 Draw ->
                     "PEN"
+
+                Cut ->
+                    "DRAG_KNIFE"
 
                 Perforate ->
                     "DRAG_KNIFE"
             )
         |> Dict.insert "FLEX_CUT"
             (case a.preset of
-                Cut ->
+                Draw ->
                     "OFF"
 
-                Draw ->
+                Cut ->
                     "OFF"
 
                 Perforate ->
@@ -92,8 +92,8 @@ toSettings a =
 
 
 type Preset
-    = Cut
-    | Draw
+    = Draw
+    | Cut
     | Perforate
 
 
