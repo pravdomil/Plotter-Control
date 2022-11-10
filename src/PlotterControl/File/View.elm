@@ -18,7 +18,7 @@ view : PlotterControl.Page.File -> PlotterControl.Model.Model -> Element.Pravdom
 view { name } model =
     case PlotterControl.Directory.Utils.fileByName name model of
         Just a ->
-            { size = \x -> { x | width = clamp 240 416 (x.width // 3) }
+            { size = \x -> { x | width = clamp 240 448 (x.width // 3) }
             , header =
                 Just
                     { attributes = []

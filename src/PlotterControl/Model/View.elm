@@ -64,7 +64,7 @@ viewColumns model =
                     PlotterControl.File.View.view c model
 
         Nothing ->
-            { size = \x -> { x | width = max 320 (x.width // 3) }
+            { size = \x -> { x | width = clamp 240 448 (x.width // 3) }
             , header = Nothing
             , toolbar = Nothing
             , body = Element.PravdomilUi.Application.Blocks []
