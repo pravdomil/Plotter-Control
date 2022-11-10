@@ -80,7 +80,7 @@ fileInfo : PlotterControl.File.Name -> PlotterControl.File.Ready -> Element.Prav
 fileInfo name a =
     Element.PravdomilUi.Application.Block.Block
         (Just "Info")
-        [ PlotterControl.Utils.View.twoRows
+        [ PlotterControl.Utils.View.twoColumns
             (text "Markers:")
             (case a.markers of
                 Just b ->
