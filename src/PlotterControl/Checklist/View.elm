@@ -85,12 +85,6 @@ viewLabel a =
         PlotterControl.Checklist.MediaLeverArmDown ->
             text "Lever arm is down."
 
-        PlotterControl.Checklist.MediaMarkersCalibration ->
-            text "Markers are calibrated."
-
-        PlotterControl.Checklist.MediaPresetCalibration ->
-            text "Preset is calibrated."
-
         --
         PlotterControl.Checklist.MarkersTestOk ->
             text "Marker test succeed."
