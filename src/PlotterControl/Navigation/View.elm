@@ -51,16 +51,18 @@ view model =
                 ]
             , Element.PravdomilUi.Application.Block.Block
                 (Just "Files")
-                [ case model.directory of
+                (case model.directory of
                     Ok b ->
-                        viewFiles model b
+                        [ viewFiles model b
+                        ]
 
                     Err () ->
-                        paragraph theme
+                        [ paragraph theme
                             [ paddingXY 8 8, fontSize 15, fontColor style.fore60 ]
                             [ text "Open file first."
                             ]
-                ]
+                        ]
+                )
             ]
     }
 
