@@ -29,7 +29,7 @@ view model =
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            [ viewChecklist model "Media Load" PlotterControl.Checklist.loadChecklist
+            [ viewChecklist model "Media" PlotterControl.Checklist.mediaChecklist
             , viewChecklist model "Markers Calibration" PlotterControl.Checklist.markersChecklist
             , viewChecklist model "Draw Calibration" PlotterControl.Checklist.drawChecklist
             , viewChecklist model "Cut Calibration" PlotterControl.Checklist.cutChecklist
@@ -65,19 +65,19 @@ viewItem checked a =
 viewLabel : PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
 viewLabel a =
     case a of
-        PlotterControl.Checklist.LoadMediumRollersAlignment ->
+        PlotterControl.Checklist.MediaRollersAlignment ->
             text "Medium and rollers are aligned."
 
-        PlotterControl.Checklist.LoadMediaFlangesLock ->
-            text "Media flanges are secured."
+        PlotterControl.Checklist.MediaFlangeGuides ->
+            text "Flange guides are locked."
 
-        PlotterControl.Checklist.LoadLeverArmDown ->
+        PlotterControl.Checklist.MediaLeverArmDown ->
             text "Lever arm is down."
 
-        PlotterControl.Checklist.LoadMarkersCalibration ->
+        PlotterControl.Checklist.MediaMarkersCalibration ->
             text "Markers are calibrated."
 
-        PlotterControl.Checklist.LoadPresetCalibration ->
+        PlotterControl.Checklist.MediaPresetCalibration ->
             text "Preset is calibrated."
 
         --

@@ -2,11 +2,11 @@ module PlotterControl.Checklist exposing (..)
 
 
 type Item
-    = LoadMediumRollersAlignment
-    | LoadMediaFlangesLock
-    | LoadLeverArmDown
-    | LoadMarkersCalibration
-    | LoadPresetCalibration
+    = MediaRollersAlignment
+    | MediaFlangeGuides
+    | MediaLeverArmDown
+    | MediaMarkersCalibration
+    | MediaPresetCalibration
       --
     | MarkersTestOk
       --
@@ -30,13 +30,13 @@ type Item
     | PerfToolOffset
 
 
-loadChecklist : List Item
-loadChecklist =
-    [ LoadMediumRollersAlignment
-    , LoadMediaFlangesLock
-    , LoadLeverArmDown
-    , LoadMarkersCalibration
-    , LoadPresetCalibration
+mediaChecklist : List Item
+mediaChecklist =
+    [ MediaRollersAlignment
+    , MediaFlangeGuides
+    , MediaLeverArmDown
+    , MediaMarkersCalibration
+    , MediaPresetCalibration
     ]
 
 
@@ -82,20 +82,20 @@ perforationChecklist =
 toComparable : Item -> String
 toComparable a =
     case a of
-        LoadMediumRollersAlignment ->
-            "LoadMediumRollersAlignment"
+        MediaRollersAlignment ->
+            "MediaRollersAlignment"
 
-        LoadMediaFlangesLock ->
-            "LoadMediaFlangesLock"
+        MediaFlangeGuides ->
+            "MediaFlangeGuides"
 
-        LoadLeverArmDown ->
-            "LoadLeverArmDown"
+        MediaLeverArmDown ->
+            "MediaLeverArmDown"
 
-        LoadMarkersCalibration ->
-            "LoadMarkersCalibration"
+        MediaMarkersCalibration ->
+            "MediaMarkersCalibration"
 
-        LoadPresetCalibration ->
-            "LoadPresetCalibration"
+        MediaPresetCalibration ->
+            "MediaPresetCalibration"
 
         MarkersTestOk ->
             "MarkersTestOk"
