@@ -68,6 +68,16 @@ toSettings a =
     )
 
 
+
+--
+
+
+type Preset
+    = Draw
+    | Cut
+    | Perforate
+
+
 presetToSettings : Preset -> SummaEl.Settings
 presetToSettings a =
     defaultSettings
@@ -103,16 +113,6 @@ presetToSettings a =
         |> Dict.remove "KNIFE_PRESSURE"
         |> Dict.remove "DRAG_OFFSET"
         |> Dict.remove "FLEX_PRESSURE"
-
-
-
---
-
-
-type Preset
-    = Draw
-    | Cut
-    | Perforate
 
 
 
