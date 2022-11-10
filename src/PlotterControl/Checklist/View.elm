@@ -124,6 +124,9 @@ viewItem model a =
         PlotterControl.Checklist.DrawingPenInHolder ->
             checkbox (text "Drawing pen is in tool holder.")
 
+        PlotterControl.Checklist.DrawingSpeed ->
+            checkbox (text "Speed is set.")
+
         PlotterControl.Checklist.DrawingPenPressure ->
             checkbox (text "Pen pressure is ok.")
 
