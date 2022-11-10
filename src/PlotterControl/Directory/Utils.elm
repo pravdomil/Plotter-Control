@@ -26,14 +26,17 @@ readyFileByName name model =
 
 activeFile : PlotterControl.Model.Model -> Maybe ( PlotterControl.File.Name, PlotterControl.File.File )
 activeFile model =
-    model.directory
-        |> Result.toMaybe
-        |> Maybe.andThen
-            (\x ->
-                x.active
-                    |> Maybe.andThen
-                        (\x2 ->
-                            Dict.Any.get PlotterControl.File.nameToString x2 x.files
-                                |> Maybe.map (Tuple.pair x2)
-                        )
-            )
+    Maybe.map2
+        (\x x2 ->
+            Dict.Any.get PlotterControl.File.nameToString x2 x.files
+                |> Maybe.map (Tuple.pair x2)
+        )
+        (Result.toMaybe model.directory)
+        (case model.page of
+            Just (PlotterControl.Model.File x) ->
+                Just x
+
+            _ ->
+                Nothing
+        )
+        |> Maybe.andThen identity
