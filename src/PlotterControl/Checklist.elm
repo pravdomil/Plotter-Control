@@ -19,6 +19,25 @@ all =
     ]
 
 
+items : Checklist -> List Item
+items a =
+    case a of
+        MediaChecklist ->
+            mediaChecklist
+
+        MarkersChecklist ->
+            markersChecklist
+
+        DrawingChecklist ->
+            drawingChecklist
+
+        CuttingChecklist ->
+            cuttingChecklist
+
+        PerforationChecklist ->
+            perforationChecklist
+
+
 
 --
 
