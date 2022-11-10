@@ -4,11 +4,13 @@ import Dict.Any
 import Element.PravdomilUi exposing (..)
 import Element.PravdomilUi.Application
 import Element.PravdomilUi.Application.Block
+import FeatherIcons
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Page
 import PlotterControl.Utils.Theme exposing (..)
+import PlotterControl.Utils.View
 
 
 view : PlotterControl.Page.Checklist -> PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
@@ -44,16 +46,11 @@ viewChecklist : PlotterControl.Model.Model -> String -> List PlotterControl.Chec
 viewChecklist model label items =
     Element.PravdomilUi.Application.Block.Block
         (Just label)
-        (items
-            |> List.map
-                (\x ->
-                    viewItem (model.checklist |> Dict.Any.member PlotterControl.Checklist.itemToComparable x) x
-                )
-        )
+        (items |> List.map (\x -> viewItem model x))
 
 
-viewItem : Bool -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
-viewItem checked a =
+viewItem : PlotterControl.Model.Model -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
+viewItem model a =
     let
         checkbox : Element PlotterControl.Msg.Msg -> Element PlotterControl.Msg.Msg
         checkbox b =
@@ -62,7 +59,7 @@ viewItem checked a =
                 [ width fill ]
                 { label = b
                 , icon = inputCheckboxIcon theme
-                , checked = checked
+                , checked = Dict.Any.member PlotterControl.Checklist.itemToComparable a model.checklist
                 , onChange = PlotterControl.Msg.ChecklistItemChecked a
                 }
     in
@@ -81,7 +78,44 @@ viewItem checked a =
 
         --
         PlotterControl.Checklist.MarkersTestOk ->
-            checkbox (text "Marker test succeed.")
+            column [ width fill, spacing 8 ]
+                [ checkbox (text "Marker test succeed.")
+                , PlotterControl.Utils.View.twoColumns
+                    "Sensitivity:"
+                    (row [ spacing 8 ]
+                        [ el [ fontVariant fontTabularNumbers ]
+                            (text
+                                (model.markerSensitivity
+                                    |> Maybe.map String.fromInt
+                                    |> Maybe.withDefault "00"
+                                )
+                            )
+                        , textButton theme
+                            []
+                            { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                            , onPress = PlotterControl.Msg.MarkerSensitivityChanged -10 |> Just
+                            }
+                        , textButton theme
+                            []
+                            { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                            , onPress = PlotterControl.Msg.MarkerSensitivityChanged 10 |> Just
+                            }
+                        , textButton theme
+                            []
+                            { label = text "Test"
+                            , onPress = Just PlotterControl.Msg.MarkerTestRequested
+                            }
+                        ]
+                    )
+                , el
+                    [ width fill
+                    , height (px 24)
+                    , fontCenter
+                    , fontSize 15
+                    , fontColor style.fore60
+                    ]
+                    (textEllipsis [] "Recommended value is 20–60.")
+                ]
 
         --
         PlotterControl.Checklist.DrawingPenInHolder ->

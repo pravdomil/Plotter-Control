@@ -47,6 +47,9 @@ update msg model =
         PlotterControl.Msg.MarkerSensitivityChanged a ->
             PlotterControl.Checklist.Update.changeMarkerSensitivity a model
 
+        PlotterControl.Msg.MarkerTestRequested ->
+            PlotterControl.Checklist.Update.testMarkers model
+
         --
         PlotterControl.Msg.OpenFilesRequested ->
             PlotterControl.Directory.Update.openFiles model

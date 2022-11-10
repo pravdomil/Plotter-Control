@@ -1,6 +1,7 @@
 module PlotterControl.Checklist.Update exposing (..)
 
 import Dict.Any
+import Platform.Extra
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -50,3 +51,8 @@ changeMarkerSensitivity a model =
     ( { model | markerSensitivity = Just markerSensitivity }
     , Cmd.none
     )
+
+
+testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+testMarkers model =
+    Platform.Extra.noOperation model
