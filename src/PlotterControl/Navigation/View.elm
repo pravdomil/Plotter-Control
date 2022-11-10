@@ -43,7 +43,7 @@ view model =
                         PlotterControl.Checklist.all
                             |> List.map
                                 (\x ->
-                                    inputRadioBlockOption theme [ width fill ] x (textEllipsis [] (Debug.toString x))
+                                    inputRadioBlockOption theme [ width fill ] x (textEllipsis [] (checklistName x))
                                 )
                     , selected = PlotterControl.Checklist.Utils.activeChecklist model
                     , onChange = PlotterControl.Msg.ChecklistActivated
@@ -83,3 +83,26 @@ viewFiles model a =
         , selected = PlotterControl.Directory.Utils.activeFilename model
         , onChange = PlotterControl.Msg.FileActivated
         }
+
+
+
+--
+
+
+checklistName : PlotterControl.Checklist.Checklist -> String
+checklistName a =
+    case a of
+        PlotterControl.Checklist.MediaChecklist ->
+            "Media"
+
+        PlotterControl.Checklist.MarkersChecklist ->
+            "Markers"
+
+        PlotterControl.Checklist.DrawChecklist ->
+            "Drawing"
+
+        PlotterControl.Checklist.CutChecklist ->
+            "Cutting"
+
+        PlotterControl.Checklist.PerforationChecklist ->
+            "Perforation"
