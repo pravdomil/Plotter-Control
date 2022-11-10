@@ -142,12 +142,12 @@ viewItem model a =
                         , textButton theme
                             []
                             { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.DrawingSpeedChanged -20 |> Just
+                            , onPress = PlotterControl.Msg.DrawingSpeedChanged -50 |> Just
                             }
                         , textButton theme
                             []
                             { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.DrawingSpeedChanged 20 |> Just
+                            , onPress = PlotterControl.Msg.DrawingSpeedChanged 50 |> Just
                             }
                         ]
                     )
