@@ -108,12 +108,10 @@ markersItems =
 
 drawingItems : List Item
 drawingItems =
-    [ CuttingKnifeInHolder
-    , CuttingKnifePressure
-    , CuttingKnifeDepth
-    , CuttingKnifeSecureNut
-    , CuttingToolHolderKnob
-    , CuttingKnifeOffset
+    [ DrawingPenInHolder
+    , DrawingPenPressure
+    , DrawingPenDepth
+    , DrawingToolHolderKnob
     ]
 
 
