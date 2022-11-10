@@ -36,33 +36,21 @@ default name =
     }
 
 
-toSettings : Settings -> SummaEl.Settings
+toSettings : Settings -> ( SummaEl.Settings, SummaEl.Settings )
 toSettings a =
-    defaultSettings
-        |> Dict.insert "TOOL"
-            (case a.preset of
-                Draw ->
-                    "PEN"
+    ( Dict.singleton
+        "CONFIGUSER"
+        (case a.preset of
+            Draw ->
+                "1"
 
-                Cut ->
-                    "DRAG_KNIFE"
+            Cut ->
+                "2"
 
-                Perforate ->
-                    "DRAG_KNIFE"
-            )
-        |> Dict.insert "FLEX_CUT"
-            (case a.preset of
-                Draw ->
-                    "OFF"
-
-                Cut ->
-                    "OFF"
-
-                Perforate ->
-                    "MODE2"
-            )
-        |> Dict.insert "FULL_PRESSURE" "400"
-        |> Dict.insert "FLEX_VELOCITY" "100"
+            Perforate ->
+                "3"
+        )
+    , Dict.empty
         |> Dict.insert "OPOS_PANELLING"
             (case a.markerLoading of
                 LoadAllAtOnce ->
@@ -77,6 +65,36 @@ toSettings a =
                 |> round
                 |> String.fromInt
             )
+    )
+
+
+presetToSettings : Preset -> SummaEl.Settings
+presetToSettings a =
+    defaultSettings
+        |> Dict.insert "TOOL"
+            (case a of
+                Draw ->
+                    "PEN"
+
+                Cut ->
+                    "DRAG_KNIFE"
+
+                Perforate ->
+                    "DRAG_KNIFE"
+            )
+        |> Dict.insert "FLEX_CUT"
+            (case a of
+                Draw ->
+                    "OFF"
+
+                Cut ->
+                    "OFF"
+
+                Perforate ->
+                    "MODE2"
+            )
+        |> Dict.insert "FULL_PRESSURE" "400"
+        |> Dict.insert "FLEX_VELOCITY" "100"
         --
         |> Dict.insert "OVERCUT" "2"
         |> Dict.remove "OPOS_LEVEL"
