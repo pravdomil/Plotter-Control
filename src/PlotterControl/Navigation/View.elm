@@ -111,6 +111,6 @@ viewChecklist model a =
 
         text : String
         text =
-            String.fromInt done ++ "/" ++ String.fromInt total ++ " " ++ PlotterControl.Checklist.toName a
+            PlotterControl.Checklist.toName a ++ " " ++ String.fromInt (round ((toFloat done / toFloat total) * 100)) ++ "%"
     in
     inputRadioBlockOption theme [ width fill ] a (textEllipsis [ fontVariant fontTabularNumbers ] text)
