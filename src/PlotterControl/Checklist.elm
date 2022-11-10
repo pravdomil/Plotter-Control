@@ -67,6 +67,7 @@ type Item
     | MediaFlangeGuides
     | MediaLeverArmDown
       --
+    | MarkersSensorClean
     | MarkersTestOk
       --
     | DrawingPenInHolder
@@ -100,7 +101,8 @@ mediaItems =
 
 markersItems : List Item
 markersItems =
-    [ MarkersTestOk
+    [ MarkersSensorClean
+    , MarkersTestOk
     ]
 
 
@@ -151,6 +153,9 @@ itemToComparable a =
 
         MediaLeverArmDown ->
             "MediaLeverArmDown"
+
+        MarkersSensorClean ->
+            "MarkersSensorClean"
 
         MarkersTestOk ->
             "MarkersTestOk"

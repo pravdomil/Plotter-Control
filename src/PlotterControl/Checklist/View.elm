@@ -77,6 +77,9 @@ viewItem model a =
             checkbox (text "Lever arm is down.")
 
         --
+        PlotterControl.Checklist.MarkersSensorClean ->
+            checkbox (text "Sensor is clean.")
+
         PlotterControl.Checklist.MarkersTestOk ->
             column [ width fill, spacing 8 ]
                 [ checkbox (text "Marker test succeed.")
