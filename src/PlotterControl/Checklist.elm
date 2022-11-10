@@ -32,24 +32,24 @@ type Item
       --
     | MarkersTestOk
       --
-    | DrawPenInHolder
-    | DrawPenPressure
-    | DrawPenDepth
-    | DrawToolHolderKnob
+    | DrawingPenInHolder
+    | DrawingPenPressure
+    | DrawingPenDepth
+    | DrawingToolHolderKnob
       --
-    | CutKnifeInHolder
-    | CutKnifePressure
-    | CutKnifeDepth
-    | CutKnifeSecureNut
-    | CutToolHolderKnob
-    | CutKnifeOffset
+    | CuttingKnifeInHolder
+    | CuttingKnifePressure
+    | CuttingKnifeDepth
+    | CuttingKnifeSecureNut
+    | CuttingToolHolderKnob
+    | CuttingKnifeOffset
       --
-    | PerfKnifeInHolder
-    | PerfToolDepth
-    | PerfFlexPressure
-    | PerfKnifeSecureNut
-    | PerfToolHolderKnob
-    | PerfToolOffset
+    | PerforationKnifeInHolder
+    | PerforationToolDepth
+    | PerforationFlexPressure
+    | PerforationKnifeSecureNut
+    | PerforationToolHolderKnob
+    | PerforationToolOffset
 
 
 mediaChecklist : List Item
@@ -68,36 +68,36 @@ markersChecklist =
     ]
 
 
-drawChecklist : List Item
-drawChecklist =
-    [ CutKnifeInHolder
-    , CutKnifePressure
-    , CutKnifeDepth
-    , CutKnifeSecureNut
-    , CutToolHolderKnob
-    , CutKnifeOffset
+drawingChecklist : List Item
+drawingChecklist =
+    [ CuttingKnifeInHolder
+    , CuttingKnifePressure
+    , CuttingKnifeDepth
+    , CuttingKnifeSecureNut
+    , CuttingToolHolderKnob
+    , CuttingKnifeOffset
     ]
 
 
-cutChecklist : List Item
-cutChecklist =
-    [ CutKnifeInHolder
-    , CutKnifePressure
-    , CutKnifeDepth
-    , CutKnifeSecureNut
-    , CutToolHolderKnob
-    , CutKnifeOffset
+cuttingChecklist : List Item
+cuttingChecklist =
+    [ CuttingKnifeInHolder
+    , CuttingKnifePressure
+    , CuttingKnifeDepth
+    , CuttingKnifeSecureNut
+    , CuttingToolHolderKnob
+    , CuttingKnifeOffset
     ]
 
 
 perforationChecklist : List Item
 perforationChecklist =
-    [ PerfKnifeInHolder
-    , PerfToolDepth
-    , PerfFlexPressure
-    , PerfKnifeSecureNut
-    , PerfToolHolderKnob
-    , PerfToolOffset
+    [ PerforationKnifeInHolder
+    , PerforationToolDepth
+    , PerforationFlexPressure
+    , PerforationKnifeSecureNut
+    , PerforationToolHolderKnob
+    , PerforationToolOffset
     ]
 
 
@@ -120,52 +120,52 @@ toComparable a =
             "MediaPresetCalibration"
 
         MarkersTestOk ->
-            "MarkersTestOk"
+            " ->"
 
-        DrawPenInHolder ->
-            "DrawPenInHolder"
+        DrawingPenInHolder ->
+            "DrawingPenInHolder"
 
-        DrawPenPressure ->
-            "DrawPenPressure"
+        DrawingPenPressure ->
+            "DrawingPenPressure"
 
-        DrawPenDepth ->
-            "DrawPenDepth"
+        DrawingPenDepth ->
+            " "
 
-        DrawToolHolderKnob ->
-            "DrawToolHolderKnob"
+        DrawingToolHolderKnob ->
+            "DrawingToolHolderKnob"
 
-        CutKnifeInHolder ->
-            "CutKnifeInHolder"
+        CuttingKnifeInHolder ->
+            "CuttingKnifeInHolder"
 
-        CutKnifePressure ->
-            "CutKnifePressure"
+        CuttingKnifePressure ->
+            "CuttingKnifePressure"
 
-        CutKnifeDepth ->
-            "CutKnifeDepth"
+        CuttingKnifeDepth ->
+            "CuttingKnifeDepth"
 
-        CutKnifeSecureNut ->
-            "CutKnifeSecureNut"
+        CuttingKnifeSecureNut ->
+            "CuttingKnifeSecureNut"
 
-        CutToolHolderKnob ->
-            "CutToolHolderKnob"
+        CuttingToolHolderKnob ->
+            "CuttingToolHolderKnob"
 
-        CutKnifeOffset ->
-            "CutKnifeOffset"
+        CuttingKnifeOffset ->
+            "CuttingKnifeOffset"
 
-        PerfKnifeInHolder ->
-            "PerfKnifeInHolder"
+        PerforationKnifeInHolder ->
+            "PerforationKnifeInHolder"
 
-        PerfToolDepth ->
-            "PerfToolDepth"
+        PerforationToolDepth ->
+            "PerforationToolDepth"
 
-        PerfFlexPressure ->
-            "PerfFlexPressure"
+        PerforationFlexPressure ->
+            "PerforationFlexPressure"
 
-        PerfKnifeSecureNut ->
-            "PerfKnifeSecureNut"
+        PerforationKnifeSecureNut ->
+            "PerforationKnifeSecureNut"
 
-        PerfToolHolderKnob ->
-            "PerfToolHolderKnob"
+        PerforationToolHolderKnob ->
+            "PerforationToolHolderKnob"
 
-        PerfToolOffset ->
-            "PerfToolOffset"
+        PerforationToolOffset ->
+            "PerforationToolOffset"

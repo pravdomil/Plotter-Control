@@ -32,8 +32,8 @@ view _ model =
         Element.PravdomilUi.Application.Blocks
             [ viewChecklist model "Media" PlotterControl.Checklist.mediaChecklist
             , viewChecklist model "Markers Calibration" PlotterControl.Checklist.markersChecklist
-            , viewChecklist model "Draw Calibration" PlotterControl.Checklist.drawChecklist
-            , viewChecklist model "Cut Calibration" PlotterControl.Checklist.cutChecklist
+            , viewChecklist model "Draw Calibration" PlotterControl.Checklist.drawingChecklist
+            , viewChecklist model "Cut Calibration" PlotterControl.Checklist.cuttingChecklist
             , viewChecklist model "Perforation Calibration" PlotterControl.Checklist.perforationChecklist
             ]
     }
@@ -86,52 +86,52 @@ viewLabel a =
             text "Marker test succeed."
 
         --
-        PlotterControl.Checklist.DrawPenInHolder ->
+        PlotterControl.Checklist.DrawingPenInHolder ->
             text "Drawing pen is in tool holder."
 
-        PlotterControl.Checklist.DrawPenPressure ->
+        PlotterControl.Checklist.DrawingPenPressure ->
             text "Pen pressure is ok."
 
-        PlotterControl.Checklist.DrawPenDepth ->
+        PlotterControl.Checklist.DrawingPenDepth ->
             text "Pen depth is ok."
 
-        PlotterControl.Checklist.DrawToolHolderKnob ->
+        PlotterControl.Checklist.DrawingToolHolderKnob ->
             text "Tool holder knob is tight."
 
         --
-        PlotterControl.Checklist.CutKnifeInHolder ->
+        PlotterControl.Checklist.CuttingKnifeInHolder ->
             text "Cutting knife is in tool holder."
 
-        PlotterControl.Checklist.CutKnifePressure ->
+        PlotterControl.Checklist.CuttingKnifePressure ->
             text "Knife pressure is ok."
 
-        PlotterControl.Checklist.CutKnifeDepth ->
+        PlotterControl.Checklist.CuttingKnifeDepth ->
             text "Knife depth is ok."
 
-        PlotterControl.Checklist.CutKnifeSecureNut ->
+        PlotterControl.Checklist.CuttingKnifeSecureNut ->
             text "Knife depth is secured with nut."
 
-        PlotterControl.Checklist.CutToolHolderKnob ->
+        PlotterControl.Checklist.CuttingToolHolderKnob ->
             text "Tool holder knob is tight."
 
-        PlotterControl.Checklist.CutKnifeOffset ->
+        PlotterControl.Checklist.CuttingKnifeOffset ->
             text "Knife offset is corrected."
 
         --
-        PlotterControl.Checklist.PerfKnifeInHolder ->
+        PlotterControl.Checklist.PerforationKnifeInHolder ->
             text "Perforation knife is in tool holder."
 
-        PlotterControl.Checklist.PerfToolDepth ->
+        PlotterControl.Checklist.PerforationToolDepth ->
             text "Knife depth is ok."
 
-        PlotterControl.Checklist.PerfFlexPressure ->
+        PlotterControl.Checklist.PerforationFlexPressure ->
             text "Flex pressure is just enough."
 
-        PlotterControl.Checklist.PerfKnifeSecureNut ->
+        PlotterControl.Checklist.PerforationKnifeSecureNut ->
             text "Knife depth is secured with nut."
 
-        PlotterControl.Checklist.PerfToolHolderKnob ->
+        PlotterControl.Checklist.PerforationToolHolderKnob ->
             text "Tool holder knob is tight."
 
-        PlotterControl.Checklist.PerfToolOffset ->
+        PlotterControl.Checklist.PerforationToolOffset ->
             text "Knife offset is corrected."
