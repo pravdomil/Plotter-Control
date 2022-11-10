@@ -18,7 +18,7 @@ import WakeLock
 
 view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view model =
-    { size = \x -> { x | width = max 240 (x.width // 4) }
+    { size = \x -> { x | width = max 240 (x.width // 3) }
     , header =
         Just
             { attributes = []

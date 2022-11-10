@@ -17,7 +17,7 @@ view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column Plot
 view model =
     case PlotterControl.Directory.Utils.activeFile model of
         Just ( name, a ) ->
-            { size = \x -> { x | width = max 240 (x.width // 4) }
+            { size = \x -> { x | width = max 240 (x.width // 3) }
             , header =
                 Just
                     { attributes = []
