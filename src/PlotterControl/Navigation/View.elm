@@ -82,16 +82,38 @@ viewChecklists model =
         [ inputRadio theme
             [ width fill ]
             { label = labelHidden "Checklists"
-            , options =
-                PlotterControl.Checklist.all
-                    |> List.map
-                        (\x ->
-                            inputRadioBlockOption theme [ width fill ] x (textEllipsis [] (checklistName x))
-                        )
+            , options = PlotterControl.Checklist.all |> List.map (viewChecklist model)
             , selected = PlotterControl.Checklist.Utils.activeChecklist model
             , onChange = PlotterControl.Msg.ChecklistActivated
             }
         ]
+
+
+viewChecklist : PlotterControl.Model.Model -> PlotterControl.Checklist.Checklist -> InputOption PlotterControl.Checklist.Checklist PlotterControl.Msg.Msg
+viewChecklist model a =
+    let
+        items : List PlotterControl.Checklist.Item
+        items =
+            PlotterControl.Checklist.items a
+
+        done : Int
+        done =
+            items
+                |> List.filterMap
+                    (\x ->
+                        Dict.Any.get PlotterControl.Checklist.toComparable x model.checklist
+                    )
+                |> List.length
+
+        total : Int
+        total =
+            List.length items
+
+        text : String
+        text =
+            String.fromInt done ++ "/" ++ String.fromInt total ++ " " ++ checklistName a
+    in
+    inputRadioBlockOption theme [ width fill ] a (textEllipsis [ fontVariant fontTabularNumbers ] text)
 
 
 checklistName : PlotterControl.Checklist.Checklist -> String
