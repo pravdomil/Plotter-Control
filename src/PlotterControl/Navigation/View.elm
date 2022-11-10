@@ -1,4 +1,4 @@
-module PlotterControl.Directory.View exposing (..)
+module PlotterControl.Navigation.View exposing (..)
 
 import Dict.Any
 import Element.PravdomilUi exposing (..)

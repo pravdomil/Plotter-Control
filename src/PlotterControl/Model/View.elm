@@ -7,10 +7,10 @@ import File
 import Html.Events
 import Json.Decode
 import PlotterControl.Checklist.View
-import PlotterControl.Directory.View
 import PlotterControl.File.View
 import PlotterControl.Model
 import PlotterControl.Msg
+import PlotterControl.Navigation.View
 import PlotterControl.Queue.View
 import PlotterControl.Utils.Theme exposing (..)
 
@@ -52,7 +52,7 @@ view model =
 
 viewColumns : PlotterControl.Model.Model -> List (Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg)
 viewColumns model =
-    [ PlotterControl.Directory.View.view model
+    [ PlotterControl.Navigation.View.view model
     , PlotterControl.File.View.view model
     , PlotterControl.Queue.View.view model
     , PlotterControl.Checklist.View.view model
