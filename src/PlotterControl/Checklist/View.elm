@@ -7,11 +7,12 @@ import Element.PravdomilUi.Application.Block
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
+import PlotterControl.Page
 import PlotterControl.Utils.Theme exposing (..)
 
 
-view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
-view model =
+view : PlotterControl.Page.Checklist -> PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
+view _ model =
     { size = \x -> { x | width = max 240 (x.width // 3) }
     , header =
         Just

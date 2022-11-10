@@ -7,16 +7,17 @@ import PlotterControl.Directory.Utils
 import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Msg
+import PlotterControl.Page
 import PlotterControl.Settings.View
 import PlotterControl.Utils.Theme exposing (..)
 import PlotterControl.Utils.Utils
 import PlotterControl.Utils.View
 
 
-view : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
-view model =
-    case PlotterControl.Directory.Utils.activeFile model of
-        Just ( name, a ) ->
+view : PlotterControl.Page.File -> PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
+view { name } model =
+    case PlotterControl.Directory.Utils.fileByName name model of
+        Just a ->
             { size = \x -> { x | width = max 240 (x.width // 3) }
             , header =
                 Just

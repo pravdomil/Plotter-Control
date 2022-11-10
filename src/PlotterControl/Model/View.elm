@@ -11,6 +11,7 @@ import PlotterControl.File.View
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Navigation.View
+import PlotterControl.Page
 import PlotterControl.Queue.View
 import PlotterControl.Utils.Theme exposing (..)
 
@@ -53,9 +54,22 @@ view model =
 viewColumns : PlotterControl.Model.Model -> List (Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg)
 viewColumns model =
     [ PlotterControl.Navigation.View.view model
-    , PlotterControl.File.View.view model
+    , case model.page of
+        Just b ->
+            case b of
+                PlotterControl.Page.Checklist_ c ->
+                    PlotterControl.Checklist.View.view c model
+
+                PlotterControl.Page.File_ c ->
+                    PlotterControl.File.View.view c model
+
+        Nothing ->
+            { size = \x -> { x | width = max 320 (x.width // 3) }
+            , header = Nothing
+            , toolbar = Nothing
+            , body = Element.PravdomilUi.Application.Blocks []
+            }
     , PlotterControl.Queue.View.view model
-    , PlotterControl.Checklist.View.view model
     ]
 
 
