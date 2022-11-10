@@ -32,19 +32,19 @@ view a model =
         Element.PravdomilUi.Application.Blocks
             [ case a.checklist of
                 PlotterControl.Checklist.MediaChecklist ->
-                    ()
+                    viewChecklist model "Media" PlotterControl.Checklist.mediaChecklist
 
                 PlotterControl.Checklist.MarkersChecklist ->
-                    ()
+                    viewChecklist model "Markers" PlotterControl.Checklist.markersChecklist
 
                 PlotterControl.Checklist.DrawingChecklist ->
-                    ()
+                    viewChecklist model "Drawing" PlotterControl.Checklist.drawingChecklist
 
                 PlotterControl.Checklist.CuttingChecklist ->
-                    ()
+                    viewChecklist model "Cutting" PlotterControl.Checklist.cuttingChecklist
 
                 PlotterControl.Checklist.PerforationChecklist ->
-                    ()
+                    viewChecklist model "Perforation" PlotterControl.Checklist.perforationChecklist
             ]
     }
 
