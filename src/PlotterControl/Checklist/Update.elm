@@ -89,12 +89,14 @@ changeDrawingSpeed a model =
     let
         value : Int
         value =
-            case model.drawingSpeed of
+            (case model.drawingSpeed of
                 Just b ->
                     b + a
 
                 Nothing ->
                     200
+            )
+                |> clamp 50 800
     in
     ( { model | drawingSpeed = Just value }
     , Cmd.none
