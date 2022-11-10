@@ -78,7 +78,12 @@ viewItem model a =
 
         --
         PlotterControl.Checklist.MarkersSensorClean ->
-            checkbox (text "Sensor is clean.")
+            column [ width fill, spacing 8 ]
+                [ checkbox (text "Sensor is clean.")
+                , statusText theme
+                    [ fontCenter ]
+                    "Use dust blaster to clean the sensor."
+                ]
 
         PlotterControl.Checklist.MarkersTestOk ->
             column [ width fill, spacing 8 ]
