@@ -12,7 +12,7 @@ import PlotterControl.Utils.Theme exposing (..)
 
 
 view : PlotterControl.Page.Checklist -> PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
-view _ model =
+view a model =
     { size = \x -> { x | width = max 240 (x.width // 3) }
     , header =
         Just
@@ -30,11 +30,21 @@ view _ model =
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            [ viewChecklist model "Media" PlotterControl.Checklist.mediaChecklist
-            , viewChecklist model "Markers Calibration" PlotterControl.Checklist.markersChecklist
-            , viewChecklist model "Draw Calibration" PlotterControl.Checklist.drawingChecklist
-            , viewChecklist model "Cut Calibration" PlotterControl.Checklist.cuttingChecklist
-            , viewChecklist model "Perforation Calibration" PlotterControl.Checklist.perforationChecklist
+            [ case a.checklist of
+                PlotterControl.Checklist.MediaChecklist ->
+                    ()
+
+                PlotterControl.Checklist.MarkersChecklist ->
+                    ()
+
+                PlotterControl.Checklist.DrawingChecklist ->
+                    ()
+
+                PlotterControl.Checklist.CuttingChecklist ->
+                    ()
+
+                PlotterControl.Checklist.PerforationChecklist ->
+                    ()
             ]
     }
 
