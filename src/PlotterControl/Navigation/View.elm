@@ -31,20 +31,18 @@ view model =
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            (case model.directory of
+            [ case model.directory of
                 Ok b ->
-                    [ Element.PravdomilUi.Application.Block.Block
+                    Element.PravdomilUi.Application.Block.Block
                         (Just "Files")
                         [ viewFiles model b
                         ]
-                    ]
 
                 Err () ->
-                    [ Element.PravdomilUi.Application.Block.Status
+                    Element.PravdomilUi.Application.Block.Status
                         [ text "Open file first."
                         ]
-                    ]
-            )
+            ]
     }
 
 
