@@ -49,17 +49,18 @@ view model =
                     , onChange = PlotterControl.Msg.ChecklistActivated
                     }
                 ]
-            , case model.directory of
-                Ok b ->
-                    Element.PravdomilUi.Application.Block.Block
-                        (Just "Files")
-                        [ viewFiles model b
-                        ]
+            , Element.PravdomilUi.Application.Block.Block
+                (Just "Files")
+                [ case model.directory of
+                    Ok b ->
+                        viewFiles model b
 
-                Err () ->
-                    Element.PravdomilUi.Application.Block.Status
-                        [ text "Open file first."
-                        ]
+                    Err () ->
+                        paragraph theme
+                            [ paddingXY 8 8, fontSize 15, fontColor style.fore60 ]
+                            [ text "Open file first."
+                            ]
+                ]
             ]
     }
 
