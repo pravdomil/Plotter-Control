@@ -60,11 +60,11 @@ filesReceived a model =
                 Nothing ->
                     Just new
 
-        nextPage : Maybe PlotterControl.Model.Page
+        nextPage : Maybe PlotterControl.Page.Page
         nextPage =
             case List.Extra.last a of
                 Just ( name, _ ) ->
-                    Just (PlotterControl.Model.File name)
+                    Just (PlotterControl.Page.File_ (PlotterControl.Page.File name))
 
                 Nothing ->
                     model.page
