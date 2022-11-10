@@ -70,7 +70,7 @@ view { name } model =
             , body =
                 Element.PravdomilUi.Application.Blocks
                     [ Element.PravdomilUi.Application.Block.Status
-                        [ text "No file selected."
+                        [ text "File not found."
                         ]
                     ]
             }
