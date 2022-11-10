@@ -32,11 +32,15 @@ activeFile model =
                 |> Maybe.map (Tuple.pair x2)
         )
         (Result.toMaybe model.directory)
-        (case model.page of
-            Just (PlotterControl.Model.File x) ->
-                Just x
-
-            _ ->
-                Nothing
-        )
+        (activeFilename model)
         |> Maybe.andThen identity
+
+
+activeFilename : PlotterControl.Model.Model -> Maybe PlotterControl.File.Name
+activeFilename model =
+    case model.page of
+        Just (PlotterControl.Model.File b) ->
+            Just b
+
+        _ ->
+            Nothing
