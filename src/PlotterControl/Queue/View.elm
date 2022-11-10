@@ -59,7 +59,7 @@ view model =
                                                     [ textEllipsis [] (PlotterControl.Queue.itemNameToString x.name)
                                                     , textButton theme
                                                         []
-                                                        { label = FeatherIcons.x |> PlotterControl.Utils.View.iconToElement
+                                                        { label = FeatherIcons.x |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
                                                         , onPress = Just (PlotterControl.Msg.QueueItemRemoveRequested id)
                                                         }
                                                     ]
