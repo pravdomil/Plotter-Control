@@ -120,7 +120,7 @@ toComparable a =
             "MediaPresetCalibration"
 
         MarkersTestOk ->
-            " ->"
+            "MarkersTestOk"
 
         DrawingPenInHolder ->
             "DrawingPenInHolder"
@@ -129,7 +129,7 @@ toComparable a =
             "DrawingPenPressure"
 
         DrawingPenDepth ->
-            " "
+            "DrawingPenDepth"
 
         DrawingToolHolderKnob ->
             "DrawingToolHolderKnob"
