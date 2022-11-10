@@ -74,7 +74,7 @@ viewItem checked a =
             checkbox (text "Medium and rollers are aligned.")
 
         PlotterControl.Checklist.MediaFlangeGuides ->
-            checkbox (text "Flange guides are locked.")
+            checkbox (text "Media flange guides are locked.")
 
         PlotterControl.Checklist.MediaLeverArmDown ->
             checkbox (text "Lever arm is down.")
