@@ -86,7 +86,7 @@ mainButton model =
         stopButton : Element PlotterControl.Msg.Msg
         stopButton =
             textButton theme
-                [ fontSemiBold, bgColor style.danger ]
+                [ fontSemiBold, fontColor style.danger ]
                 { label = text "Stop"
                 , onPress = Just PlotterControl.Msg.StopSendingRequested
                 }
