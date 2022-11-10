@@ -8,6 +8,7 @@ import PlotterControl.Directory
 import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Msg
+import PlotterControl.Page
 import Task
 
 
@@ -78,6 +79,6 @@ filesReceived a model =
 
 activateFile : PlotterControl.File.Name -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 activateFile name model =
-    ( { model | page = Just (PlotterControl.Model.File name) }
+    ( { model | page = Just (PlotterControl.Page.File_ (PlotterControl.Page.File name)) }
     , Cmd.none
     )
