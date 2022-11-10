@@ -5,6 +5,7 @@ import Element.PravdomilUi exposing (..)
 import Element.PravdomilUi.Application
 import Element.PravdomilUi.Application.Block
 import PlotterControl.Directory
+import PlotterControl.Directory.Utils
 import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -47,7 +48,7 @@ view model =
 
 
 viewFiles : PlotterControl.Model.Model -> PlotterControl.Directory.Directory -> Element PlotterControl.Msg.Msg
-viewFiles _ a =
+viewFiles model a =
     inputRadio theme
         [ width fill ]
         { label = labelHidden "Files"
@@ -59,6 +60,6 @@ viewFiles _ a =
                     (\( x, _ ) ->
                         inputRadioBlockOption theme [ width fill ] x (textEllipsis [] (PlotterControl.File.nameToString x))
                     )
-        , selected = a.active
+        , selected = PlotterControl.Directory.Utils.activeFilename model
         , onChange = PlotterControl.Msg.FileActivated
         }
