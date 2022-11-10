@@ -36,8 +36,8 @@ default name =
     }
 
 
-toSettings : Settings -> SummaEl.SummaEl
-toSettings a =
+toSummaEl : Settings -> SummaEl.SummaEl
+toSummaEl a =
     [ presetToSetUserCommand a.preset
     , SummaEl.SetSettings
         (Dict.empty
@@ -87,8 +87,8 @@ presetToSetUserCommand a =
         )
 
 
-presetToSettings : Preset -> SummaEl.SummaEl
-presetToSettings a =
+presetToSummaEl : Preset -> SummaEl.SummaEl
+presetToSummaEl a =
     [ presetToSetUserCommand a
     , SummaEl.SetSettings
         (defaultSettings
