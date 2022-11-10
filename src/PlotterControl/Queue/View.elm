@@ -32,15 +32,17 @@ view model =
     , body =
         Element.PravdomilUi.Application.Blocks
             [ plotterStatus model
-            , case model.queue |> Dict.Any.isEmpty of
-                True ->
-                    Element.PravdomilUi.Application.Block.Status
-                        [ text "Queue is empty."
+            , Element.PravdomilUi.Application.Block.Block
+                (Just "Items")
+                (case model.queue |> Dict.Any.isEmpty of
+                    True ->
+                        [ paragraph theme
+                            [ paddingXY 8 8, fontSize 15, fontColor style.fore60 ]
+                            [ text "Queue is empty."
+                            ]
                         ]
 
-                False ->
-                    Element.PravdomilUi.Application.Block.Block
-                        (Just "Items")
+                    False ->
                         [ inputRadio theme
                             [ width fill ]
                             { label = labelHidden "Items"
@@ -68,6 +70,7 @@ view model =
                             , onChange = always PlotterControl.Msg.NothingHappened
                             }
                         ]
+                )
             ]
     }
 
