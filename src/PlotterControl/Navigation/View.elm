@@ -34,21 +34,7 @@ view model =
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            [ Element.PravdomilUi.Application.Block.Block
-                (Just "Checklists")
-                [ inputRadio theme
-                    [ width fill ]
-                    { label = labelHidden "Checklists"
-                    , options =
-                        PlotterControl.Checklist.all
-                            |> List.map
-                                (\x ->
-                                    inputRadioBlockOption theme [ width fill ] x (textEllipsis [] (checklistName x))
-                                )
-                    , selected = PlotterControl.Checklist.Utils.activeChecklist model
-                    , onChange = PlotterControl.Msg.ChecklistActivated
-                    }
-                ]
+            [ viewChecklists model
             , Element.PravdomilUi.Application.Block.Block
                 (Just "Files")
                 (case model.directory of
@@ -87,6 +73,25 @@ viewFiles model a =
 
 
 --
+
+
+viewChecklists : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+viewChecklists model =
+    Element.PravdomilUi.Application.Block.Block
+        (Just "Checklists")
+        [ inputRadio theme
+            [ width fill ]
+            { label = labelHidden "Checklists"
+            , options =
+                PlotterControl.Checklist.all
+                    |> List.map
+                        (\x ->
+                            inputRadioBlockOption theme [ width fill ] x (textEllipsis [] (checklistName x))
+                        )
+            , selected = PlotterControl.Checklist.Utils.activeChecklist model
+            , onChange = PlotterControl.Msg.ChecklistActivated
+            }
+        ]
 
 
 checklistName : PlotterControl.Checklist.Checklist -> String
