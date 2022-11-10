@@ -9,6 +9,25 @@ type Checklist
     | PerforationChecklist
 
 
+toName : Checklist -> String
+toName a =
+    case a of
+        MediaChecklist ->
+            "Media"
+
+        MarkersChecklist ->
+            "Markers"
+
+        DrawingChecklist ->
+            "Drawing"
+
+        CuttingChecklist ->
+            "Cutting"
+
+        PerforationChecklist ->
+            "Perforation"
+
+
 all : List Checklist
 all =
     [ MediaChecklist

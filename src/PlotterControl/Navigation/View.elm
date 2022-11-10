@@ -111,25 +111,6 @@ viewChecklist model a =
 
         text : String
         text =
-            String.fromInt done ++ "/" ++ String.fromInt total ++ " " ++ checklistName a
+            String.fromInt done ++ "/" ++ String.fromInt total ++ " " ++ PlotterControl.Checklist.toName a
     in
     inputRadioBlockOption theme [ width fill ] a (textEllipsis [ fontVariant fontTabularNumbers ] text)
-
-
-checklistName : PlotterControl.Checklist.Checklist -> String
-checklistName a =
-    case a of
-        PlotterControl.Checklist.MediaChecklist ->
-            "Media"
-
-        PlotterControl.Checklist.MarkersChecklist ->
-            "Markers"
-
-        PlotterControl.Checklist.DrawingChecklist ->
-            "Drawing"
-
-        PlotterControl.Checklist.CuttingChecklist ->
-            "Cutting"
-
-        PlotterControl.Checklist.PerforationChecklist ->
-            "Perforation"

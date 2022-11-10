@@ -30,21 +30,7 @@ view a model =
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            [ case a.checklist of
-                PlotterControl.Checklist.MediaChecklist ->
-                    viewChecklist model "Media" PlotterControl.Checklist.mediaItems
-
-                PlotterControl.Checklist.MarkersChecklist ->
-                    viewChecklist model "Markers" PlotterControl.Checklist.markersItems
-
-                PlotterControl.Checklist.DrawingChecklist ->
-                    viewChecklist model "Drawing" PlotterControl.Checklist.drawingItems
-
-                PlotterControl.Checklist.CuttingChecklist ->
-                    viewChecklist model "Cutting" PlotterControl.Checklist.cuttingItems
-
-                PlotterControl.Checklist.PerforationChecklist ->
-                    viewChecklist model "Perforation" PlotterControl.Checklist.perforationItems
+            [ viewChecklist model (PlotterControl.Checklist.toName a.checklist) (PlotterControl.Checklist.items a.checklist)
             ]
     }
 
