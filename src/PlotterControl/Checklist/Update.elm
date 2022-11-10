@@ -6,6 +6,13 @@ import PlotterControl.Model
 import PlotterControl.Msg
 
 
+activateChecklist : PlotterControl.Checklist.Checklist -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+activateChecklist a model =
+    ( { model | page = Just (PlotterControl.Model.Checklist a) }
+    , Cmd.none
+    )
+
+
 checkItem : PlotterControl.Checklist.Item -> Bool -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 checkItem item checked model =
     ( { model
