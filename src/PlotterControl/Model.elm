@@ -22,6 +22,7 @@ type alias Model =
     --
     , markerSensitivity : Maybe Int
     , drawingSpeed : Maybe Int
+    , drawingPressure : Maybe Int
     }
 
 

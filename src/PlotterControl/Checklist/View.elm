@@ -157,7 +157,35 @@ viewItem model a =
                 ]
 
         PlotterControl.Checklist.DrawingPenPressure ->
-            checkbox (text "Pen pressure is ok.")
+            column [ width fill, spacing 8 ]
+                [ checkbox (text "Pen pressure is set.")
+                , PlotterControl.Utils.View.twoColumns
+                    "Pressure:"
+                    (row [ spacing 8 ]
+                        [ el [ fontVariant fontTabularNumbers ]
+                            (text
+                                (model.drawingPressure
+                                    |> Maybe.map String.fromInt
+                                    |> Maybe.withDefault "000"
+                                    |> (\x -> x ++ " g")
+                                )
+                            )
+                        , textButton theme
+                            []
+                            { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                            , onPress = PlotterControl.Msg.DrawingPressureChanged -20 |> Just
+                            }
+                        , textButton theme
+                            []
+                            { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                            , onPress = PlotterControl.Msg.DrawingPressureChanged 20 |> Just
+                            }
+                        ]
+                    )
+                , statusText theme
+                    [ fontCenter ]
+                    "Recommended pressure is 160 g."
+                ]
 
         PlotterControl.Checklist.DrawingPenDepth ->
             checkbox (text "Pen depth is ok.")

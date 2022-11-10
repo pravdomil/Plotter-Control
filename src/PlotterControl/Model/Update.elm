@@ -24,6 +24,7 @@ init flags =
         Dict.Any.empty
         Nothing
         Nothing
+        Nothing
     , Cmd.none
     )
 
@@ -53,6 +54,9 @@ update msg model =
 
         PlotterControl.Msg.DrawingSpeedChanged a ->
             PlotterControl.Checklist.Update.changeDrawingSpeed a model
+
+        PlotterControl.Msg.DrawingPressureChanged a ->
+            PlotterControl.Checklist.Update.changeDrawingPressure a model
 
         --
         PlotterControl.Msg.OpenFilesRequested ->

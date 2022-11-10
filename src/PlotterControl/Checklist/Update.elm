@@ -40,6 +40,10 @@ resetChecklist model =
     )
 
 
+
+--
+
+
 changeMarkerSensitivity : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeMarkerSensitivity a model =
     let
@@ -84,6 +88,10 @@ testMarkers model =
         model
 
 
+
+--
+
+
 changeDrawingSpeed : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeDrawingSpeed a model =
     let
@@ -106,6 +114,33 @@ changeDrawingSpeed a model =
                 (PlotterControl.Queue.stringToItemName "Set Speed")
                 (SummaEl.toString
                     [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt value))
+                    ]
+                )
+            )
+
+
+changeDrawingPressure : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeDrawingPressure a model =
+    let
+        value : Int
+        value =
+            (case model.drawingPressure of
+                Just b ->
+                    b + a
+
+                Nothing ->
+                    160
+            )
+                |> clamp 0 400
+    in
+    ( { model | drawingPressure = Just value }
+    , Cmd.none
+    )
+        |> Platform.Extra.andThen
+            (PlotterControl.Queue.Update.createItem
+                (PlotterControl.Queue.stringToItemName "Set Pressure")
+                (SummaEl.toString
+                    [ SummaEl.SetSettings (Dict.singleton "PEN_PRESSURE" (String.fromInt value))
                     ]
                 )
             )
