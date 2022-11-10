@@ -1,6 +1,28 @@
 module PlotterControl.Checklist exposing (..)
 
 
+type Checklist
+    = MediaChecklist
+    | MarkersChecklist
+    | DrawChecklist
+    | CutChecklist
+    | PerforationChecklist
+
+
+all : List Checklist
+all =
+    [ MediaChecklist
+    , MarkersChecklist
+    , DrawChecklist
+    , CutChecklist
+    , PerforationChecklist
+    ]
+
+
+
+--
+
+
 type Item
     = MediaRollersAlignment
     | MediaFlangeGuides
