@@ -27,24 +27,17 @@ preset : PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element
 preset name a =
     PlotterControl.Utils.View.twoRows
         (text "Preset:")
-        (row [ spacing 8 ]
-            [ inputRadioRow theme
-                []
-                { label = labelHidden "Preset:"
-                , options =
-                    [ inputRadioBlockOption theme [] PlotterControl.Settings.Draw (text "Draw")
-                    , inputRadioBlockOption theme [] PlotterControl.Settings.Cut (text "Cut")
-                    , inputRadioBlockOption theme [] PlotterControl.Settings.Perforate (text "Perforate")
-                    ]
-                , selected = Just a.preset
-                , onChange = PlotterControl.Msg.PresetChanged name
-                }
-            , textButton theme
-                []
-                { label = text "Configure"
-                , onPress = Just (PlotterControl.Msg.ConfigurePlotterRequested name)
-                }
-            ]
+        (inputRadioRow theme
+            []
+            { label = labelHidden "Preset:"
+            , options =
+                [ inputRadioBlockOption theme [] PlotterControl.Settings.Draw (text "Draw")
+                , inputRadioBlockOption theme [] PlotterControl.Settings.Cut (text "Cut")
+                , inputRadioBlockOption theme [] PlotterControl.Settings.Perforate (text "Perforate")
+                ]
+            , selected = Just a.preset
+            , onChange = PlotterControl.Msg.PresetChanged name
+            }
         )
 
 
