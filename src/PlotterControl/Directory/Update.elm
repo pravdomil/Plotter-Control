@@ -42,7 +42,6 @@ filesReceived a model =
         directory =
             PlotterControl.Directory.Directory
                 (a |> List.foldl (\( k, v ) -> Dict.Any.update PlotterControl.File.nameToString k (fileUpdate v)) files)
-                (a |> List.Extra.last |> Maybe.map Tuple.first)
 
         fileUpdate : PlotterControl.File.File -> Maybe PlotterControl.File.File -> Maybe PlotterControl.File.File
         fileUpdate new old =
@@ -59,14 +58,26 @@ filesReceived a model =
 
                 Nothing ->
                     Just new
+
+        nextPage : Maybe PlotterControl.Model.Page
+        nextPage =
+            case List.Extra.last a of
+                Just ( name, _ ) ->
+                    Just (PlotterControl.Model.File name)
+
+                Nothing ->
+                    model.page
     in
-    ( { model | directory = Ok directory }
+    ( { model
+        | page = nextPage
+        , directory = Ok directory
+      }
     , Cmd.none
     )
 
 
 activateFile : PlotterControl.File.Name -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 activateFile name model =
-    ( { model | directory = Result.map (\x -> { x | active = Just name }) model.directory }
+    ( { model | page = Just (PlotterControl.Model.File name) }
     , Cmd.none
     )
