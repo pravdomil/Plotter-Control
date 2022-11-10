@@ -58,11 +58,6 @@ changeMarkerSensitivity a model =
 testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testMarkers model =
     PlotterControl.Queue.Update.createItem
-        ("Marker Test"
-            |> PlotterControl.Queue.stringToItemName
-        )
-        (SummaEl.toString
-            [ SummaEl.LoadMarkers
-            ]
-        )
+        (PlotterControl.Queue.stringToItemName "Marker Test")
+        (SummaEl.toString [ SummaEl.LoadMarkers ])
         model
