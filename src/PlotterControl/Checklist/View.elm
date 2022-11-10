@@ -76,14 +76,14 @@ viewItem checked a =
 viewLabel : PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
 viewLabel a =
     case a of
+        PlotterControl.Checklist.MediaRollersInRange ->
+            text "Rollers are within white range."
+
         PlotterControl.Checklist.MediaRollersAlignment ->
             text "Medium and rollers are aligned."
 
         PlotterControl.Checklist.MediaFlangeGuides ->
             text "Flange guides are locked."
-
-        PlotterControl.Checklist.MediaRollersInRange ->
-            text "Rollers are within white range."
 
         PlotterControl.Checklist.MediaLeverArmDown ->
             text "Lever arm is down."

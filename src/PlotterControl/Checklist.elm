@@ -24,9 +24,9 @@ all =
 
 
 type Item
-    = MediaRollersAlignment
+    = MediaRollersInRange
+    | MediaRollersAlignment
     | MediaFlangeGuides
-    | MediaRollersInRange
     | MediaLeverArmDown
       --
     | MarkersTestOk
@@ -53,9 +53,9 @@ type Item
 
 mediaChecklist : List Item
 mediaChecklist =
-    [ MediaRollersAlignment
+    [ MediaRollersInRange
+    , MediaRollersAlignment
     , MediaFlangeGuides
-    , MediaRollersInRange
     , MediaLeverArmDown
     ]
 
@@ -102,14 +102,14 @@ perforationChecklist =
 toComparable : Item -> String
 toComparable a =
     case a of
+        MediaRollersInRange ->
+            "MediaRollersInRange"
+
         MediaRollersAlignment ->
             "MediaRollersAlignment"
 
         MediaFlangeGuides ->
             "MediaFlangeGuides"
-
-        MediaRollersInRange ->
-            "MediaRollersInRange"
 
         MediaLeverArmDown ->
             "MediaLeverArmDown"
