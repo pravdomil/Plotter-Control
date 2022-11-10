@@ -85,9 +85,9 @@ viewItem model a =
                     "Use dust blaster to clean the sensor."
                 ]
 
-        PlotterControl.Checklist.MarkersTestOk ->
+        PlotterControl.Checklist.MarkersSensitivity ->
             column [ width fill, spacing 8 ]
-                [ checkbox (text "Marker test succeed.")
+                [ checkbox (text "Marker sensitivity is set.")
                 , PlotterControl.Utils.View.twoColumns
                     "Sensitivity:"
                     (row [ spacing 8 ]
@@ -109,16 +109,21 @@ viewItem model a =
                             { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
                             , onPress = PlotterControl.Msg.MarkerSensitivityChanged 5 |> Just
                             }
-                        , textButton theme
-                            []
-                            { label = text "Test"
-                            , onPress = Just PlotterControl.Msg.MarkerTestRequested
-                            }
                         ]
                     )
                 , statusText theme
                     [ fontCenter ]
                     "Recommended sensitivity is 75–95%."
+                ]
+
+        PlotterControl.Checklist.MarkersTestOk ->
+            column [ width fill, spacing 8 ]
+                [ checkbox (text "Marker test succeed.")
+                , textButton theme
+                    [ centerX ]
+                    { label = text "Test Markers"
+                    , onPress = Just PlotterControl.Msg.MarkerTestRequested
+                    }
                 ]
 
         --
