@@ -27,8 +27,6 @@ type Item
     = MediaRollersAlignment
     | MediaFlangeGuides
     | MediaLeverArmDown
-    | MediaMarkersCalibration
-    | MediaPresetCalibration
       --
     | MarkersTestOk
       --
@@ -57,8 +55,6 @@ mediaChecklist =
     [ MediaRollersAlignment
     , MediaFlangeGuides
     , MediaLeverArmDown
-    , MediaMarkersCalibration
-    , MediaPresetCalibration
     ]
 
 
@@ -112,12 +108,6 @@ toComparable a =
 
         MediaLeverArmDown ->
             "MediaLeverArmDown"
-
-        MediaMarkersCalibration ->
-            "MediaMarkersCalibration"
-
-        MediaPresetCalibration ->
-            "MediaPresetCalibration"
 
         MarkersTestOk ->
             "MarkersTestOk"
