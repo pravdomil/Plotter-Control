@@ -116,8 +116,8 @@ presetToSummaEl a =
                 )
             |> Dict.insert "FULL_PRESSURE" "400"
             |> Dict.insert "FLEX_VELOCITY" "100"
-            --
             |> Dict.insert "OVERCUT" "2"
+            --
             |> Dict.remove "OPOS_LEVEL"
             |> Dict.remove "VELOCITY"
             |> Dict.remove "PEN_PRESSURE"
