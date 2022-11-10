@@ -1,6 +1,8 @@
 module PlotterControl.Checklist.Update exposing (..)
 
+import Dict
 import Dict.Any
+import Platform.Extra
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -53,6 +55,14 @@ changeMarkerInsensitivity a model =
     ( { model | markerInsensitivity = Just value }
     , Cmd.none
     )
+        |> Platform.Extra.andThen
+            (PlotterControl.Queue.Update.createItem
+                (PlotterControl.Queue.stringToItemName "Set Insensitivity")
+                (SummaEl.toString
+                    [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt value))
+                    ]
+                )
+            )
 
 
 testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
