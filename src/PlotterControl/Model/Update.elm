@@ -64,7 +64,7 @@ update msg model =
         PlotterControl.Msg.AddFileToQueueRequested a ->
             PlotterControl.File.Update.addFileToQueue a model
 
-        PlotterControl.Msg.MarkerTestRequested a ->
+        PlotterControl.Msg.FileMarkerTestRequested a ->
             PlotterControl.File.Update.testMarkers a model
 
         PlotterControl.Msg.PresetChanged a b ->

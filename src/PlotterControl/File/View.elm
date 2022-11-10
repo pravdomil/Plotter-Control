@@ -95,7 +95,7 @@ fileInfo name a =
                         , textButton theme
                             []
                             { label = text "Test"
-                            , onPress = Just (PlotterControl.Msg.MarkerTestRequested name)
+                            , onPress = Just (PlotterControl.Msg.FileMarkerTestRequested name)
                             }
                         ]
 
