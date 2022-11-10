@@ -3,6 +3,7 @@ module PlotterControl.Directory.Utils exposing (..)
 import Dict.Any
 import PlotterControl.File
 import PlotterControl.Model
+import PlotterControl.Page
 
 
 fileByName : PlotterControl.File.Name -> PlotterControl.Model.Model -> Maybe PlotterControl.File.File
@@ -39,8 +40,8 @@ activeFile model =
 activeFilename : PlotterControl.Model.Model -> Maybe PlotterControl.File.Name
 activeFilename model =
     case model.page of
-        Just (PlotterControl.Model.File b) ->
-            Just b
+        Just (PlotterControl.Page.File_ b) ->
+            Just b.name
 
         _ ->
             Nothing
