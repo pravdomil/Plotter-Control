@@ -44,7 +44,7 @@ view model =
 
                     Err () ->
                         [ statusText theme
-                            []
+                            [ paddingXY 8 0 ]
                             "Open file first."
                         ]
                 )

@@ -37,7 +37,7 @@ view model =
                 (case model.queue |> Dict.Any.isEmpty of
                     True ->
                         [ statusText theme
-                            []
+                            [ paddingXY 8 0 ]
                             "Queue is empty."
                         ]
 
@@ -121,7 +121,7 @@ plotterStatus model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Status")
         [ statusText theme
-            []
+            [ paddingXY 8 0 ]
             (case model.plotter of
                 Ok _ ->
                     "Ready."
