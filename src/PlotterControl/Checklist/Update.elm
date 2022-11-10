@@ -38,19 +38,19 @@ resetChecklist model =
     )
 
 
-changeMarkerSensitivity : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-changeMarkerSensitivity a model =
+changeMarkerInsensitivity : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeMarkerInsensitivity a model =
     let
-        markerSensitivity : Int
-        markerSensitivity =
-            case model.markerSensitivity of
+        value : Int
+        value =
+            case model.markerInsensitivity of
                 Just b ->
                     b + a
 
                 Nothing ->
                     60
     in
-    ( { model | markerSensitivity = Just markerSensitivity }
+    ( { model | markerInsensitivity = Just value }
     , Cmd.none
     )
 

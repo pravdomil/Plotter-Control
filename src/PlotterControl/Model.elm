@@ -20,7 +20,7 @@ type alias Model =
     , checklist : Dict.Any.Dict PlotterControl.Checklist.Item ()
 
     --
-    , markerSensitivity : Maybe Int
+    , markerInsensitivity : Maybe Int
     }
 
 

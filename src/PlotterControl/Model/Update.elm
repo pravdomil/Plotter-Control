@@ -44,8 +44,8 @@ update msg model =
         PlotterControl.Msg.ChecklistActivated a ->
             PlotterControl.Checklist.Update.activateChecklist a model
 
-        PlotterControl.Msg.MarkerSensitivityChanged a ->
-            PlotterControl.Checklist.Update.changeMarkerSensitivity a model
+        PlotterControl.Msg.MarkerInsensitivityChanged a ->
+            PlotterControl.Checklist.Update.changeMarkerInsensitivity a model
 
         PlotterControl.Msg.MarkerTestRequested ->
             PlotterControl.Checklist.Update.testMarkers model

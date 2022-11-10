@@ -81,11 +81,11 @@ viewItem model a =
             column [ width fill, spacing 8 ]
                 [ checkbox (text "Marker test succeed.")
                 , PlotterControl.Utils.View.twoColumns
-                    "Sensitivity:"
+                    "Insensitivity:"
                     (row [ spacing 8 ]
                         [ el [ fontVariant fontTabularNumbers ]
                             (text
-                                (model.markerSensitivity
+                                (model.markerInsensitivity
                                     |> Maybe.map String.fromInt
                                     |> Maybe.withDefault "00"
                                 )
@@ -93,12 +93,12 @@ viewItem model a =
                         , textButton theme
                             []
                             { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.MarkerSensitivityChanged -10 |> Just
+                            , onPress = PlotterControl.Msg.MarkerInsensitivityChanged -10 |> Just
                             }
                         , textButton theme
                             []
                             { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.MarkerSensitivityChanged 10 |> Just
+                            , onPress = PlotterControl.Msg.MarkerInsensitivityChanged 10 |> Just
                             }
                         , textButton theme
                             []
@@ -114,7 +114,7 @@ viewItem model a =
                     , fontSize 15
                     , fontColor style.fore60
                     ]
-                    (textEllipsis [] "Recommended value is 20–60.")
+                    (textEllipsis [ centerY ] "Recommended insensitivity is 20–60.")
                 ]
 
         --
