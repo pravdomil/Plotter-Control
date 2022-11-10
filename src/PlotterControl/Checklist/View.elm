@@ -54,82 +54,82 @@ viewChecklist model label items =
 
 viewItem : Bool -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
 viewItem checked a =
-    inputCheckbox
-        theme
-        [ width fill ]
-        { label = viewLabel a
-        , icon = inputCheckboxIcon theme
-        , checked = checked
-        , onChange = PlotterControl.Msg.ChecklistItemChecked a
-        }
-
-
-viewLabel : PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
-viewLabel a =
+    let
+        checkbox : Element PlotterControl.Msg.Msg -> Element PlotterControl.Msg.Msg
+        checkbox b =
+            inputCheckbox
+                theme
+                [ width fill ]
+                { label = b
+                , icon = inputCheckboxIcon theme
+                , checked = checked
+                , onChange = PlotterControl.Msg.ChecklistItemChecked a
+                }
+    in
     case a of
         PlotterControl.Checklist.MediaRollersInRange ->
-            text "Rollers are within white range."
+            checkbox (text "Rollers are within white range.")
 
         PlotterControl.Checklist.MediaRollersAlignment ->
-            text "Medium and rollers are aligned."
+            checkbox (text "Medium and rollers are aligned.")
 
         PlotterControl.Checklist.MediaFlangeGuides ->
-            text "Flange guides are locked."
+            checkbox (text "Flange guides are locked.")
 
         PlotterControl.Checklist.MediaLeverArmDown ->
-            text "Lever arm is down."
+            checkbox (text "Lever arm is down.")
 
         --
         PlotterControl.Checklist.MarkersTestOk ->
-            text "Marker test succeed."
+            checkbox (text "Marker test succeed.")
 
         --
         PlotterControl.Checklist.DrawingPenInHolder ->
-            text "Drawing pen is in tool holder."
+            checkbox (text "Drawing pen is in tool holder.")
 
         PlotterControl.Checklist.DrawingPenPressure ->
-            text "Pen pressure is ok."
+            checkbox (text "Pen pressure is ok.")
 
         PlotterControl.Checklist.DrawingPenDepth ->
-            text "Pen depth is ok."
+            checkbox (text "Pen depth is ok.")
 
         PlotterControl.Checklist.DrawingToolHolderKnob ->
-            text "Tool holder knob is tight."
+            checkbox (text "Tool holder knob is tight.")
 
         --
         PlotterControl.Checklist.CuttingKnifeInHolder ->
-            text "Cutting knife is in tool holder."
+            checkbox (text "Cutting knife is in tool holder.")
 
         PlotterControl.Checklist.CuttingKnifePressure ->
-            text "Knife pressure is ok."
+            checkbox (text "Knife pressure is ok.")
 
         PlotterControl.Checklist.CuttingKnifeDepth ->
-            text "Knife depth is ok."
+            checkbox (text "Knife depth is ok.")
 
         PlotterControl.Checklist.CuttingKnifeSecureNut ->
-            text "Knife depth is secured with nut."
+            checkbox (text "Knife depth is secured with nut.")
 
         PlotterControl.Checklist.CuttingToolHolderKnob ->
-            text "Tool holder knob is tight."
+            checkbox (text "Tool holder knob is tight.")
 
         PlotterControl.Checklist.CuttingKnifeOffset ->
-            text "Knife offset is corrected."
+            checkbox (text "Knife offset is corrected.")
 
         --
         PlotterControl.Checklist.PerforationKnifeInHolder ->
-            text "Perforation knife is in tool holder."
+            checkbox (text "Perforation knife is in tool holder.")
 
         PlotterControl.Checklist.PerforationToolDepth ->
-            text "Knife depth is ok."
+            checkbox (text "Knife depth is ok.")
 
         PlotterControl.Checklist.PerforationFlexPressure ->
-            text "Flex pressure is just enough."
+            checkbox (text "Flex pressure is just enough.")
 
         PlotterControl.Checklist.PerforationKnifeSecureNut ->
-            text "Knife depth is secured with nut."
+            checkbox (text "Knife depth is secured with nut.")
 
         PlotterControl.Checklist.PerforationToolHolderKnob ->
-            text "Tool holder knob is tight."
+            checkbox (text "Tool holder knob is tight.")
 
         PlotterControl.Checklist.PerforationToolOffset ->
-            text "Knife offset is corrected."
+            checkbox (text "Knife offset is corrected.")
