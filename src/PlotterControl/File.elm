@@ -1,6 +1,5 @@
 module PlotterControl.File exposing (..)
 
-import Dict
 import File
 import HpGl
 import HpGl.Geometry
@@ -94,11 +93,17 @@ hpGlFileToReady a =
             )
 
 
-readyToSettings : Ready -> SummaEl.Settings
-readyToSettings a =
-    Dict.union
-        (a.markers |> Maybe.map PlotterControl.Markers.toSettings |> Maybe.withDefault Dict.empty)
-        (a.settings |> PlotterControl.Settings.toSettings)
+readySettingsToSummaEl : Ready -> SummaEl.SummaEl
+readySettingsToSummaEl a =
+    PlotterControl.Settings.toSummaEl a.settings
+        |> (\x ->
+                case a.markers of
+                    Just x2 ->
+                        x ++ [ PlotterControl.Markers.toCommand x2 ]
+
+                    Nothing ->
+                        x
+           )
 
 
 readyToPlotterData : Ready -> String
@@ -106,9 +111,7 @@ readyToPlotterData a =
     let
         setSettings : String
         setSettings =
-            SummaEl.toString
-                [ SummaEl.SetSettings (readyToSettings a)
-                ]
+            SummaEl.toString (readySettingsToSummaEl a)
 
         maybeLoadMarkers : String
         maybeLoadMarkers =

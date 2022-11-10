@@ -44,9 +44,10 @@ testMarkers name model =
                             |> PlotterControl.Queue.stringToItemName
                         )
                         (SummaEl.toString
-                            [ SummaEl.SetSettings (PlotterControl.File.readyToSettings b)
-                            , SummaEl.LoadMarkers
-                            ]
+                            (PlotterControl.File.readySettingsToSummaEl b
+                                ++ [ SummaEl.LoadMarkers
+                                   ]
+                            )
                         )
                         model
 
