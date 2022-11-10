@@ -26,7 +26,7 @@ view _ a b =
 preset : PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element PlotterControl.Msg.Msg
 preset name a =
     PlotterControl.Utils.View.twoColumns
-        (text "Preset:")
+        "Preset:"
         (inputRadioRow theme
             []
             { label = labelHidden "Preset:"
@@ -44,7 +44,7 @@ preset name a =
 markerLoading : PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element PlotterControl.Msg.Msg
 markerLoading name a =
     PlotterControl.Utils.View.twoColumns
-        (text "Marker Loading:")
+        "Marker Loading:"
         (inputRadioRow theme
             []
             { label = labelHidden "Marker Loading:"
@@ -61,7 +61,7 @@ markerLoading name a =
 copies : PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element PlotterControl.Msg.Msg
 copies name a =
     PlotterControl.Utils.View.twoColumns
-        (text "Copies:")
+        "Copies:"
         (PlotterControl.Utils.View.inputNumber
             (text (a.copies |> PlotterControl.Settings.copiesToInt |> String.fromInt))
             (\x -> x |> PlotterControl.Settings.intToCopies |> PlotterControl.Msg.CopiesChanged name)
@@ -71,7 +71,7 @@ copies name a =
 copyDistance : PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element PlotterControl.Msg.Msg
 copyDistance name a =
     PlotterControl.Utils.View.twoColumns
-        (text "Copy Distance:")
+        "Copy Distance:"
         (PlotterControl.Utils.View.inputNumber
             (text (PlotterControl.Utils.Utils.mmToString a.copyDistance))
             (\x -> x |> toFloat |> Length.millimeters |> PlotterControl.Msg.CopyDistanceChanged name)

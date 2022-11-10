@@ -81,7 +81,7 @@ fileInfo name a =
     Element.PravdomilUi.Application.Block.Block
         (Just "Info")
         [ PlotterControl.Utils.View.twoColumns
-            (text "Markers:")
+            "Markers:"
             (case a.markers of
                 Just b ->
                     row [ spacing 8 ]

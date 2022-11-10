@@ -5,10 +5,10 @@ import FeatherIcons
 import PlotterControl.Utils.Theme exposing (..)
 
 
-twoColumns : Element msg -> Element msg -> Element msg
+twoColumns : String -> Element msg -> Element msg
 twoColumns a b =
     row [ width fill, spacing 8 ]
-        [ el (theme.label [ width (px 128), fontAlignRight ]) a
+        [ el (theme.label [ width (px 128), height (px 40), alignTop ]) (textEllipsis [ centerY, fontAlignRight ] a)
         , b
         ]
 
