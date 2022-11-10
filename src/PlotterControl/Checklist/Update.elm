@@ -1,11 +1,13 @@
 module PlotterControl.Checklist.Update exposing (..)
 
 import Dict.Any
-import Platform.Extra
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Page
+import PlotterControl.Queue
+import PlotterControl.Queue.Update
+import SummaEl
 
 
 activateChecklist : PlotterControl.Checklist.Checklist -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
@@ -55,4 +57,12 @@ changeMarkerSensitivity a model =
 
 testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testMarkers model =
-    Platform.Extra.noOperation model
+    PlotterControl.Queue.Update.createItem
+        ("Marker Test"
+            |> PlotterControl.Queue.stringToItemName
+        )
+        (SummaEl.toString
+            [ SummaEl.LoadMarkers
+            ]
+        )
+        model
