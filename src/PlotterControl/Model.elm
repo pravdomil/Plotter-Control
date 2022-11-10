@@ -26,11 +26,7 @@ type alias Model =
 
 
 type Page
-    = MediaChecklist
-    | MarkersChecklist
-    | DrawChecklist
-    | CutChecklist
-    | PerforationChecklist
+    = Checklist PlotterControl.Checklist.Checklist
     | File PlotterControl.File.Name
 
 
