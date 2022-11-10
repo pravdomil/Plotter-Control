@@ -20,7 +20,7 @@ view a model =
         name =
             PlotterControl.Checklist.toName a.checklist
     in
-    { size = \x -> { x | width = max 240 (x.width // 3) }
+    { size = \x -> { x | width = clamp 240 416 (x.width // 3) }
     , header =
         Just
             { attributes = []
