@@ -43,10 +43,9 @@ view model =
                         ]
 
                     Err () ->
-                        [ paragraph theme
-                            [ paddingXY 8 8, fontSize 15, fontColor style.fore60 ]
-                            [ text "Open file first."
-                            ]
+                        [ statusText theme
+                            []
+                            "Open file first."
                         ]
                 )
             ]

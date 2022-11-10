@@ -13,6 +13,6 @@ theme =
     Element.PravdomilUi.Theme.Basic.theme style
 
 
-statusParagraph : Element.PravdomilUi.Theme.Theme msg -> List (Attribute msg) -> List (Element msg) -> Element msg
-statusParagraph theme_ attrs a =
-    paragraph theme_ (fontSize 15 :: fontColor style.fore60 :: attrs) a
+statusText : Element.PravdomilUi.Theme.Theme msg -> List (Attribute msg) -> String -> Element msg
+statusText _ attrs a =
+    el (width fill :: height (px 40) :: fontSize 15 :: fontColor style.fore60 :: attrs) (textEllipsis [ centerY ] a)

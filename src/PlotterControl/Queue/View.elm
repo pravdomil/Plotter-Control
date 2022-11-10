@@ -36,10 +36,9 @@ view model =
                 (Just "Items")
                 (case model.queue |> Dict.Any.isEmpty of
                     True ->
-                        [ paragraph theme
-                            [ paddingXY 8 8, fontSize 15, fontColor style.fore60 ]
-                            [ text "Queue is empty."
-                            ]
+                        [ statusText theme
+                            []
+                            "Queue is empty."
                         ]
 
                     False ->
@@ -121,42 +120,42 @@ plotterStatus : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Bl
 plotterStatus model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Status")
-        [ paragraph theme
-            [ paddingXY 8 8 ]
-            [ case model.plotter of
+        [ statusText theme
+            []
+            (case model.plotter of
                 Ok _ ->
-                    text "Ready."
+                    "Ready."
 
                 Err b ->
                     case b of
                         PlotterControl.Model.NoPlotter ->
-                            text "Ready."
+                            "Ready."
 
                         PlotterControl.Model.PlotterConnecting ->
-                            text "Connecting..."
+                            "Connecting..."
 
                         PlotterControl.Model.PlotterSending _ ->
-                            text "Sending..."
+                            "Sending..."
 
                         PlotterControl.Model.PlotterError c ->
                             case c of
                                 PlotterControl.Plotter.UsbDeviceError d ->
                                     case d of
                                         Usb.Device.NotSupported ->
-                                            text "Your browser is not supported."
+                                            "Your browser is not supported."
 
                                         Usb.Device.NothingSelected ->
-                                            text "Ready."
+                                            "Ready."
 
                                         Usb.Device.TransferAborted ->
-                                            text "Sending has been stopped."
+                                            "Sending has been stopped."
 
                                         Usb.Device.JavaScriptError _ ->
-                                            text "Internal error."
+                                            "Internal error."
 
                                 PlotterControl.Plotter.WakeLockError d ->
                                     case d of
                                         WakeLock.JavaScriptError _ ->
-                                            text "Internal error."
-            ]
+                                            "Internal error."
+            )
         ]

@@ -107,14 +107,9 @@ viewItem model a =
                             }
                         ]
                     )
-                , el
-                    [ width fill
-                    , height (px 24)
-                    , fontCenter
-                    , fontSize 15
-                    , fontColor style.fore60
-                    ]
-                    (textEllipsis [ centerY ] "Recommended insensitivity is 20–60.")
+                , statusText theme
+                    [ fontCenter ]
+                    "Recommended insensitivity is 20–60."
                 ]
 
         --
