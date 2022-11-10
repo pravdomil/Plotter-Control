@@ -13,12 +13,17 @@ import PlotterControl.Utils.Theme exposing (..)
 
 view : PlotterControl.Page.Checklist -> PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view a model =
+    let
+        name : String
+        name =
+            PlotterControl.Checklist.toName a.checklist
+    in
     { size = \x -> { x | width = max 240 (x.width // 3) }
     , header =
         Just
             { attributes = []
             , left = []
-            , center = textEllipsis [ fontCenter ] "Checklist"
+            , center = textEllipsis [ fontCenter ] (name ++ " Checklist")
             , right =
                 [ textButton theme
                     [ fontSemiBold ]
@@ -30,7 +35,7 @@ view a model =
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            [ viewChecklist model (PlotterControl.Checklist.toName a.checklist) (PlotterControl.Checklist.items a.checklist)
+            [ viewChecklist model name (PlotterControl.Checklist.items a.checklist)
             ]
     }
 
