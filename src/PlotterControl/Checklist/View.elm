@@ -185,6 +185,11 @@ viewItem model a =
                             { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
                             , onPress = PlotterControl.Msg.DrawingPressureChanged 20 |> Just
                             }
+                        , textButton theme
+                            []
+                            { label = text "Test"
+                            , onPress = Just PlotterControl.Msg.DrawingPressureTestRequested
+                            }
                         ]
                     )
                 , statusText theme

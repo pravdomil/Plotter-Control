@@ -58,6 +58,9 @@ update msg model =
         PlotterControl.Msg.DrawingPressureChanged a ->
             PlotterControl.Checklist.Update.changeDrawingPressure a model
 
+        PlotterControl.Msg.DrawingPressureTestRequested ->
+            PlotterControl.Checklist.Update.testDrawingPressure model
+
         --
         PlotterControl.Msg.OpenFilesRequested ->
             PlotterControl.Directory.Update.openFiles model

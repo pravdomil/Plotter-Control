@@ -144,3 +144,11 @@ changeDrawingPressure a model =
                     ]
                 )
             )
+
+
+testDrawingPressure : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+testDrawingPressure model =
+    PlotterControl.Queue.Update.createItem
+        (PlotterControl.Queue.stringToItemName "Pressure Test")
+        (SummaEl.toString [])
+        model

@@ -20,6 +20,7 @@ type Msg
     | MarkerTestRequested
     | DrawingSpeedChanged Int
     | DrawingPressureChanged Int
+    | DrawingPressureTestRequested
       --
     | OpenFilesRequested
     | RawFilesReceived (List File.File)
