@@ -125,7 +125,35 @@ viewItem model a =
             checkbox (text "Drawing pen is in tool holder.")
 
         PlotterControl.Checklist.DrawingSpeed ->
-            checkbox (text "Speed is set.")
+            column [ width fill, spacing 8 ]
+                [ checkbox (text "Speed is set.")
+                , PlotterControl.Utils.View.twoColumns
+                    "Speed:"
+                    (row [ spacing 8 ]
+                        [ el [ fontVariant fontTabularNumbers ]
+                            (text
+                                (model.drawingSpeed
+                                    |> Maybe.map String.fromInt
+                                    |> Maybe.withDefault "000"
+                                    |> (\x -> x ++ " mm/s")
+                                )
+                            )
+                        , textButton theme
+                            []
+                            { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                            , onPress = PlotterControl.Msg.DrawingSpeedChanged -20 |> Just
+                            }
+                        , textButton theme
+                            []
+                            { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                            , onPress = PlotterControl.Msg.DrawingSpeedChanged 20 |> Just
+                            }
+                        ]
+                    )
+                , statusText theme
+                    [ fontCenter ]
+                    "Recommended speed is 200 mm/s."
+                ]
 
         PlotterControl.Checklist.DrawingPenPressure ->
             checkbox (text "Pen pressure is ok.")

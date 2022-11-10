@@ -51,6 +51,9 @@ update msg model =
         PlotterControl.Msg.MarkerTestRequested ->
             PlotterControl.Checklist.Update.testMarkers model
 
+        PlotterControl.Msg.DrawingSpeedChanged a ->
+            PlotterControl.Checklist.Update.changeDrawingSpeed a model
+
         --
         PlotterControl.Msg.OpenFilesRequested ->
             PlotterControl.Directory.Update.openFiles model

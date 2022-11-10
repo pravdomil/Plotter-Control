@@ -18,6 +18,7 @@ type Msg
     | ChecklistActivated PlotterControl.Checklist.Checklist
     | MarkerInsensitivityChanged Int
     | MarkerTestRequested
+    | DrawingSpeedChanged Int
       --
     | OpenFilesRequested
     | RawFilesReceived (List File.File)

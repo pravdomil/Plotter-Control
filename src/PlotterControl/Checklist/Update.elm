@@ -71,3 +71,28 @@ testMarkers model =
         (PlotterControl.Queue.stringToItemName "Marker Test")
         (SummaEl.toString [ SummaEl.LoadMarkers ])
         model
+
+
+changeDrawingSpeed : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeDrawingSpeed a model =
+    let
+        value : Int
+        value =
+            case model.drawingSpeed of
+                Just b ->
+                    b + a
+
+                Nothing ->
+                    200
+    in
+    ( { model | drawingSpeed = Just value }
+    , Cmd.none
+    )
+        |> Platform.Extra.andThen
+            (PlotterControl.Queue.Update.createItem
+                (PlotterControl.Queue.stringToItemName "Set Speed")
+                (SummaEl.toString
+                    [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt value))
+                    ]
+                )
+            )
