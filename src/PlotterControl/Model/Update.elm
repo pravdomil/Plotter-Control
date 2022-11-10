@@ -40,6 +40,10 @@ update msg model =
             ( { model | viewportSize = a }, Cmd.none )
 
         --
+        PlotterControl.Msg.ChecklistActivated a ->
+            PlotterControl.Checklist.Update.activateChecklist a model
+
+        --
         PlotterControl.Msg.OpenFilesRequested ->
             PlotterControl.Directory.Update.openFiles model
 

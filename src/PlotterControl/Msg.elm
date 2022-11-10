@@ -15,6 +15,8 @@ type Msg
     = NothingHappened
     | ViewportSizeChanged Element.PravdomilUi.Application.ViewportSize
       --
+    | ChecklistActivated PlotterControl.Checklist.Checklist
+      --
     | OpenFilesRequested
     | RawFilesReceived (List File.File)
     | FilesReceived (List ( PlotterControl.File.Name, PlotterControl.File.File ))
