@@ -36,25 +36,27 @@ default name =
     }
 
 
-toSettings : Settings -> ( SummaEl.Settings, SummaEl.Settings )
+toSettings : Settings -> SummaEl.SummaEl
 toSettings a =
-    ( presetToSetUserCommand a.preset
-    , Dict.empty
-        |> Dict.insert "OPOS_PANELLING"
-            (case a.markerLoading of
-                LoadAllAtOnce ->
-                    "OFF"
+    [ presetToSetUserCommand a.preset
+    , SummaEl.SetSettings
+        (Dict.empty
+            |> Dict.insert "OPOS_PANELLING"
+                (case a.markerLoading of
+                    LoadAllAtOnce ->
+                        "OFF"
 
-                LoadSequentially ->
-                    "ON"
-            )
-        |> Dict.insert "RECUT_OFFSET"
-            (a.copyDistance
-                |> Length.inMillimeters
-                |> round
-                |> String.fromInt
-            )
-    )
+                    LoadSequentially ->
+                        "ON"
+                )
+            |> Dict.insert "RECUT_OFFSET"
+                (a.copyDistance
+                    |> Length.inMillimeters
+                    |> round
+                    |> String.fromInt
+                )
+        )
+    ]
 
 
 
@@ -85,43 +87,45 @@ presetToSetUserCommand a =
         )
 
 
-presetToSettings : Preset -> ( SummaEl.Settings, SummaEl.Settings )
+presetToSettings : Preset -> SummaEl.SummaEl
 presetToSettings a =
-    ( presetToSetUserCommand a
-    , defaultSettings
-        |> Dict.insert "TOOL"
-            (case a of
-                Draw ->
-                    "PEN"
+    [ presetToSetUserCommand a
+    , SummaEl.SetSettings
+        (defaultSettings
+            |> Dict.insert "TOOL"
+                (case a of
+                    Draw ->
+                        "PEN"
 
-                Cut ->
-                    "DRAG_KNIFE"
+                    Cut ->
+                        "DRAG_KNIFE"
 
-                Perforate ->
-                    "DRAG_KNIFE"
-            )
-        |> Dict.insert "FLEX_CUT"
-            (case a of
-                Draw ->
-                    "OFF"
+                    Perforate ->
+                        "DRAG_KNIFE"
+                )
+            |> Dict.insert "FLEX_CUT"
+                (case a of
+                    Draw ->
+                        "OFF"
 
-                Cut ->
-                    "OFF"
+                    Cut ->
+                        "OFF"
 
-                Perforate ->
-                    "MODE2"
-            )
-        |> Dict.insert "FULL_PRESSURE" "400"
-        |> Dict.insert "FLEX_VELOCITY" "100"
-        --
-        |> Dict.insert "OVERCUT" "2"
-        |> Dict.remove "OPOS_LEVEL"
-        |> Dict.remove "VELOCITY"
-        |> Dict.remove "PEN_PRESSURE"
-        |> Dict.remove "KNIFE_PRESSURE"
-        |> Dict.remove "DRAG_OFFSET"
-        |> Dict.remove "FLEX_PRESSURE"
-    )
+                    Perforate ->
+                        "MODE2"
+                )
+            |> Dict.insert "FULL_PRESSURE" "400"
+            |> Dict.insert "FLEX_VELOCITY" "100"
+            --
+            |> Dict.insert "OVERCUT" "2"
+            |> Dict.remove "OPOS_LEVEL"
+            |> Dict.remove "VELOCITY"
+            |> Dict.remove "PEN_PRESSURE"
+            |> Dict.remove "KNIFE_PRESSURE"
+            |> Dict.remove "DRAG_OFFSET"
+            |> Dict.remove "FLEX_PRESSURE"
+        )
+    ]
 
 
 
