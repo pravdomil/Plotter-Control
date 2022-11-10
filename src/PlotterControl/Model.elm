@@ -17,7 +17,7 @@ type alias Model =
     , directory : Result () PlotterControl.Directory.Directory
     , queue : PlotterControl.Queue.Queue
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
-    , checkList : Dict.Any.Dict PlotterControl.Checklist.Item ()
+    , checklist : Dict.Any.Dict PlotterControl.Checklist.Item ()
     }
 
 

@@ -17,12 +17,12 @@ activateChecklist a model =
 checkItem : PlotterControl.Checklist.Item -> Bool -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 checkItem item checked model =
     ( { model
-        | checkList =
+        | checklist =
             if checked then
-                Dict.Any.insert PlotterControl.Checklist.toComparable item () model.checkList
+                Dict.Any.insert PlotterControl.Checklist.toComparable item () model.checklist
 
             else
-                Dict.Any.remove PlotterControl.Checklist.toComparable item model.checkList
+                Dict.Any.remove PlotterControl.Checklist.toComparable item model.checklist
       }
     , Cmd.none
     )
@@ -30,6 +30,6 @@ checkItem item checked model =
 
 resetChecklist : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 resetChecklist model =
-    ( { model | checkList = Dict.Any.empty }
+    ( { model | checklist = Dict.Any.empty }
     , Cmd.none
     )

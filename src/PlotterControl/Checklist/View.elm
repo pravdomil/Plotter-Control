@@ -56,7 +56,7 @@ viewChecklist model label items =
         (items
             |> List.map
                 (\x ->
-                    viewItem (model.checkList |> Dict.Any.member PlotterControl.Checklist.toComparable x) x
+                    viewItem (model.checklist |> Dict.Any.member PlotterControl.Checklist.toComparable x) x
                 )
         )
 
