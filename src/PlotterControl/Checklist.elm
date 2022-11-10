@@ -23,19 +23,19 @@ items : Checklist -> List Item
 items a =
     case a of
         MediaChecklist ->
-            mediaChecklist
+            mediaItems
 
         MarkersChecklist ->
-            markersChecklist
+            markersItems
 
         DrawingChecklist ->
-            drawingChecklist
+            drawingItems
 
         CuttingChecklist ->
-            cuttingChecklist
+            cuttingItems
 
         PerforationChecklist ->
-            perforationChecklist
+            perforationItems
 
 
 
@@ -70,8 +70,8 @@ type Item
     | PerforationToolOffset
 
 
-mediaChecklist : List Item
-mediaChecklist =
+mediaItems : List Item
+mediaItems =
     [ MediaRollersInRange
     , MediaRollersAlignment
     , MediaFlangeGuides
@@ -79,14 +79,14 @@ mediaChecklist =
     ]
 
 
-markersChecklist : List Item
-markersChecklist =
+markersItems : List Item
+markersItems =
     [ MarkersTestOk
     ]
 
 
-drawingChecklist : List Item
-drawingChecklist =
+drawingItems : List Item
+drawingItems =
     [ CuttingKnifeInHolder
     , CuttingKnifePressure
     , CuttingKnifeDepth
@@ -96,8 +96,8 @@ drawingChecklist =
     ]
 
 
-cuttingChecklist : List Item
-cuttingChecklist =
+cuttingItems : List Item
+cuttingItems =
     [ CuttingKnifeInHolder
     , CuttingKnifePressure
     , CuttingKnifeDepth
@@ -107,8 +107,8 @@ cuttingChecklist =
     ]
 
 
-perforationChecklist : List Item
-perforationChecklist =
+perforationItems : List Item
+perforationItems =
     [ PerforationKnifeInHolder
     , PerforationToolDepth
     , PerforationFlexPressure
