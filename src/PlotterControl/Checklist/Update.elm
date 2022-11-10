@@ -9,6 +9,7 @@ import PlotterControl.Msg
 import PlotterControl.Page
 import PlotterControl.Queue
 import PlotterControl.Queue.Update
+import PlotterControl.Settings
 import SummaEl
 
 
@@ -113,8 +114,10 @@ changeDrawingSpeed a model =
             (PlotterControl.Queue.Update.createItem
                 (PlotterControl.Queue.stringToItemName "Set Speed")
                 (SummaEl.toString
-                    [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt value))
-                    ]
+                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
+                        ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt value))
+                           ]
+                    )
                 )
             )
 
@@ -140,8 +143,10 @@ changeDrawingPressure a model =
             (PlotterControl.Queue.Update.createItem
                 (PlotterControl.Queue.stringToItemName "Set Pressure")
                 (SummaEl.toString
-                    [ SummaEl.SetSettings (Dict.singleton "PEN_PRESSURE" (String.fromInt value))
-                    ]
+                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
+                        ++ [ SummaEl.SetSettings (Dict.singleton "PEN_PRESSURE" (String.fromInt value))
+                           ]
+                    )
                 )
             )
 
