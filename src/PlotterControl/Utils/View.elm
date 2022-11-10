@@ -29,12 +29,20 @@ inputNumber value onChange =
             }
         , textButton theme
             []
-            { label = FeatherIcons.minus |> FeatherIcons.withSize 30 |> iconToElement
+            { label =
+                row []
+                    [ FeatherIcons.minus |> FeatherIcons.withSize 20 |> iconToElement
+                    , text " 10"
+                    ]
             , onPress = onChange -10 |> Just
             }
         , textButton theme
             []
-            { label = FeatherIcons.plus |> FeatherIcons.withSize 30 |> iconToElement
+            { label =
+                row []
+                    [ FeatherIcons.plus |> FeatherIcons.withSize 20 |> iconToElement
+                    , text " 10"
+                    ]
             , onPress = onChange 10 |> Just
             }
         ]
