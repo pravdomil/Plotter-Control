@@ -5,6 +5,7 @@ import Element.PravdomilUi.Application
 import Element.PravdomilUi.Application.Block
 import PlotterControl.Directory.Utils
 import PlotterControl.File
+import PlotterControl.Markers
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Page
@@ -47,11 +48,13 @@ view { name } model =
                                     PlotterControl.File.FileNotSupported ->
                                         text ("Only " ++ PlotterControl.File.supportedExtension ++ " files are supported.")
 
-                                    PlotterControl.File.InvalidMarkerCount ->
-                                        text "Failed to load markers."
-
                                     PlotterControl.File.ParserError _ ->
                                         text "Failed to parse file."
+
+                                    PlotterControl.File.MarkersError c ->
+                                        case c of
+                                            PlotterControl.Markers.InvalidMarkerCount ->
+                                                text "Failed to load markers."
                                 ]
                             ]
                     )
