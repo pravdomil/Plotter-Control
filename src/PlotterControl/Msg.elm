@@ -16,7 +16,7 @@ type Msg
     | ViewportSizeChanged Element.PravdomilUi.Application.ViewportSize
       --
     | ChecklistActivated PlotterControl.Checklist.Checklist
-    | MarkerInsensitivityChanged Int
+    | MarkerSensitivityChanged Int
     | MarkerTestRequested
     | DrawingSpeedChanged Int
       --

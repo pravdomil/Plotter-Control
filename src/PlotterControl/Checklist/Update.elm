@@ -40,26 +40,37 @@ resetChecklist model =
     )
 
 
-changeMarkerInsensitivity : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-changeMarkerInsensitivity a model =
+changeMarkerSensitivity : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeMarkerSensitivity a model =
     let
         value : Int
         value =
-            case model.markerInsensitivity of
+            (case model.markerSensitivity of
                 Just b ->
                     b + a
 
                 Nothing ->
-                    60
+                    75
+            )
+                |> clamp 0 100
+
+        level : Int
+        level =
+            value
+                |> toFloat
+                |> (\x -> x / 100)
+                |> (\x -> 1 - x)
+                |> (\x -> x * 250)
+                |> round
     in
-    ( { model | markerInsensitivity = Just value }
+    ( { model | markerSensitivity = Just value }
     , Cmd.none
     )
         |> Platform.Extra.andThen
             (PlotterControl.Queue.Update.createItem
-                (PlotterControl.Queue.stringToItemName "Set Insensitivity")
+                (PlotterControl.Queue.stringToItemName "Set Sensitivity")
                 (SummaEl.toString
-                    [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt value))
+                    [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
                     ]
                 )
             )
