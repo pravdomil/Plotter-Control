@@ -26,6 +26,7 @@ all =
 type Item
     = MediaRollersAlignment
     | MediaFlangeGuides
+    | MediaRollersInRange
     | MediaLeverArmDown
       --
     | MarkersTestOk
@@ -54,6 +55,7 @@ mediaChecklist : List Item
 mediaChecklist =
     [ MediaRollersAlignment
     , MediaFlangeGuides
+    , MediaRollersInRange
     , MediaLeverArmDown
     ]
 
@@ -105,6 +107,9 @@ toComparable a =
 
         MediaFlangeGuides ->
             "MediaFlangeGuides"
+
+        MediaRollersInRange ->
+            "MediaRollersInRange"
 
         MediaLeverArmDown ->
             "MediaLeverArmDown"
