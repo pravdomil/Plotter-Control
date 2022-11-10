@@ -18,6 +18,9 @@ type alias Model =
     , queue : PlotterControl.Queue.Queue
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
     , checklist : Dict.Any.Dict PlotterControl.Checklist.Item ()
+
+    --
+    , markerSensitivity : Maybe Int
     }
 
 

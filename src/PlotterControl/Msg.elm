@@ -16,6 +16,7 @@ type Msg
     | ViewportSizeChanged Element.PravdomilUi.Application.ViewportSize
       --
     | ChecklistActivated PlotterControl.Checklist.Checklist
+    | MarkerSensitivityChanged Int
       --
     | OpenFilesRequested
     | RawFilesReceived (List File.File)
