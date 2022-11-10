@@ -87,8 +87,8 @@ presetToSetUserCommand a =
         )
 
 
-presetToSummaEl : Preset -> SummaEl.SummaEl
-presetToSummaEl a =
+presetToDefaultSettings : Preset -> SummaEl.SummaEl
+presetToDefaultSettings a =
     [ presetToSetUserCommand a
     , SummaEl.SetSettings
         (defaultSettings
