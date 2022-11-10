@@ -63,9 +63,6 @@ update msg model =
         PlotterControl.Msg.MarkerTestRequested a ->
             PlotterControl.File.Update.testMarkers a model
 
-        PlotterControl.Msg.ConfigurePlotterRequested a ->
-            PlotterControl.File.Update.configurePlotter a model
-
         PlotterControl.Msg.PresetChanged a b ->
             PlotterControl.File.Update.changePreset a b model
 

@@ -57,22 +57,6 @@ testMarkers name model =
             Platform.Extra.noOperation model
 
 
-configurePlotter : PlotterControl.File.Name -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-configurePlotter name model =
-    case PlotterControl.Directory.Utils.readyFileByName name model of
-        Just ( _, b ) ->
-            PlotterControl.Queue.Update.createItem
-                (name |> PlotterControl.File.nameToString |> (\x -> "Configure - " ++ x) |> PlotterControl.Queue.stringToItemName)
-                (SummaEl.toString
-                    [ SummaEl.SetSettings (PlotterControl.File.readyToSettings b)
-                    ]
-                )
-                model
-
-        Nothing ->
-            Platform.Extra.noOperation model
-
-
 
 --
 

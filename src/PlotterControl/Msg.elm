@@ -24,7 +24,6 @@ type Msg
       --
     | AddFileToQueueRequested PlotterControl.File.Name
     | MarkerTestRequested PlotterControl.File.Name
-    | ConfigurePlotterRequested PlotterControl.File.Name
     | PresetChanged PlotterControl.File.Name PlotterControl.Settings.Preset
     | CopiesChanged PlotterControl.File.Name PlotterControl.Settings.Copies
     | CopyDistanceChanged PlotterControl.File.Name Length.Length
