@@ -17,6 +17,7 @@ init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg
 init flags =
     ( PlotterControl.Model.Model
         (Element.PravdomilUi.Application.flagsToViewportSize flags)
+        Nothing
         (Err ())
         Dict.Any.empty
         (Err PlotterControl.Model.NoPlotter)
