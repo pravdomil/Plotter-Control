@@ -19,10 +19,10 @@ checkItem item checked model =
     ( { model
         | checklist =
             if checked then
-                Dict.Any.insert PlotterControl.Checklist.toComparable item () model.checklist
+                Dict.Any.insert PlotterControl.Checklist.itemToComparable item () model.checklist
 
             else
-                Dict.Any.remove PlotterControl.Checklist.toComparable item model.checklist
+                Dict.Any.remove PlotterControl.Checklist.itemToComparable item model.checklist
       }
     , Cmd.none
     )

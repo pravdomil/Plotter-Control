@@ -101,7 +101,7 @@ viewChecklist model a =
             items
                 |> List.filterMap
                     (\x ->
-                        Dict.Any.get PlotterControl.Checklist.toComparable x model.checklist
+                        Dict.Any.get PlotterControl.Checklist.itemToComparable x model.checklist
                     )
                 |> List.length
 

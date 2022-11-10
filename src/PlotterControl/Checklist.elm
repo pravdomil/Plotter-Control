@@ -118,8 +118,8 @@ perforationChecklist =
     ]
 
 
-toComparable : Item -> String
-toComparable a =
+itemToComparable : Item -> String
+itemToComparable a =
     case a of
         MediaRollersInRange ->
             "MediaRollersInRange"
