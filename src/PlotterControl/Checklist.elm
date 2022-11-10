@@ -2,58 +2,58 @@ module PlotterControl.Checklist exposing (..)
 
 
 type Checklist
-    = MediaChecklist
-    | MarkersChecklist
-    | DrawingChecklist
-    | CuttingChecklist
-    | PerforationChecklist
+    = Media
+    | Markers
+    | Drawing
+    | Cutting
+    | Perforation
 
 
 toName : Checklist -> String
 toName a =
     case a of
-        MediaChecklist ->
+        Media ->
             "Media"
 
-        MarkersChecklist ->
+        Markers ->
             "Markers"
 
-        DrawingChecklist ->
+        Drawing ->
             "Drawing"
 
-        CuttingChecklist ->
+        Cutting ->
             "Cutting"
 
-        PerforationChecklist ->
+        Perforation ->
             "Perforation"
 
 
 all : List Checklist
 all =
-    [ MediaChecklist
-    , MarkersChecklist
-    , DrawingChecklist
-    , CuttingChecklist
-    , PerforationChecklist
+    [ Media
+    , Markers
+    , Drawing
+    , Cutting
+    , Perforation
     ]
 
 
 items : Checklist -> List Item
 items a =
     case a of
-        MediaChecklist ->
+        Media ->
             mediaItems
 
-        MarkersChecklist ->
+        Markers ->
             markersItems
 
-        DrawingChecklist ->
+        Drawing ->
             drawingItems
 
-        CuttingChecklist ->
+        Cutting ->
             cuttingItems
 
-        PerforationChecklist ->
+        Perforation ->
             perforationItems
 
 
