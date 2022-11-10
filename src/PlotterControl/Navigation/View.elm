@@ -4,6 +4,8 @@ import Dict.Any
 import Element.PravdomilUi exposing (..)
 import Element.PravdomilUi.Application
 import Element.PravdomilUi.Application.Block
+import PlotterControl.Checklist
+import PlotterControl.Checklist.Utils
 import PlotterControl.Directory
 import PlotterControl.Directory.Utils
 import PlotterControl.File
@@ -32,7 +34,22 @@ view model =
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            [ case model.directory of
+            [ Element.PravdomilUi.Application.Block.Block
+                (Just "Checklists")
+                [ inputRadio theme
+                    [ width fill ]
+                    { label = labelHidden "Checklists"
+                    , options =
+                        PlotterControl.Checklist.all
+                            |> List.map
+                                (\x ->
+                                    inputRadioBlockOption theme [ width fill ] x (textEllipsis [] (Debug.toString x))
+                                )
+                    , selected = PlotterControl.Checklist.Utils.activeChecklist model
+                    , onChange = PlotterControl.Msg.ChecklistActivated
+                    }
+                ]
+            , case model.directory of
                 Ok b ->
                     Element.PravdomilUi.Application.Block.Block
                         (Just "Files")
