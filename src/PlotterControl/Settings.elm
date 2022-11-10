@@ -38,18 +38,7 @@ default name =
 
 toSettings : Settings -> ( SummaEl.Settings, SummaEl.Settings )
 toSettings a =
-    ( Dict.singleton
-        "CONFIGUSER"
-        (case a.preset of
-            Draw ->
-                "1"
-
-            Cut ->
-                "2"
-
-            Perforate ->
-                "3"
-        )
+    ( presetToUser a.preset
     , Dict.empty
         |> Dict.insert "OPOS_PANELLING"
             (case a.markerLoading of
@@ -78,9 +67,26 @@ type Preset
     | Perforate
 
 
-presetToSettings : Preset -> SummaEl.Settings
+presetToUser : Preset -> SummaEl.Settings
+presetToUser a =
+    Dict.singleton
+        "CONFIGUSER"
+        (case a of
+            Draw ->
+                "1"
+
+            Cut ->
+                "2"
+
+            Perforate ->
+                "3"
+        )
+
+
+presetToSettings : Preset -> ( SummaEl.Settings, SummaEl.Settings )
 presetToSettings a =
-    defaultSettings
+    ( presetToUser a
+    , defaultSettings
         |> Dict.insert "TOOL"
             (case a of
                 Draw ->
@@ -113,6 +119,7 @@ presetToSettings a =
         |> Dict.remove "KNIFE_PRESSURE"
         |> Dict.remove "DRAG_OFFSET"
         |> Dict.remove "FLEX_PRESSURE"
+    )
 
 
 
