@@ -4,8 +4,8 @@ module PlotterControl.Checklist exposing (..)
 type Checklist
     = MediaChecklist
     | MarkersChecklist
-    | DrawChecklist
-    | CutChecklist
+    | DrawingChecklist
+    | CuttingChecklist
     | PerforationChecklist
 
 
@@ -13,8 +13,8 @@ all : List Checklist
 all =
     [ MediaChecklist
     , MarkersChecklist
-    , DrawChecklist
-    , CutChecklist
+    , DrawingChecklist
+    , CuttingChecklist
     , PerforationChecklist
     ]
 

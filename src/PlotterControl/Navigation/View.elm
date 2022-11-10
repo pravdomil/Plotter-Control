@@ -98,10 +98,10 @@ checklistName a =
         PlotterControl.Checklist.MarkersChecklist ->
             "Markers"
 
-        PlotterControl.Checklist.DrawChecklist ->
+        PlotterControl.Checklist.DrawingChecklist ->
             "Drawing"
 
-        PlotterControl.Checklist.CutChecklist ->
+        PlotterControl.Checklist.CuttingChecklist ->
             "Cutting"
 
         PlotterControl.Checklist.PerforationChecklist ->
