@@ -6,7 +6,6 @@ import HpGl
 import HpGl.Geometry
 import Length
 import LineSegment2d
-import Platform.Extra
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -90,60 +89,16 @@ testMarkers model =
 
 changeDrawingSpeed : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeDrawingSpeed a model =
-    let
-        value : Int
-        value =
-            (case model.drawingSpeed of
-                Just b ->
-                    b + a
-
-                Nothing ->
-                    200
-            )
-                |> clamp 50 800
-    in
-    ( { model | drawingSpeed = Just value }
+    ( { model | drawingSpeed = clamp 50 800 (model.drawingSpeed + a) }
     , Cmd.none
     )
-        |> Platform.Extra.andThen
-            (PlotterControl.Queue.Update.createItem
-                (PlotterControl.Queue.stringToItemName "Set Speed")
-                (SummaEl.toString
-                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
-                        ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt value))
-                           ]
-                    )
-                )
-            )
 
 
 changeDrawingPressure : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeDrawingPressure a model =
-    let
-        value : Int
-        value =
-            (case model.drawingPressure of
-                Just b ->
-                    b + a
-
-                Nothing ->
-                    160
-            )
-                |> clamp 0 400
-    in
-    ( { model | drawingPressure = Just value }
+    ( { model | drawingPressure = clamp 0 400 (model.drawingPressure + a) }
     , Cmd.none
     )
-        |> Platform.Extra.andThen
-            (PlotterControl.Queue.Update.createItem
-                (PlotterControl.Queue.stringToItemName "Set Pressure")
-                (SummaEl.toString
-                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
-                        ++ [ SummaEl.SetSettings (Dict.singleton "PEN_PRESSURE" (String.fromInt value))
-                           ]
-                    )
-                )
-            )
 
 
 testDrawing : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
@@ -183,7 +138,11 @@ testDrawing model =
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName "Drawing Test")
         (SummaEl.toString
-            (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw)
+            (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
+                ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt model.drawingSpeed))
+                   , SummaEl.SetSettings (Dict.singleton "PEN_PRESSURE" (String.fromInt model.drawingPressure))
+                   ]
+            )
             ++ test
             ++ SummaEl.toString
                 [ SummaEl.SetOrigin (Point2d.origin |> Point2d.translateBy spacing)

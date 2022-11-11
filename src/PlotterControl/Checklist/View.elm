@@ -190,13 +190,7 @@ drawingTest model =
             "Speed:"
             (row [ spacing 8 ]
                 [ el [ fontVariant fontTabularNumbers ]
-                    (text
-                        (model.drawingSpeed
-                            |> Maybe.map String.fromInt
-                            |> Maybe.withDefault "000"
-                            |> (\x -> x ++ " mm/s")
-                        )
-                    )
+                    (text (String.fromInt model.drawingSpeed ++ " mm/s"))
                 , textButton theme
                     []
                     { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
@@ -213,13 +207,7 @@ drawingTest model =
             "Pressure:"
             (row [ spacing 8 ]
                 [ el [ fontVariant fontTabularNumbers ]
-                    (text
-                        (model.drawingPressure
-                            |> Maybe.map String.fromInt
-                            |> Maybe.withDefault "000"
-                            |> (\x -> x ++ " g")
-                        )
-                    )
+                    (text (String.fromInt model.drawingPressure ++ " g"))
                 , textButton theme
                     []
                     { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
