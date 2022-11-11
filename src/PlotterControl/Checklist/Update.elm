@@ -6,7 +6,6 @@ import HpGl
 import HpGl.Geometry
 import Length
 import LineSegment2d
-import Platform.Extra
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -211,4 +210,13 @@ changePerforationOffset a model =
 
 testPerforation : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testPerforation model =
-    Platform.Extra.noOperation model
+    PlotterControl.Queue.Update.createItem
+        (PlotterControl.Queue.stringToItemName "Perforation Test")
+        (SummaEl.toString
+            (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Perforate
+                ++ [ SummaEl.SetSettings (Dict.singleton "FLEX_PRESSURE" (String.fromInt model.perforationPressure))
+                   , SummaEl.SetSettings (Dict.singleton "DRAG_OFFSET" (String.fromInt model.perforationOffset))
+                   ]
+            )
+        )
+        model
