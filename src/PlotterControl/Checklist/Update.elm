@@ -181,6 +181,29 @@ changeCuttingOffset a model =
 testCutting : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testCutting model =
     let
+        polylines : List (Polyline2d.Polyline2d Length.Meters coordinates)
+        polylines =
+            [ Polyline2d.fromVertices
+                [ Point2d.millimeters 0 0
+                , Point2d.millimeters 10 0
+                , Point2d.millimeters 10 5
+                , Point2d.millimeters 0 5
+                , Point2d.millimeters 0 10
+                , Point2d.millimeters 10 10
+                , Point2d.millimeters 10 5
+                , Point2d.millimeters 0 5
+                , Point2d.millimeters 0 0
+                ]
+            , Polyline2d.fromVertices
+                [ Point2d.millimeters 2 2
+                , Point2d.millimeters 8 8
+                ]
+            , Polyline2d.fromVertices
+                [ Point2d.millimeters 2 8
+                , Point2d.millimeters 8 2
+                ]
+            ]
+
         test : String
         test =
             SummaEl.toString
@@ -196,6 +219,10 @@ testCutting model =
                             ]
                        )
                 )
+                ++ HpGl.toString (HpGl.Initialize :: HpGl.Geometry.fromPolylines polylines)
+                ++ SummaEl.toString
+                    [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters -8) (Length.millimeters (-2 + 11)))
+                    ]
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Cutting Test") test model
 
