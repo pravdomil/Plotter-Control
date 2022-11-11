@@ -147,7 +147,7 @@ testDrawing model =
                             ]
                        )
                 )
-                ++ HpGl.toString (HpGl.Initialize :: HpGl.Geometry.fromPolylines polylines)
+                ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.origin |> Point2d.translateBy spacing)
                     ]
@@ -223,7 +223,7 @@ testCutting model =
                             ]
                        )
                 )
-                ++ HpGl.toString (HpGl.Initialize :: HpGl.Geometry.fromPolylines polylines)
+                ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters -8) (Length.millimeters (-2 + 11)))
                     ]
