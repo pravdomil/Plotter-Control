@@ -111,7 +111,7 @@ viewItem model a =
             checkbox (text "Cutting knife is in tool holder.")
 
         PlotterControl.Checklist.CuttingKnifeDepth ->
-            checkbox (text "Knife depth is ok.")
+            checkbox (text "Knife depth is set.")
 
         PlotterControl.Checklist.CuttingKnifeSecureNut ->
             checkbox (text "Knife depth is secured with nut.")
@@ -127,7 +127,7 @@ viewItem model a =
             checkbox (text "Perforation knife is in tool holder.")
 
         PlotterControl.Checklist.PerforationToolDepth ->
-            checkbox (text "Knife depth is ok.")
+            checkbox (text "Knife depth is set.")
 
         PlotterControl.Checklist.PerforationKnifeSecureNut ->
             checkbox (text "Knife depth is secured with nut.")
