@@ -149,6 +149,7 @@ testDrawing model =
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.origin |> Point2d.translateBy spacing)
                     ]
+                ++ HpGl.toString [ HpGl.ToolUp [ Point2d.xy (Length.millimeters 40) Quantity.zero ] ]
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Drawing Test") test model
 
@@ -223,6 +224,7 @@ testCutting model =
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters -8) (Length.millimeters (-2 + 11)))
                     ]
+                ++ HpGl.toString [ HpGl.ToolUp [ Point2d.xy (Length.millimeters 40) Quantity.zero ] ]
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Cutting Test") test model
 
