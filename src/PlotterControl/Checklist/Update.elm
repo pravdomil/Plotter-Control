@@ -77,6 +77,7 @@ testMarkers model =
         (PlotterControl.Queue.stringToItemName "Marker Test")
         (SummaEl.toString
             [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
+            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
             , SummaEl.LoadMarkers
             ]
         )
@@ -142,6 +143,7 @@ testDrawing model =
                                     |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
                                     |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
                                 )
+                            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
                             ]
                        )
                 )
@@ -217,6 +219,7 @@ testCutting model =
                                     |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
                                     |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
                                 )
+                            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
                             ]
                        )
                 )
@@ -262,6 +265,7 @@ testPerforation model =
                                     |> Dict.insert "FLEX_PRESSURE" (String.fromInt model.perforationPressure)
                                     |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
                                 )
+                            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
                             ]
                        )
                 )
