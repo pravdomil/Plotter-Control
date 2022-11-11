@@ -172,7 +172,16 @@ changeCuttingOffset a model =
 
 testCutting : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testCutting model =
-    Platform.Extra.noOperation model
+    PlotterControl.Queue.Update.createItem
+        (PlotterControl.Queue.stringToItemName "Cutting Test")
+        (SummaEl.toString
+            (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Cut
+                ++ [ SummaEl.SetSettings (Dict.singleton "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure))
+                   , SummaEl.SetSettings (Dict.singleton "DRAG_OFFSET" (String.fromInt model.cuttingOffset))
+                   ]
+            )
+        )
+        model
 
 
 
