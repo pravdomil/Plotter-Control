@@ -23,7 +23,7 @@ view a model =
             , center = textEllipsis [ fontCenter ] (PlotterControl.Checklist.toName a.checklist ++ " Checklist")
             , right =
                 [ textButton theme
-                    [ fontSemiBold ]
+                    []
                     { label = text "Reset"
                     , onPress = Just PlotterControl.Msg.ResetChecklist
                     }
