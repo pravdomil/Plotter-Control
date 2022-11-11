@@ -134,19 +134,20 @@ testDrawing model =
 
         test : String
         test =
-            SummaEl.toString
-                (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
-                    |> (\( x, x2 ) ->
-                            [ x
-                            , SummaEl.SetSettings
-                                (x2
-                                    |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
-                                    |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
-                                )
-                            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                            ]
-                       )
-                )
+            HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
+                ++ SummaEl.toString
+                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
+                        |> (\( x, x2 ) ->
+                                [ x
+                                , SummaEl.SetSettings
+                                    (x2
+                                        |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
+                                        |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
+                                    )
+                                , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                                ]
+                           )
+                    )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.origin |> Point2d.translateBy spacing)
@@ -209,20 +210,21 @@ testCutting model =
 
         test : String
         test =
-            SummaEl.toString
-                (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Cut
-                    |> (\( x, x2 ) ->
-                            [ x
-                            , SummaEl.SetSettings
-                                (x2
-                                    |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
-                                    |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
-                                    |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
-                                )
-                            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                            ]
-                       )
-                )
+            HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
+                ++ SummaEl.toString
+                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Cut
+                        |> (\( x, x2 ) ->
+                                [ x
+                                , SummaEl.SetSettings
+                                    (x2
+                                        |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
+                                        |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
+                                        |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
+                                    )
+                                , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                                ]
+                           )
+                    )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters -8) (Length.millimeters (-2 + 11)))
