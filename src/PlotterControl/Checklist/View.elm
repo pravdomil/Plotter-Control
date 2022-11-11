@@ -41,7 +41,7 @@ view a model =
                     markersTest model
 
                 PlotterControl.Checklist.Drawing ->
-                    Element.PravdomilUi.Application.Block.Empty
+                    drawingTest model
 
                 PlotterControl.Checklist.Cutting ->
                     Element.PravdomilUi.Application.Block.Empty
@@ -97,68 +97,6 @@ viewItem model a =
         PlotterControl.Checklist.DrawingPenInHolder ->
             checkbox (text "Drawing pen is in tool holder.")
 
-        PlotterControl.Checklist.DrawingSpeed ->
-            column [ width fill, spacing 8 ]
-                [ checkbox (text "Speed is set.")
-                , PlotterControl.Utils.View.twoColumns
-                    "Speed:"
-                    (row [ spacing 8 ]
-                        [ el [ fontVariant fontTabularNumbers ]
-                            (text
-                                (model.drawingSpeed
-                                    |> Maybe.map String.fromInt
-                                    |> Maybe.withDefault "000"
-                                    |> (\x -> x ++ " mm/s")
-                                )
-                            )
-                        , textButton theme
-                            []
-                            { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.DrawingSpeedChanged -50 |> Just
-                            }
-                        , textButton theme
-                            []
-                            { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.DrawingSpeedChanged 50 |> Just
-                            }
-                        ]
-                    )
-                , statusText theme
-                    [ fontCenter ]
-                    "Recommended speed is 200 mm/s."
-                ]
-
-        PlotterControl.Checklist.DrawingPenPressure ->
-            column [ width fill, spacing 8 ]
-                [ checkbox (text "Pen pressure is set.")
-                , PlotterControl.Utils.View.twoColumns
-                    "Pressure:"
-                    (row [ spacing 8 ]
-                        [ el [ fontVariant fontTabularNumbers ]
-                            (text
-                                (model.drawingPressure
-                                    |> Maybe.map String.fromInt
-                                    |> Maybe.withDefault "000"
-                                    |> (\x -> x ++ " g")
-                                )
-                            )
-                        , textButton theme
-                            []
-                            { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.DrawingPressureChanged -20 |> Just
-                            }
-                        , textButton theme
-                            []
-                            { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.DrawingPressureChanged 20 |> Just
-                            }
-                        ]
-                    )
-                , statusText theme
-                    [ fontCenter ]
-                    "Recommended pressure is 160 g."
-                ]
-
         PlotterControl.Checklist.DrawingPenDepth ->
             checkbox (text "Pen depth is set.")
 
@@ -166,14 +104,7 @@ viewItem model a =
             checkbox (text "Tool holder knob is tight.")
 
         PlotterControl.Checklist.DrawingTestOk ->
-            column [ width fill, spacing 8 ]
-                [ checkbox (text "Drawing test succeed.")
-                , textButton theme
-                    [ centerX ]
-                    { label = text "Drawing Test"
-                    , onPress = Just PlotterControl.Msg.DrawingTestRequested
-                    }
-                ]
+            checkbox (text "Drawing test succeed.")
 
         --
         PlotterControl.Checklist.CuttingKnifeInHolder ->
@@ -214,6 +145,10 @@ viewItem model a =
             checkbox (text "Knife offset is corrected.")
 
 
+
+--
+
+
 markersTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
 markersTest model =
     Element.PravdomilUi.Application.Block.Block
@@ -241,5 +176,67 @@ markersTest model =
             [ centerX ]
             { label = text "Test Markers"
             , onPress = Just PlotterControl.Msg.MarkerTestRequested
+            }
+        ]
+
+
+
+--
+
+
+drawingTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+drawingTest model =
+    Element.PravdomilUi.Application.Block.Block
+        (Just "Test")
+        [ PlotterControl.Utils.View.twoColumns
+            "Speed:"
+            (row [ spacing 8 ]
+                [ el [ fontVariant fontTabularNumbers ]
+                    (text
+                        (model.drawingSpeed
+                            |> Maybe.map String.fromInt
+                            |> Maybe.withDefault "000"
+                            |> (\x -> x ++ " mm/s")
+                        )
+                    )
+                , textButton theme
+                    []
+                    { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                    , onPress = PlotterControl.Msg.DrawingSpeedChanged -50 |> Just
+                    }
+                , textButton theme
+                    []
+                    { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                    , onPress = PlotterControl.Msg.DrawingSpeedChanged 50 |> Just
+                    }
+                ]
+            )
+        , PlotterControl.Utils.View.twoColumns
+            "Pressure:"
+            (row [ spacing 8 ]
+                [ el [ fontVariant fontTabularNumbers ]
+                    (text
+                        (model.drawingPressure
+                            |> Maybe.map String.fromInt
+                            |> Maybe.withDefault "000"
+                            |> (\x -> x ++ " g")
+                        )
+                    )
+                , textButton theme
+                    []
+                    { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                    , onPress = PlotterControl.Msg.DrawingPressureChanged -20 |> Just
+                    }
+                , textButton theme
+                    []
+                    { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                    , onPress = PlotterControl.Msg.DrawingPressureChanged 20 |> Just
+                    }
+                ]
+            )
+        , textButton theme
+            [ centerX ]
+            { label = text "Drawing Test"
+            , onPress = Just PlotterControl.Msg.DrawingTestRequested
             }
         ]
