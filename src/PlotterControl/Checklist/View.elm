@@ -100,11 +100,11 @@ viewItem model a =
         PlotterControl.Checklist.DrawingPenDepth ->
             checkbox (text "Pen depth is set.")
 
-        PlotterControl.Checklist.DrawingToolHolderKnob ->
-            checkbox (text "Tool holder knob is tight.")
-
         PlotterControl.Checklist.DrawingTestOk ->
             checkbox (text "Drawing test succeed.")
+
+        PlotterControl.Checklist.DrawingToolHolderKnob ->
+            checkbox (text "Tool holder knob is tight.")
 
         --
         PlotterControl.Checklist.CuttingKnifeInHolder ->
@@ -113,14 +113,14 @@ viewItem model a =
         PlotterControl.Checklist.CuttingKnifeDepth ->
             checkbox (text "Knife depth is set.")
 
+        PlotterControl.Checklist.CuttingTestOk ->
+            checkbox (text "Cutting test succeed.")
+
         PlotterControl.Checklist.CuttingKnifeSecureNut ->
             checkbox (text "Knife depth is secured with nut.")
 
         PlotterControl.Checklist.CuttingToolHolderKnob ->
             checkbox (text "Tool holder knob is tight.")
-
-        PlotterControl.Checklist.CuttingTestOk ->
-            checkbox (text "Cutting test succeed.")
 
         --
         PlotterControl.Checklist.PerforationKnifeInHolder ->
@@ -129,14 +129,14 @@ viewItem model a =
         PlotterControl.Checklist.PerforationToolDepth ->
             checkbox (text "Knife depth is set.")
 
+        PlotterControl.Checklist.PerforationTestOk ->
+            checkbox (text "Perforation test succeed.")
+
         PlotterControl.Checklist.PerforationKnifeSecureNut ->
             checkbox (text "Knife depth is secured with nut.")
 
         PlotterControl.Checklist.PerforationToolHolderKnob ->
             checkbox (text "Tool holder knob is tight.")
-
-        PlotterControl.Checklist.PerforationTestOk ->
-            checkbox (text "Perforation test succeed.")
 
 
 
