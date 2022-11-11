@@ -257,19 +257,20 @@ testPerforation model =
     let
         test : String
         test =
-            SummaEl.toString
-                (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Perforate
-                    |> (\( x, x2 ) ->
-                            [ x
-                            , SummaEl.SetSettings
-                                (x2
-                                    |> Dict.insert "VELOCITY" (String.fromInt 800)
-                                    |> Dict.insert "FLEX_PRESSURE" (String.fromInt model.perforationPressure)
-                                    |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
-                                )
-                            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                            ]
-                       )
-                )
+            HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
+                ++ SummaEl.toString
+                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Perforate
+                        |> (\( x, x2 ) ->
+                                [ x
+                                , SummaEl.SetSettings
+                                    (x2
+                                        |> Dict.insert "VELOCITY" (String.fromInt 800)
+                                        |> Dict.insert "FLEX_PRESSURE" (String.fromInt model.perforationPressure)
+                                        |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
+                                    )
+                                , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                                ]
+                           )
+                    )
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Perforation Test") test model
