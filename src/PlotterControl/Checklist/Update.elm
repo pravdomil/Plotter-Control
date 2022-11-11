@@ -213,20 +213,21 @@ changePerforationOffset a model =
 
 testPerforation : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testPerforation model =
-    PlotterControl.Queue.Update.createItem
-        (PlotterControl.Queue.stringToItemName "Perforation Test")
-        (SummaEl.toString
-            (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Perforate
-                |> (\( x, x2 ) ->
-                        [ x
-                        , SummaEl.SetSettings
-                            (x2
-                                |> Dict.insert "VELOCITY" (String.fromInt 800)
-                                |> Dict.insert "FLEX_PRESSURE" (String.fromInt model.perforationPressure)
-                                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
-                            )
-                        ]
-                   )
-            )
-        )
-        model
+    let
+        test : String
+        test =
+            SummaEl.toString
+                (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Perforate
+                    |> (\( x, x2 ) ->
+                            [ x
+                            , SummaEl.SetSettings
+                                (x2
+                                    |> Dict.insert "VELOCITY" (String.fromInt 800)
+                                    |> Dict.insert "FLEX_PRESSURE" (String.fromInt model.perforationPressure)
+                                    |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
+                                )
+                            ]
+                       )
+                )
+    in
+    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Perforation Test") test model
