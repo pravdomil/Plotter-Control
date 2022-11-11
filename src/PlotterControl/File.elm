@@ -128,7 +128,7 @@ readyToPlotterData a =
         data =
             a.polylines
                 |> HpGl.Geometry.fromPolylines
-                |> (\x -> [ HpGl.Initialize ] ++ x ++ [ HpGl.End ])
+                |> (\x -> HpGl.Initialize :: x ++ [ HpGl.End ])
                 |> HpGl.toString
 
         maybeRecut : String
