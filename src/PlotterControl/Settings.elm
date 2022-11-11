@@ -115,6 +115,7 @@ presetToDefaultSettings a =
         |> Dict.insert "FLEX_VELOCITY" "100"
         |> Dict.insert "OVERCUT" "2"
         --
+        |> Dict.remove "CONFIGUSER"
         |> Dict.remove "OPOS_LEVEL"
     )
 
