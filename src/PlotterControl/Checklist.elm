@@ -76,11 +76,10 @@ type Item
     | DrawingTestOk
       --
     | CuttingKnifeInHolder
-    | CuttingKnifePressure
     | CuttingKnifeDepth
     | CuttingKnifeSecureNut
     | CuttingToolHolderKnob
-    | CuttingKnifeOffset
+    | CuttingTestOk
       --
     | PerforationKnifeInHolder
     | PerforationToolDepth
@@ -118,11 +117,10 @@ drawingItems =
 cuttingItems : List Item
 cuttingItems =
     [ CuttingKnifeInHolder
-    , CuttingKnifePressure
     , CuttingKnifeDepth
     , CuttingKnifeSecureNut
     , CuttingToolHolderKnob
-    , CuttingKnifeOffset
+    , CuttingTestOk
     ]
 
 
@@ -173,9 +171,6 @@ itemToComparable a =
         CuttingKnifeInHolder ->
             "CuttingKnifeInHolder"
 
-        CuttingKnifePressure ->
-            "CuttingKnifePressure"
-
         CuttingKnifeDepth ->
             "CuttingKnifeDepth"
 
@@ -185,8 +180,8 @@ itemToComparable a =
         CuttingToolHolderKnob ->
             "CuttingToolHolderKnob"
 
-        CuttingKnifeOffset ->
-            "CuttingKnifeOffset"
+        CuttingTestOk ->
+            "CuttingTestOk"
 
         PerforationKnifeInHolder ->
             "PerforationKnifeInHolder"

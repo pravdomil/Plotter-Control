@@ -110,9 +110,6 @@ viewItem model a =
         PlotterControl.Checklist.CuttingKnifeInHolder ->
             checkbox (text "Cutting knife is in tool holder.")
 
-        PlotterControl.Checklist.CuttingKnifePressure ->
-            checkbox (text "Knife pressure is ok.")
-
         PlotterControl.Checklist.CuttingKnifeDepth ->
             checkbox (text "Knife depth is ok.")
 
@@ -122,8 +119,8 @@ viewItem model a =
         PlotterControl.Checklist.CuttingToolHolderKnob ->
             checkbox (text "Tool holder knob is tight.")
 
-        PlotterControl.Checklist.CuttingKnifeOffset ->
-            checkbox (text "Knife offset is corrected.")
+        PlotterControl.Checklist.CuttingTestOk ->
+            checkbox (text "Cutting test succeed.")
 
         --
         PlotterControl.Checklist.PerforationKnifeInHolder ->
