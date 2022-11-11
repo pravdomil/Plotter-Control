@@ -135,9 +135,15 @@ testDrawing model =
         test =
             SummaEl.toString
                 (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
-                    ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt model.drawingSpeed))
-                       , SummaEl.SetSettings (Dict.singleton "PEN_PRESSURE" (String.fromInt model.drawingPressure))
-                       ]
+                    |> (\( x, x2 ) ->
+                            [ x
+                            , SummaEl.SetSettings
+                                (x2
+                                    |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
+                                    |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
+                                )
+                            ]
+                       )
                 )
                 ++ HpGl.toString (HpGl.Initialize :: HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
