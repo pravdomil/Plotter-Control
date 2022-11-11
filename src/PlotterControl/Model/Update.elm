@@ -28,7 +28,7 @@ init flags =
         800
         100
         40
-        50
+        60
         40
     , Cmd.none
     )
