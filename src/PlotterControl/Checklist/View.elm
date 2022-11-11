@@ -153,23 +153,11 @@ markersTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Bloc
 markersTest model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Test")
-        [ PlotterControl.Utils.View.twoColumns
+        [ inputHelper
             "Sensitivity:"
-            (row [ spacing 8 ]
-                [ el [ fontVariant fontTabularNumbers ]
-                    (text (String.fromInt model.markerSensitivity ++ "%"))
-                , textButton theme
-                    []
-                    { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                    , onPress = PlotterControl.Msg.MarkerSensitivityChanged -5 |> Just
-                    }
-                , textButton theme
-                    []
-                    { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                    , onPress = PlotterControl.Msg.MarkerSensitivityChanged 5 |> Just
-                    }
-                ]
-            )
+            (String.fromInt model.markerSensitivity ++ "%")
+            (PlotterControl.Msg.MarkerSensitivityChanged 5)
+            (PlotterControl.Msg.MarkerSensitivityChanged -5)
         , textButton theme
             [ centerX ]
             { label = text "Test Markers"
@@ -226,3 +214,27 @@ drawingTest model =
             , onPress = Just PlotterControl.Msg.DrawingTestRequested
             }
         ]
+
+
+
+--
+
+
+inputHelper : String -> String -> msg -> msg -> Element msg
+inputHelper label value plus minus =
+    PlotterControl.Utils.View.twoColumns
+        label
+        (row [ spacing 8 ]
+            [ el [ fontVariant fontTabularNumbers ] (text value)
+            , textButton theme
+                []
+                { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                , onPress = Just minus
+                }
+            , textButton theme
+                []
+                { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                , onPress = Just plus
+                }
+            ]
+        )
