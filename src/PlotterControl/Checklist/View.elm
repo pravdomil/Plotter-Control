@@ -44,7 +44,7 @@ view a model =
                     drawingTest model
 
                 PlotterControl.Checklist.Cutting ->
-                    Element.PravdomilUi.Application.Block.Empty
+                    cuttingTest model
 
                 PlotterControl.Checklist.Perforation ->
                     Element.PravdomilUi.Application.Block.Empty
@@ -185,6 +185,37 @@ drawingTest model =
             [ centerX ]
             { label = text "Test Drawing"
             , onPress = Just PlotterControl.Msg.DrawingTestRequested
+            }
+        ]
+
+
+
+--
+
+
+cuttingTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+cuttingTest model =
+    Element.PravdomilUi.Application.Block.Block
+        (Just "Test")
+        [ inputHelper
+            "Speed:"
+            (String.fromInt model.cuttingSpeed ++ " mm/s")
+            (PlotterControl.Msg.CuttingSpeedChanged 50)
+            (PlotterControl.Msg.CuttingSpeedChanged -50)
+        , inputHelper
+            "Pressure:"
+            (String.fromInt model.cuttingPressure ++ " g")
+            (PlotterControl.Msg.CuttingPressureChanged 20)
+            (PlotterControl.Msg.CuttingPressureChanged -20)
+        , inputHelper
+            "Offset:"
+            (String.fromFloat (toFloat model.cuttingOffset / 100) ++ " mm")
+            (PlotterControl.Msg.CuttingOffsetChanged 10)
+            (PlotterControl.Msg.CuttingOffsetChanged -10)
+        , textButton theme
+            [ centerX ]
+            { label = text "Test Cutting"
+            , onPress = Just PlotterControl.Msg.CuttingTestRequested
             }
         ]
 
