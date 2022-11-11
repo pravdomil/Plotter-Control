@@ -16,6 +16,8 @@ type Msg
     | ViewportSizeChanged Element.PravdomilUi.Application.ViewportSize
       --
     | ChecklistActivated PlotterControl.Checklist.Checklist
+    | ChecklistItemChecked PlotterControl.Checklist.Item Bool
+    | ResetChecklist
     | MarkerSensitivityChanged Int
     | MarkerTestRequested
     | DrawingSpeedChanged Int
@@ -43,6 +45,3 @@ type Msg
     | QueueItemSent PlotterControl.Plotter.Plotter (Id.Id PlotterControl.Queue.Item) (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested
     | SendingStopped (Result PlotterControl.Plotter.Error ())
-      --
-    | ChecklistItemChecked PlotterControl.Checklist.Item Bool
-    | ResetChecklist
