@@ -85,40 +85,38 @@ presetToSetUserCommand a =
         )
 
 
-presetToDefaultSettings : Preset -> SummaEl.SummaEl
+presetToDefaultSettings : Preset -> ( SummaEl.Command, SummaEl.Settings )
 presetToDefaultSettings a =
-    [ presetToSetUserCommand a
-    , SummaEl.SetSettings
-        (defaultSettings
-            |> Dict.insert "TOOL"
-                (case a of
-                    Draw ->
-                        "PEN"
+    ( presetToSetUserCommand a
+    , defaultSettings
+        |> Dict.insert "TOOL"
+            (case a of
+                Draw ->
+                    "PEN"
 
-                    Cut ->
-                        "DRAG_KNIFE"
+                Cut ->
+                    "DRAG_KNIFE"
 
-                    Perforate ->
-                        "DRAG_KNIFE"
-                )
-            |> Dict.insert "FLEX_CUT"
-                (case a of
-                    Draw ->
-                        "OFF"
+                Perforate ->
+                    "DRAG_KNIFE"
+            )
+        |> Dict.insert "FLEX_CUT"
+            (case a of
+                Draw ->
+                    "OFF"
 
-                    Cut ->
-                        "OFF"
+                Cut ->
+                    "OFF"
 
-                    Perforate ->
-                        "MODE2"
-                )
-            |> Dict.insert "FULL_PRESSURE" "400"
-            |> Dict.insert "FLEX_VELOCITY" "100"
-            |> Dict.insert "OVERCUT" "2"
-            --
-            |> Dict.remove "OPOS_LEVEL"
-        )
-    ]
+                Perforate ->
+                    "MODE2"
+            )
+        |> Dict.insert "FULL_PRESSURE" "400"
+        |> Dict.insert "FLEX_VELOCITY" "100"
+        |> Dict.insert "OVERCUT" "2"
+        --
+        |> Dict.remove "OPOS_LEVEL"
+    )
 
 
 
