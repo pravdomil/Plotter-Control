@@ -15,17 +15,12 @@ import PlotterControl.Utils.View
 
 view : PlotterControl.Page.Checklist -> PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view a model =
-    let
-        name : String
-        name =
-            PlotterControl.Checklist.toName a.checklist
-    in
     { size = \x -> { x | width = clamp 240 448 (x.width // 3) }
     , header =
         Just
             { attributes = []
             , left = []
-            , center = textEllipsis [ fontCenter ] (name ++ " Checklist")
+            , center = textEllipsis [ fontCenter ] (PlotterControl.Checklist.toName a.checklist ++ " Checklist")
             , right =
                 [ textButton theme
                     [ fontSemiBold ]
@@ -37,7 +32,7 @@ view a model =
     , toolbar = Nothing
     , body =
         Element.PravdomilUi.Application.Blocks
-            [ viewChecklist model name (PlotterControl.Checklist.items a.checklist)
+            [ viewChecklist model (PlotterControl.Checklist.items a.checklist)
             , case a.checklist of
                 PlotterControl.Checklist.Media ->
                     Element.PravdomilUi.Application.Block.Empty
@@ -57,10 +52,10 @@ view a model =
     }
 
 
-viewChecklist : PlotterControl.Model.Model -> String -> List PlotterControl.Checklist.Item -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
-viewChecklist model label items =
+viewChecklist : PlotterControl.Model.Model -> List PlotterControl.Checklist.Item -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+viewChecklist model items =
     Element.PravdomilUi.Application.Block.Block
-        (Just label)
+        (Just "Checklist")
         (items |> List.map (\x -> viewItem model x))
 
 
