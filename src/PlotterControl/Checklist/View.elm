@@ -198,7 +198,7 @@ viewItem model a =
                 ]
 
         PlotterControl.Checklist.DrawingPenDepth ->
-            checkbox (text "Pen depth is ok.")
+            checkbox (text "Pen depth is set.")
 
         PlotterControl.Checklist.DrawingToolHolderKnob ->
             checkbox (text "Tool holder knob is tight.")
