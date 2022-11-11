@@ -111,7 +111,7 @@ viewItem model a =
             checkbox (text "Cutting knife is in tool holder.")
 
         PlotterControl.Checklist.CuttingKnifeDepth ->
-            checkbox (text "Knife depth is set.")
+            checkbox (text "Knife depth is set using 45° increments.")
 
         PlotterControl.Checklist.CuttingTestOk ->
             checkbox (text "Cutting test succeed.")
@@ -127,7 +127,7 @@ viewItem model a =
             checkbox (text "Perforation knife is in tool holder.")
 
         PlotterControl.Checklist.PerforationToolDepth ->
-            checkbox (text "Knife depth is set.")
+            checkbox (text "Knife depth is set using 45° increments.")
 
         PlotterControl.Checklist.PerforationTestOk ->
             checkbox (text "Perforation test succeed.")
