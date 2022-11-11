@@ -100,6 +100,9 @@ update msg model =
         PlotterControl.Msg.QueueItemRemoveRequested a ->
             PlotterControl.Queue.Update.removeItemFromQueue a model
 
+        PlotterControl.Msg.QueueDownloadRequested ->
+            PlotterControl.Queue.Update.download model
+
         --
         PlotterControl.Msg.SendQueueRequested ->
             PlotterControl.Plotter.Update.sendQueue model
