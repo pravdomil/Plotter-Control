@@ -22,7 +22,13 @@ view model =
     , header =
         Just
             { attributes = []
-            , left = []
+            , left =
+                [ textButton theme
+                    []
+                    { label = text "Download"
+                    , onPress = Just PlotterControl.Msg.QueueDownloadRequested
+                    }
+                ]
             , center = textEllipsis [ fontCenter ] "Queue"
             , right =
                 [ mainButton model
