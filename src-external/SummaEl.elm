@@ -37,7 +37,7 @@ type Command
     | LoadMarkers
     | Recut Int
     | Report
-    | SetOrigin Point
+    | SetOriginRelative Point
       --
     | UnknownCommand UnknownCommand
 
@@ -72,7 +72,7 @@ commandToString a =
         Report ->
             "QUERY"
 
-        SetOrigin b ->
+        SetOriginRelative b ->
             "SET_ORIGIN=" ++ pointToString b
 
         UnknownCommand b ->

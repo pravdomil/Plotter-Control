@@ -141,7 +141,7 @@ testDrawing model =
                 )
                 ++ HpGl.toString (HpGl.Initialize :: HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
-                    [ SummaEl.SetOrigin (Point2d.origin |> Point2d.translateBy spacing)
+                    [ SummaEl.SetOriginRelative (Point2d.origin |> Point2d.translateBy spacing)
                     ]
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Drawing Test") test model
