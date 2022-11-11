@@ -180,17 +180,18 @@ changeCuttingOffset a model =
 
 testCutting : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testCutting model =
-    PlotterControl.Queue.Update.createItem
-        (PlotterControl.Queue.stringToItemName "Cutting Test")
-        (SummaEl.toString
-            (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Cut
-                ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt model.cuttingSpeed))
-                   , SummaEl.SetSettings (Dict.singleton "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure))
-                   , SummaEl.SetSettings (Dict.singleton "DRAG_OFFSET" (String.fromInt model.cuttingOffset))
-                   ]
-            )
-        )
-        model
+    let
+        test : String
+        test =
+            SummaEl.toString
+                (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Cut
+                    ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt model.cuttingSpeed))
+                       , SummaEl.SetSettings (Dict.singleton "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure))
+                       , SummaEl.SetSettings (Dict.singleton "DRAG_OFFSET" (String.fromInt model.cuttingOffset))
+                       ]
+                )
+    in
+    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Cutting Test") test model
 
 
 
