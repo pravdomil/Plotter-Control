@@ -182,7 +182,8 @@ testCutting model =
         (PlotterControl.Queue.stringToItemName "Cutting Test")
         (SummaEl.toString
             (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Cut
-                ++ [ SummaEl.SetSettings (Dict.singleton "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure))
+                ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt model.cuttingSpeed))
+                   , SummaEl.SetSettings (Dict.singleton "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure))
                    , SummaEl.SetSettings (Dict.singleton "DRAG_OFFSET" (String.fromInt model.cuttingOffset))
                    ]
             )
