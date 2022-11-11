@@ -54,11 +54,6 @@ toSettings a =
         ]
 
 
-toCommand : Markers -> SummaEl.Command
-toCommand a =
-    SummaEl.SetSettings (toSettings a)
-
-
 size : Length.Length
 size =
     Length.millimeters 3

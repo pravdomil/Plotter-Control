@@ -36,27 +36,25 @@ default name =
     }
 
 
-toSummaEl : Settings -> SummaEl.SummaEl
-toSummaEl a =
-    [ presetToSetUserCommand a.preset
-    , SummaEl.SetSettings
-        (Dict.empty
-            |> Dict.insert "OPOS_PANELLING"
-                (case a.markerLoading of
-                    LoadAllAtOnce ->
-                        "OFF"
+toCommandAndSettings : Settings -> ( SummaEl.Command, SummaEl.Settings )
+toCommandAndSettings a =
+    ( presetToSetUserCommand a.preset
+    , Dict.empty
+        |> Dict.insert "OPOS_PANELLING"
+            (case a.markerLoading of
+                LoadAllAtOnce ->
+                    "OFF"
 
-                    LoadSequentially ->
-                        "ON"
-                )
-            |> Dict.insert "RECUT_OFFSET"
-                (a.copyDistance
-                    |> Length.inMillimeters
-                    |> round
-                    |> String.fromInt
-                )
-        )
-    ]
+                LoadSequentially ->
+                    "ON"
+            )
+        |> Dict.insert "RECUT_OFFSET"
+            (a.copyDistance
+                |> Length.inMillimeters
+                |> round
+                |> String.fromInt
+            )
+    )
 
 
 
