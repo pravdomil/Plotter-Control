@@ -38,6 +38,21 @@ view a model =
     , body =
         Element.PravdomilUi.Application.Blocks
             [ viewChecklist model name (PlotterControl.Checklist.items a.checklist)
+            , case a.checklist of
+                PlotterControl.Checklist.Media ->
+                    Element.PravdomilUi.Application.Block.Empty
+
+                PlotterControl.Checklist.Markers ->
+                    markersTest model
+
+                PlotterControl.Checklist.Drawing ->
+                    Element.PravdomilUi.Application.Block.Empty
+
+                PlotterControl.Checklist.Cutting ->
+                    Element.PravdomilUi.Application.Block.Empty
+
+                PlotterControl.Checklist.Perforation ->
+                    Element.PravdomilUi.Application.Block.Empty
             ]
     }
 
@@ -78,53 +93,10 @@ viewItem model a =
 
         --
         PlotterControl.Checklist.MarkersSensorClean ->
-            column [ width fill, spacing 8 ]
-                [ checkbox (text "Sensor is clean.")
-                , statusText theme
-                    [ fontCenter ]
-                    "Use dust blaster to clean the sensor."
-                ]
-
-        PlotterControl.Checklist.MarkersSensitivity ->
-            column [ width fill, spacing 8 ]
-                [ checkbox (text "Marker sensitivity is set.")
-                , PlotterControl.Utils.View.twoColumns
-                    "Sensitivity:"
-                    (row [ spacing 8 ]
-                        [ el [ fontVariant fontTabularNumbers ]
-                            (text
-                                (model.markerSensitivity
-                                    |> Maybe.map String.fromInt
-                                    |> Maybe.withDefault "00"
-                                    |> (\x -> x ++ "%")
-                                )
-                            )
-                        , textButton theme
-                            []
-                            { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.MarkerSensitivityChanged -5 |> Just
-                            }
-                        , textButton theme
-                            []
-                            { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                            , onPress = PlotterControl.Msg.MarkerSensitivityChanged 5 |> Just
-                            }
-                        ]
-                    )
-                , statusText theme
-                    [ fontCenter ]
-                    "Recommended sensitivity is 75–95%."
-                ]
+            checkbox (text "Sensor cleaned with dust blaster.")
 
         PlotterControl.Checklist.MarkersTestOk ->
-            column [ width fill, spacing 8 ]
-                [ checkbox (text "Marker test succeed.")
-                , textButton theme
-                    [ centerX ]
-                    { label = text "Test Markers"
-                    , onPress = Just PlotterControl.Msg.MarkerTestRequested
-                    }
-                ]
+            checkbox (text "Marker test succeed.")
 
         --
         PlotterControl.Checklist.DrawingPenInHolder ->
@@ -245,3 +217,41 @@ viewItem model a =
 
         PlotterControl.Checklist.PerforationToolOffset ->
             checkbox (text "Knife offset is corrected.")
+
+
+markersTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+markersTest model =
+    Element.PravdomilUi.Application.Block.Block
+        (Just "Test")
+        [ PlotterControl.Utils.View.twoColumns
+            "Sensitivity:"
+            (row [ spacing 8 ]
+                [ el [ fontVariant fontTabularNumbers ]
+                    (text
+                        (model.markerSensitivity
+                            |> Maybe.map String.fromInt
+                            |> Maybe.withDefault "00"
+                            |> (\x -> x ++ "%")
+                        )
+                    )
+                , textButton theme
+                    []
+                    { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                    , onPress = PlotterControl.Msg.MarkerSensitivityChanged -5 |> Just
+                    }
+                , textButton theme
+                    []
+                    { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                    , onPress = PlotterControl.Msg.MarkerSensitivityChanged 5 |> Just
+                    }
+                ]
+            )
+        , statusText theme
+            [ fontCenter ]
+            "Recommended sensitivity is 75–95%."
+        , textButton theme
+            [ centerX ]
+            { label = text "Test Markers"
+            , onPress = Just PlotterControl.Msg.MarkerTestRequested
+            }
+        ]
