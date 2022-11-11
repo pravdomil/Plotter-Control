@@ -18,14 +18,19 @@ type Msg
     | ChecklistActivated PlotterControl.Checklist.Checklist
     | ChecklistItemChecked PlotterControl.Checklist.Item Bool
     | ResetChecklist
+      --
     | MarkerSensitivityChanged Int
     | MarkerTestRequested
+      --
     | DrawingSpeedChanged Int
     | DrawingPressureChanged Int
     | DrawingTestRequested
+      --
+    | CuttingSpeedChanged Int
     | CuttingPressureChanged Int
     | CuttingOffsetChanged Int
     | CuttingTestRequested
+      --
     | PerforationPressureChanged Int
     | PerforationOffsetChanged Int
     | PerforationTestRequested

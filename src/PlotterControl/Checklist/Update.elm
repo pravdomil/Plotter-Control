@@ -156,6 +156,13 @@ testDrawing model =
 --
 
 
+changeCuttingSpeed : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeCuttingSpeed a model =
+    ( { model | cuttingSpeed = clamp 50 800 (model.cuttingSpeed + a) }
+    , Cmd.none
+    )
+
+
 changeCuttingPressure : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeCuttingPressure a model =
     ( { model | cuttingPressure = clamp 0 400 (model.cuttingPressure + a) }

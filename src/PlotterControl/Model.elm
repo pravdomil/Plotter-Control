@@ -27,6 +27,7 @@ type alias Model =
     , drawingPressure : Int
 
     --
+    , cuttingSpeed : Int
     , cuttingPressure : Int
     , cuttingOffset : Int
 

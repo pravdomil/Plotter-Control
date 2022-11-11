@@ -25,6 +25,7 @@ init flags =
         75
         200
         160
+        800
         100
         40
         50
@@ -70,6 +71,9 @@ update msg model =
 
         PlotterControl.Msg.DrawingTestRequested ->
             PlotterControl.Checklist.Update.testDrawing model
+
+        PlotterControl.Msg.CuttingSpeedChanged a ->
+            PlotterControl.Checklist.Update.changeCuttingSpeed a model
 
         PlotterControl.Msg.CuttingPressureChanged a ->
             PlotterControl.Checklist.Update.changeCuttingPressure a model
