@@ -157,9 +157,7 @@ markersTest model =
             "Sensitivity:"
             (row [ spacing 8 ]
                 [ el [ fontVariant fontTabularNumbers ]
-                    (text
-                        (String.fromInt model.markerSensitivity ++ "%")
-                    )
+                    (text (String.fromInt model.markerSensitivity ++ "%"))
                 , textButton theme
                     []
                     { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
