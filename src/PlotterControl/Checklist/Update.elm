@@ -144,10 +144,7 @@ testDrawing model =
                     [ SummaEl.SetOrigin (Point2d.origin |> Point2d.translateBy spacing)
                     ]
     in
-    PlotterControl.Queue.Update.createItem
-        (PlotterControl.Queue.stringToItemName "Drawing Test")
-        test
-        model
+    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Drawing Test") test model
 
 
 
