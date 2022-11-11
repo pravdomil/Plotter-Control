@@ -95,7 +95,7 @@ viewItem model a =
 
         --
         PlotterControl.Checklist.DrawingPenInHolder ->
-            checkbox (text "Drawing pen is in tool holder.")
+            checkbox (text "Pen is in tool holder.")
 
         PlotterControl.Checklist.DrawingPenDepth ->
             checkbox (text "Pen depth is set.")
