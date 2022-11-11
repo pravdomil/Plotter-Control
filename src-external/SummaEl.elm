@@ -33,7 +33,7 @@ type Command
     | SetSystemSettings SystemSettings
       --
     | CameraExtendedLoad
-    | CameraOrigin
+    | SetCameraOrigin
     | LoadMarkers
     | Recut Int
     | Report
@@ -60,7 +60,7 @@ commandToString a =
         CameraExtendedLoad ->
             "EXTENDED_LOAD"
 
-        CameraOrigin ->
+        SetCameraOrigin ->
             "SET_CAM_ORIGIN"
 
         LoadMarkers ->
