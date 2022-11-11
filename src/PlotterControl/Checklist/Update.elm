@@ -56,45 +56,31 @@ resetChecklist model =
 
 changeMarkerSensitivity : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeMarkerSensitivity a model =
+    ( { model | markerSensitivity = clamp 0 100 (model.markerSensitivity + a) }
+    , Cmd.none
+    )
+
+
+testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+testMarkers model =
     let
-        value : Int
-        value =
-            (case model.markerSensitivity of
-                Just b ->
-                    b + a
-
-                Nothing ->
-                    75
-            )
-                |> clamp 0 100
-
         level : Int
         level =
-            value
+            model.markerSensitivity
                 |> toFloat
                 |> (\x -> x / 100)
                 |> (\x -> 1 - x)
                 |> (\x -> x * 250)
                 |> round
+                |> clamp 0 250
     in
-    ( { model | markerSensitivity = Just value }
-    , Cmd.none
-    )
-        |> Platform.Extra.andThen
-            (PlotterControl.Queue.Update.createItem
-                (PlotterControl.Queue.stringToItemName "Set Sensitivity")
-                (SummaEl.toString
-                    [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
-                    ]
-                )
-            )
-
-
-testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-testMarkers model =
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName "Marker Test")
-        (SummaEl.toString [ SummaEl.LoadMarkers ])
+        (SummaEl.toString
+            [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
+            , SummaEl.LoadMarkers
+            ]
+        )
         model
 
 

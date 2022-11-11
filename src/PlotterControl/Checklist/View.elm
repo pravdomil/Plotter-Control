@@ -223,11 +223,7 @@ markersTest model =
             (row [ spacing 8 ]
                 [ el [ fontVariant fontTabularNumbers ]
                     (text
-                        (model.markerSensitivity
-                            |> Maybe.map String.fromInt
-                            |> Maybe.withDefault "00"
-                            |> (\x -> x ++ "%")
-                        )
+                        (String.fromInt model.markerSensitivity ++ "%")
                     )
                 , textButton theme
                     []
@@ -241,9 +237,6 @@ markersTest model =
                     }
                 ]
             )
-        , statusText theme
-            [ fontCenter ]
-            "Recommended sensitivity is 75–95%."
         , textButton theme
             [ centerX ]
             { label = text "Test Markers"

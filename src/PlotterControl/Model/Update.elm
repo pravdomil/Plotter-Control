@@ -22,7 +22,7 @@ init flags =
         Dict.Any.empty
         (Err PlotterControl.Model.NoPlotter)
         Dict.Any.empty
-        Nothing
+        75
         Nothing
         Nothing
     , Cmd.none
