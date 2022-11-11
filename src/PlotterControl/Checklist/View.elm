@@ -222,7 +222,7 @@ drawingTest model =
             )
         , textButton theme
             [ centerX ]
-            { label = text "Drawing Test"
+            { label = text "Test Drawing"
             , onPress = Just PlotterControl.Msg.DrawingTestRequested
             }
         ]
