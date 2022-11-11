@@ -185,11 +185,6 @@ viewItem model a =
                             { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
                             , onPress = PlotterControl.Msg.DrawingPressureChanged 20 |> Just
                             }
-                        , textButton theme
-                            []
-                            { label = text "Test"
-                            , onPress = Just PlotterControl.Msg.DrawingPressureTestRequested
-                            }
                         ]
                     )
                 , statusText theme
@@ -202,6 +197,16 @@ viewItem model a =
 
         PlotterControl.Checklist.DrawingToolHolderKnob ->
             checkbox (text "Tool holder knob is tight.")
+
+        PlotterControl.Checklist.DrawingTestOk ->
+            column [ width fill, spacing 8 ]
+                [ checkbox (text "Drawing test succeed.")
+                , textButton theme
+                    [ centerX ]
+                    { label = text "Drawing Test"
+                    , onPress = Just PlotterControl.Msg.DrawingTestRequested
+                    }
+                ]
 
         --
         PlotterControl.Checklist.CuttingKnifeInHolder ->
