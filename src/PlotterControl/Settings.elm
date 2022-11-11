@@ -119,11 +119,6 @@ presetToDefaultSettings a =
             |> Dict.insert "OVERCUT" "2"
             --
             |> Dict.remove "OPOS_LEVEL"
-            |> Dict.remove "VELOCITY"
-            |> Dict.remove "PEN_PRESSURE"
-            |> Dict.remove "KNIFE_PRESSURE"
-            |> Dict.remove "DRAG_OFFSET"
-            |> Dict.remove "FLEX_PRESSURE"
         )
     ]
 
