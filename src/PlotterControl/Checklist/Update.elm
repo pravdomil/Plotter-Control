@@ -217,10 +217,16 @@ testPerforation model =
         (PlotterControl.Queue.stringToItemName "Perforation Test")
         (SummaEl.toString
             (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Perforate
-                ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt 800))
-                   , SummaEl.SetSettings (Dict.singleton "FLEX_PRESSURE" (String.fromInt model.perforationPressure))
-                   , SummaEl.SetSettings (Dict.singleton "DRAG_OFFSET" (String.fromInt model.perforationOffset))
-                   ]
+                |> (\( x, x2 ) ->
+                        [ x
+                        , SummaEl.SetSettings
+                            (x2
+                                |> Dict.insert "VELOCITY" (String.fromInt 800)
+                                |> Dict.insert "FLEX_PRESSURE" (String.fromInt model.perforationPressure)
+                                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
+                            )
+                        ]
+                   )
             )
         )
         model
