@@ -133,21 +133,20 @@ testDrawing model =
 
         test : String
         test =
-            HpGl.toString (HpGl.Initialize :: HpGl.Geometry.fromPolylines polylines)
+            SummaEl.toString
+                (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
+                    ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt model.drawingSpeed))
+                       , SummaEl.SetSettings (Dict.singleton "PEN_PRESSURE" (String.fromInt model.drawingPressure))
+                       ]
+                )
+                ++ HpGl.toString (HpGl.Initialize :: HpGl.Geometry.fromPolylines polylines)
+                ++ SummaEl.toString
+                    [ SummaEl.SetOrigin (Point2d.origin |> Point2d.translateBy spacing)
+                    ]
     in
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName "Drawing Test")
-        (SummaEl.toString
-            (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
-                ++ [ SummaEl.SetSettings (Dict.singleton "VELOCITY" (String.fromInt model.drawingSpeed))
-                   , SummaEl.SetSettings (Dict.singleton "PEN_PRESSURE" (String.fromInt model.drawingPressure))
-                   ]
-            )
-            ++ test
-            ++ SummaEl.toString
-                [ SummaEl.SetOrigin (Point2d.origin |> Point2d.translateBy spacing)
-                ]
-        )
+        test
         model
 
 
