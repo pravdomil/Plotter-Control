@@ -94,7 +94,7 @@ type UnknownCommand
     | Restore
     | SetLanguage
     | SetSerial
-    | Store
+    | Store String
     | SweepMediaSensors
     | UpgradeFlash
 
@@ -132,8 +132,8 @@ unknownCommandToString a =
         SetSerial ->
             "SET_SERIAL"
 
-        Store ->
-            "STORE"
+        Store b ->
+            "STORE " ++ b
 
         SweepMediaSensors ->
             "SWEEP_MEDIA_SENSORS"
