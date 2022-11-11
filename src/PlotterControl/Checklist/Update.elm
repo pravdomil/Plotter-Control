@@ -2,6 +2,10 @@ module PlotterControl.Checklist.Update exposing (..)
 
 import Dict
 import Dict.Any
+import HpGl
+import HpGl.Geometry
+import Length
+import LineSegment2d
 import Platform.Extra
 import PlotterControl.Checklist
 import PlotterControl.Model
@@ -10,7 +14,12 @@ import PlotterControl.Page
 import PlotterControl.Queue
 import PlotterControl.Queue.Update
 import PlotterControl.Settings
+import Point2d
+import Polyline2d
+import Quantity
+import Rectangle2d
 import SummaEl
+import Vector2d
 
 
 activateChecklist : PlotterControl.Checklist.Checklist -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
@@ -153,7 +162,45 @@ changeDrawingPressure a model =
 
 testDrawing : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testDrawing model =
+    let
+        size : Length.Length
+        size =
+            Length.millimeters 2
+
+        spacing : Vector2d.Vector2d Length.Meters coordinates
+        spacing =
+            Vector2d.xy
+                Quantity.zero
+                (size |> Quantity.plus Length.millimeter)
+
+        polyline : Polyline2d.Polyline2d Length.Meters coordinates
+        polyline =
+            Rectangle2d.from Point2d.origin (Point2d.xy size size)
+                |> Rectangle2d.edges
+                |> List.concatMap (\x -> [ LineSegment2d.startPoint x, LineSegment2d.endPoint x ])
+                |> Polyline2d.fromVertices
+
+        polylines : List (Polyline2d.Polyline2d Length.Meters coordinates)
+        polylines =
+            List.range 0 3
+                |> List.map
+                    (\i ->
+                        Polyline2d.translateBy
+                            (spacing |> Vector2d.scaleBy (toFloat i))
+                            polyline
+                    )
+
+        test : String
+        test =
+            HpGl.toString (HpGl.Initialize :: HpGl.Geometry.fromPolylines polylines)
+    in
     PlotterControl.Queue.Update.createItem
-        (PlotterControl.Queue.stringToItemName "Pressure Test")
-        (SummaEl.toString [])
+        (PlotterControl.Queue.stringToItemName "Drawing Test")
+        (SummaEl.toString
+            (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw)
+            ++ test
+            ++ SummaEl.toString
+                [ SummaEl.SetOrigin (Point2d.origin |> Point2d.translateBy spacing)
+                ]
+        )
         model
