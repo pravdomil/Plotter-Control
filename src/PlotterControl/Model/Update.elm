@@ -25,6 +25,10 @@ init flags =
         75
         200
         160
+        100
+        40
+        50
+        40
     , Cmd.none
     )
 
@@ -66,6 +70,24 @@ update msg model =
 
         PlotterControl.Msg.DrawingTestRequested ->
             PlotterControl.Checklist.Update.testDrawing model
+
+        PlotterControl.Msg.CuttingPressureChanged a ->
+            PlotterControl.Checklist.Update.changeCuttingPressure a model
+
+        PlotterControl.Msg.CuttingOffsetChanged a ->
+            PlotterControl.Checklist.Update.changeCuttingOffset a model
+
+        PlotterControl.Msg.CuttingTestRequested ->
+            PlotterControl.Checklist.Update.testCutting model
+
+        PlotterControl.Msg.PerforationPressureChanged a ->
+            PlotterControl.Checklist.Update.changePerforationPressure a model
+
+        PlotterControl.Msg.PerforationOffsetChanged a ->
+            PlotterControl.Checklist.Update.changePerforationOffset a model
+
+        PlotterControl.Msg.PerforationTestRequested ->
+            PlotterControl.Checklist.Update.testPerforation model
 
         --
         PlotterControl.Msg.OpenFilesRequested ->

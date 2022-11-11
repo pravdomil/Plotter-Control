@@ -23,6 +23,12 @@ type Msg
     | DrawingSpeedChanged Int
     | DrawingPressureChanged Int
     | DrawingTestRequested
+    | CuttingPressureChanged Int
+    | CuttingOffsetChanged Int
+    | CuttingTestRequested
+    | PerforationPressureChanged Int
+    | PerforationOffsetChanged Int
+    | PerforationTestRequested
       --
     | OpenFilesRequested
     | RawFilesReceived (List File.File)

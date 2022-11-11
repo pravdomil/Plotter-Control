@@ -21,8 +21,18 @@ type alias Model =
 
     --
     , markerSensitivity : Int
+
+    --
     , drawingSpeed : Int
     , drawingPressure : Int
+
+    --
+    , cuttingPressure : Int
+    , cuttingOffset : Int
+
+    --
+    , perforationPressure : Int
+    , perforationOffset : Int
     }
 
 

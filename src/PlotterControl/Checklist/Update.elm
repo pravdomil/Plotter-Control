@@ -6,6 +6,7 @@ import HpGl
 import HpGl.Geometry
 import Length
 import LineSegment2d
+import Platform.Extra
 import PlotterControl.Checklist
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -149,3 +150,49 @@ testDrawing model =
                 ]
         )
         model
+
+
+
+--
+
+
+changeCuttingPressure : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeCuttingPressure a model =
+    ( { model | cuttingPressure = clamp 0 400 (model.cuttingPressure + a) }
+    , Cmd.none
+    )
+
+
+changeCuttingOffset : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeCuttingOffset a model =
+    ( { model | cuttingOffset = clamp 0 100 (model.cuttingOffset + a) }
+    , Cmd.none
+    )
+
+
+testCutting : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+testCutting model =
+    Platform.Extra.noOperation model
+
+
+
+--
+
+
+changePerforationPressure : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changePerforationPressure a model =
+    ( { model | perforationPressure = clamp 0 400 (model.perforationPressure + a) }
+    , Cmd.none
+    )
+
+
+changePerforationOffset : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changePerforationOffset a model =
+    ( { model | perforationOffset = clamp 0 100 (model.perforationOffset + a) }
+    , Cmd.none
+    )
+
+
+testPerforation : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+testPerforation model =
+    Platform.Extra.noOperation model
