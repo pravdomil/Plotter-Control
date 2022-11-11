@@ -4,6 +4,7 @@ module SummaEl exposing (..)
 -}
 
 import Dict
+import Length
 import Point2d
 import Quantity
 
@@ -178,11 +179,29 @@ systemSettingsToString a =
 
 
 type alias Point =
-    Point2d.Point2d Quantity.Unitless ()
+    Point2d.Point2d Length.Meters ()
 
 
 pointToString : Point -> String
 pointToString a =
-    (a |> Point2d.xCoordinate |> Quantity.toFloat |> String.fromFloat)
+    (a |> Point2d.xCoordinate |> lengthToString)
         ++ ","
-        ++ (a |> Point2d.yCoordinate |> Quantity.toFloat |> String.fromFloat)
+        ++ (a |> Point2d.yCoordinate |> lengthToString)
+
+
+
+--
+
+
+lengthToString : Length.Length -> String
+lengthToString a =
+    a
+        |> Quantity.at resolution
+        |> Quantity.toFloat
+        |> round
+        |> String.fromInt
+
+
+resolution : Quantity.Quantity Float (Quantity.Rate Quantity.Unitless Length.Meters)
+resolution =
+    Quantity.rate (Quantity.float 1) (Length.millimeters 0.025)
