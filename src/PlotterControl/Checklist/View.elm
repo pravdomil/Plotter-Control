@@ -129,17 +129,14 @@ viewItem model a =
         PlotterControl.Checklist.PerforationToolDepth ->
             checkbox (text "Knife depth is ok.")
 
-        PlotterControl.Checklist.PerforationFlexPressure ->
-            checkbox (text "Flex pressure is just enough.")
-
         PlotterControl.Checklist.PerforationKnifeSecureNut ->
             checkbox (text "Knife depth is secured with nut.")
 
         PlotterControl.Checklist.PerforationToolHolderKnob ->
             checkbox (text "Tool holder knob is tight.")
 
-        PlotterControl.Checklist.PerforationToolOffset ->
-            checkbox (text "Knife offset is corrected.")
+        PlotterControl.Checklist.PerforationTestOk ->
+            checkbox (text "Perforation test succeed.")
 
 
 

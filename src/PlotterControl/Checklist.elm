@@ -83,10 +83,9 @@ type Item
       --
     | PerforationKnifeInHolder
     | PerforationToolDepth
-    | PerforationFlexPressure
     | PerforationKnifeSecureNut
     | PerforationToolHolderKnob
-    | PerforationToolOffset
+    | PerforationTestOk
 
 
 mediaItems : List Item
@@ -128,10 +127,9 @@ perforationItems : List Item
 perforationItems =
     [ PerforationKnifeInHolder
     , PerforationToolDepth
-    , PerforationFlexPressure
     , PerforationKnifeSecureNut
     , PerforationToolHolderKnob
-    , PerforationToolOffset
+    , PerforationTestOk
     ]
 
 
@@ -189,14 +187,11 @@ itemToComparable a =
         PerforationToolDepth ->
             "PerforationToolDepth"
 
-        PerforationFlexPressure ->
-            "PerforationFlexPressure"
-
         PerforationKnifeSecureNut ->
             "PerforationKnifeSecureNut"
 
         PerforationToolHolderKnob ->
             "PerforationToolHolderKnob"
 
-        PerforationToolOffset ->
-            "PerforationToolOffset"
+        PerforationTestOk ->
+            "PerforationTestOk"
