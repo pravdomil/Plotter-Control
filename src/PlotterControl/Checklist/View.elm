@@ -174,40 +174,16 @@ drawingTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Bloc
 drawingTest model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Test")
-        [ PlotterControl.Utils.View.twoColumns
+        [ inputHelper
             "Speed:"
-            (row [ spacing 8 ]
-                [ el [ fontVariant fontTabularNumbers ]
-                    (text (String.fromInt model.drawingSpeed ++ " mm/s"))
-                , textButton theme
-                    []
-                    { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                    , onPress = PlotterControl.Msg.DrawingSpeedChanged -50 |> Just
-                    }
-                , textButton theme
-                    []
-                    { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                    , onPress = PlotterControl.Msg.DrawingSpeedChanged 50 |> Just
-                    }
-                ]
-            )
-        , PlotterControl.Utils.View.twoColumns
+            (String.fromInt model.drawingSpeed ++ " mm/s")
+            (PlotterControl.Msg.DrawingSpeedChanged 50)
+            (PlotterControl.Msg.DrawingSpeedChanged -50)
+        , inputHelper
             "Pressure:"
-            (row [ spacing 8 ]
-                [ el [ fontVariant fontTabularNumbers ]
-                    (text (String.fromInt model.drawingPressure ++ " g"))
-                , textButton theme
-                    []
-                    { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                    , onPress = PlotterControl.Msg.DrawingPressureChanged -20 |> Just
-                    }
-                , textButton theme
-                    []
-                    { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                    , onPress = PlotterControl.Msg.DrawingPressureChanged 20 |> Just
-                    }
-                ]
-            )
+            (String.fromInt model.drawingPressure ++ " g")
+            (PlotterControl.Msg.DrawingPressureChanged 20)
+            (PlotterControl.Msg.DrawingPressureChanged -20)
         , textButton theme
             [ centerX ]
             { label = text "Test Drawing"
