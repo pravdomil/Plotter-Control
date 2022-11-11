@@ -72,20 +72,20 @@ type Item
       --
     | DrawingPenInHolder
     | DrawingPenDepth
-    | DrawingToolHolderKnob
     | DrawingTestOk
+    | DrawingToolHolderKnob
       --
     | CuttingKnifeInHolder
     | CuttingKnifeDepth
+    | CuttingTestOk
     | CuttingKnifeSecureNut
     | CuttingToolHolderKnob
-    | CuttingTestOk
       --
     | PerforationKnifeInHolder
     | PerforationToolDepth
+    | PerforationTestOk
     | PerforationKnifeSecureNut
     | PerforationToolHolderKnob
-    | PerforationTestOk
 
 
 mediaItems : List Item
@@ -108,8 +108,8 @@ drawingItems : List Item
 drawingItems =
     [ DrawingPenInHolder
     , DrawingPenDepth
-    , DrawingToolHolderKnob
     , DrawingTestOk
+    , DrawingToolHolderKnob
     ]
 
 
@@ -117,9 +117,9 @@ cuttingItems : List Item
 cuttingItems =
     [ CuttingKnifeInHolder
     , CuttingKnifeDepth
+    , CuttingTestOk
     , CuttingKnifeSecureNut
     , CuttingToolHolderKnob
-    , CuttingTestOk
     ]
 
 
@@ -127,9 +127,9 @@ perforationItems : List Item
 perforationItems =
     [ PerforationKnifeInHolder
     , PerforationToolDepth
+    , PerforationTestOk
     , PerforationKnifeSecureNut
     , PerforationToolHolderKnob
-    , PerforationTestOk
     ]
 
 
