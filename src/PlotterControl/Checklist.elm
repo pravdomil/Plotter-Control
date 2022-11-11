@@ -76,6 +76,7 @@ type Item
     | DrawingPenPressure
     | DrawingPenDepth
     | DrawingToolHolderKnob
+    | DrawingTestOk
       --
     | CuttingKnifeInHolder
     | CuttingKnifePressure
@@ -116,6 +117,7 @@ drawingItems =
     , DrawingPenPressure
     , DrawingPenDepth
     , DrawingToolHolderKnob
+    , DrawingTestOk
     ]
 
 
@@ -179,6 +181,9 @@ itemToComparable a =
 
         DrawingToolHolderKnob ->
             "DrawingToolHolderKnob"
+
+        DrawingTestOk ->
+            "DrawingTestOk"
 
         CuttingKnifeInHolder ->
             "CuttingKnifeInHolder"
