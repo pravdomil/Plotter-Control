@@ -241,7 +241,6 @@ testCutting model =
                                     |> Dict.remove "CONFIGUSER"
                                     |> Dict.remove "OPOS_LEVEL"
                                     --
-                                    |> Dict.insert "TOOL" "DRAG_KNIFE"
                                     |> Dict.insert "OVERCUT" "2"
                                     |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
                                     |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
