@@ -67,6 +67,27 @@ type Preset
     | Perforate
 
 
+allPresets : List Preset
+allPresets =
+    [ Draw
+    , Cut
+    , Perforate
+    ]
+
+
+presetName : Preset -> String
+presetName a =
+    case a of
+        Draw ->
+            "Draw"
+
+        Cut ->
+            "Cut"
+
+        Perforate ->
+            "Perforate"
+
+
 presetToSetUserCommand : Preset -> SummaEl.Command
 presetToSetUserCommand a =
     SummaEl.SetSettings

@@ -31,10 +31,8 @@ preset name a =
             []
             { label = labelHidden "Preset:"
             , options =
-                [ inputRadioBlockOption theme [] PlotterControl.Settings.Draw (text "Draw")
-                , inputRadioBlockOption theme [] PlotterControl.Settings.Cut (text "Cut")
-                , inputRadioBlockOption theme [] PlotterControl.Settings.Perforate (text "Perforate")
-                ]
+                PlotterControl.Settings.allPresets
+                    |> List.map (\x -> inputRadioBlockOption theme [] x (text (PlotterControl.Settings.presetName x)))
             , selected = Just a.preset
             , onChange = PlotterControl.Msg.PresetChanged name
             }
