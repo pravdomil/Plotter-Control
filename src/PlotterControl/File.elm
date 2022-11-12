@@ -1,5 +1,6 @@
 module PlotterControl.File exposing (..)
 
+import BoundingBox2d
 import Dict
 import File
 import HpGl
@@ -8,10 +9,13 @@ import Length
 import Parser
 import PlotterControl.Markers
 import PlotterControl.Settings
+import Point2d
 import Polyline2d
+import Quantity
 import SummaEl
 import Task
 import Time
+import Vector2d
 
 
 type alias File =
@@ -107,9 +111,23 @@ readySettingsToSummaEl a =
 readyToPlotterData : Ready -> String
 readyToPlotterData a =
     let
+        usePerforationRelief : Bool
+        usePerforationRelief =
+            (a.settings.preset == PlotterControl.Settings.Perforate)
+                && (PlotterControl.Settings.copiesToInt a.settings.copies > 1)
+    in
+    let
         setSettings : String
         setSettings =
-            SummaEl.toString (readySettingsToSummaEl a)
+            SummaEl.toString
+                (if usePerforationRelief then
+                    readySettingsToSummaEl a
+                        ++ [ SummaEl.SetSettings (Dict.singleton "RECUT_OFFSET" "0")
+                           ]
+
+                 else
+                    readySettingsToSummaEl a
+                )
 
         maybeLoadMarkers : String
         maybeLoadMarkers =
@@ -124,10 +142,20 @@ readyToPlotterData a =
 
         data : String
         data =
-            a.polylines
-                |> HpGl.Geometry.fromPolylines
-                |> (\x -> HpGl.Initialize :: x ++ [ HpGl.End ])
-                |> HpGl.toString
+            if usePerforationRelief then
+                HpGl.toString
+                    (HpGl.Initialize
+                        :: HpGl.Geometry.fromPolylines (polylinesPreventDoubleCut a.markers a.polylines)
+                        ++ HpGl.Geometry.fromPolylines (perforationRelief a)
+                        ++ [ HpGl.End ]
+                    )
+
+            else
+                HpGl.toString
+                    (HpGl.Initialize
+                        :: HpGl.Geometry.fromPolylines a.polylines
+                        ++ [ HpGl.End ]
+                    )
 
         maybeRecut : String
         maybeRecut =
@@ -144,6 +172,87 @@ readyToPlotterData a =
                    )
     in
     setSettings ++ maybeLoadMarkers ++ data ++ maybeRecut
+
+
+polylinesPreventDoubleCut : Maybe PlotterControl.Markers.Markers -> List (Polyline2d.Polyline2d Length.Meters coordinates) -> List (Polyline2d.Polyline2d Length.Meters coordinates)
+polylinesPreventDoubleCut markers a =
+    let
+        tolerance : Length.Length
+        tolerance =
+            Length.millimeters 0.2
+    in
+    case markers of
+        Just markers_ ->
+            let
+                maxX : Quantity.Quantity Float Length.Meters
+                maxX =
+                    markers_
+                        |> PlotterControl.Markers.boundingBox
+                        |> BoundingBox2d.maxX
+                        |> Quantity.minus tolerance
+            in
+            a
+                |> List.map
+                    (\x ->
+                        case Polyline2d.boundingBox x of
+                            Just box ->
+                                if BoundingBox2d.maxX box |> Quantity.greaterThan maxX then
+                                    Polyline2d.translateBy (Vector2d.xy (Quantity.negate tolerance) Quantity.zero) x
+
+                                else
+                                    x
+
+                            Nothing ->
+                                x
+                    )
+
+        Nothing ->
+            a
+
+
+perforationRelief : Ready -> List (Polyline2d.Polyline2d Length.Meters coordinates)
+perforationRelief a =
+    let
+        polylinesBox : Maybe (BoundingBox2d.BoundingBox2d Length.Meters ())
+        polylinesBox =
+            a.polylines
+                |> List.filterMap Polyline2d.boundingBox
+                |> BoundingBox2d.aggregateN
+
+        nextCopy : Maybe (Point2d.Point2d Length.Meters coordinates)
+        nextCopy =
+            polylinesBox
+                |> Maybe.map
+                    (\box ->
+                        Point2d.xy
+                            ((case a.markers of
+                                Just x2 ->
+                                    BoundingBox2d.aggregate box [ PlotterControl.Markers.boundingBox x2 ]
+
+                                Nothing ->
+                                    box
+                             )
+                                |> BoundingBox2d.maxX
+                                |> Quantity.plus a.settings.copyDistance
+                            )
+                            Quantity.zero
+                    )
+    in
+    Maybe.map2
+        (\box x ->
+            [ Polyline2d.fromVertices
+                [ Point2d.xy (Point2d.xCoordinate x) (BoundingBox2d.maxY box)
+                , Point2d.xy (BoundingBox2d.maxX box) (BoundingBox2d.maxY box)
+                ]
+            , Polyline2d.fromVertices
+                [ Point2d.xy (Point2d.xCoordinate x) (BoundingBox2d.minY box)
+                , Point2d.xy (BoundingBox2d.maxX box) (BoundingBox2d.minY box)
+                ]
+            ]
+        )
+        polylinesBox
+        nextCopy
+        |> Maybe.withDefault []
 
 
 
