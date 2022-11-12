@@ -42,13 +42,6 @@ checkItem item checked model =
     )
 
 
-resetChecklist : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-resetChecklist model =
-    ( { model | checklist = Dict.Any.empty }
-    , Cmd.none
-    )
-
-
 
 --
 
