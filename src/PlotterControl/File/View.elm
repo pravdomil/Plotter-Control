@@ -17,9 +17,14 @@ import PlotterControl.Utils.View
 
 view : PlotterControl.Page.File -> PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
 view { name } model =
+    let
+        size : Element.PravdomilUi.Application.ViewportSize -> Element.PravdomilUi.Application.ViewportSize
+        size x =
+            { x | width = clamp 240 448 (x.width // 3) }
+    in
     case PlotterControl.Directory.Utils.fileByName name model of
         Just a ->
-            { size = \x -> { x | width = clamp 240 448 (x.width // 3) }
+            { size = size
             , header =
                 Just
                     { attributes = []
@@ -61,7 +66,7 @@ view { name } model =
             }
 
         Nothing ->
-            { size = \x -> { x | width = clamp 240 448 (x.width // 3) }
+            { size = size
             , header =
                 Just
                     { attributes = []
