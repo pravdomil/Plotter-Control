@@ -14,10 +14,10 @@ import PlotterControl.Settings
 type Msg
     = NothingHappened
     | ViewportSizeChanged Element.PravdomilUi.Application.ViewportSize
+    | Reset
       --
     | ChecklistActivated PlotterControl.Checklist.Checklist
     | ChecklistItemChecked PlotterControl.Checklist.Item Bool
-    | ResetChecklist
       --
     | MarkerSensitivityChanged Int
     | MarkerTestRequested

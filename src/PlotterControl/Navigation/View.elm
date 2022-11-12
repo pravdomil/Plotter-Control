@@ -25,7 +25,7 @@ view model =
                 [ textButton theme
                     []
                     { label = text "Reset"
-                    , onPress = Just PlotterControl.Msg.ResetChecklist
+                    , onPress = Just PlotterControl.Msg.Reset
                     }
                 ]
             , center = text "Plotter Control"

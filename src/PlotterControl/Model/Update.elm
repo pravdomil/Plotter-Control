@@ -3,6 +3,7 @@ module PlotterControl.Model.Update exposing (..)
 import Dict.Any
 import Element.PravdomilUi.Application
 import Json.Decode
+import Json.Encode
 import Platform.Extra
 import PlotterControl.Checklist.Update
 import PlotterControl.Directory.Update
@@ -47,15 +48,16 @@ update msg model =
         PlotterControl.Msg.ViewportSizeChanged a ->
             ( { model | viewportSize = a }, Cmd.none )
 
+        PlotterControl.Msg.Reset ->
+            init Json.Encode.null
+                |> Tuple.mapFirst (\x -> { x | viewportSize = model.viewportSize, page = model.page })
+
         --
         PlotterControl.Msg.ChecklistActivated a ->
             PlotterControl.Checklist.Update.activateChecklist a model
 
         PlotterControl.Msg.ChecklistItemChecked a b ->
             PlotterControl.Checklist.Update.checkItem a b model
-
-        PlotterControl.Msg.ResetChecklist ->
-            PlotterControl.Checklist.Update.resetChecklist model
 
         PlotterControl.Msg.MarkerSensitivityChanged a ->
             PlotterControl.Checklist.Update.changeMarkerSensitivity a model
