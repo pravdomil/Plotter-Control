@@ -78,6 +78,10 @@ testMarkers model =
             "("
                 ++ (String.fromInt model.markerSensitivity ++ "%")
                 ++ ")"
+
+        settings : SummaEl.Settings
+        settings =
+            Dict.singleton "OPOS_LEVEL" (String.fromInt level)
     in
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName ("Marker Test " ++ params))
@@ -85,10 +89,7 @@ testMarkers model =
             ((PlotterControl.Settings.allPresets
                 |> List.concatMap
                     (\x ->
-                        PlotterControl.Settings.presetToSetUserCommands x
-                            ++ [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
-                               , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                               ]
+                        PlotterControl.Settings.setSummaSettings x settings
                     )
              )
                 ++ [ SummaEl.LoadMarkers
@@ -150,18 +151,16 @@ testDrawing model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.presetToSetUserCommands PlotterControl.Settings.Draw
-                        ++ [ SummaEl.SetSettings
-                                (PlotterControl.Settings.defaultSettings
-                                    |> Dict.remove "CONFIGUSER"
-                                    |> Dict.remove "OPOS_LEVEL"
-                                    --
-                                    |> Dict.insert "TOOL" "PEN"
-                                    |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
-                                    |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
-                                )
-                           , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                           ]
+                    (PlotterControl.Settings.setSummaSettings
+                        PlotterControl.Settings.Draw
+                        (PlotterControl.Settings.defaultSettings
+                            |> Dict.remove "CONFIGUSER"
+                            |> Dict.remove "OPOS_LEVEL"
+                            --
+                            |> Dict.insert "TOOL" "PEN"
+                            |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
+                            |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
+                        )
                     )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
@@ -235,19 +234,17 @@ testCutting model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.presetToSetUserCommands PlotterControl.Settings.Cut
-                        ++ [ SummaEl.SetSettings
-                                (PlotterControl.Settings.defaultSettings
-                                    |> Dict.remove "CONFIGUSER"
-                                    |> Dict.remove "OPOS_LEVEL"
-                                    --
-                                    |> Dict.insert "OVERCUT" "2"
-                                    |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
-                                    |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
-                                    |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
-                                )
-                           , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                           ]
+                    (PlotterControl.Settings.setSummaSettings
+                        PlotterControl.Settings.Cut
+                        (PlotterControl.Settings.defaultSettings
+                            |> Dict.remove "CONFIGUSER"
+                            |> Dict.remove "OPOS_LEVEL"
+                            --
+                            |> Dict.insert "OVERCUT" "2"
+                            |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
+                            |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
+                            |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
+                        )
                     )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
@@ -316,23 +313,21 @@ testPerforation a model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.presetToSetUserCommands PlotterControl.Settings.Perforate
-                        ++ [ SummaEl.SetSettings
-                                (PlotterControl.Settings.defaultSettings
-                                    |> Dict.remove "CONFIGUSER"
-                                    |> Dict.remove "OPOS_LEVEL"
-                                    --
-                                    |> Dict.insert "FLEX_CUT" "MODE2"
-                                    |> Dict.insert "FULL_PRESSURE" "400"
-                                    |> Dict.insert "FLEX_VELOCITY" "100"
-                                    |> Dict.insert "OVERCUT" "2"
-                                    --
-                                    |> Dict.insert "VELOCITY" (String.fromInt 800)
-                                    |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
-                                    |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
-                                )
-                           , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                           ]
+                    (PlotterControl.Settings.setSummaSettings
+                        PlotterControl.Settings.Perforate
+                        (PlotterControl.Settings.defaultSettings
+                            |> Dict.remove "CONFIGUSER"
+                            |> Dict.remove "OPOS_LEVEL"
+                            --
+                            |> Dict.insert "FLEX_CUT" "MODE2"
+                            |> Dict.insert "FULL_PRESSURE" "400"
+                            |> Dict.insert "FLEX_VELOCITY" "100"
+                            |> Dict.insert "OVERCUT" "2"
+                            --
+                            |> Dict.insert "VELOCITY" (String.fromInt 800)
+                            |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
+                            |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
+                        )
                     )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString

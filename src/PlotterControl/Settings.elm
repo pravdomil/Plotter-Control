@@ -108,6 +108,14 @@ presetToSetUserCommands a =
     ]
 
 
+setSummaSettings : Preset -> SummaEl.Settings -> SummaEl.SummaEl
+setSummaSettings preset settings =
+    presetToSetUserCommands preset
+        ++ [ SummaEl.SetSettings settings
+           , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+           ]
+
+
 
 --
 
