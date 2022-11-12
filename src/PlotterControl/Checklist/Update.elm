@@ -82,10 +82,18 @@ testMarkers model =
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName ("Marker Test " ++ params))
         (SummaEl.toString
-            [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
-            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-            , SummaEl.LoadMarkers
-            ]
+            ((PlotterControl.Settings.allPresets
+                |> List.concatMap
+                    (\x ->
+                        PlotterControl.Settings.presetToSetUserCommand x
+                            ++ [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
+                               , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                               ]
+                    )
+             )
+                ++ [ SummaEl.LoadMarkers
+                   ]
+            )
         )
         model
 
