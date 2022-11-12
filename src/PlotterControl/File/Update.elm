@@ -10,6 +10,7 @@ import PlotterControl.Msg
 import PlotterControl.Queue
 import PlotterControl.Queue.Update
 import PlotterControl.Settings
+import PlotterControl.Utils.Utils
 import Quantity
 import SummaEl
 
@@ -21,7 +22,11 @@ addFileToQueue name model =
             let
                 params : String
                 params =
-                    " (" ++ String.fromInt (PlotterControl.Settings.copiesToInt c.settings.copies) ++ "×)"
+                    " ("
+                        ++ (String.fromInt (PlotterControl.Settings.copiesToInt c.settings.copies) ++ "×")
+                        ++ ", "
+                        ++ PlotterControl.Utils.Utils.mmToString c.settings.copyDistance
+                        ++ ")"
             in
             PlotterControl.Queue.Update.createItem
                 (PlotterControl.Queue.stringToItemName (PlotterControl.File.nameToString name ++ params))
