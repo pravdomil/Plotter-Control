@@ -9,6 +9,7 @@ import PlotterControl.Plotter
 import PlotterControl.Queue
 import Task
 import Time
+import Usb.Device
 
 
 sendQueue : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
@@ -84,6 +85,14 @@ queueItemSent plotter id a model =
             ( { model | plotter = Err (PlotterControl.Model.PlotterError b) }
             , Cmd.none
             )
+                |> Platform.Extra.andThen
+                    (case b of
+                        PlotterControl.Plotter.UsbDeviceError Usb.Device.DeviceDisconnected ->
+                            connect
+
+                        _ ->
+                            Platform.Extra.noOperation
+                    )
     )
         |> Platform.Extra.andThen sendNextItemInQueue
 
