@@ -21,7 +21,13 @@ view model =
     , header =
         Just
             { attributes = []
-            , left = []
+            , left =
+                [ textButton theme
+                    []
+                    { label = text "Reset"
+                    , onPress = Just PlotterControl.Msg.ResetChecklist
+                    }
+                ]
             , center = text "Plotter Control"
             , right =
                 [ textButton theme

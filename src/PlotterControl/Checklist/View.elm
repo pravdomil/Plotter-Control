@@ -21,13 +21,7 @@ view a model =
             { attributes = []
             , left = []
             , center = textEllipsis [ fontCenter ] (PlotterControl.Checklist.toName a.checklist ++ " Checklist")
-            , right =
-                [ textButton theme
-                    []
-                    { label = text "Reset"
-                    , onPress = Just PlotterControl.Msg.ResetChecklist
-                    }
-                ]
+            , right = []
             }
     , toolbar = Nothing
     , body =
