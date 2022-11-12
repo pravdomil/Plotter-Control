@@ -189,6 +189,7 @@ polylinesPreventDoubleCut markers a =
                     markers_
                         |> PlotterControl.Markers.boundingBox
                         |> BoundingBox2d.maxX
+                        |> Quantity.minus PlotterControl.Markers.size
                         |> Quantity.minus tolerance
             in
             a
