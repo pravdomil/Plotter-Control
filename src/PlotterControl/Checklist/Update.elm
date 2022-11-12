@@ -147,20 +147,20 @@ testDrawing model =
                             polyline
                     )
 
+        settings : SummaEl.Settings
+        settings =
+            PlotterControl.Settings.defaultSettings
+                |> Dict.remove "OPOS_LEVEL"
+                --
+                |> Dict.insert "TOOL" "PEN"
+                |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
+                |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
+
         test : String
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.savePreset
-                        PlotterControl.Settings.Draw
-                        (PlotterControl.Settings.defaultSettings
-                            |> Dict.remove "OPOS_LEVEL"
-                            --
-                            |> Dict.insert "TOOL" "PEN"
-                            |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
-                            |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
-                        )
-                    )
+                    (PlotterControl.Settings.savePreset PlotterControl.Settings.Draw settings)
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.origin |> Point2d.translateBy spacing)
