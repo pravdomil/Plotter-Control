@@ -202,7 +202,7 @@ cuttingTest model =
         , inputHelper
             "Pressure:"
             (String.fromInt model.cuttingPressure ++ " g")
-            none
+            (text "~120 g per layer")
             (\x -> PlotterControl.Msg.CuttingPressureChanged (20 * x))
         , inputHelper
             "Offset:"
@@ -263,6 +263,6 @@ inputHelper label value note onChange =
                 { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
                 , onPress = Just (onChange 1)
                 }
-            , note
+            , el [ fontSize 15, fontColor style.fore60 ] note
             ]
         )
