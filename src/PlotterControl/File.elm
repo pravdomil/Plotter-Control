@@ -97,18 +97,16 @@ hpGlFileToReady a =
 readySettingsToSummaEl : Ready -> SummaEl.SummaEl
 readySettingsToSummaEl a =
     PlotterControl.Settings.toCommandAndSettings a.settings
-        |> Tuple.mapSecond
-            (\x ->
-                case a.markers of
-                    Just x2 ->
-                        Dict.union (PlotterControl.Markers.toSettings x2) x
-
-                    Nothing ->
-                        x
-            )
         |> (\( x, x2 ) ->
                 x
-                    ++ [ SummaEl.SetSettings x2
+                    ++ [ SummaEl.SetSettings
+                            (x2
+                                |> Dict.union
+                                    (a.markers
+                                        |> Maybe.map PlotterControl.Markers.toSettings
+                                        |> Maybe.withDefault Dict.empty
+                                    )
+                            )
                        ]
            )
 
