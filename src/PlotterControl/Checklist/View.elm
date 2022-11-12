@@ -150,8 +150,7 @@ markersTest model =
         [ inputHelper
             "Sensitivity:"
             (String.fromInt model.markerSensitivity ++ "%")
-            (PlotterControl.Msg.MarkerSensitivityChanged 5)
-            (PlotterControl.Msg.MarkerSensitivityChanged -5)
+            (\x -> PlotterControl.Msg.MarkerSensitivityChanged (5 * x))
         , textButton theme
             [ centerX ]
             { label = text "Test Markers"
@@ -171,13 +170,11 @@ drawingTest model =
         [ inputHelper
             "Speed:"
             (String.fromInt model.drawingSpeed ++ " mm/s")
-            (PlotterControl.Msg.DrawingSpeedChanged 50)
-            (PlotterControl.Msg.DrawingSpeedChanged -50)
+            (\x -> PlotterControl.Msg.DrawingSpeedChanged (50 * x))
         , inputHelper
             "Pressure:"
             (String.fromInt model.drawingPressure ++ " g")
-            (PlotterControl.Msg.DrawingPressureChanged 20)
-            (PlotterControl.Msg.DrawingPressureChanged -20)
+            (\x -> PlotterControl.Msg.DrawingPressureChanged (20 * x))
         , textButton theme
             [ centerX ]
             { label = text "Test Drawing"
@@ -197,18 +194,15 @@ cuttingTest model =
         [ inputHelper
             "Speed:"
             (String.fromInt model.cuttingSpeed ++ " mm/s")
-            (PlotterControl.Msg.CuttingSpeedChanged 50)
-            (PlotterControl.Msg.CuttingSpeedChanged -50)
+            (\x -> PlotterControl.Msg.CuttingSpeedChanged (50 * x))
         , inputHelper
             "Pressure:"
             (String.fromInt model.cuttingPressure ++ " g")
-            (PlotterControl.Msg.CuttingPressureChanged 20)
-            (PlotterControl.Msg.CuttingPressureChanged -20)
+            (\x -> PlotterControl.Msg.CuttingPressureChanged (20 * x))
         , inputHelper
             "Offset:"
             (String.fromFloat (toFloat model.cuttingOffset / 100) ++ " mm")
-            (PlotterControl.Msg.CuttingOffsetChanged 10)
-            (PlotterControl.Msg.CuttingOffsetChanged -10)
+            (\x -> PlotterControl.Msg.CuttingOffsetChanged (10 * x))
         , textButton theme
             [ centerX ]
             { label = text "Test Cutting"
@@ -228,13 +222,11 @@ perforationTest model =
         [ inputHelper
             "Spacing:"
             (String.fromFloat (toFloat model.perforationSpacing / 100) ++ " mm")
-            (PlotterControl.Msg.PerforationSpacingChanged 2)
-            (PlotterControl.Msg.PerforationSpacingChanged -2)
+            (\x -> PlotterControl.Msg.PerforationSpacingChanged (2 * x))
         , inputHelper
             "Offset:"
             (String.fromFloat (toFloat model.perforationOffset / 100) ++ " mm")
-            (PlotterControl.Msg.PerforationOffsetChanged 10)
-            (PlotterControl.Msg.PerforationOffsetChanged -10)
+            (\x -> PlotterControl.Msg.PerforationOffsetChanged (10 * x))
         , textButton theme
             [ centerX ]
             { label = text "Test Perforation"
@@ -247,8 +239,8 @@ perforationTest model =
 --
 
 
-inputHelper : String -> String -> msg -> msg -> Element msg
-inputHelper label value plus minus =
+inputHelper : String -> String -> (Int -> msg) -> Element msg
+inputHelper label value onChange =
     PlotterControl.Utils.View.twoColumns
         label
         (row [ spacing 8 ]
@@ -256,12 +248,12 @@ inputHelper label value plus minus =
             , textButton theme
                 []
                 { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                , onPress = Just minus
+                , onPress = Just (onChange -1)
                 }
             , textButton theme
                 []
                 { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                , onPress = Just plus
+                , onPress = Just (onChange 1)
                 }
             ]
         )
