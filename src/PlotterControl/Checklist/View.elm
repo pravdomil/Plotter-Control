@@ -196,7 +196,7 @@ cuttingTest model =
         , inputHelper
             "Pressure:"
             (String.fromInt model.cuttingPressure ++ " g")
-            (text "~120 g / layer")
+            (text "~100 g / layer")
             (\x -> PlotterControl.Msg.CuttingPressureChanged (20 * x))
         , inputHelper
             "Offset:"
