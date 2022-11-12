@@ -153,6 +153,9 @@ plotterStatus model =
                                         Usb.Device.NothingSelected ->
                                             "Ready."
 
+                                        Usb.Device.DeviceDisconnected ->
+                                            "Disconnected."
+
                                         Usb.Device.TransferAborted ->
                                             "Sending has been stopped."
 
@@ -161,6 +164,9 @@ plotterStatus model =
 
                                 PlotterControl.Plotter.WakeLockError d ->
                                     case d of
+                                        WakeLock.PageNotVisible ->
+                                            "Please keep application visible."
+
                                         WakeLock.JavaScriptError _ ->
                                             "Internal error."
             )
