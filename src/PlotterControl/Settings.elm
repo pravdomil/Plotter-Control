@@ -30,7 +30,7 @@ default name =
                 Cut
     in
     { preset = preset
-    , markerLoading = LoadSequentially
+    , markerLoading = LoadContinually
     , copies = intToCopies 1
     , copyDistance = Length.millimeters 10
     }
@@ -45,7 +45,7 @@ toCommandAndSettings a =
                 LoadAllAtOnce ->
                     "OFF"
 
-                LoadSequentially ->
+                LoadContinually ->
                     "ON"
             )
         |> Dict.insert "RECUT_OFFSET"
@@ -145,7 +145,7 @@ copiesPlus (Copies a) (Copies b) =
 
 type MarkerLoading
     = LoadAllAtOnce
-    | LoadSequentially
+    | LoadContinually
 
 
 
