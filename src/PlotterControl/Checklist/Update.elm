@@ -85,7 +85,7 @@ testMarkers model =
             ((PlotterControl.Settings.allPresets
                 |> List.concatMap
                     (\x ->
-                        PlotterControl.Settings.presetToSetUserCommand x
+                        PlotterControl.Settings.presetToSetUserCommands x
                             ++ [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
                                , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
                                ]

@@ -38,7 +38,7 @@ default name =
 
 toCommandAndSettings : Settings -> ( SummaEl.SummaEl, SummaEl.Settings )
 toCommandAndSettings a =
-    ( presetToSetUserCommand a.preset
+    ( presetToSetUserCommands a.preset
     , Dict.empty
         |> Dict.insert "OPOS_PANELLING"
             (case a.markerLoading of
@@ -88,8 +88,8 @@ presetName a =
             "Perforate"
 
 
-presetToSetUserCommand : Preset -> SummaEl.SummaEl
-presetToSetUserCommand a =
+presetToSetUserCommands : Preset -> SummaEl.SummaEl
+presetToSetUserCommands a =
     [ SummaEl.SetSettings
         (Dict.singleton
             "CONFIGUSER"
@@ -106,41 +106,6 @@ presetToSetUserCommand a =
         )
     , SummaEl.UnknownCommand (SummaEl.Restore "NVRAM")
     ]
-
-
-presetToDefaultSettings : Preset -> ( SummaEl.SummaEl, SummaEl.Settings )
-presetToDefaultSettings a =
-    ( presetToSetUserCommand a
-    , defaultSettings
-        |> Dict.insert "TOOL"
-            (case a of
-                Draw ->
-                    "PEN"
-
-                Cut ->
-                    "DRAG_KNIFE"
-
-                Perforate ->
-                    "DRAG_KNIFE"
-            )
-        |> Dict.insert "FLEX_CUT"
-            (case a of
-                Draw ->
-                    "OFF"
-
-                Cut ->
-                    "OFF"
-
-                Perforate ->
-                    "MODE2"
-            )
-        |> Dict.insert "FULL_PRESSURE" "400"
-        |> Dict.insert "FLEX_VELOCITY" "100"
-        |> Dict.insert "OVERCUT" "2"
-        --
-        |> Dict.remove "CONFIGUSER"
-        |> Dict.remove "OPOS_LEVEL"
-    )
 
 
 
