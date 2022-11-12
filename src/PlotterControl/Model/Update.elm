@@ -29,7 +29,7 @@ init flags =
         100
         50
         60
-        40
+        60
     , Cmd.none
     )
 
