@@ -10,6 +10,7 @@ import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Page
 import PlotterControl.Utils.Theme exposing (..)
+import PlotterControl.Utils.Utils
 import PlotterControl.Utils.View
 
 
@@ -196,7 +197,7 @@ cuttingTest model =
         , inputHelper
             "Pressure:"
             (String.fromInt model.cuttingPressure ++ " g")
-            (text "~100 g / layer")
+            (text ("~" ++ String.fromInt PlotterControl.Utils.Utils.layerCutPressure ++ " g / layer"))
             (\x -> PlotterControl.Msg.CuttingPressureChanged (20 * x))
         , inputHelper
             "Offset:"

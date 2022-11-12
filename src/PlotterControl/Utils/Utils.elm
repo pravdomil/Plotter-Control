@@ -3,6 +3,11 @@ module PlotterControl.Utils.Utils exposing (..)
 import Length
 
 
+layerCutPressure : Int
+layerCutPressure =
+    100
+
+
 mmToString : Length.Length -> String
 mmToString a =
     a

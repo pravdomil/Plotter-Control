@@ -12,6 +12,7 @@ import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter.Update
 import PlotterControl.Queue.Update
+import PlotterControl.Utils.Utils
 
 
 init : Json.Decode.Value -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
@@ -27,7 +28,7 @@ init flags =
         200
         160
         800
-        100
+        PlotterControl.Utils.Utils.layerCutPressure
         50
         10
         60
