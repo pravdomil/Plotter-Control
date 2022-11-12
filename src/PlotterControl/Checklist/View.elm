@@ -150,6 +150,7 @@ markersTest model =
         [ inputHelper
             "Sensitivity:"
             (String.fromInt model.markerSensitivity ++ "%")
+            none
             (\x -> PlotterControl.Msg.MarkerSensitivityChanged (5 * x))
         , textButton theme
             [ centerX ]
@@ -170,10 +171,12 @@ drawingTest model =
         [ inputHelper
             "Speed:"
             (String.fromInt model.drawingSpeed ++ " mm/s")
+            none
             (\x -> PlotterControl.Msg.DrawingSpeedChanged (50 * x))
         , inputHelper
             "Pressure:"
             (String.fromInt model.drawingPressure ++ " g")
+            none
             (\x -> PlotterControl.Msg.DrawingPressureChanged (20 * x))
         , textButton theme
             [ centerX ]
@@ -194,14 +197,17 @@ cuttingTest model =
         [ inputHelper
             "Speed:"
             (String.fromInt model.cuttingSpeed ++ " mm/s")
+            none
             (\x -> PlotterControl.Msg.CuttingSpeedChanged (50 * x))
         , inputHelper
             "Pressure:"
             (String.fromInt model.cuttingPressure ++ " g")
+            none
             (\x -> PlotterControl.Msg.CuttingPressureChanged (20 * x))
         , inputHelper
             "Offset:"
             (String.fromFloat (toFloat model.cuttingOffset / 100) ++ " mm")
+            none
             (\x -> PlotterControl.Msg.CuttingOffsetChanged (10 * x))
         , textButton theme
             [ centerX ]
@@ -222,10 +228,12 @@ perforationTest model =
         [ inputHelper
             "Spacing:"
             (String.fromFloat (toFloat model.perforationSpacing / 100) ++ " mm")
+            none
             (\x -> PlotterControl.Msg.PerforationSpacingChanged (2 * x))
         , inputHelper
             "Offset:"
             (String.fromFloat (toFloat model.perforationOffset / 100) ++ " mm")
+            none
             (\x -> PlotterControl.Msg.PerforationOffsetChanged (10 * x))
         , textButton theme
             [ centerX ]
@@ -239,11 +247,11 @@ perforationTest model =
 --
 
 
-inputHelper : String -> String -> (Int -> msg) -> Element msg
-inputHelper label value onChange =
+inputHelper : String -> String -> Element msg -> (Int -> msg) -> Element msg
+inputHelper label value note onChange =
     PlotterControl.Utils.View.twoColumns
         label
-        (row [ spacing 8 ]
+        (row [ width fill, spacing 8 ]
             [ el [ fontVariant fontTabularNumbers ] (text value)
             , textButton theme
                 []
@@ -255,5 +263,6 @@ inputHelper label value onChange =
                 { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
                 , onPress = Just (onChange 1)
                 }
+            , note
             ]
         )
