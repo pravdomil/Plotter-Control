@@ -72,9 +72,15 @@ testMarkers model =
                 |> (\x -> x * 250)
                 |> round
                 |> clamp 0 250
+
+        params : String
+        params =
+            "("
+                ++ (String.fromInt model.markerSensitivity ++ "%")
+                ++ ")"
     in
     PlotterControl.Queue.Update.createItem
-        (PlotterControl.Queue.stringToItemName "Marker Test")
+        (PlotterControl.Queue.stringToItemName ("Marker Test " ++ params))
         (SummaEl.toString
             [ SummaEl.SetSettings (Dict.singleton "OPOS_LEVEL" (String.fromInt level))
             , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
@@ -153,8 +159,16 @@ testDrawing model =
                     [ SummaEl.SetOriginRelative (Point2d.origin |> Point2d.translateBy spacing)
                     ]
                 ++ HpGl.toString [ HpGl.ToolUp [ Point2d.xy (Length.millimeters 40) Quantity.zero ] ]
+
+        params : String
+        params =
+            "("
+                ++ (String.fromInt model.drawingSpeed ++ " mm/s")
+                ++ ", "
+                ++ (String.fromInt model.drawingPressure ++ " g")
+                ++ ")"
     in
-    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Drawing Test") test model
+    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName ("Drawing Test " ++ params)) test model
 
 
 
@@ -230,8 +244,18 @@ testCutting model =
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters -8) (Length.millimeters (-2 + 11)))
                     ]
                 ++ HpGl.toString [ HpGl.ToolUp [ Point2d.xy (Length.millimeters 40) Quantity.zero ] ]
+
+        params : String
+        params =
+            "("
+                ++ (String.fromInt model.cuttingSpeed ++ " mm/s")
+                ++ ", "
+                ++ (String.fromInt model.cuttingPressure ++ " g")
+                ++ ", "
+                ++ (String.fromFloat (toFloat model.cuttingOffset / 100) ++ " mm")
+                ++ ")"
     in
-    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Cutting Test") test model
+    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName ("Cutting Test " ++ params)) test model
 
 
 
@@ -300,5 +324,13 @@ testPerforation a model =
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters 0) (Length.millimeters (-16 + 20)))
                     ]
                 ++ HpGl.toString [ HpGl.ToolUp [ Point2d.xy (Length.millimeters 120) Quantity.zero ] ]
+
+        params : String
+        params =
+            "("
+                ++ (String.fromFloat (toFloat model.perforationSpacing / 10) ++ " mm")
+                ++ ", "
+                ++ (String.fromFloat (toFloat model.perforationOffset / 100) ++ " mm")
+                ++ ")"
     in
-    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Perforation Test") test model
+    PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName ("Perforation Test " ++ params)) test model
