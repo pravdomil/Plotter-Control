@@ -143,12 +143,7 @@ readyToPlotterData a =
                             ""
                    )
     in
-    String.join "\n"
-        [ setSettings
-        , maybeLoadMarkers
-        , data
-        , maybeRecut
-        ]
+    setSettings ++ maybeLoadMarkers ++ data ++ maybeRecut
 
 
 
