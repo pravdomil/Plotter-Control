@@ -4,6 +4,7 @@ import BoundingBox2d
 import Dict
 import HpGl
 import Length
+import Point2d
 import Polyline2d
 import Quantity
 import SummaEl
@@ -52,6 +53,16 @@ toSettings a =
         , ( "MARKER_Y_SIZE", size |> HpGl.lengthToString )
         , ( "MARKER_X_N", a.count |> String.fromInt )
         ]
+
+
+boundingBox : Markers -> BoundingBox2d.BoundingBox2d Length.Meters coordinates
+boundingBox a =
+    BoundingBox2d.from
+        Point2d.origin
+        (Point2d.xy
+            (a.xDistance |> Quantity.multiplyBy (toFloat (a.count - 1)))
+            a.yDistance
+        )
 
 
 size : Length.Length
