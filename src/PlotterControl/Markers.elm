@@ -60,8 +60,8 @@ boundingBox a =
     BoundingBox2d.from
         Point2d.origin
         (Point2d.xy
-            (a.xDistance |> Quantity.multiplyBy (toFloat (a.count - 1)))
-            a.yDistance
+            (a.xDistance |> Quantity.multiplyBy (toFloat (a.count - 1)) |> Quantity.plus size)
+            (a.yDistance |> Quantity.plus size)
         )
 
 
