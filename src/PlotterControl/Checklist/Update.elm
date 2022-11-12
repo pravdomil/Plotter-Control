@@ -252,22 +252,31 @@ changePerforationOffset a model =
     )
 
 
-testPerforation : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-testPerforation model =
+testPerforation : PlotterControl.Msg.PerforationTest -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+testPerforation a model =
     let
         polylines : List (Polyline2d.Polyline2d Length.Meters coordinates)
         polylines =
-            [ Polyline2d.fromVertices
-                [ Point2d.millimeters 16 0
-                , Point2d.millimeters 0 0
-                , Point2d.millimeters 0 16
-                ]
-            , Polyline2d.fromVertices
-                [ Point2d.millimeters 16 0
-                , Point2d.millimeters 16 16
-                , Point2d.millimeters 0 16
-                ]
-            ]
+            case a of
+                PlotterControl.Msg.PerforationTestSquare ->
+                    [ Polyline2d.fromVertices
+                        [ Point2d.millimeters 16 0
+                        , Point2d.millimeters 0 0
+                        , Point2d.millimeters 0 16
+                        ]
+                    , Polyline2d.fromVertices
+                        [ Point2d.millimeters 16 0
+                        , Point2d.millimeters 16 16
+                        , Point2d.millimeters 0 16
+                        ]
+                    ]
+
+                PlotterControl.Msg.PerforationTestLine ->
+                    [ Polyline2d.fromVertices
+                        [ Point2d.millimeters 0 0
+                        , Point2d.millimeters 0 16
+                        ]
+                    ]
 
         test : String
         test =
