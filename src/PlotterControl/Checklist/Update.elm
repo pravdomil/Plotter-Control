@@ -229,21 +229,21 @@ testCutting model =
                 ]
             ]
 
+        settings : SummaEl.Settings
+        settings =
+            PlotterControl.Settings.defaultSettings
+                |> Dict.remove "OPOS_LEVEL"
+                --
+                |> Dict.insert "OVERCUT" "2"
+                |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
+                |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
+                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
+
         test : String
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.savePreset
-                        PlotterControl.Settings.Cut
-                        (PlotterControl.Settings.defaultSettings
-                            |> Dict.remove "OPOS_LEVEL"
-                            --
-                            |> Dict.insert "OVERCUT" "2"
-                            |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
-                            |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
-                            |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
-                        )
-                    )
+                    (PlotterControl.Settings.savePreset PlotterControl.Settings.Cut settings)
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters -8) (Length.millimeters (-2 + 11)))
