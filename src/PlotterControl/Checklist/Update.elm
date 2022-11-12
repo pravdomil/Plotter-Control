@@ -307,7 +307,7 @@ testPerforation a model =
                         ]
                     ]
 
-        settings : Dict.Dict String String
+        settings : SummaEl.Settings
         settings =
             PlotterControl.Settings.defaultSettings
                 |> Dict.remove "OPOS_LEVEL"
