@@ -14,10 +14,10 @@ type alias Model =
 
     --
     , page : Maybe PlotterControl.Page.Page
+    , checklist : Dict.Any.Dict PlotterControl.Checklist.Item ()
     , directory : Result () PlotterControl.Directory.Directory
     , queue : PlotterControl.Queue.Queue
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
-    , checklist : Dict.Any.Dict PlotterControl.Checklist.Item ()
 
     --
     , markerSensitivity : Int

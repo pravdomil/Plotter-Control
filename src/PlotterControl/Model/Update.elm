@@ -19,10 +19,10 @@ init flags =
     ( PlotterControl.Model.Model
         (Element.PravdomilUi.Application.flagsToViewportSize flags)
         Nothing
+        Dict.Any.empty
         (Err ())
         Dict.Any.empty
         (Err PlotterControl.Model.NoPlotter)
-        Dict.Any.empty
         75
         200
         160
