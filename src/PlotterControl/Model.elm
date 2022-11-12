@@ -32,7 +32,7 @@ type alias Model =
     , cuttingOffset : Int
 
     --
-    , perforationPressure : Int
+    , perforationSpacing : Int
     , perforationOffset : Int
     }
 

@@ -238,9 +238,9 @@ testCutting model =
 --
 
 
-changePerforationPressure : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-changePerforationPressure a model =
-    ( { model | perforationPressure = clamp 0 400 (model.perforationPressure + a) }
+changePerforationSpacing : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changePerforationSpacing a model =
+    ( { model | perforationSpacing = clamp 0 100 (model.perforationSpacing + a) }
     , Cmd.none
     )
 

@@ -28,7 +28,7 @@ init flags =
         800
         100
         50
-        60
+        10
         60
     , Cmd.none
     )
@@ -84,8 +84,8 @@ update msg model =
         PlotterControl.Msg.CuttingTestRequested ->
             PlotterControl.Checklist.Update.testCutting model
 
-        PlotterControl.Msg.PerforationPressureChanged a ->
-            PlotterControl.Checklist.Update.changePerforationPressure a model
+        PlotterControl.Msg.PerforationSpacingChanged a ->
+            PlotterControl.Checklist.Update.changePerforationSpacing a model
 
         PlotterControl.Msg.PerforationOffsetChanged a ->
             PlotterControl.Checklist.Update.changePerforationOffset a model

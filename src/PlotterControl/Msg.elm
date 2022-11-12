@@ -31,7 +31,7 @@ type Msg
     | CuttingOffsetChanged Int
     | CuttingTestRequested
       --
-    | PerforationPressureChanged Int
+    | PerforationSpacingChanged Int
     | PerforationOffsetChanged Int
     | PerforationTestRequested
       --

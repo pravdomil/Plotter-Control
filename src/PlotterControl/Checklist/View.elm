@@ -226,10 +226,10 @@ perforationTest model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Test")
         [ inputHelper
-            "Pressure:"
-            (String.fromInt model.perforationPressure ++ " g")
-            (PlotterControl.Msg.PerforationPressureChanged 20)
-            (PlotterControl.Msg.PerforationPressureChanged -20)
+            "Spacing:"
+            (String.fromFloat (toFloat model.perforationSpacing / 100) ++ " mm")
+            (PlotterControl.Msg.PerforationSpacingChanged 2)
+            (PlotterControl.Msg.PerforationSpacingChanged -2)
         , inputHelper
             "Offset:"
             (String.fromFloat (toFloat model.perforationOffset / 100) ++ " mm")
