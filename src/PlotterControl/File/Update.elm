@@ -18,12 +18,13 @@ addFileToQueue : PlotterControl.File.Name -> PlotterControl.Model.Model -> ( Plo
 addFileToQueue name model =
     case PlotterControl.Directory.Utils.readyFileByName name model of
         Just ( _, c ) ->
+            let
+                params : String
+                params =
+                    " (" ++ String.fromInt (PlotterControl.Settings.copiesToInt c.settings.copies) ++ "×)"
+            in
             PlotterControl.Queue.Update.createItem
-                (name
-                    |> PlotterControl.File.nameToString
-                    |> (\x -> String.fromInt (PlotterControl.Settings.copiesToInt c.settings.copies) ++ "× - " ++ x)
-                    |> PlotterControl.Queue.stringToItemName
-                )
+                (PlotterControl.Queue.stringToItemName (PlotterControl.File.nameToString name ++ params))
                 (PlotterControl.File.readyToPlotterData c)
                 model
 
