@@ -108,8 +108,8 @@ loadPreset a =
     ]
 
 
-savePreset : Preset -> SummaEl.Settings -> SummaEl.SummaEl
-savePreset preset settings =
+savePreset : SummaEl.Settings -> Preset -> SummaEl.SummaEl
+savePreset settings preset =
     loadPreset preset
         ++ [ SummaEl.SetSettings (settings |> Dict.remove "CONFIGUSER")
            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")

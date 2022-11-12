@@ -87,10 +87,7 @@ testMarkers model =
         (PlotterControl.Queue.stringToItemName ("Marker Test " ++ params))
         (SummaEl.toString
             ((PlotterControl.Settings.allPresets
-                |> List.concatMap
-                    (\x ->
-                        PlotterControl.Settings.savePreset x settings
-                    )
+                |> List.concatMap (PlotterControl.Settings.savePreset settings)
              )
                 ++ [ SummaEl.LoadMarkers
                    ]
@@ -160,7 +157,7 @@ testDrawing model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.savePreset PlotterControl.Settings.Draw settings)
+                    (PlotterControl.Settings.savePreset settings PlotterControl.Settings.Draw)
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.origin |> Point2d.translateBy spacing)
@@ -243,7 +240,7 @@ testCutting model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.savePreset PlotterControl.Settings.Cut settings)
+                    (PlotterControl.Settings.savePreset settings PlotterControl.Settings.Cut)
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters -8) (Length.millimeters (-2 + 11)))
@@ -325,7 +322,7 @@ testPerforation a model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.savePreset PlotterControl.Settings.Perforate settings)
+                    (PlotterControl.Settings.savePreset settings PlotterControl.Settings.Perforate)
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters 0) (Length.millimeters (-16 + 20)))
