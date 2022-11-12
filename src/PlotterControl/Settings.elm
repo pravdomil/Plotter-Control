@@ -42,11 +42,11 @@ toCommandAndSettings a =
     , Dict.empty
         |> Dict.insert "OPOS_PANELLING"
             (case a.markerLoading of
-                LoadSimultaneously ->
-                    "OFF"
-
                 LoadContinually ->
                     "ON"
+
+                LoadSimultaneously ->
+                    "OFF"
             )
         |> Dict.insert "RECUT_OFFSET"
             (a.copyDistance
@@ -144,8 +144,8 @@ copiesPlus (Copies a) (Copies b) =
 
 
 type MarkerLoading
-    = LoadSimultaneously
-    | LoadContinually
+    = LoadContinually
+    | LoadSimultaneously
 
 
 
