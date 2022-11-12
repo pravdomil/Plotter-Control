@@ -91,7 +91,7 @@ type UnknownCommand
     | ReadMarkers
     | ReadMediaSensors
     | ReloadMarkers
-    | Restore
+    | Restore String
     | SetLanguage
     | SetSerial
     | Store String
@@ -123,8 +123,8 @@ unknownCommandToString a =
         ReloadMarkers ->
             "RELOAD_MARKERS"
 
-        Restore ->
-            "RESTORE"
+        Restore b ->
+            "RESTORE " ++ b
 
         SetLanguage ->
             "WRITE_LANGUAGE"
