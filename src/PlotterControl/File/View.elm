@@ -61,7 +61,7 @@ view { name } model =
             }
 
         Nothing ->
-            { size = \x -> { x | width = max 320 (x.width // 4) }
+            { size = \x -> { x | width = clamp 240 448 (x.width // 3) }
             , header =
                 Just
                     { attributes = []
