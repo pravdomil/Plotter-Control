@@ -23,11 +23,16 @@ view model =
         Just
             { attributes = []
             , left =
-                [ textButton theme
-                    []
-                    { label = text "Download"
-                    , onPress = Just PlotterControl.Msg.QueueDownloadRequested
-                    }
+                [ case model.queue |> Dict.Any.isEmpty of
+                    True ->
+                        el [] none
+
+                    False ->
+                        textButton theme
+                            []
+                            { label = text "Download"
+                            , onPress = Just PlotterControl.Msg.QueueDownloadRequested
+                            }
                 ]
             , center = textEllipsis [ fontCenter ] "Queue"
             , right =
