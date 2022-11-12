@@ -307,25 +307,25 @@ testPerforation a model =
                         ]
                     ]
 
+        settings : Dict.Dict String String
+        settings =
+            PlotterControl.Settings.defaultSettings
+                |> Dict.remove "OPOS_LEVEL"
+                --
+                |> Dict.insert "FLEX_CUT" "MODE2"
+                |> Dict.insert "FULL_PRESSURE" "400"
+                |> Dict.insert "FLEX_VELOCITY" "100"
+                |> Dict.insert "OVERCUT" "2"
+                --
+                |> Dict.insert "VELOCITY" (String.fromInt 800)
+                |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
+                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
+
         test : String
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.savePreset
-                        PlotterControl.Settings.Perforate
-                        (PlotterControl.Settings.defaultSettings
-                            |> Dict.remove "OPOS_LEVEL"
-                            --
-                            |> Dict.insert "FLEX_CUT" "MODE2"
-                            |> Dict.insert "FULL_PRESSURE" "400"
-                            |> Dict.insert "FLEX_VELOCITY" "100"
-                            |> Dict.insert "OVERCUT" "2"
-                            --
-                            |> Dict.insert "VELOCITY" (String.fromInt 800)
-                            |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
-                            |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
-                        )
-                    )
+                    (PlotterControl.Settings.savePreset PlotterControl.Settings.Perforate settings)
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
                     [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters 0) (Length.millimeters (-16 + 20)))
