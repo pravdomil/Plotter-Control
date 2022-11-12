@@ -252,7 +252,7 @@ inputHelper label value note onChange =
     PlotterControl.Utils.View.twoColumns
         label
         (row [ width fill, spacing 8 ]
-            [ el [ fontVariant fontTabularNumbers ] (text value)
+            [ el [ width (px 80), fontVariant fontTabularNumbers ] (text value)
             , textButton theme
                 []
                 { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
