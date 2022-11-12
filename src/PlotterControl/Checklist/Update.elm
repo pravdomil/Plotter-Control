@@ -235,18 +235,20 @@ testCutting model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Cut
-                        |> (\( x, x2 ) ->
-                                x
-                                    ++ [ SummaEl.SetSettings
-                                            (x2
-                                                |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
-                                                |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
-                                                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
-                                            )
-                                       , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                                       ]
-                           )
+                    (PlotterControl.Settings.presetToSetUserCommands PlotterControl.Settings.Cut
+                        ++ [ SummaEl.SetSettings
+                                (PlotterControl.Settings.defaultSettings
+                                    |> Dict.remove "CONFIGUSER"
+                                    |> Dict.remove "OPOS_LEVEL"
+                                    --
+                                    |> Dict.insert "TOOL" "DRAG_KNIFE"
+                                    |> Dict.insert "OVERCUT" "2"
+                                    |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
+                                    |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
+                                    |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
+                                )
+                           , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                           ]
                     )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
