@@ -154,7 +154,6 @@ testDrawing model =
                     (PlotterControl.Settings.savePreset
                         PlotterControl.Settings.Draw
                         (PlotterControl.Settings.defaultSettings
-                            |> Dict.remove "CONFIGUSER"
                             |> Dict.remove "OPOS_LEVEL"
                             --
                             |> Dict.insert "TOOL" "PEN"
@@ -237,7 +236,6 @@ testCutting model =
                     (PlotterControl.Settings.savePreset
                         PlotterControl.Settings.Cut
                         (PlotterControl.Settings.defaultSettings
-                            |> Dict.remove "CONFIGUSER"
                             |> Dict.remove "OPOS_LEVEL"
                             --
                             |> Dict.insert "OVERCUT" "2"
@@ -316,7 +314,6 @@ testPerforation a model =
                     (PlotterControl.Settings.savePreset
                         PlotterControl.Settings.Perforate
                         (PlotterControl.Settings.defaultSettings
-                            |> Dict.remove "CONFIGUSER"
                             |> Dict.remove "OPOS_LEVEL"
                             --
                             |> Dict.insert "FLEX_CUT" "MODE2"
