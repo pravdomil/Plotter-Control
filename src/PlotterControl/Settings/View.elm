@@ -48,7 +48,7 @@ markerLoading name a =
             { label = labelHidden "Marker Loading:"
             , options =
                 [ inputRadioBlockOption theme [] PlotterControl.Settings.LoadContinually (text "Continually")
-                , inputRadioBlockOption theme [] PlotterControl.Settings.LoadAllAtOnce (text "All at Once")
+                , inputRadioBlockOption theme [] PlotterControl.Settings.LoadSimultaneously (text "Simultaneously")
                 ]
             , selected = Just a.markerLoading
             , onChange = PlotterControl.Msg.MarkerLoadingChanged name

@@ -42,7 +42,7 @@ toCommandAndSettings a =
     , Dict.empty
         |> Dict.insert "OPOS_PANELLING"
             (case a.markerLoading of
-                LoadAllAtOnce ->
+                LoadSimultaneously ->
                     "OFF"
 
                 LoadContinually ->
@@ -144,7 +144,7 @@ copiesPlus (Copies a) (Copies b) =
 
 
 type MarkerLoading
-    = LoadAllAtOnce
+    = LoadSimultaneously
     | LoadContinually
 
 
