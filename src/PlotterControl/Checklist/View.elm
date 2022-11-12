@@ -227,7 +227,7 @@ perforationTest model =
         (Just "Test")
         [ inputHelper
             "Spacing:"
-            (String.fromFloat (toFloat model.perforationSpacing / 100) ++ " mm")
+            (String.fromFloat (toFloat model.perforationSpacing / 10) ++ " mm")
             none
             (\x -> PlotterControl.Msg.PerforationSpacingChanged (2 * x))
         , inputHelper

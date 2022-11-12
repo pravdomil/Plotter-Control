@@ -265,7 +265,7 @@ testPerforation model =
                                 , SummaEl.SetSettings
                                     (x2
                                         |> Dict.insert "VELOCITY" (String.fromInt 800)
-                                        |> Dict.insert "FLEX_PRESSURE" (String.fromInt model.perforationPressure)
+                                        |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
                                         |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
                                     )
                                 , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
