@@ -50,7 +50,7 @@ update msg model =
 
         PlotterControl.Msg.Reset ->
             init Json.Encode.null
-                |> Tuple.mapFirst (\x -> { x | viewportSize = model.viewportSize, page = model.page })
+                |> Tuple.mapFirst (\x -> { x | viewportSize = model.viewportSize, page = model.page, directory = model.directory })
 
         --
         PlotterControl.Msg.ChecklistActivated a ->
