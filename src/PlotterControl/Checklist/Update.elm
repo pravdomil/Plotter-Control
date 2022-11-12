@@ -255,6 +255,20 @@ changePerforationOffset a model =
 testPerforation : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testPerforation model =
     let
+        polylines : List (Polyline2d.Polyline2d Length.Meters coordinates)
+        polylines =
+            [ Polyline2d.fromVertices
+                [ Point2d.millimeters 16 0
+                , Point2d.millimeters 0 0
+                , Point2d.millimeters 0 16
+                ]
+            , Polyline2d.fromVertices
+                [ Point2d.millimeters 16 0
+                , Point2d.millimeters 16 16
+                , Point2d.millimeters 0 16
+                ]
+            ]
+
         test : String
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
@@ -272,5 +286,10 @@ testPerforation model =
                                 ]
                            )
                     )
+                ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
+                ++ SummaEl.toString
+                    [ SummaEl.SetOriginRelative (Point2d.xy (Length.millimeters 0) (Length.millimeters (-16 + 20)))
+                    ]
+                ++ HpGl.toString [ HpGl.ToolUp [ Point2d.xy (Length.millimeters 120) Quantity.zero ] ]
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName "Perforation Test") test model
