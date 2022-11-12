@@ -144,14 +144,14 @@ testDrawing model =
                 ++ SummaEl.toString
                     (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Draw
                         |> (\( x, x2 ) ->
-                                [ x
-                                , SummaEl.SetSettings
-                                    (x2
-                                        |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
-                                        |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
-                                    )
-                                , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                                ]
+                                x
+                                    ++ [ SummaEl.SetSettings
+                                            (x2
+                                                |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
+                                                |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
+                                            )
+                                       , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                                       ]
                            )
                     )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
@@ -228,15 +228,15 @@ testCutting model =
                 ++ SummaEl.toString
                     (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Cut
                         |> (\( x, x2 ) ->
-                                [ x
-                                , SummaEl.SetSettings
-                                    (x2
-                                        |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
-                                        |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
-                                        |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
-                                    )
-                                , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                                ]
+                                x
+                                    ++ [ SummaEl.SetSettings
+                                            (x2
+                                                |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
+                                                |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
+                                                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
+                                            )
+                                       , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                                       ]
                            )
                     )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
@@ -308,15 +308,15 @@ testPerforation a model =
                 ++ SummaEl.toString
                     (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Perforate
                         |> (\( x, x2 ) ->
-                                [ x
-                                , SummaEl.SetSettings
-                                    (x2
-                                        |> Dict.insert "VELOCITY" (String.fromInt 800)
-                                        |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
-                                        |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
-                                    )
-                                , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                                ]
+                                x
+                                    ++ [ SummaEl.SetSettings
+                                            (x2
+                                                |> Dict.insert "VELOCITY" (String.fromInt 800)
+                                                |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
+                                                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
+                                            )
+                                       , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                                       ]
                            )
                     )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)

@@ -36,7 +36,7 @@ default name =
     }
 
 
-toCommandAndSettings : Settings -> ( SummaEl.Command, SummaEl.Settings )
+toCommandAndSettings : Settings -> ( SummaEl.SummaEl, SummaEl.Settings )
 toCommandAndSettings a =
     ( presetToSetUserCommand a.preset
     , Dict.empty
@@ -88,9 +88,9 @@ presetName a =
             "Perforate"
 
 
-presetToSetUserCommand : Preset -> SummaEl.Command
+presetToSetUserCommand : Preset -> SummaEl.SummaEl
 presetToSetUserCommand a =
-    SummaEl.SetSettings
+    [ SummaEl.SetSettings
         (Dict.singleton
             "CONFIGUSER"
             (case a of
@@ -104,9 +104,11 @@ presetToSetUserCommand a =
                     "3"
             )
         )
+    , SummaEl.UnknownCommand (SummaEl.Restore "NVRAM")
+    ]
 
 
-presetToDefaultSettings : Preset -> ( SummaEl.Command, SummaEl.Settings )
+presetToDefaultSettings : Preset -> ( SummaEl.SummaEl, SummaEl.Settings )
 presetToDefaultSettings a =
     ( presetToSetUserCommand a
     , defaultSettings

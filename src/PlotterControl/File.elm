@@ -107,9 +107,9 @@ readySettingsToSummaEl a =
                         x
             )
         |> (\( x, x2 ) ->
-                [ x
-                , SummaEl.SetSettings x2
-                ]
+                x
+                    ++ [ SummaEl.SetSettings x2
+                       ]
            )
 
 
