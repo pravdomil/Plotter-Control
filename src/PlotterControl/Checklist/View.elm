@@ -237,12 +237,12 @@ perforationTest model =
             (\x -> PlotterControl.Msg.PerforationOffsetChanged (10 * x))
         , textButton theme
             [ centerX ]
-            { label = text "Test Perforation Square"
+            { label = text "Test Perforation on Square"
             , onPress = Just (PlotterControl.Msg.PerforationTestRequested PlotterControl.Msg.PerforationTestSquare)
             }
         , textButton theme
             [ centerX ]
-            { label = text "Test Perforation Line"
+            { label = text "Test Perforation on Line"
             , onPress = Just (PlotterControl.Msg.PerforationTestRequested PlotterControl.Msg.PerforationTestLine)
             }
         ]
