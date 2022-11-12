@@ -37,12 +37,13 @@ testMarkers name model =
         Just ( _, b ) ->
             case b.markers of
                 Just _ ->
+                    let
+                        params : String
+                        params =
+                            " (" ++ PlotterControl.File.nameToString name ++ ")"
+                    in
                     PlotterControl.Queue.Update.createItem
-                        (name
-                            |> PlotterControl.File.nameToString
-                            |> (\x -> "Marker Test - " ++ x)
-                            |> PlotterControl.Queue.stringToItemName
-                        )
+                        (PlotterControl.Queue.stringToItemName ("Marker Test " ++ params))
                         (SummaEl.toString
                             (PlotterControl.File.readySettingsToSummaEl b
                                 ++ [ SummaEl.LoadMarkers
