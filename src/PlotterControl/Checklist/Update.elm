@@ -316,18 +316,23 @@ testPerforation a model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.presetToDefaultSettings PlotterControl.Settings.Perforate
-                        |> (\( x, x2 ) ->
-                                x
-                                    ++ [ SummaEl.SetSettings
-                                            (x2
-                                                |> Dict.insert "VELOCITY" (String.fromInt 800)
-                                                |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
-                                                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
-                                            )
-                                       , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
-                                       ]
-                           )
+                    (PlotterControl.Settings.presetToSetUserCommands PlotterControl.Settings.Perforate
+                        ++ [ SummaEl.SetSettings
+                                (PlotterControl.Settings.defaultSettings
+                                    |> Dict.remove "CONFIGUSER"
+                                    |> Dict.remove "OPOS_LEVEL"
+                                    --
+                                    |> Dict.insert "FLEX_CUT" "MODE2"
+                                    |> Dict.insert "FULL_PRESSURE" "400"
+                                    |> Dict.insert "FLEX_VELOCITY" "100"
+                                    |> Dict.insert "OVERCUT" "2"
+                                    --
+                                    |> Dict.insert "VELOCITY" (String.fromInt 800)
+                                    |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
+                                    |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
+                                )
+                           , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+                           ]
                     )
                 ++ HpGl.toString (HpGl.Geometry.fromPolylines polylines)
                 ++ SummaEl.toString
