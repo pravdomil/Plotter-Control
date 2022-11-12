@@ -89,7 +89,7 @@ testMarkers model =
             ((PlotterControl.Settings.allPresets
                 |> List.concatMap
                     (\x ->
-                        PlotterControl.Settings.setSummaSettings x settings
+                        PlotterControl.Settings.savePreset x settings
                     )
              )
                 ++ [ SummaEl.LoadMarkers
@@ -151,7 +151,7 @@ testDrawing model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.setSummaSettings
+                    (PlotterControl.Settings.savePreset
                         PlotterControl.Settings.Draw
                         (PlotterControl.Settings.defaultSettings
                             |> Dict.remove "CONFIGUSER"
@@ -234,7 +234,7 @@ testCutting model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.setSummaSettings
+                    (PlotterControl.Settings.savePreset
                         PlotterControl.Settings.Cut
                         (PlotterControl.Settings.defaultSettings
                             |> Dict.remove "CONFIGUSER"
@@ -313,7 +313,7 @@ testPerforation a model =
         test =
             HpGl.toString [ HpGl.ToolUp [ Point2d.origin ] ]
                 ++ SummaEl.toString
-                    (PlotterControl.Settings.setSummaSettings
+                    (PlotterControl.Settings.savePreset
                         PlotterControl.Settings.Perforate
                         (PlotterControl.Settings.defaultSettings
                             |> Dict.remove "CONFIGUSER"

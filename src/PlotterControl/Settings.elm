@@ -38,7 +38,7 @@ default name =
 
 toCommandAndSettings : Settings -> ( SummaEl.SummaEl, SummaEl.Settings )
 toCommandAndSettings a =
-    ( presetToSetUserCommands a.preset
+    ( loadPreset a.preset
     , Dict.empty
         |> Dict.insert "OPOS_PANELLING"
             (case a.markerLoading of
@@ -88,8 +88,8 @@ presetName a =
             "Perforate"
 
 
-presetToSetUserCommands : Preset -> SummaEl.SummaEl
-presetToSetUserCommands a =
+loadPreset : Preset -> SummaEl.SummaEl
+loadPreset a =
     [ SummaEl.SetSettings
         (Dict.singleton
             "CONFIGUSER"
@@ -108,9 +108,9 @@ presetToSetUserCommands a =
     ]
 
 
-setSummaSettings : Preset -> SummaEl.Settings -> SummaEl.SummaEl
-setSummaSettings preset settings =
-    presetToSetUserCommands preset
+savePreset : Preset -> SummaEl.Settings -> SummaEl.SummaEl
+savePreset preset settings =
+    loadPreset preset
         ++ [ SummaEl.SetSettings settings
            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
            ]
