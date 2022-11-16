@@ -1,6 +1,7 @@
 module PlotterControl.File.Update exposing (..)
 
 import Dict.Any
+import File.Download
 import Length
 import Platform.Extra
 import PlotterControl.Directory.Utils
@@ -32,6 +33,21 @@ addFileToQueue name model =
                 (PlotterControl.Queue.stringToItemName (PlotterControl.File.nameToString name ++ params))
                 (PlotterControl.File.readyToPlotterData c)
                 model
+
+        Nothing ->
+            Platform.Extra.noOperation model
+
+
+downloadSvg : PlotterControl.File.Name -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+downloadSvg name model =
+    case PlotterControl.Directory.Utils.readyFileByName name model of
+        Just ( _, c ) ->
+            ( model
+            , File.Download.string
+                (PlotterControl.File.nameToString name ++ ".svg")
+                "image/svg+xml"
+                (PlotterControl.File.readyToSvg c)
+            )
 
         Nothing ->
             Platform.Extra.noOperation model

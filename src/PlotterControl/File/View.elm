@@ -28,7 +28,13 @@ view { name } model =
             , header =
                 Just
                     { attributes = []
-                    , left = []
+                    , left =
+                        [ textButton theme
+                            []
+                            { label = text "Download"
+                            , onPress = Just (PlotterControl.Msg.DownloadSvgRequested name)
+                            }
+                        ]
                     , center = textEllipsis [ fontCenter, fontVariant fontTabularNumbers ] ("File " ++ PlotterControl.File.nameToString name)
                     , right =
                         [ textButton theme
