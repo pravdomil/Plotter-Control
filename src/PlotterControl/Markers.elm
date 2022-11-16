@@ -7,7 +7,9 @@ import Length
 import Point2d
 import Polyline2d
 import Quantity
+import Rectangle2d
 import SummaEl
+import Vector2d
 
 
 type alias Markers =
@@ -63,6 +65,30 @@ boundingBox a =
             (a.xDistance |> Quantity.multiplyBy (toFloat (a.count - 1)) |> Quantity.plus size)
             (a.yDistance |> Quantity.plus size)
         )
+
+
+rectangles : Markers -> List (Rectangle2d.Rectangle2d Length.Meters coordinates)
+rectangles a =
+    List.range 0 (a.count - 1)
+        |> List.concatMap
+            (\x ->
+                let
+                    rect : Point2d.Point2d Length.Meters coordinates -> Rectangle2d.Rectangle2d Length.Meters coordinates
+                    rect b =
+                        Rectangle2d.from b (b |> Point2d.translateBy (Vector2d.xy size size))
+
+                    spacing : Vector2d.Vector2d Length.Meters coordinates
+                    spacing =
+                        Vector2d.xy
+                            (a.xDistance |> Quantity.multiplyBy (toFloat x))
+                            Quantity.zero
+                in
+                [ rect Point2d.origin
+                    |> Rectangle2d.translateBy spacing
+                , rect (Point2d.xy Quantity.zero a.yDistance)
+                    |> Rectangle2d.translateBy spacing
+                ]
+            )
 
 
 size : Length.Length
