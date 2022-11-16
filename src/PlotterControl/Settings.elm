@@ -21,10 +21,17 @@ default name =
         nonAlphaNum =
             Regex.fromString "[^0-9A-Za-z]" |> Maybe.withDefault Regex.never
 
+        words : List String
+        words =
+            name |> Regex.split nonAlphaNum
+
         preset : Preset
         preset =
-            if name |> Regex.split nonAlphaNum |> List.member "perf" then
+            if List.member "perf" words then
                 Perforate
+
+            else if List.member "draw" words then
+                Draw
 
             else
                 Cut
