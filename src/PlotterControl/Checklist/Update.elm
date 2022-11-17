@@ -311,7 +311,7 @@ changePerforationSpacing a model =
                 |> Quantity.plus a
                 |> Quantity.clamp
                     (Length.millimeters 0)
-                    (Length.millimeters 1)
+                    (Length.millimeters 10)
       }
     , Cmd.none
     )
