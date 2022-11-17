@@ -46,9 +46,16 @@ checkItem item checked model =
 --
 
 
-changeMarkerSensitivity : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeMarkerSensitivity : PlotterControl.MarkerSensitivity.MarkerSensitivity -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeMarkerSensitivity a model =
-    ( { model | markerSensitivity = clamp 0 100 (model.markerSensitivity + a) }
+    ( { model
+        | markerSensitivity =
+            model.markerSensitivity
+                |> Quantity.plus a
+                |> Quantity.clamp
+                    (PlotterControl.MarkerSensitivity.percentage 0)
+                    (PlotterControl.MarkerSensitivity.percentage 100)
+      }
     , Cmd.none
     )
 
@@ -95,16 +102,30 @@ testMarkers model =
 --
 
 
-changeDrawingSpeed : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeDrawingSpeed : Speed.Speed -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeDrawingSpeed a model =
-    ( { model | drawingSpeed = clamp 50 800 (model.drawingSpeed + a) }
+    ( { model
+        | drawingSpeed =
+            model.drawingSpeed
+                |> Quantity.plus a
+                |> Quantity.clamp
+                    (PlotterControl.Utils.Utils.millimetersPerSecond 50)
+                    (PlotterControl.Utils.Utils.millimetersPerSecond 800)
+      }
     , Cmd.none
     )
 
 
-changeDrawingPressure : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeDrawingPressure : Mass.Mass -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeDrawingPressure a model =
-    ( { model | drawingPressure = clamp 0 400 (model.drawingPressure + a) }
+    ( { model
+        | drawingPressure =
+            model.drawingPressure
+                |> Quantity.plus a
+                |> Quantity.clamp
+                    (Mass.grams 0)
+                    (Mass.grams 400)
+      }
     , Cmd.none
     )
 
@@ -175,23 +196,44 @@ testDrawing model =
 --
 
 
-changeCuttingSpeed : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeCuttingSpeed : Speed.Speed -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeCuttingSpeed a model =
-    ( { model | cuttingSpeed = clamp 50 800 (model.cuttingSpeed + a) }
+    ( { model
+        | cuttingSpeed =
+            model.cuttingSpeed
+                |> Quantity.plus a
+                |> Quantity.clamp
+                    (PlotterControl.Utils.Utils.millimetersPerSecond 50)
+                    (PlotterControl.Utils.Utils.millimetersPerSecond 800)
+      }
     , Cmd.none
     )
 
 
-changeCuttingPressure : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeCuttingPressure : Mass.Mass -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeCuttingPressure a model =
-    ( { model | cuttingPressure = clamp 0 400 (model.cuttingPressure + a) }
+    ( { model
+        | cuttingPressure =
+            model.cuttingPressure
+                |> Quantity.plus a
+                |> Quantity.clamp
+                    (Mass.grams 0)
+                    (Mass.grams 400)
+      }
     , Cmd.none
     )
 
 
-changeCuttingOffset : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeCuttingOffset : Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeCuttingOffset a model =
-    ( { model | cuttingOffset = clamp 0 100 (model.cuttingOffset + a) }
+    ( { model
+        | cuttingOffset =
+            model.cuttingOffset
+                |> Quantity.plus a
+                |> Quantity.clamp
+                    (Length.millimeters 0)
+                    (Length.millimeters 1)
+      }
     , Cmd.none
     )
 
@@ -261,16 +303,30 @@ testCutting model =
 --
 
 
-changePerforationSpacing : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changePerforationSpacing : Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changePerforationSpacing a model =
-    ( { model | perforationSpacing = clamp 0 100 (model.perforationSpacing + a) }
+    ( { model
+        | perforationSpacing =
+            model.perforationSpacing
+                |> Quantity.plus a
+                |> Quantity.clamp
+                    (Length.millimeters 0)
+                    (Length.millimeters 1)
+      }
     , Cmd.none
     )
 
 
-changePerforationOffset : Int -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changePerforationOffset : Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changePerforationOffset a model =
-    ( { model | perforationOffset = clamp 0 100 (model.perforationOffset + a) }
+    ( { model
+        | perforationOffset =
+            model.perforationOffset
+                |> Quantity.plus a
+                |> Quantity.clamp
+                    (Length.millimeters 0)
+                    (Length.millimeters 1)
+      }
     , Cmd.none
     )
 
