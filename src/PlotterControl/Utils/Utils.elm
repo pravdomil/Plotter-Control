@@ -5,9 +5,9 @@ import Mass
 import Speed
 
 
-layerCutPressure : Int
+layerCutPressure : Mass.Mass
 layerCutPressure =
-    100
+    Mass.grams 100
 
 
 lengthToString : Length.Length -> String
