@@ -170,7 +170,7 @@ drawingTest model =
             (\x -> PlotterControl.Msg.DrawingSpeedChanged (50 * x))
         , inputHelper
             "Pressure:"
-            (String.fromInt model.drawingPressure ++ " g")
+            (PlotterControl.Utils.Utils.massToString model.drawingPressure)
             none
             (\x -> PlotterControl.Msg.DrawingPressureChanged (20 * x))
         , textButton theme
@@ -196,7 +196,7 @@ cuttingTest model =
             (\x -> PlotterControl.Msg.CuttingSpeedChanged (50 * x))
         , inputHelper
             "Pressure:"
-            (String.fromInt model.cuttingPressure ++ " g")
+            (PlotterControl.Utils.Utils.massToString model.cuttingPressure)
             (text ("~" ++ String.fromInt PlotterControl.Utils.Utils.layerCutPressure ++ " g / layer"))
             (\x -> PlotterControl.Msg.CuttingPressureChanged (20 * x))
         , inputHelper

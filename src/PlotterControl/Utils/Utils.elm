@@ -1,6 +1,7 @@
 module PlotterControl.Utils.Utils exposing (..)
 
 import Length
+import Mass
 import Speed
 
 
@@ -24,3 +25,8 @@ lengthToString a =
 speedToString : Speed.Speed -> String
 speedToString a =
     String.fromInt (round (Speed.inMetersPerSecond a / 1000)) ++ " mm/s"
+
+
+massToString : Mass.Mass -> String
+massToString a =
+    String.fromInt (round (Mass.inGrams a)) ++ " g"
