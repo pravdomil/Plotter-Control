@@ -6,17 +6,21 @@ import HpGl
 import HpGl.Geometry
 import Length
 import LineSegment2d
+import Mass
 import PlotterControl.Checklist
+import PlotterControl.MarkerSensitivity
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Page
 import PlotterControl.Queue
 import PlotterControl.Queue.Update
 import PlotterControl.Settings
+import PlotterControl.Utils.Utils
 import Point2d
 import Polyline2d
 import Quantity
 import Rectangle2d
+import Speed
 import SummaEl
 import Vector2d
 
@@ -63,26 +67,16 @@ changeMarkerSensitivity a model =
 testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testMarkers model =
     let
-        level : Int
-        level =
-            model.markerSensitivity
-                |> toFloat
-                |> (\x -> x / 100)
-                |> (\x -> 1 - x)
-                |> (\x -> x * 250)
-                |> round
-                |> clamp 0 250
-
         params : String
         params =
             "("
-                ++ (String.fromInt model.markerSensitivity ++ "%")
+                ++ PlotterControl.MarkerSensitivity.toString model.markerSensitivity
                 ++ ")"
 
         settings : SummaEl.Settings
         settings =
             Dict.empty
-                |> Dict.insert "OPOS_LEVEL" (String.fromInt level)
+                |> PlotterControl.Settings.setMarkerSensitivity model.markerSensitivity
                 |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
     in
     PlotterControl.Queue.Update.createItem
