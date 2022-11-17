@@ -1,6 +1,7 @@
 module PlotterControl.File exposing (..)
 
 import Angle
+import Axis2d
 import BoundingBox2d
 import Dict
 import File
@@ -353,14 +354,14 @@ readyToSvg a =
         polylines : List (Polyline2d.Polyline2d Length.Meters ())
         polylines =
             a.polylines
-                |> List.map (Polyline2d.rotateAround Point2d.origin rotation)
+                |> List.map (Polyline2d.mirrorAcross Axis2d.x >> Polyline2d.rotateAround Point2d.origin rotation)
 
         markers : List (Rectangle2d.Rectangle2d Length.Meters coordinates)
         markers =
             a.markers
                 |> Maybe.map PlotterControl.Markers.rectangles
                 |> Maybe.withDefault []
-                |> List.map (Rectangle2d.rotateAround Point2d.origin rotation)
+                |> List.map (Rectangle2d.mirrorAcross Axis2d.x >> Rectangle2d.rotateAround Point2d.origin rotation)
 
         node : XmlParser.Node
         node =
