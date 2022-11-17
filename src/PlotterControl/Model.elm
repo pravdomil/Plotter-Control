@@ -2,11 +2,15 @@ module PlotterControl.Model exposing (..)
 
 import Dict.Any
 import Element.PravdomilUi.Application
+import Length
+import Mass
 import PlotterControl.Checklist
 import PlotterControl.Directory
 import PlotterControl.Page
 import PlotterControl.Plotter
 import PlotterControl.Queue
+import Quantity
+import Speed
 
 
 type alias Model =
@@ -20,21 +24,29 @@ type alias Model =
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
 
     --
-    , markerSensitivity : Int
+    , markerSensitivity : Quantity.Quantity Int MarkerSensitivity
 
     --
-    , drawingSpeed : Int
-    , drawingPressure : Int
+    , drawingSpeed : Speed.Speed
+    , drawingPressure : Mass.Kilograms
 
     --
-    , cuttingSpeed : Int
-    , cuttingPressure : Int
-    , cuttingOffset : Int
+    , cuttingSpeed : Speed.Speed
+    , cuttingPressure : Mass.Kilograms
+    , cuttingOffset : Length.Length
 
     --
-    , perforationSpacing : Int
-    , perforationOffset : Int
+    , perforationSpacing : Length.Length
+    , perforationOffset : Length.Length
     }
+
+
+
+--
+
+
+type MarkerSensitivity
+    = MarkerSensitivity
 
 
 
