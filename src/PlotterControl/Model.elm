@@ -24,7 +24,7 @@ type alias Model =
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
 
     --
-    , markerSensitivity : Quantity.Quantity Int MarkerSensitivity
+    , markerSensitivity : MarkerSensitivity
 
     --
     , drawingSpeed : Speed.Speed
@@ -45,8 +45,16 @@ type alias Model =
 --
 
 
-type MarkerSensitivity
-    = MarkerSensitivity
+type alias MarkerSensitivity =
+    Quantity.Quantity Int Sensitivity
+
+
+
+--
+
+
+type Sensitivity
+    = Sensitivity
 
 
 
