@@ -120,13 +120,16 @@ readyToPlotterData a =
         setSettings : String
         setSettings =
             SummaEl.toString
-                (if usePerforationRelief then
-                    readySettingsToSummaEl a
-                        ++ [ SummaEl.SetSettings (Dict.singleton "RECUT_OFFSET" "0")
-                           ]
+                (readySettingsToSummaEl a
+                    |> (\x ->
+                            if usePerforationRelief then
+                                x
+                                    ++ [ SummaEl.SetSettings (Dict.singleton "RECUT_OFFSET" "0")
+                                       ]
 
-                 else
-                    readySettingsToSummaEl a
+                            else
+                                x
+                       )
                 )
 
         maybeLoadMarkers : String
