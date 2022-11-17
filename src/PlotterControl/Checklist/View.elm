@@ -87,7 +87,7 @@ viewItem model a =
 
         --
         PlotterControl.Checklist.MarkersSensorClean ->
-            checkbox (text "Sensor cleaned with dust blaster.")
+            checkbox (text "Sensor is cleaned with dust blaster.")
 
         PlotterControl.Checklist.MarkersTestOk ->
             checkbox (text "Marker test succeed.")
