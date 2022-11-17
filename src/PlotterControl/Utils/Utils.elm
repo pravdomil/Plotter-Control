@@ -1,6 +1,7 @@
 module PlotterControl.Utils.Utils exposing (..)
 
 import Length
+import Speed
 
 
 layerCutPressure : Int
@@ -18,3 +19,8 @@ lengthToString a =
         |> (\x -> x / 10)
         |> String.fromFloat
         |> (\x -> x ++ " mm")
+
+
+speedToString : Speed.Speed -> String
+speedToString a =
+    String.fromInt (round (Speed.inMetersPerSecond a / 1000)) ++ " mm/s"

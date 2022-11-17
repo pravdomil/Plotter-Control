@@ -165,7 +165,7 @@ drawingTest model =
         (Just "Test")
         [ inputHelper
             "Speed:"
-            (String.fromInt model.drawingSpeed ++ " mm/s")
+            (PlotterControl.Utils.Utils.speedToString model.drawingSpeed)
             none
             (\x -> PlotterControl.Msg.DrawingSpeedChanged (50 * x))
         , inputHelper
@@ -191,7 +191,7 @@ cuttingTest model =
         (Just "Test")
         [ inputHelper
             "Speed:"
-            (String.fromInt model.cuttingSpeed ++ " mm/s")
+            (PlotterControl.Utils.Utils.speedToString model.cuttingSpeed)
             none
             (\x -> PlotterControl.Msg.CuttingSpeedChanged (50 * x))
         , inputHelper
