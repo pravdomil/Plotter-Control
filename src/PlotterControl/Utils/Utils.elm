@@ -30,3 +30,17 @@ speedToString a =
 massToString : Mass.Mass -> String
 massToString a =
     String.fromInt (round (Mass.inGrams a)) ++ " g"
+
+
+
+--
+
+
+millimetersPerSecond : Float -> Speed.Speed
+millimetersPerSecond a =
+    Speed.metersPerSecond (a / 1000)
+
+
+inMillimetersPerSecond : Speed.Speed -> Float
+inMillimetersPerSecond a =
+    Speed.inMetersPerSecond a / 1000
