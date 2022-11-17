@@ -7,19 +7,19 @@ type alias MarkerSensitivity =
     Quantity.Quantity Int MarkerSensitivity_
 
 
-fromInt : Int -> MarkerSensitivity
-fromInt a =
+percentage : Int -> MarkerSensitivity
+percentage a =
     Quantity.unsafe a
 
 
-toInt : MarkerSensitivity -> Int
-toInt a =
+inPercentage : MarkerSensitivity -> Int
+inPercentage a =
     Quantity.unwrap a
 
 
 toString : MarkerSensitivity -> String
 toString a =
-    String.fromInt (toInt a) ++ " %"
+    String.fromInt (inPercentage a) ++ " %"
 
 
 

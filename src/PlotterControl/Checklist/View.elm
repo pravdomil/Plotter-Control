@@ -150,7 +150,7 @@ markersTest model =
             "Sensitivity:"
             (PlotterControl.MarkerSensitivity.toString model.markerSensitivity)
             none
-            (PlotterControl.MarkerSensitivity.fromInt 5)
+            (PlotterControl.MarkerSensitivity.percentage 5)
             PlotterControl.Msg.MarkerSensitivityChanged
         , textButton theme
             [ centerX ]
