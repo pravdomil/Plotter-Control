@@ -101,8 +101,8 @@ fileInfo name a =
                     row [ spacing 8 ]
                         [ text
                             ([ b.count |> String.fromInt
-                             , b.yDistance |> PlotterControl.Utils.Utils.mmToString
-                             , b.xDistance |> PlotterControl.Utils.Utils.mmToString
+                             , b.yDistance |> PlotterControl.Utils.Utils.lengthToString
+                             , b.xDistance |> PlotterControl.Utils.Utils.lengthToString
                              ]
                                 |> String.join " × "
                             )

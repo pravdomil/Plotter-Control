@@ -8,8 +8,8 @@ layerCutPressure =
     100
 
 
-mmToString : Length.Length -> String
-mmToString a =
+lengthToString : Length.Length -> String
+lengthToString a =
     a
         |> Length.inMillimeters
         |> (*) 10

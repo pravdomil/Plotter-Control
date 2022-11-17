@@ -71,6 +71,6 @@ copyDistance name a =
     PlotterControl.Utils.View.twoColumns
         "Copy Distance:"
         (PlotterControl.Utils.View.inputNumber
-            (text (PlotterControl.Utils.Utils.mmToString a.copyDistance))
+            (text (PlotterControl.Utils.Utils.lengthToString a.copyDistance))
             (\x -> x |> toFloat |> Length.millimeters |> PlotterControl.Msg.CopyDistanceChanged name)
         )

@@ -26,7 +26,7 @@ addFileToQueue name model =
                     " ("
                         ++ (String.fromInt (PlotterControl.Settings.copiesToInt c.settings.copies) ++ "×")
                         ++ ", "
-                        ++ PlotterControl.Utils.Utils.mmToString c.settings.copyDistance
+                        ++ PlotterControl.Utils.Utils.lengthToString c.settings.copyDistance
                         ++ ")"
             in
             PlotterControl.Queue.Update.createItem
