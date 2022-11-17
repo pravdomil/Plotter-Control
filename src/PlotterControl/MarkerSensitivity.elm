@@ -19,7 +19,7 @@ inPercentage a =
 
 toString : MarkerSensitivity -> String
 toString a =
-    String.fromInt (inPercentage a) ++ " %"
+    String.fromInt (inPercentage a) ++ "%"
 
 
 
