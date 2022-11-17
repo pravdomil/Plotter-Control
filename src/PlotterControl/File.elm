@@ -28,9 +28,24 @@ type alias File =
 
 fromFile : File.File -> Task.Task x ( Name, File )
 fromFile a =
+    let
+        name : String
+        name =
+            File.name a
+
+        name_ : Name
+        name_ =
+            stringToName
+                (if name |> String.endsWith supportedExtension then
+                    name |> String.dropRight (String.length supportedExtension)
+
+                 else
+                    name
+                )
+    in
     Task.map2
         (\x x2 ->
-            ( stringToName (String.dropRight (String.length supportedExtension) (File.name a))
+            ( name_
             , File x x2
             )
         )
