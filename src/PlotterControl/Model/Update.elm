@@ -4,10 +4,13 @@ import Dict.Any
 import Element.PravdomilUi.Application
 import Json.Decode
 import Json.Encode
+import Length
+import Mass
 import Platform.Extra
 import PlotterControl.Checklist.Update
 import PlotterControl.Directory.Update
 import PlotterControl.File.Update
+import PlotterControl.MarkerSensitivity
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter.Update
@@ -24,14 +27,14 @@ init flags =
         (Err ())
         Dict.Any.empty
         (Err PlotterControl.Model.NoPlotter)
-        75
-        200
-        160
-        800
+        (PlotterControl.MarkerSensitivity.percentage 75)
+        (PlotterControl.Utils.Utils.millimetersPerSecond 200)
+        (Mass.grams 160)
+        (PlotterControl.Utils.Utils.millimetersPerSecond 800)
         PlotterControl.Utils.Utils.layerCutPressure
-        50
-        10
-        60
+        (Length.millimeters 0.5)
+        (Length.millimeters 1)
+        (Length.millimeters 0.6)
     , Cmd.none
     )
 
