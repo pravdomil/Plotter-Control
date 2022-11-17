@@ -161,8 +161,8 @@ testDrawing model =
                 |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
                 --
                 |> Dict.insert "TOOL" "PEN"
-                |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
-                |> Dict.insert "PEN_PRESSURE" (String.fromInt model.drawingPressure)
+                |> PlotterControl.Settings.setSpeed model.drawingSpeed
+                |> PlotterControl.Settings.setPenPressure model.drawingPressure
 
         test : String
         test =
@@ -178,9 +178,9 @@ testDrawing model =
         params : String
         params =
             "("
-                ++ (String.fromInt model.drawingSpeed ++ " mm/s")
+                ++ PlotterControl.Utils.Utils.speedToString model.drawingSpeed
                 ++ ", "
-                ++ (String.fromInt model.drawingPressure ++ " g")
+                ++ PlotterControl.Utils.Utils.massToString model.drawingPressure
                 ++ ")"
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName ("Drawing Test " ++ params)) test model
