@@ -11,6 +11,8 @@ import PlotterControl.Directory.Utils
 import PlotterControl.File
 import PlotterControl.Model
 import PlotterControl.Msg
+import PlotterControl.Tool
+import PlotterControl.Tool.Utils
 import PlotterControl.Utils.Theme exposing (..)
 import Time
 
@@ -127,7 +129,19 @@ viewChecklist model a =
 
 
 viewTools : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
-viewTools _ =
+viewTools model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Tools")
-        []
+        [ inputRadio theme
+            [ width fill ]
+            { label = labelHidden "Tools"
+            , options =
+                PlotterControl.Tool.all
+                    |> List.map
+                        (\x ->
+                            inputRadioBlockOption theme [ width fill ] x (textEllipsis [] (PlotterControl.Tool.toName x))
+                        )
+            , selected = PlotterControl.Tool.Utils.activeTool model
+            , onChange = PlotterControl.Msg.ToolActivated
+            }
+        ]
