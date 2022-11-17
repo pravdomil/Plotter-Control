@@ -5,6 +5,7 @@ import Element.PravdomilUi.Application
 import Length
 import Mass
 import PlotterControl.Checklist
+import PlotterControl.Commander
 import PlotterControl.Directory
 import PlotterControl.MarkerSensitivity
 import PlotterControl.Page
@@ -38,6 +39,9 @@ type alias Model =
     --
     , perforationSpacing : Length.Length
     , perforationOffset : Length.Length
+
+    --
+    , commander : PlotterControl.Commander.Commander
     }
 
 

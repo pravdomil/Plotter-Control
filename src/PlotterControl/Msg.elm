@@ -6,6 +6,7 @@ import Id
 import Length
 import Mass
 import PlotterControl.Checklist
+import PlotterControl.Commander
 import PlotterControl.File
 import PlotterControl.MarkerSensitivity
 import PlotterControl.Plotter
@@ -45,6 +46,10 @@ type Msg
     | FileActivated PlotterControl.File.Name
       --
     | ToolActivated PlotterControl.Tool.Tool
+      --
+    | CommanderCommandTypeChanged PlotterControl.Commander.CommandType
+    | CommanderCommandChanged String
+    | CommanderSendRequested
       --
     | AddFileToQueueRequested PlotterControl.File.Name
     | DownloadSvgRequested PlotterControl.File.Name
