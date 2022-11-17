@@ -8,6 +8,7 @@ import Length
 import Mass
 import Platform.Extra
 import PlotterControl.Checklist.Update
+import PlotterControl.Commander.Update
 import PlotterControl.Directory.Update
 import PlotterControl.File.Update
 import PlotterControl.MarkerSensitivity
@@ -36,6 +37,7 @@ init flags =
         (Length.millimeters 0.5)
         (Length.millimeters 1)
         (Length.millimeters 0.6)
+        PlotterControl.Commander.Update.init
     , Cmd.none
     )
 
@@ -116,6 +118,16 @@ update msg model =
         --
         PlotterControl.Msg.ToolActivated a ->
             PlotterControl.Tool.Update.activateTool a model
+
+        --
+        PlotterControl.Msg.CommanderCommandTypeChanged a ->
+            PlotterControl.Commander.Update.changeCommandType a model
+
+        PlotterControl.Msg.CommanderCommandChanged a ->
+            PlotterControl.Commander.Update.changeCommand a model
+
+        PlotterControl.Msg.CommanderSendRequested ->
+            PlotterControl.Commander.Update.sendCommand model
 
         --
         PlotterControl.Msg.AddFileToQueueRequested a ->
