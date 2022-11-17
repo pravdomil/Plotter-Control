@@ -67,17 +67,17 @@ changeMarkerSensitivity a model =
 testMarkers : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 testMarkers model =
     let
-        params : String
-        params =
-            "("
-                ++ PlotterControl.MarkerSensitivity.toString model.markerSensitivity
-                ++ ")"
-
         settings : SummaEl.Settings
         settings =
             Dict.empty
                 |> PlotterControl.Settings.setMarkerSensitivity model.markerSensitivity
                 |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
+
+        params : String
+        params =
+            "("
+                ++ PlotterControl.MarkerSensitivity.toString model.markerSensitivity
+                ++ ")"
     in
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName ("Marker Test " ++ params))
