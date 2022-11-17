@@ -6,6 +6,7 @@ import Element.PravdomilUi.Application
 import Element.PravdomilUi.Application.Block
 import FeatherIcons
 import PlotterControl.Checklist
+import PlotterControl.MarkerSensitivity
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Page
@@ -144,7 +145,7 @@ markersTest model =
         (Just "Test")
         [ inputHelper
             "Sensitivity:"
-            (String.fromInt model.markerSensitivity ++ "%")
+            (PlotterControl.MarkerSensitivity.toString model.markerSensitivity)
             none
             (\x -> PlotterControl.Msg.MarkerSensitivityChanged (5 * x))
         , textButton theme

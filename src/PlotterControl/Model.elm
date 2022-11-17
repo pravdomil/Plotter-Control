@@ -6,10 +6,10 @@ import Length
 import Mass
 import PlotterControl.Checklist
 import PlotterControl.Directory
+import PlotterControl.MarkerSensitivity
 import PlotterControl.Page
 import PlotterControl.Plotter
 import PlotterControl.Queue
-import Quantity
 import Speed
 
 
@@ -24,7 +24,7 @@ type alias Model =
     , plotter : Result PlotterError PlotterControl.Plotter.Plotter
 
     --
-    , markerSensitivity : MarkerSensitivity
+    , markerSensitivity : PlotterControl.MarkerSensitivity.MarkerSensitivity
 
     --
     , drawingSpeed : Speed.Speed
@@ -39,22 +39,6 @@ type alias Model =
     , perforationSpacing : Length.Length
     , perforationOffset : Length.Length
     }
-
-
-
---
-
-
-type alias MarkerSensitivity =
-    Quantity.Quantity Int Sensitivity
-
-
-
---
-
-
-type Sensitivity
-    = Sensitivity
 
 
 
