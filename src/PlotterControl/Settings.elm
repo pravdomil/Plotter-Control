@@ -2,7 +2,11 @@ module PlotterControl.Settings exposing (..)
 
 import Dict
 import Length
+import Mass
+import PlotterControl.MarkerSensitivity
+import PlotterControl.Utils.Utils
 import Regex
+import Speed
 import SummaEl
 
 
@@ -217,3 +221,40 @@ defaultSettings =
     , ( "SORTING_ENABLE", "OFF" )
     ]
         |> Dict.fromList
+
+
+setMarkerSensitivity : PlotterControl.MarkerSensitivity.MarkerSensitivity -> SummaEl.Settings -> SummaEl.Settings
+setMarkerSensitivity a =
+    let
+        level : Int
+        level =
+            a
+                |> PlotterControl.MarkerSensitivity.inPercentage
+                |> toFloat
+                |> (\x -> x / 100)
+                |> (\x -> 1 - x)
+                |> (\x -> x * 250)
+                |> round
+                |> clamp 0 250
+    in
+    Dict.insert "OPOS_LEVEL" (String.fromInt level)
+
+
+setSpeed : Speed.Speed -> SummaEl.Settings -> SummaEl.Settings
+setSpeed a =
+    Dict.insert "VELOCITY" (String.fromInt (round (PlotterControl.Utils.Utils.inMillimetersPerSecond a)))
+
+
+setPenPressure : Mass.Mass -> SummaEl.Settings -> SummaEl.Settings
+setPenPressure a =
+    Dict.insert "PEN_PRESSURE" (String.fromInt (round (Mass.inGrams a)))
+
+
+setKnifePressure : Mass.Mass -> SummaEl.Settings -> SummaEl.Settings
+setKnifePressure a =
+    Dict.insert "KNIFE_PRESSURE" (String.fromInt (round (Mass.inGrams a)))
+
+
+setDragOffset : Length.Length -> SummaEl.Settings -> SummaEl.Settings
+setDragOffset a =
+    Dict.insert "DRAG_OFFSET" (String.fromInt (round (Length.inMillimeters a * 100)))
