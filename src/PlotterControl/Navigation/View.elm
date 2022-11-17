@@ -54,6 +54,7 @@ view model =
                             "Open file first."
                         ]
                 )
+            , viewTools model
             ]
     }
 
@@ -119,3 +120,14 @@ viewChecklist model a =
             PlotterControl.Checklist.toName a ++ " " ++ String.fromInt (round ((toFloat done / toFloat total) * 100)) ++ "%"
     in
     inputRadioBlockOption theme [ width fill ] a (textEllipsis [ fontVariant fontTabularNumbers ] text)
+
+
+
+--
+
+
+viewTools : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+viewTools _ =
+    Element.PravdomilUi.Application.Block.Block
+        (Just "Tools")
+        []
