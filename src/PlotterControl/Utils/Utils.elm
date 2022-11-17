@@ -38,7 +38,7 @@ massToString a =
 
 millimetersPerSecond : Float -> Speed.Speed
 millimetersPerSecond a =
-    Speed.metersPerSecond (a / 1000)
+    Speed.metersPerSecond (a * 1000)
 
 
 inMillimetersPerSecond : Speed.Speed -> Float
