@@ -1,5 +1,6 @@
 module PlotterControl.File exposing (..)
 
+import Angle
 import BoundingBox2d
 import Dict
 import File
@@ -7,15 +8,18 @@ import HpGl
 import HpGl.Geometry
 import Length
 import Parser
+import Pixels
 import PlotterControl.Markers
 import PlotterControl.Settings
 import Point2d
 import Polyline2d
 import Quantity
+import Rectangle2d
 import SummaEl
 import Task
 import Time
 import Vector2d
+import XmlParser
 
 
 type alias File =
@@ -272,6 +276,103 @@ perforationRelief a =
         polylinesBox
         nextCopy
         |> Maybe.withDefault []
+
+
+readyToSvg : Ready -> String
+readyToSvg a =
+    let
+        lengthToString : Length.Length -> String
+        lengthToString b =
+            String.fromFloat (Pixels.inPixels (Quantity.at resolution b))
+
+        pointToString : Point2d.Point2d Length.Meters coordinates -> String
+        pointToString b =
+            lengthToString (Point2d.xCoordinate b)
+                ++ ","
+                ++ lengthToString (Point2d.yCoordinate b)
+
+        polylineToSvg : Polyline2d.Polyline2d Length.Meters coordinates -> XmlParser.Node
+        polylineToSvg b =
+            XmlParser.Element "polyline"
+                [ XmlParser.Attribute "points" (b |> Polyline2d.vertices |> List.map pointToString |> String.join " ")
+                , XmlParser.Attribute "stroke" "#000000"
+                , XmlParser.Attribute "fill" "none"
+                ]
+                []
+
+        rectangleToSvg : Rectangle2d.Rectangle2d Length.Meters coordinates -> XmlParser.Node
+        rectangleToSvg b =
+            let
+                ( w, h ) =
+                    Rectangle2d.dimensions b
+
+                center : Point2d.Point2d Length.Meters coordinates
+                center =
+                    Rectangle2d.centerPoint b
+            in
+            XmlParser.Element "rect"
+                [ XmlParser.Attribute "x" (center |> Point2d.xCoordinate |> Quantity.minus (w |> Quantity.half) |> lengthToString)
+                , XmlParser.Attribute "y" (center |> Point2d.yCoordinate |> Quantity.minus (h |> Quantity.half) |> lengthToString)
+                , XmlParser.Attribute "width" (lengthToString w)
+                , XmlParser.Attribute "height" (lengthToString h)
+                ]
+                []
+
+        boundingBoxToViewBox : BoundingBox2d.BoundingBox2d Length.Meters coordinates -> String
+        boundingBoxToViewBox b =
+            let
+                ( width, height ) =
+                    BoundingBox2d.dimensions b
+            in
+            lengthToString (BoundingBox2d.minX b)
+                ++ " "
+                ++ lengthToString (BoundingBox2d.minY b)
+                ++ " "
+                ++ lengthToString width
+                ++ " "
+                ++ lengthToString height
+
+        resolution : Quantity.Quantity Float (Quantity.Rate Pixels.Pixels Length.Meters)
+        resolution =
+            Pixels.pixels 72 |> Quantity.per (Length.inches 1)
+
+        box : Maybe (BoundingBox2d.BoundingBox2d Length.Meters ())
+        box =
+            polylines
+                |> List.filterMap Polyline2d.boundingBox
+                |> BoundingBox2d.aggregateN
+                |> Maybe.map
+                    (\x ->
+                        BoundingBox2d.aggregate x (markers |> List.map Rectangle2d.boundingBox)
+                    )
+
+        rotation : Angle.Angle
+        rotation =
+            Angle.degrees -90
+
+        polylines : List (Polyline2d.Polyline2d Length.Meters ())
+        polylines =
+            a.polylines
+                |> List.map (Polyline2d.rotateAround Point2d.origin rotation)
+
+        markers : List (Rectangle2d.Rectangle2d Length.Meters coordinates)
+        markers =
+            a.markers
+                |> Maybe.map PlotterControl.Markers.rectangles
+                |> Maybe.withDefault []
+                |> List.map (Rectangle2d.rotateAround Point2d.origin rotation)
+
+        node : XmlParser.Node
+        node =
+            XmlParser.Element "svg"
+                [ XmlParser.Attribute "xmlns" "http://www.w3.org/2000/svg"
+                , XmlParser.Attribute "viewBox" (box |> Maybe.map boundingBoxToViewBox |> Maybe.withDefault "")
+                ]
+                [ XmlParser.Element "g" [] (polylines |> List.map polylineToSvg)
+                , XmlParser.Element "g" [] (markers |> List.map rectangleToSvg)
+                ]
+    in
+    XmlParser.format (XmlParser.Xml [] Nothing node)
 
 
 
