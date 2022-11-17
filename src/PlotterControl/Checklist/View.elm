@@ -205,7 +205,7 @@ cuttingTest model =
         , inputHelper
             "Pressure:"
             (PlotterControl.Utils.Utils.massToString model.cuttingPressure)
-            (text ("~" ++ String.fromInt PlotterControl.Utils.Utils.layerCutPressure ++ " g / layer"))
+            (text ("~" ++ PlotterControl.Utils.Utils.massToString PlotterControl.Utils.Utils.layerCutPressure ++ " / layer"))
             (Mass.grams 20)
             PlotterControl.Msg.CuttingPressureChanged
         , inputHelper
