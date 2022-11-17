@@ -2,10 +2,10 @@ module PlotterControl.Tool exposing (..)
 
 
 type Tool
-    = MarkerSensorCalibration
+    = Commander
 
 
 all : List Tool
 all =
-    [ MarkerSensorCalibration
+    [ Commander
     ]
