@@ -5,6 +5,8 @@ import Element.PravdomilUi exposing (..)
 import Element.PravdomilUi.Application
 import Element.PravdomilUi.Application.Block
 import FeatherIcons
+import Length
+import Mass
 import PlotterControl.Checklist
 import PlotterControl.MarkerSensitivity
 import PlotterControl.Model
@@ -13,6 +15,7 @@ import PlotterControl.Page
 import PlotterControl.Utils.Theme exposing (..)
 import PlotterControl.Utils.Utils
 import PlotterControl.Utils.View
+import Quantity
 
 
 view : PlotterControl.Page.Checklist -> PlotterControl.Model.Model -> Element.PravdomilUi.Application.Column PlotterControl.Msg.Msg
@@ -147,7 +150,8 @@ markersTest model =
             "Sensitivity:"
             (PlotterControl.MarkerSensitivity.toString model.markerSensitivity)
             none
-            (\x -> PlotterControl.Msg.MarkerSensitivityChanged (5 * x))
+            (PlotterControl.MarkerSensitivity.fromInt 5)
+            PlotterControl.Msg.MarkerSensitivityChanged
         , textButton theme
             [ centerX ]
             { label = text "Test Markers"
@@ -168,12 +172,14 @@ drawingTest model =
             "Speed:"
             (PlotterControl.Utils.Utils.speedToString model.drawingSpeed)
             none
-            (\x -> PlotterControl.Msg.DrawingSpeedChanged (50 * x))
+            (PlotterControl.Utils.Utils.millimetersPerSecond 50)
+            PlotterControl.Msg.DrawingSpeedChanged
         , inputHelper
             "Pressure:"
             (PlotterControl.Utils.Utils.massToString model.drawingPressure)
             none
-            (\x -> PlotterControl.Msg.DrawingPressureChanged (20 * x))
+            (Mass.grams 20)
+            PlotterControl.Msg.DrawingPressureChanged
         , textButton theme
             [ centerX ]
             { label = text "Test Drawing"
@@ -194,17 +200,20 @@ cuttingTest model =
             "Speed:"
             (PlotterControl.Utils.Utils.speedToString model.cuttingSpeed)
             none
-            (\x -> PlotterControl.Msg.CuttingSpeedChanged (50 * x))
+            (PlotterControl.Utils.Utils.millimetersPerSecond 50)
+            PlotterControl.Msg.CuttingSpeedChanged
         , inputHelper
             "Pressure:"
             (PlotterControl.Utils.Utils.massToString model.cuttingPressure)
             (text ("~" ++ String.fromInt PlotterControl.Utils.Utils.layerCutPressure ++ " g / layer"))
-            (\x -> PlotterControl.Msg.CuttingPressureChanged (20 * x))
+            (Mass.grams 20)
+            PlotterControl.Msg.CuttingPressureChanged
         , inputHelper
             "Offset:"
             (PlotterControl.Utils.Utils.lengthToString model.cuttingOffset)
             none
-            (\x -> PlotterControl.Msg.CuttingOffsetChanged (10 * x))
+            (Length.millimeters 0.1)
+            PlotterControl.Msg.CuttingOffsetChanged
         , textButton theme
             [ centerX ]
             { label = text "Test Cutting"
@@ -225,12 +234,14 @@ perforationTest model =
             "Spacing:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationSpacing)
             none
-            (\x -> PlotterControl.Msg.PerforationSpacingChanged (2 * x))
+            (Length.millimeters 0.2)
+            PlotterControl.Msg.PerforationSpacingChanged
         , inputHelper
             "Offset:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationOffset)
             none
-            (\x -> PlotterControl.Msg.PerforationOffsetChanged (10 * x))
+            (Length.millimeters 0.1)
+            PlotterControl.Msg.PerforationOffsetChanged
         , textButton theme
             [ centerX ]
             { label = text "Test Perforation on Square"
@@ -248,8 +259,8 @@ perforationTest model =
 --
 
 
-inputHelper : String -> String -> Element msg -> (Int -> msg) -> Element msg
-inputHelper label value note onChange =
+inputHelper : String -> String -> Element msg -> Quantity.Quantity number units -> (Quantity.Quantity number units -> msg) -> Element msg
+inputHelper label value note step onChange =
     PlotterControl.Utils.View.twoColumns
         label
         (row [ width fill, spacing 8 ]
@@ -257,12 +268,12 @@ inputHelper label value note onChange =
             , textButton theme
                 []
                 { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                , onPress = Just (onChange -1)
+                , onPress = Just (onChange (step |> Quantity.negate))
                 }
             , textButton theme
                 []
                 { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                , onPress = Just (onChange 1)
+                , onPress = Just (onChange step)
                 }
             , el [ fontSize 15, fontColor style.fore60 ] note
             ]
