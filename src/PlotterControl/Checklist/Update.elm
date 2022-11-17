@@ -74,7 +74,9 @@ testMarkers model =
 
         settings : SummaEl.Settings
         settings =
-            Dict.singleton "OPOS_LEVEL" (String.fromInt level)
+            Dict.empty
+                |> Dict.insert "OPOS_LEVEL" (String.fromInt level)
+                |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
     in
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName ("Marker Test " ++ params))
@@ -141,6 +143,7 @@ testDrawing model =
         settings =
             PlotterControl.Settings.defaultSettings
                 |> Dict.remove "OPOS_LEVEL"
+                |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
                 --
                 |> Dict.insert "TOOL" "PEN"
                 |> Dict.insert "VELOCITY" (String.fromInt model.drawingSpeed)
@@ -223,6 +226,7 @@ testCutting model =
         settings =
             PlotterControl.Settings.defaultSettings
                 |> Dict.remove "OPOS_LEVEL"
+                |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
                 --
                 |> Dict.insert "OVERCUT" "2"
                 |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
@@ -301,6 +305,7 @@ testPerforation a model =
         settings =
             PlotterControl.Settings.defaultSettings
                 |> Dict.remove "OPOS_LEVEL"
+                |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
                 --
                 |> Dict.insert "FLEX_CUT" "MODE2"
                 |> Dict.insert "FULL_PRESSURE" "400"
