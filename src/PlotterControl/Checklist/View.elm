@@ -201,7 +201,7 @@ cuttingTest model =
             (\x -> PlotterControl.Msg.CuttingPressureChanged (20 * x))
         , inputHelper
             "Offset:"
-            (String.fromFloat (toFloat model.cuttingOffset / 100) ++ " mm")
+            (PlotterControl.Utils.Utils.lengthToString model.cuttingOffset)
             none
             (\x -> PlotterControl.Msg.CuttingOffsetChanged (10 * x))
         , textButton theme
@@ -222,12 +222,12 @@ perforationTest model =
         (Just "Test")
         [ inputHelper
             "Spacing:"
-            (String.fromFloat (toFloat model.perforationSpacing / 10) ++ " mm")
+            (PlotterControl.Utils.Utils.lengthToString model.perforationSpacing)
             none
             (\x -> PlotterControl.Msg.PerforationSpacingChanged (2 * x))
         , inputHelper
             "Offset:"
-            (String.fromFloat (toFloat model.perforationOffset / 100) ++ " mm")
+            (PlotterControl.Utils.Utils.lengthToString model.perforationOffset)
             none
             (\x -> PlotterControl.Msg.PerforationOffsetChanged (10 * x))
         , textButton theme
