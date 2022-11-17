@@ -362,9 +362,9 @@ testPerforation a model =
                 |> Dict.insert "FLEX_VELOCITY" "100"
                 |> Dict.insert "OVERCUT" "2"
                 --
-                |> Dict.insert "VELOCITY" (String.fromInt 800)
-                |> Dict.insert "FLEX_LENGTH" (Length.millimeters (toFloat model.perforationSpacing / 10) |> SummaEl.lengthToString)
-                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.perforationOffset)
+                |> PlotterControl.Settings.setSpeed (PlotterControl.Utils.Utils.millimetersPerSecond 800)
+                |> Dict.insert "FLEX_LENGTH" (SummaEl.lengthToString model.perforationSpacing)
+                |> PlotterControl.Settings.setDragOffset model.perforationOffset
 
         test : String
         test =
@@ -380,9 +380,9 @@ testPerforation a model =
         params : String
         params =
             "("
-                ++ (String.fromFloat (toFloat model.perforationSpacing / 10) ++ " mm")
+                ++ PlotterControl.Utils.Utils.lengthToString model.perforationSpacing
                 ++ ", "
-                ++ (String.fromFloat (toFloat model.perforationOffset / 100) ++ " mm")
+                ++ PlotterControl.Utils.Utils.lengthToString model.perforationOffset
                 ++ ")"
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName ("Perforation Test " ++ params)) test model
