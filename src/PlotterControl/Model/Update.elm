@@ -15,6 +15,7 @@ import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Plotter.Update
 import PlotterControl.Queue.Update
+import PlotterControl.Tool.Update
 import PlotterControl.Utils.Utils
 
 
@@ -111,6 +112,10 @@ update msg model =
 
         PlotterControl.Msg.FileActivated a ->
             PlotterControl.Directory.Update.activateFile a model
+
+        --
+        PlotterControl.Msg.ToolActivated a ->
+            PlotterControl.Tool.Update.activateTool a model
 
         --
         PlotterControl.Msg.AddFileToQueueRequested a ->
