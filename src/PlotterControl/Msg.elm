@@ -11,6 +11,7 @@ import PlotterControl.MarkerSensitivity
 import PlotterControl.Plotter
 import PlotterControl.Queue
 import PlotterControl.Settings
+import PlotterControl.Tool
 import Speed
 
 
@@ -42,6 +43,8 @@ type Msg
     | RawFilesReceived (List File.File)
     | FilesReceived (List ( PlotterControl.File.Name, PlotterControl.File.File ))
     | FileActivated PlotterControl.File.Name
+      --
+    | ToolActivated PlotterControl.Tool.Tool
       --
     | AddFileToQueueRequested PlotterControl.File.Name
     | DownloadSvgRequested PlotterControl.File.Name
