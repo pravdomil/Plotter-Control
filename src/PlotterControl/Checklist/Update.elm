@@ -158,7 +158,7 @@ testDrawing model =
         settings =
             PlotterControl.Settings.defaultSettings
                 |> Dict.remove "OPOS_LEVEL"
-                |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
+                |> Dict.remove "OPOS_ORIGIN"
                 --
                 |> Dict.insert "TOOL" "PEN"
                 |> PlotterControl.Settings.setSpeed model.drawingSpeed
@@ -262,7 +262,7 @@ testCutting model =
         settings =
             PlotterControl.Settings.defaultSettings
                 |> Dict.remove "OPOS_LEVEL"
-                |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
+                |> Dict.remove "OPOS_ORIGIN"
                 --
                 |> Dict.insert "OVERCUT" "2"
                 |> PlotterControl.Settings.setSpeed model.cuttingSpeed
@@ -355,7 +355,7 @@ testPerforation a model =
         settings =
             PlotterControl.Settings.defaultSettings
                 |> Dict.remove "OPOS_LEVEL"
-                |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
+                |> Dict.remove "OPOS_ORIGIN"
                 --
                 |> Dict.insert "FLEX_CUT" "MODE2"
                 |> Dict.insert "FULL_PRESSURE" "400"
