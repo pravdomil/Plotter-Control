@@ -28,11 +28,11 @@ type alias Model =
 
     --
     , drawingSpeed : Speed.Speed
-    , drawingPressure : Mass.Kilograms
+    , drawingPressure : Mass.Mass
 
     --
     , cuttingSpeed : Speed.Speed
-    , cuttingPressure : Mass.Kilograms
+    , cuttingPressure : Mass.Mass
     , cuttingOffset : Length.Length
 
     --
