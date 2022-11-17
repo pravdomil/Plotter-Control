@@ -4,11 +4,14 @@ import Element.PravdomilUi.Application
 import File
 import Id
 import Length
+import Mass
 import PlotterControl.Checklist
 import PlotterControl.File
+import PlotterControl.MarkerSensitivity
 import PlotterControl.Plotter
 import PlotterControl.Queue
 import PlotterControl.Settings
+import Speed
 
 
 type Msg
@@ -19,20 +22,20 @@ type Msg
     | ChecklistActivated PlotterControl.Checklist.Checklist
     | ChecklistItemChecked PlotterControl.Checklist.Item Bool
       --
-    | MarkerSensitivityChanged Int
+    | MarkerSensitivityChanged PlotterControl.MarkerSensitivity.MarkerSensitivity
     | MarkerTestRequested
       --
-    | DrawingSpeedChanged Int
-    | DrawingPressureChanged Int
+    | DrawingSpeedChanged Speed.Speed
+    | DrawingPressureChanged Mass.Mass
     | DrawingTestRequested
       --
-    | CuttingSpeedChanged Int
-    | CuttingPressureChanged Int
-    | CuttingOffsetChanged Int
+    | CuttingSpeedChanged Speed.Speed
+    | CuttingPressureChanged Mass.Mass
+    | CuttingOffsetChanged Length.Length
     | CuttingTestRequested
       --
-    | PerforationSpacingChanged Int
-    | PerforationOffsetChanged Int
+    | PerforationSpacingChanged Length.Length
+    | PerforationOffsetChanged Length.Length
     | PerforationTestRequested PerforationTest
       --
     | OpenFilesRequested
