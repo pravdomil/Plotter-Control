@@ -265,9 +265,9 @@ testCutting model =
                 |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
                 --
                 |> Dict.insert "OVERCUT" "2"
-                |> Dict.insert "VELOCITY" (String.fromInt model.cuttingSpeed)
-                |> Dict.insert "KNIFE_PRESSURE" (String.fromInt model.cuttingPressure)
-                |> Dict.insert "DRAG_OFFSET" (String.fromInt model.cuttingOffset)
+                |> PlotterControl.Settings.setSpeed model.cuttingSpeed
+                |> PlotterControl.Settings.setKnifePressure model.cuttingPressure
+                |> PlotterControl.Settings.setDragOffset model.cuttingOffset
 
         test : String
         test =
@@ -283,11 +283,11 @@ testCutting model =
         params : String
         params =
             "("
-                ++ (String.fromInt model.cuttingSpeed ++ " mm/s")
+                ++ PlotterControl.Utils.Utils.speedToString model.cuttingSpeed
                 ++ ", "
-                ++ (String.fromInt model.cuttingPressure ++ " g")
+                ++ PlotterControl.Utils.Utils.massToString model.cuttingPressure
                 ++ ", "
-                ++ (String.fromFloat (toFloat model.cuttingOffset / 100) ++ " mm")
+                ++ PlotterControl.Utils.Utils.lengthToString model.cuttingOffset
                 ++ ")"
     in
     PlotterControl.Queue.Update.createItem (PlotterControl.Queue.stringToItemName ("Cutting Test " ++ params)) test model
