@@ -13,6 +13,7 @@ import PlotterControl.Msg
 import PlotterControl.Navigation.View
 import PlotterControl.Page
 import PlotterControl.Queue.View
+import PlotterControl.Tool.View
 import PlotterControl.Utils.Theme exposing (..)
 
 
@@ -62,6 +63,9 @@ viewColumns model =
 
                 PlotterControl.Page.File_ c ->
                     PlotterControl.File.View.view c model
+
+                PlotterControl.Page.Tool_ c ->
+                    PlotterControl.Tool.View.view c model
 
         Nothing ->
             { size = \x -> { x | width = clamp 240 448 (x.width // 3) }
