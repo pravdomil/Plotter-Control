@@ -70,7 +70,7 @@ testMarkers model =
         settings : SummaEl.Settings
         settings =
             Dict.empty
-                |> PlotterControl.Settings.setMarkerSensitivity model.markerSensitivity
+                |> PlotterControl.Settings.setMarkerSensorSensitivity model.markerSensitivity
                 |> Dict.insert "OPOS_ORIGIN" "CURRENT_POSITION"
 
         params : String

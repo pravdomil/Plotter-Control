@@ -223,8 +223,8 @@ defaultSettings =
         |> Dict.fromList
 
 
-setMarkerSensitivity : PlotterControl.MarkerSensitivity.MarkerSensitivity -> SummaEl.Settings -> SummaEl.Settings
-setMarkerSensitivity a =
+setMarkerSensorSensitivity : PlotterControl.MarkerSensitivity.MarkerSensitivity -> SummaEl.Settings -> SummaEl.Settings
+setMarkerSensorSensitivity a =
     let
         level : Int
         level =
