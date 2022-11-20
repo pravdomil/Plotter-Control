@@ -3,6 +3,7 @@ module PlotterControl.Utils.View exposing (..)
 import Element.PravdomilUi exposing (..)
 import FeatherIcons
 import PlotterControl.Utils.Theme exposing (..)
+import Quantity
 
 
 twoColumns : String -> Element msg -> Element msg
@@ -46,6 +47,27 @@ inputNumber value onChange =
             , onPress = onChange 10 |> Just
             }
         ]
+
+
+inputHelper : String -> String -> Element msg -> Quantity.Quantity number units -> (Quantity.Quantity number units -> msg) -> Element msg
+inputHelper label value note step onChange =
+    twoColumns
+        label
+        (row [ width fill, spacing 8 ]
+            [ el [ width (px 80), fontVariant fontTabularNumbers ] (text value)
+            , textButton theme
+                []
+                { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> iconToElement
+                , onPress = Just (onChange (step |> Quantity.negate))
+                }
+            , textButton theme
+                []
+                { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> iconToElement
+                , onPress = Just (onChange step)
+                }
+            , el [ fontSize 15, fontColor style.fore60 ] note
+            ]
+        )
 
 
 iconToElement : FeatherIcons.Icon -> Element msg
