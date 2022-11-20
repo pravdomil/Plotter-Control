@@ -49,8 +49,8 @@ inputNumber value onChange =
         ]
 
 
-inputHelper : String -> String -> Element msg -> Quantity.Quantity number units -> (Quantity.Quantity number units -> msg) -> Element msg
-inputHelper label value note step onChange =
+quantityInput : String -> String -> Element msg -> Quantity.Quantity number units -> (Quantity.Quantity number units -> msg) -> Element msg
+quantityInput label value note step onChange =
     twoColumns
         label
         (row [ width fill, spacing 8 ]

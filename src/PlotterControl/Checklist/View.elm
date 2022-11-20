@@ -144,7 +144,7 @@ markersTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Bloc
 markersTest model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Test")
-        [ PlotterControl.Utils.View.inputHelper
+        [ PlotterControl.Utils.View.quantityInput
             "Sensitivity:"
             (PlotterControl.MarkerSensitivity.toString model.markerSensitivity)
             none
@@ -166,13 +166,13 @@ drawingTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Bloc
 drawingTest model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Test")
-        [ PlotterControl.Utils.View.inputHelper
+        [ PlotterControl.Utils.View.quantityInput
             "Speed:"
             (PlotterControl.Utils.Utils.speedToString model.drawingSpeed)
             none
             (PlotterControl.Utils.Utils.millimetersPerSecond 50)
             PlotterControl.Msg.DrawingSpeedChanged
-        , PlotterControl.Utils.View.inputHelper
+        , PlotterControl.Utils.View.quantityInput
             "Pressure:"
             (PlotterControl.Utils.Utils.massToString model.drawingPressure)
             none
@@ -194,19 +194,19 @@ cuttingTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Bloc
 cuttingTest model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Test")
-        [ PlotterControl.Utils.View.inputHelper
+        [ PlotterControl.Utils.View.quantityInput
             "Speed:"
             (PlotterControl.Utils.Utils.speedToString model.cuttingSpeed)
             none
             (PlotterControl.Utils.Utils.millimetersPerSecond 50)
             PlotterControl.Msg.CuttingSpeedChanged
-        , PlotterControl.Utils.View.inputHelper
+        , PlotterControl.Utils.View.quantityInput
             "Pressure:"
             (PlotterControl.Utils.Utils.massToString model.cuttingPressure)
             (text ("~" ++ PlotterControl.Utils.Utils.massToString PlotterControl.Utils.Utils.layerCutPressure ++ " / layer"))
             (Mass.grams 20)
             PlotterControl.Msg.CuttingPressureChanged
-        , PlotterControl.Utils.View.inputHelper
+        , PlotterControl.Utils.View.quantityInput
             "Offset:"
             (PlotterControl.Utils.Utils.lengthToString model.cuttingOffset)
             none
@@ -228,13 +228,13 @@ perforationTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.
 perforationTest model =
     Element.PravdomilUi.Application.Block.Block
         (Just "Test")
-        [ PlotterControl.Utils.View.inputHelper
+        [ PlotterControl.Utils.View.quantityInput
             "Spacing:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationSpacing)
             none
             (Length.millimeters 0.2)
             PlotterControl.Msg.PerforationSpacingChanged
-        , PlotterControl.Utils.View.inputHelper
+        , PlotterControl.Utils.View.quantityInput
             "Offset:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationOffset)
             none
