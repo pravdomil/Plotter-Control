@@ -1,9 +1,15 @@
 module PlotterControl.Commander exposing (..)
 
+import Length
+
 
 type alias Commander =
     { type_ : CommandType
     , command : String
+
+    --
+    , left : Length.Length
+    , up : Length.Length
     }
 
 

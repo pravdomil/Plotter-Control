@@ -1,5 +1,6 @@
 module PlotterControl.Commander.Update exposing (..)
 
+import Length
 import PlotterControl.Commander
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -12,6 +13,8 @@ init =
     PlotterControl.Commander.Commander
         PlotterControl.Commander.Raw
         ""
+        (Length.millimeters 800)
+        (Length.millimeters 800)
 
 
 changeCommandType : PlotterControl.Commander.CommandType -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
