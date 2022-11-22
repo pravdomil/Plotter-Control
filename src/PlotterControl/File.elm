@@ -19,7 +19,6 @@ import Rectangle2d
 import SummaEl
 import Task
 import Time
-import Vector2d
 import XmlParser
 
 
@@ -165,20 +164,17 @@ readyToPlotterData a =
 
         data : String
         data =
-            if usePerforationRelief then
-                HpGl.toString
-                    (HpGl.Initialize
-                        :: HpGl.Geometry.fromPolylines (polylinesPreventDoubleCut a.markers a.polylines)
-                        ++ HpGl.Geometry.fromPolylines (perforationRelief a)
-                        ++ [ HpGl.End ]
-                    )
+            HpGl.toString
+                (HpGl.Initialize
+                    :: HpGl.Geometry.fromPolylines a.polylines
+                    ++ (if usePerforationRelief then
+                            HpGl.Geometry.fromPolylines (perforationRelief a)
 
-            else
-                HpGl.toString
-                    (HpGl.Initialize
-                        :: HpGl.Geometry.fromPolylines a.polylines
-                        ++ [ HpGl.End ]
-                    )
+                        else
+                            []
+                       )
+                    ++ [ HpGl.End ]
+                )
 
         maybeRecut : String
         maybeRecut =
@@ -195,43 +191,6 @@ readyToPlotterData a =
                    )
     in
     setSettings ++ maybeLoadMarkers ++ data ++ maybeRecut
-
-
-polylinesPreventDoubleCut : Maybe PlotterControl.Markers.Markers -> List (Polyline2d.Polyline2d Length.Meters coordinates) -> List (Polyline2d.Polyline2d Length.Meters coordinates)
-polylinesPreventDoubleCut markers a =
-    let
-        tolerance : Length.Length
-        tolerance =
-            Length.millimeters 0.2
-    in
-    case markers of
-        Just markers_ ->
-            let
-                maxX : Quantity.Quantity Float Length.Meters
-                maxX =
-                    markers_
-                        |> PlotterControl.Markers.boundingBox
-                        |> BoundingBox2d.maxX
-                        |> Quantity.minus PlotterControl.Markers.size
-                        |> Quantity.minus tolerance
-            in
-            a
-                |> List.map
-                    (\x ->
-                        case Polyline2d.boundingBox x of
-                            Just box ->
-                                if BoundingBox2d.maxX box |> Quantity.greaterThan maxX then
-                                    Polyline2d.translateBy (Vector2d.xy (Quantity.negate tolerance) Quantity.zero) x
-
-                                else
-                                    x
-
-                            Nothing ->
-                                x
-                    )
-
-        Nothing ->
-            a
 
 
 perforationRelief : Ready -> List (Polyline2d.Polyline2d Length.Meters coordinates)
