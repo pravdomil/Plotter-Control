@@ -114,8 +114,8 @@ type Error
 
 
 boxHasSameSizeAsMarker : BoundingBox2d.BoundingBox2d Length.Meters coordinates -> Bool
-boxHasSameSizeAsMarker b =
-    b
+boxHasSameSizeAsMarker a =
+    a
         |> BoundingBox2d.dimensions
         |> (\( w, h ) ->
                 (w |> Quantity.equalWithin tolerance size)
