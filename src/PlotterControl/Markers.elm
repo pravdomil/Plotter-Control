@@ -4,6 +4,7 @@ import BoundingBox2d
 import Dict
 import HpGl
 import Length
+import List.Extra
 import Point2d
 import Polyline2d
 import Quantity
@@ -24,26 +25,48 @@ fromPolylines :
     -> Result Error ( List (Polyline2d.Polyline2d Length.Meters ()), Maybe Markers )
 fromPolylines a =
     let
-        isFirstMark : Polyline2d.Polyline2d Length.Meters coordinates -> Bool
-        isFirstMark b =
+        firstMarkOffset : Polyline2d.Polyline2d Length.Meters coordinates -> Maybe (Point2d.Point2d Length.Meters coordinates)
+        firstMarkOffset b =
             b
                 |> Polyline2d.boundingBox
-                |> Maybe.map
+                |> Maybe.andThen
                     (\x ->
-                        boxHasSameSizeAsMarker x
-                            && (x |> BoundingBox2d.minX |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero)
-                            && (x |> BoundingBox2d.minY |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero)
-                    )
-                |> Maybe.withDefault False
-    in
-    if a |> List.any isFirstMark then
-        fromPolylinesHelper a
+                        let
+                            point : Point2d.Point2d Length.Meters coordinates
+                            point =
+                                Point2d.xy (BoundingBox2d.minX x) (BoundingBox2d.minY x)
+                        in
+                        if
+                            boxHasSameSizeAsMarker x
+                                && (point
+                                        |> Point2d.xCoordinate
+                                        |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero
+                                   )
+                                && (point
+                                        |> Point2d.yCoordinate
+                                        |> Quantity.equalWithin (Length.millimeters 0.11) Quantity.zero
+                                   )
+                        then
+                            Just point
 
-    else
-        Ok
-            ( a
-            , Nothing
-            )
+                        else
+                            Nothing
+                    )
+    in
+    case a |> List.Extra.findMap firstMarkOffset of
+        Just b ->
+            let
+                polylines : List (Polyline2d.Polyline2d Length.Meters ())
+                polylines =
+                    a |> List.map (Polyline2d.mapVertices (Point2d.translateBy (Vector2d.from b Point2d.origin)))
+            in
+            fromPolylinesHelper polylines
+
+        Nothing ->
+            Ok
+                ( a
+                , Nothing
+                )
 
 
 toSettings : Markers -> SummaEl.Settings
