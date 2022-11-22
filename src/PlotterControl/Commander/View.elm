@@ -3,10 +3,12 @@ module PlotterControl.Commander.View exposing (..)
 import Element.PravdomilUi exposing (..)
 import Element.PravdomilUi.Application
 import Element.PravdomilUi.Application.Block
+import Length
 import PlotterControl.Commander
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Utils.Theme exposing (..)
+import PlotterControl.Utils.Utils
 import PlotterControl.Utils.View
 
 
@@ -18,13 +20,7 @@ view model =
             { attributes = []
             , left = []
             , center = text "Commander"
-            , right =
-                [ textButton theme
-                    [ fontSemiBold ]
-                    { label = text "Enqueue"
-                    , onPress = Just PlotterControl.Msg.CommanderSendRequested
-                    }
-                ]
+            , right = []
             }
     , toolbar = Nothing
     , body =
@@ -52,7 +48,26 @@ view model =
                     , spellcheck = False
                     , onChange = PlotterControl.Msg.CommanderCommandChanged
                     }
+                , textButton theme
+                    [ fontSemiBold, centerX ]
+                    { label = text "Enqueue"
+                    , onPress = Just PlotterControl.Msg.CommanderSendRequested
+                    }
                 , statusText theme [] "To enter service mode press left & right & enter on startup."
+                ]
+            , Element.PravdomilUi.Application.Block.Block (Just "Marker Sensor Calibration")
+                [ PlotterControl.Utils.View.quantityInput
+                    "Left Offset:"
+                    (PlotterControl.Utils.Utils.lengthToString model.commander.sensorLeftOffset)
+                    none
+                    (Length.millimeters 0.1)
+                    PlotterControl.Msg.CommanderSensorLeftOffsetChanged
+                , PlotterControl.Utils.View.quantityInput
+                    "Up Offset:"
+                    (PlotterControl.Utils.Utils.lengthToString model.commander.sensorUpOffset)
+                    none
+                    (Length.millimeters 0.1)
+                    PlotterControl.Msg.CommanderSensorUpOffsetChanged
                 ]
             ]
     }

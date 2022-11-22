@@ -8,8 +8,8 @@ type alias Commander =
     , command : String
 
     --
-    , left : Length.Length
-    , up : Length.Length
+    , sensorLeftOffset : Length.Length
+    , sensorUpOffset : Length.Length
     }
 
 

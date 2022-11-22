@@ -1,11 +1,15 @@
 module PlotterControl.Commander.Update exposing (..)
 
+import Dict
 import Length
+import Platform.Extra
 import PlotterControl.Commander
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Queue
 import PlotterControl.Queue.Update
+import Quantity
+import SummaEl
 
 
 init : PlotterControl.Commander.Commander
@@ -13,8 +17,8 @@ init =
     PlotterControl.Commander.Commander
         PlotterControl.Commander.Raw
         ""
-        (Length.millimeters 800)
-        (Length.millimeters 800)
+        (Length.millimeters 400)
+        (Length.millimeters 400)
 
 
 changeCommandType : PlotterControl.Commander.CommandType -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
@@ -53,4 +57,49 @@ sendCommand model =
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName ("Commander (" ++ command ++ ")"))
         data
+        model
+
+
+changeSensorLeftOffset : Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeSensorLeftOffset a model =
+    ( { model | commander = (\x -> { x | sensorLeftOffset = x.sensorLeftOffset |> Quantity.plus a }) model.commander }
+    , Cmd.none
+    )
+        |> Platform.Extra.andThen sendSensorOffset
+
+
+changeSensorUpOffset : Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeSensorUpOffset a model =
+    ( { model | commander = (\x -> { x | sensorUpOffset = x.sensorUpOffset |> Quantity.plus a }) model.commander }
+    , Cmd.none
+    )
+        |> Platform.Extra.andThen sendSensorOffset
+
+
+sendSensorOffset : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+sendSensorOffset model =
+    let
+        lengthToString : Length.Length -> String
+        lengthToString a =
+            a
+                |> Quantity.at resolution
+                |> Quantity.toFloat
+                |> round
+                |> String.fromInt
+
+        resolution : Quantity.Quantity Float (Quantity.Rate Quantity.Unitless Length.Meters)
+        resolution =
+            Quantity.rate (Quantity.float 80) (Length.millimeters 1)
+
+        command : SummaEl.Command
+        command =
+            SummaEl.SetSystemSettings
+                (Dict.empty
+                    |> Dict.insert "OPOS_xoffset" (lengthToString model.commander.sensorUpOffset)
+                    |> Dict.insert "OPOS_yoffset" (lengthToString model.commander.sensorLeftOffset)
+                )
+    in
+    PlotterControl.Queue.Update.createItem
+        (PlotterControl.Queue.stringToItemName "Marker Sensor Calibration")
+        (SummaEl.toString [ command ])
         model
