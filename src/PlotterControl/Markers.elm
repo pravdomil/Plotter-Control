@@ -155,7 +155,7 @@ fromPolylinesHelper a =
                     )
                 |> Maybe.withDefault False
 
-        ( markers, lines ) =
+        ( markers, polylines ) =
             a |> List.partition isMark
 
         markersCount : Int
@@ -189,6 +189,6 @@ fromPolylinesHelper a =
                 }
         in
         Ok
-            ( lines
+            ( polylines
             , Just markers_
             )
