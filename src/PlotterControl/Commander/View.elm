@@ -69,7 +69,7 @@ view model =
                     (Length.millimeters 0.1)
                     PlotterControl.Msg.CommanderSensorUpOffsetChanged
                 , textButton theme
-                    [ centerX ]
+                    [ fontSemiBold, centerX ]
                     { label = text "Calibrate"
                     , onPress = Just PlotterControl.Msg.CommanderSensorCalibrateRequested
                     }
