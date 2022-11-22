@@ -135,6 +135,9 @@ update msg model =
         PlotterControl.Msg.CommanderSensorUpOffsetChanged a ->
             PlotterControl.Commander.Update.changeSensorUpOffset a model
 
+        PlotterControl.Msg.CommanderSensorCalibrateRequested ->
+            PlotterControl.Commander.Update.calibrateSensor model
+
         --
         PlotterControl.Msg.AddFileToQueueRequested a ->
             PlotterControl.File.Update.addFileToQueue a model

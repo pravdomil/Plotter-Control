@@ -52,6 +52,7 @@ type Msg
     | CommanderSendRequested
     | CommanderSensorLeftOffsetChanged Length.Length
     | CommanderSensorUpOffsetChanged Length.Length
+    | CommanderSensorCalibrateRequested
       --
     | AddFileToQueueRequested PlotterControl.File.Name
     | DownloadSvgRequested PlotterControl.File.Name

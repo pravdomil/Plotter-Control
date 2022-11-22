@@ -2,7 +2,6 @@ module PlotterControl.Commander.Update exposing (..)
 
 import Dict
 import Length
-import Platform.Extra
 import PlotterControl.Commander
 import PlotterControl.Model
 import PlotterControl.Msg
@@ -65,7 +64,6 @@ changeSensorLeftOffset a model =
     ( { model | commander = (\x -> { x | sensorLeftOffset = x.sensorLeftOffset |> Quantity.plus a }) model.commander }
     , Cmd.none
     )
-        |> Platform.Extra.andThen sendSensorOffset
 
 
 changeSensorUpOffset : Length.Length -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
@@ -73,11 +71,10 @@ changeSensorUpOffset a model =
     ( { model | commander = (\x -> { x | sensorUpOffset = x.sensorUpOffset |> Quantity.plus a }) model.commander }
     , Cmd.none
     )
-        |> Platform.Extra.andThen sendSensorOffset
 
 
-sendSensorOffset : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
-sendSensorOffset model =
+calibrateSensor : PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+calibrateSensor model =
     let
         lengthToString : Length.Length -> String
         lengthToString a =
