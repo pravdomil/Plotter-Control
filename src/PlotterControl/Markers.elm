@@ -125,7 +125,7 @@ boxHasSameSizeAsMarker a =
 
 fromPolylinesHelper :
     List (Polyline2d.Polyline2d Length.Meters coordinates)
-    -> Result Error ( List (Polyline2d.Polyline2d Length.Meters coordinates), Maybe { xDistance : Quantity.Quantity Float Length.Meters, yDistance : Quantity.Quantity Float Length.Meters, count : Int } )
+    -> Result Error ( List (Polyline2d.Polyline2d Length.Meters coordinates), Maybe Markers )
 fromPolylinesHelper a =
     let
         box : BoundingBox2d.BoundingBox2d Length.Meters coordinates
