@@ -19,6 +19,7 @@ import Rectangle2d
 import SummaEl
 import Task
 import Time
+import Vector2d
 import XmlParser
 
 
@@ -162,11 +163,30 @@ readyToPlotterData a =
                 Nothing ->
                     ""
 
+        movePolylines : List (Polyline2d.Polyline2d Length.Meters coordinates) -> List (Polyline2d.Polyline2d Length.Meters coordinates)
+        movePolylines b =
+            b
+                |> List.map
+                    (Polyline2d.mapVertices
+                        (Point2d.translateBy
+                            (Vector2d.xy
+                                (Quantity.float 1 |> Quantity.at_ HpGl.resolution)
+                                Quantity.zero
+                            )
+                        )
+                    )
+
         data : String
         data =
             HpGl.toString
                 (HpGl.Initialize
-                    :: HpGl.Geometry.fromPolylines a.polylines
+                    :: HpGl.Geometry.fromPolylines
+                        (if a.settings.preset == PlotterControl.Settings.Perforate then
+                            movePolylines a.polylines
+
+                         else
+                            a.polylines
+                        )
                     ++ (if usePerforationRelief then
                             HpGl.Geometry.fromPolylines (perforationRelief a)
 
