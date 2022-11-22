@@ -17,8 +17,8 @@ init =
     PlotterControl.Commander.Commander
         PlotterControl.Commander.Raw
         ""
-        (Length.millimeters 400)
-        (Length.millimeters 400)
+        (Length.millimeters 386)
+        (Length.millimeters 410)
 
 
 changeCommandType : PlotterControl.Commander.CommandType -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
