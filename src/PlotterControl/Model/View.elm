@@ -20,32 +20,29 @@ import PlotterControl.Utils.Theme exposing (..)
 view : PlotterControl.Model.Model -> Browser.Document PlotterControl.Msg.Msg
 view model =
     let
-        ( attrs, body ) =
-            Element.PravdomilUi.Application.view
-                (Element.PravdomilUi.Application.Config
-                    style
-                    theme
-                    model.viewportSize
-                    (viewColumns model)
-                    []
-                    Nothing
-                    Nothing
-                    Nothing
-                    (always PlotterControl.Msg.NothingHappened)
-                    PlotterControl.Msg.NothingHappened
-                    PlotterControl.Msg.NothingHappened
-                )
+        config : Element.PravdomilUi.Application.Config PlotterControl.Msg.Msg
+        config =
+            Element.PravdomilUi.Application.Config
+                style
+                theme
+                model.viewportSize
+                (viewColumns model)
+                []
+                Nothing
+                Nothing
+                Nothing
+                (always PlotterControl.Msg.NothingHappened)
+                PlotterControl.Msg.NothingHappened
+                PlotterControl.Msg.NothingHappened
     in
-    { title = "Plotter Control"
-    , body =
-        [ layout theme
-            (onDragOver PlotterControl.Msg.NothingHappened
-                :: onDrop PlotterControl.Msg.RawFilesReceived
-                :: attrs
-            )
-            body
+    Browser.Document
+        "Plotter Control"
+        [ Element.PravdomilUi.Application.toHtml
+            config
+            [ onDragOver PlotterControl.Msg.NothingHappened
+            , onDrop PlotterControl.Msg.RawFilesReceived
+            ]
         ]
-    }
 
 
 
