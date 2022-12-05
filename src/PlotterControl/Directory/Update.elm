@@ -55,7 +55,7 @@ filesReceived a model =
                                     (\x x2 ->
                                         { x
                                             | settings = x2.settings
-                                            , markers = Maybe.map2 (\x3 x4 -> { x3 | loading = x4.loading }) x x2
+                                            , markers = Maybe.map2 (\x3 x4 -> { x3 | loading = x4.loading }) x.markers x2.markers
                                         }
                                     )
                                     new.ready
