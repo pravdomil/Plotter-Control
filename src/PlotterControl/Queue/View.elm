@@ -23,6 +23,10 @@ view model =
         Just
             { attributes = []
             , left =
+                [ mainButton model
+                ]
+            , center = textEllipsis [ fontCenter ] "Queue"
+            , right =
                 [ case model.queue |> Dict.Any.isEmpty of
                     True ->
                         el [] none
@@ -33,10 +37,6 @@ view model =
                             { label = text "Download"
                             , onPress = Just PlotterControl.Msg.QueueDownloadRequested
                             }
-                ]
-            , center = textEllipsis [ fontCenter ] "Queue"
-            , right =
-                [ mainButton model
                 ]
             }
     , toolbar = Nothing
