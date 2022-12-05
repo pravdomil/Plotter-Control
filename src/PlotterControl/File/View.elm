@@ -100,7 +100,7 @@ markers name a =
     Element.PravdomilUi.Application.Block.Block
         (Just "Markers")
         [ PlotterControl.Utils.View.twoColumns
-            "Markers:"
+            "Size:"
             (row [ spacing 8 ]
                 [ text
                     ([ a.count |> String.fromInt
