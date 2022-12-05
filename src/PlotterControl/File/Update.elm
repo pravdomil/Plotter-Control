@@ -6,6 +6,7 @@ import Length
 import Platform.Extra
 import PlotterControl.Directory.Utils
 import PlotterControl.File
+import PlotterControl.Markers
 import PlotterControl.Model
 import PlotterControl.Msg
 import PlotterControl.Queue
@@ -142,6 +143,6 @@ changeCopyDistance name a model =
     updateSettings name (\x -> { x | copyDistance = x.copyDistance |> Quantity.plus a |> Quantity.max (Length.millimeters 0) }) model
 
 
-changeMarkerLoading : PlotterControl.File.Name -> PlotterControl.Settings.MarkerLoading -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
+changeMarkerLoading : PlotterControl.File.Name -> PlotterControl.Markers.Loading -> PlotterControl.Model.Model -> ( PlotterControl.Model.Model, Cmd PlotterControl.Msg.Msg )
 changeMarkerLoading name a model =
-    updateSettings name (\x -> { x | markerLoading = a }) model
+    updateReady name (\x -> { x | markers = Maybe.map (\x2 -> { x2 | loading = a }) x.markers }) model

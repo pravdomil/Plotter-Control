@@ -17,6 +17,7 @@ type alias Markers =
     { xDistance : Length.Length
     , yDistance : Length.Length
     , count : Int
+    , loading : Loading
     }
 
 
@@ -77,6 +78,14 @@ toSettings a =
         , ( "MARKER_X_SIZE", size |> HpGl.lengthToString )
         , ( "MARKER_Y_SIZE", size |> HpGl.lengthToString )
         , ( "MARKER_X_N", a.count |> String.fromInt )
+        , ( "OPOS_PANELLING"
+          , case a.loading of
+                LoadContinually ->
+                    "ON"
+
+                LoadSimultaneously ->
+                    "OFF"
+          )
         ]
 
 
@@ -122,6 +131,15 @@ size =
 tolerance : Length.Length
 tolerance =
     Quantity.float 1 |> Quantity.at_ HpGl.resolution
+
+
+
+--
+
+
+type Loading
+    = LoadContinually
+    | LoadSimultaneously
 
 
 
@@ -209,6 +227,12 @@ fromPolylinesHelper a =
                 { xDistance = w |> Quantity.minus size |> Quantity.divideBy (toFloat (markersCount // 2 - 1))
                 , yDistance = h |> Quantity.minus size
                 , count = markersCount // 2
+                , loading =
+                    if markersCount > 4 then
+                        LoadContinually
+
+                    else
+                        LoadSimultaneously
                 }
         in
         Ok

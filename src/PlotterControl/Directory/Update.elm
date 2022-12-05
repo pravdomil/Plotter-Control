@@ -52,7 +52,12 @@ filesReceived a model =
                         { new
                             | ready =
                                 Result.map2
-                                    (\x x2 -> { x | settings = x2.settings })
+                                    (\x x2 ->
+                                        { x
+                                            | settings = x2.settings
+                                            , markers = Maybe.map2 (\x3 x4 -> { x3 | loading = x4.loading }) x x2
+                                        }
+                                    )
                                     new.ready
                                     old_.ready
                         }

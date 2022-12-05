@@ -49,8 +49,13 @@ view { name } model =
                 Element.PravdomilUi.Application.Blocks
                     (case a.ready of
                         Ok ready ->
-                            [ fileInfo name ready
-                            , PlotterControl.Settings.View.view model name ready.settings
+                            [ PlotterControl.Settings.View.view model name ready.settings
+                            , case ready.markers of
+                                Just b ->
+                                    markers name b
+
+                                Nothing ->
+                                    Element.PravdomilUi.Application.Block.Empty
                             ]
 
                         Err b ->
@@ -90,30 +95,38 @@ view { name } model =
             }
 
 
-fileInfo : PlotterControl.File.Name -> PlotterControl.File.Ready -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
-fileInfo name a =
+markers : PlotterControl.File.Name -> PlotterControl.Markers.Markers -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+markers name a =
     Element.PravdomilUi.Application.Block.Block
-        (Just "Info")
+        (Just "Markers")
         [ PlotterControl.Utils.View.twoColumns
             "Markers:"
-            (case a.markers of
-                Just b ->
-                    row [ spacing 8 ]
-                        [ text
-                            ([ b.count |> String.fromInt
-                             , b.yDistance |> PlotterControl.Utils.Utils.lengthToString
-                             , b.xDistance |> PlotterControl.Utils.Utils.lengthToString
-                             ]
-                                |> String.join " × "
-                            )
-                        , textButton theme
-                            []
-                            { label = text "Test"
-                            , onPress = Just (PlotterControl.Msg.FileMarkerTestRequested name)
-                            }
-                        ]
-
-                Nothing ->
-                    text "None"
+            (row [ spacing 8 ]
+                [ text
+                    ([ a.count |> String.fromInt
+                     , a.yDistance |> PlotterControl.Utils.Utils.lengthToString
+                     , a.xDistance |> PlotterControl.Utils.Utils.lengthToString
+                     ]
+                        |> String.join " × "
+                    )
+                , textButton theme
+                    []
+                    { label = text "Test"
+                    , onPress = Just (PlotterControl.Msg.FileMarkerTestRequested name)
+                    }
+                ]
+            )
+        , PlotterControl.Utils.View.twoColumns
+            "Loading:"
+            (inputRadioRow theme
+                []
+                { label = labelHidden "Loading:"
+                , options =
+                    [ inputRadioBlockOption theme [] PlotterControl.Markers.LoadContinually (text "Continually")
+                    , inputRadioBlockOption theme [] PlotterControl.Markers.LoadSimultaneously (text "Simultaneously")
+                    ]
+                , selected = Just a.loading
+                , onChange = PlotterControl.Msg.MarkerLoadingChanged name
+                }
             )
         ]

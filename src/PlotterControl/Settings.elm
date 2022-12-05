@@ -12,7 +12,6 @@ import SummaEl
 
 type alias Settings =
     { preset : Preset
-    , markerLoading : MarkerLoading
     , copies : Copies
     , copyDistance : Length.Length
     }
@@ -41,7 +40,6 @@ default name =
                 Cut
     in
     { preset = preset
-    , markerLoading = LoadContinually
     , copies = intToCopies 1
     , copyDistance = Length.millimeters 10
     }
@@ -52,14 +50,6 @@ loadSettings additional a =
     loadPreset a.preset
         ++ [ SummaEl.SetSettings
                 (Dict.empty
-                    |> Dict.insert "OPOS_PANELLING"
-                        (case a.markerLoading of
-                            LoadContinually ->
-                                "ON"
-
-                            LoadSimultaneously ->
-                                "OFF"
-                        )
                     |> Dict.insert "RECUT_OFFSET"
                         (a.copyDistance
                             |> Length.inMillimeters
@@ -151,15 +141,6 @@ copiesToInt (Copies a) =
 copiesPlus : Copies -> Copies -> Copies
 copiesPlus (Copies a) (Copies b) =
     a + b |> max 1 |> intToCopies
-
-
-
---
-
-
-type MarkerLoading
-    = LoadContinually
-    | LoadSimultaneously
 
 
 

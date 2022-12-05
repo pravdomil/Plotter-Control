@@ -17,7 +17,6 @@ view _ a b =
     Element.PravdomilUi.Application.Block.Block
         (Just "Settings")
         [ preset a b
-        , markerLoading a b
         , copies a b
         , copyDistance a b
         ]
@@ -35,23 +34,6 @@ preset name a =
                     |> List.map (\x -> inputRadioBlockOption theme [] x (text (PlotterControl.Settings.presetName x)))
             , selected = Just a.preset
             , onChange = PlotterControl.Msg.PresetChanged name
-            }
-        )
-
-
-markerLoading : PlotterControl.File.Name -> PlotterControl.Settings.Settings -> Element PlotterControl.Msg.Msg
-markerLoading name a =
-    PlotterControl.Utils.View.twoColumns
-        "Marker Loading:"
-        (inputRadioRow theme
-            []
-            { label = labelHidden "Marker Loading:"
-            , options =
-                [ inputRadioBlockOption theme [] PlotterControl.Settings.LoadContinually (text "Continually")
-                , inputRadioBlockOption theme [] PlotterControl.Settings.LoadSimultaneously (text "Simultaneously")
-                ]
-            , selected = Just a.markerLoading
-            , onChange = PlotterControl.Msg.MarkerLoadingChanged name
             }
         )
 

@@ -9,6 +9,7 @@ import PlotterControl.Checklist
 import PlotterControl.Commander
 import PlotterControl.File
 import PlotterControl.MarkerSensitivity
+import PlotterControl.Markers
 import PlotterControl.Plotter
 import PlotterControl.Queue
 import PlotterControl.Settings
@@ -60,7 +61,7 @@ type Msg
     | PresetChanged PlotterControl.File.Name PlotterControl.Settings.Preset
     | CopiesChanged PlotterControl.File.Name PlotterControl.Settings.Copies
     | CopyDistanceChanged PlotterControl.File.Name Length.Length
-    | MarkerLoadingChanged PlotterControl.File.Name PlotterControl.Settings.MarkerLoading
+    | MarkerLoadingChanged PlotterControl.File.Name PlotterControl.Markers.Loading
       --
     | QueueItemReceived ( Id.Id PlotterControl.Queue.Item, PlotterControl.Queue.Item )
     | QueueItemRemoveRequested (Id.Id PlotterControl.Queue.Item)
