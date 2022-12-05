@@ -88,15 +88,17 @@ calibrateSensor model =
         resolution =
             Quantity.rate (Quantity.float 80) (Length.millimeters 1)
 
-        command : SummaEl.Command
-        command =
-            SummaEl.SetSystemSettings
+        commands : SummaEl.SummaEl
+        commands =
+            [ SummaEl.SetSystemSettings
                 (Dict.empty
                     |> Dict.insert "OPOS_xoffset" (lengthToString model.commander.sensorUpOffset)
                     |> Dict.insert "OPOS_yoffset" (lengthToString model.commander.sensorLeftOffset)
                 )
+            , SummaEl.UnknownCommand (SummaEl.Store "NVRAM")
+            ]
     in
     PlotterControl.Queue.Update.createItem
         (PlotterControl.Queue.stringToItemName "Marker Sensor Calibration")
-        (SummaEl.toString [ command ])
+        (SummaEl.toString commands)
         model
