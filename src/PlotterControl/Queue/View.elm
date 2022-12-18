@@ -104,27 +104,27 @@ mainButton model =
                 , onPress = Just PlotterControl.Msg.StopSendingRequested
                 }
     in
-    if model.queue |> Dict.Any.isEmpty then
-        none
+    case model.plotter of
+        Ok _ ->
+            if model.queue |> Dict.Any.isEmpty then
+                none
 
-    else
-        case model.plotter of
-            Ok _ ->
+            else
                 sendButton
 
-            Err b ->
-                case b of
-                    PlotterControl.Model.NoPlotter ->
-                        sendButton
+        Err b ->
+            case b of
+                PlotterControl.Model.NoPlotter ->
+                    sendButton
 
-                    PlotterControl.Model.PlotterConnecting ->
-                        none
+                PlotterControl.Model.PlotterConnecting ->
+                    none
 
-                    PlotterControl.Model.PlotterSending _ ->
-                        stopButton
+                PlotterControl.Model.PlotterSending _ ->
+                    stopButton
 
-                    PlotterControl.Model.PlotterError _ ->
-                        sendButton
+                PlotterControl.Model.PlotterError _ ->
+                    sendButton
 
 
 plotterStatus : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
