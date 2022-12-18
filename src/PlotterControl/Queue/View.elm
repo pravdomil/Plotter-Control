@@ -90,11 +90,15 @@ mainButton model =
     let
         sendButton : Element PlotterControl.Msg.Msg
         sendButton =
-            textButton theme
-                [ fontSemiBold ]
-                { label = text "Send"
-                , onPress = Just PlotterControl.Msg.SendQueueRequested
-                }
+            if model.queue |> Dict.Any.isEmpty then
+                el [] none
+
+            else
+                textButton theme
+                    [ fontSemiBold ]
+                    { label = text "Send"
+                    , onPress = Just PlotterControl.Msg.SendQueueRequested
+                    }
 
         stopButton : Element PlotterControl.Msg.Msg
         stopButton =
@@ -106,11 +110,7 @@ mainButton model =
     in
     case model.plotter of
         Ok _ ->
-            if model.queue |> Dict.Any.isEmpty then
-                none
-
-            else
-                sendButton
+            sendButton
 
         Err b ->
             case b of
@@ -118,7 +118,7 @@ mainButton model =
                     sendButton
 
                 PlotterControl.Model.PlotterConnecting ->
-                    none
+                    el [] none
 
                 PlotterControl.Model.PlotterSending _ ->
                     stopButton
