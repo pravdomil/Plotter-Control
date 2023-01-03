@@ -61,7 +61,7 @@ viewItem model a =
             checkbox model (text "Sensor is cleaned with dust blaster.") a
 
         PlotterControl.Checklist.MarkersTestOk ->
-            checkbox model (text "Marker test succeed.") a
+            markersTest model
 
         --
         PlotterControl.Checklist.DrawingPenInHolder ->
@@ -115,11 +115,11 @@ checkbox model label a =
 --
 
 
-markersTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+markersTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 markersTest model =
-    Element.PravdomilUi.Application.Block.Block
-        (Just "Test")
-        [ PlotterControl.Utils.View.quantityInput
+    column [ width fill, spacing 8 ]
+        [ checkbox model (text "Marker test succeed.") PlotterControl.Checklist.MarkersTestOk
+        , PlotterControl.Utils.View.quantityInput
             "Sensitivity:"
             (PlotterControl.MarkerSensitivity.toString model.markerSensitivity)
             none
