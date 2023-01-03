@@ -99,8 +99,8 @@ update msg model =
         PlotterControl.Msg.PerforationOffsetChanged a ->
             PlotterControl.Checklist.Update.changePerforationOffset a model
 
-        PlotterControl.Msg.PerforationTestRequested a ->
-            PlotterControl.Checklist.Update.testPerforation a model
+        PlotterControl.Msg.PerforationTestRequested ->
+            PlotterControl.Checklist.Update.testPerforation model
 
         --
         PlotterControl.Msg.OpenFilesRequested ->

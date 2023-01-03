@@ -39,7 +39,7 @@ type Msg
       --
     | PerforationSpacingChanged Length.Length
     | PerforationOffsetChanged Length.Length
-    | PerforationTestRequested PerforationTest
+    | PerforationTestRequested
       --
     | OpenFilesRequested
     | RawFilesReceived (List File.File)
@@ -72,12 +72,3 @@ type Msg
     | QueueItemSent PlotterControl.Plotter.Plotter (Id.Id PlotterControl.Queue.Item) (Result PlotterControl.Plotter.Error ())
     | StopSendingRequested
     | SendingStopped (Result PlotterControl.Plotter.Error ())
-
-
-
---
-
-
-type PerforationTest
-    = PerforationTestSquare
-    | PerforationTestLine
