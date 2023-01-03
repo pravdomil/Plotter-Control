@@ -136,7 +136,7 @@ plotterStatus model =
                             "Connecting..."
 
                         PlotterControl.Model.PlotterSending _ ->
-                            "Sending..."
+                            "🍇 Sending..."
 
                         PlotterControl.Model.PlotterError c ->
                             case c of
@@ -152,10 +152,10 @@ plotterStatus model =
                                             "Disconnected."
 
                                         Usb.Device.TransferAborted ->
-                                            "Sending has been stopped."
+                                            "🍋 Sending has been stopped."
 
                                         Usb.Device.JavaScriptError _ ->
-                                            "Internal error."
+                                            "🍋 Internal error."
 
                                 PlotterControl.Plotter.WakeLockError d ->
                                     case d of
