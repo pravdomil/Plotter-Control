@@ -210,7 +210,7 @@ cuttingTest model =
             "Offset:"
             (PlotterControl.Utils.Utils.lengthToString model.cuttingOffset)
             none
-            (Length.millimeters 0.1)
+            (Length.millimeters 0.05)
             PlotterControl.Msg.CuttingOffsetChanged
         , textButton theme
             [ centerX ]
@@ -238,7 +238,7 @@ perforationTest model =
             "Offset:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationOffset)
             none
-            (Length.millimeters 0.1)
+            (Length.millimeters 0.05)
             PlotterControl.Msg.PerforationOffsetChanged
         , textButton theme
             [ centerX ]

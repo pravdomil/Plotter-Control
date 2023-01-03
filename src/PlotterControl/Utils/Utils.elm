@@ -14,10 +14,10 @@ lengthToString : Length.Length -> String
 lengthToString a =
     a
         |> Length.inMillimeters
-        |> (*) 10
+        |> (*) 100
         |> round
         |> toFloat
-        |> (\x -> x / 10)
+        |> (\x -> x / 100)
         |> String.fromFloat
         |> (\x -> x ++ " mm")
 
