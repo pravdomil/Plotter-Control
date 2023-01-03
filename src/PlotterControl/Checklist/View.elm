@@ -80,11 +80,8 @@ viewItem model a =
         PlotterControl.Checklist.CuttingKnifeInHolder ->
             checkbox model (text "Cutting knife is in tool holder.") a
 
-        PlotterControl.Checklist.CuttingKnifeDepth ->
-            checkbox model (text "Knife depth is set using 45° increments.") a
-
         PlotterControl.Checklist.CuttingTestOk ->
-            checkbox model (text "Cutting test succeed.") a
+            cuttingTest model
 
         PlotterControl.Checklist.CuttingKnifeSecureNut ->
             checkbox model (text "Knife depth is secured with nut.") a
@@ -173,11 +170,14 @@ drawingTest model =
 --
 
 
-cuttingTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+cuttingTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 cuttingTest model =
-    Element.PravdomilUi.Application.Block.Block
-        (Just "Test")
-        [ PlotterControl.Utils.View.quantityInput
+    column [ width fill, spacing 8 ]
+        [ checkbox model (text "Cutting test succeed.") PlotterControl.Checklist.CuttingTestOk
+        , PlotterControl.Utils.View.twoColumns
+            "Knife Depth:"
+            (text "Set manually")
+        , PlotterControl.Utils.View.quantityInput
             "Speed:"
             (PlotterControl.Utils.Utils.speedToString model.cuttingSpeed)
             none

@@ -76,7 +76,6 @@ type Item
     | DrawingToolHolderKnob
       --
     | CuttingKnifeInHolder
-    | CuttingKnifeDepth
     | CuttingTestOk
     | CuttingKnifeSecureNut
     | CuttingToolHolderKnob
@@ -115,7 +114,6 @@ drawingItems =
 cuttingItems : List Item
 cuttingItems =
     [ CuttingKnifeInHolder
-    , CuttingKnifeDepth
     , CuttingTestOk
     , CuttingKnifeSecureNut
     , CuttingToolHolderKnob
@@ -166,9 +164,6 @@ itemToComparable a =
 
         CuttingKnifeInHolder ->
             "CuttingKnifeInHolder"
-
-        CuttingKnifeDepth ->
-            "CuttingKnifeDepth"
 
         CuttingKnifeSecureNut ->
             "CuttingKnifeSecureNut"
