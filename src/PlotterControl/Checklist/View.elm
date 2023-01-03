@@ -30,21 +30,6 @@ view a model =
     , body =
         Element.PravdomilUi.Application.Blocks
             [ viewChecklist model (PlotterControl.Checklist.items a.checklist)
-            , case a.checklist of
-                PlotterControl.Checklist.Media ->
-                    Element.PravdomilUi.Application.Block.Empty
-
-                PlotterControl.Checklist.Markers ->
-                    markersTest model
-
-                PlotterControl.Checklist.Drawing ->
-                    drawingTest model
-
-                PlotterControl.Checklist.Cutting ->
-                    cuttingTest model
-
-                PlotterControl.Checklist.Perforation ->
-                    perforationTest model
             ]
     }
 
@@ -58,82 +43,81 @@ viewChecklist model items =
 
 viewItem : PlotterControl.Model.Model -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
 viewItem model a =
-    let
-        checkbox : Element PlotterControl.Msg.Msg -> Element PlotterControl.Msg.Msg
-        checkbox b =
-            inputCheckbox
-                theme
-                [ width fill ]
-                { label = b
-                , icon = inputCheckboxIcon theme
-                , checked = Dict.Any.member PlotterControl.Checklist.itemToComparable a model.checklist
-                , onChange = PlotterControl.Msg.ChecklistItemChecked a
-                }
-    in
     case a of
         PlotterControl.Checklist.MediaRollersInRange ->
-            checkbox (text "Rollers are within white range.")
+            checkbox model (text "Rollers are within white range.") a
 
         PlotterControl.Checklist.MediaRollersAlignment ->
-            checkbox (text "Medium and rollers are aligned.")
+            checkbox model (text "Medium and rollers are aligned.") a
 
         PlotterControl.Checklist.MediaFlangeGuides ->
-            checkbox (text "Media flange guides are locked.")
+            checkbox model (text "Media flange guides are locked.") a
 
         PlotterControl.Checklist.MediaLeverArmDown ->
-            checkbox (text "Lever arm is down.")
+            checkbox model (text "Lever arm is down.") a
 
         --
         PlotterControl.Checklist.MarkersSensorClean ->
-            checkbox (text "Sensor is cleaned with dust blaster.")
+            checkbox model (text "Sensor is cleaned with dust blaster.") a
 
         PlotterControl.Checklist.MarkersTestOk ->
-            checkbox (text "Marker test succeed.")
+            checkbox model (text "Marker test succeed.") a
 
         --
         PlotterControl.Checklist.DrawingPenInHolder ->
-            checkbox (text "Pen is in tool holder.")
+            checkbox model (text "Pen is in tool holder.") a
 
         PlotterControl.Checklist.DrawingPenDepth ->
-            checkbox (text "Pen depth is set.")
+            checkbox model (text "Pen depth is set.") a
 
         PlotterControl.Checklist.DrawingTestOk ->
-            checkbox (text "Drawing test succeed.")
+            checkbox model (text "Drawing test succeed.") a
 
         PlotterControl.Checklist.DrawingToolHolderKnob ->
-            checkbox (text "Tool holder knob is tight.")
+            checkbox model (text "Tool holder knob is tight.") a
 
         --
         PlotterControl.Checklist.CuttingKnifeInHolder ->
-            checkbox (text "Cutting knife is in tool holder.")
+            checkbox model (text "Cutting knife is in tool holder.") a
 
         PlotterControl.Checklist.CuttingKnifeDepth ->
-            checkbox (text "Knife depth is set using 45° increments.")
+            checkbox model (text "Knife depth is set using 45° increments.") a
 
         PlotterControl.Checklist.CuttingTestOk ->
-            checkbox (text "Cutting test succeed.")
+            checkbox model (text "Cutting test succeed.") a
 
         PlotterControl.Checklist.CuttingKnifeSecureNut ->
-            checkbox (text "Knife depth is secured with nut.")
+            checkbox model (text "Knife depth is secured with nut.") a
 
         PlotterControl.Checklist.CuttingToolHolderKnob ->
-            checkbox (text "Tool holder knob is tight.")
+            checkbox model (text "Tool holder knob is tight.") a
 
         --
         PlotterControl.Checklist.PerforationKnifeInHolder ->
-            checkbox (text "Perforation knife is in tool holder.")
+            checkbox model (text "Perforation knife is in tool holder.") a
 
         PlotterControl.Checklist.PerforationToolDepth ->
-            checkbox (text "Knife depth is set using 45° increments.")
+            checkbox model (text "Knife depth is set using 45° increments.") a
 
         PlotterControl.Checklist.PerforationTestOk ->
-            checkbox (text "Perforation test succeed.")
+            perforationTest model
 
         PlotterControl.Checklist.PerforationKnifeSecureNut ->
-            checkbox (text "Knife depth is secured with nut.")
+            checkbox model (text "Knife depth is secured with nut.") a
 
         PlotterControl.Checklist.PerforationToolHolderKnob ->
-            checkbox (text "Tool holder knob is tight.")
+            checkbox model (text "Tool holder knob is tight.") a
+
+
+checkbox : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
+checkbox model label a =
+    inputCheckbox theme
+        [ width fill ]
+        { label = label
+        , icon = inputCheckboxIcon theme
+        , checked = Dict.Any.member PlotterControl.Checklist.itemToComparable a model.checklist
+        , onChange = PlotterControl.Msg.ChecklistItemChecked a
+        }
 
 
 
@@ -223,15 +207,11 @@ cuttingTest model =
         ]
 
 
-
---
-
-
-perforationTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+perforationTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 perforationTest model =
-    Element.PravdomilUi.Application.Block.Block
-        (Just "Test")
-        [ PlotterControl.Utils.View.quantityInput
+    column [ width fill, spacing 8 ]
+        [ checkbox model (text "Perforation test succeed.") PlotterControl.Checklist.PerforationTestOk
+        , PlotterControl.Utils.View.quantityInput
             "Spacing:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationSpacing)
             none
