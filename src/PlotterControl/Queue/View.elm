@@ -54,34 +54,20 @@ view model =
                         ]
 
                     False ->
-                        [ inputRadio theme
-                            [ width fill ]
-                            { label = labelHidden "Items"
-                            , options =
-                                model.queue
-                                    |> Dict.Any.toList
-                                    |> List.sortBy (\( _, x ) -> x.created |> Time.posixToMillis)
-                                    |> List.map
-                                        (\( id, x ) ->
-                                            inputRadioBlockOption
-                                                theme
-                                                [ width fill ]
-                                                id
-                                                (row [ width fill ]
-                                                    [ textEllipsis [] (PlotterControl.Queue.itemNameToString x.name)
-                                                    , button theme
-                                                        [ height fill ]
-                                                        { label = FeatherIcons.x |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
-                                                        , active = False
-                                                        , onPress = Just (PlotterControl.Msg.QueueItemRemoveRequested id)
-                                                        }
-                                                    ]
-                                                )
-                                        )
-                            , selected = Nothing
-                            , onChange = always PlotterControl.Msg.NothingHappened
-                            }
-                        ]
+                        Dict.Any.toList model.queue
+                            |> List.sortBy (\( _, x ) -> x.created |> Time.posixToMillis)
+                            |> List.map
+                                (\( id, x ) ->
+                                    row [ width fill, height (px 40) ]
+                                        [ textEllipsis [] (PlotterControl.Queue.itemNameToString x.name)
+                                        , button theme
+                                            [ height fill ]
+                                            { label = FeatherIcons.x |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                                            , active = False
+                                            , onPress = Just (PlotterControl.Msg.QueueItemRemoveRequested id)
+                                            }
+                                        ]
+                                )
                 )
             ]
     }
