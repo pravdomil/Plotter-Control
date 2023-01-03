@@ -96,9 +96,6 @@ viewItem model a =
         PlotterControl.Checklist.PerforationKnifeInHolder ->
             checkbox model (text "Perforation knife is in tool holder.") a
 
-        PlotterControl.Checklist.PerforationToolDepth ->
-            checkbox model (text "Knife depth is set using 45° increments.") a
-
         PlotterControl.Checklist.PerforationTestOk ->
             perforationTest model
 
@@ -211,6 +208,9 @@ perforationTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 perforationTest model =
     column [ width fill, spacing 8 ]
         [ checkbox model (text "Perforation test succeed.") PlotterControl.Checklist.PerforationTestOk
+        , PlotterControl.Utils.View.twoColumns
+            "Knife Depth:"
+            (text "Set manually")
         , PlotterControl.Utils.View.quantityInput
             "Spacing:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationSpacing)

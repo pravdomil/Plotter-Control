@@ -82,7 +82,6 @@ type Item
     | CuttingToolHolderKnob
       --
     | PerforationKnifeInHolder
-    | PerforationToolDepth
     | PerforationTestOk
     | PerforationKnifeSecureNut
     | PerforationToolHolderKnob
@@ -126,7 +125,6 @@ cuttingItems =
 perforationItems : List Item
 perforationItems =
     [ PerforationKnifeInHolder
-    , PerforationToolDepth
     , PerforationTestOk
     , PerforationKnifeSecureNut
     , PerforationToolHolderKnob
@@ -183,9 +181,6 @@ itemToComparable a =
 
         PerforationKnifeInHolder ->
             "PerforationKnifeInHolder"
-
-        PerforationToolDepth ->
-            "PerforationToolDepth"
 
         PerforationKnifeSecureNut ->
             "PerforationKnifeSecureNut"
