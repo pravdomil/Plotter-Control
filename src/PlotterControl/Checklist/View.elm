@@ -203,7 +203,7 @@ cuttingTest model =
         , PlotterControl.Utils.View.quantityInput
             "Pressure:"
             (PlotterControl.Utils.Utils.massToString model.cuttingPressure)
-            (text ("~" ++ PlotterControl.Utils.Utils.massToString PlotterControl.Utils.Utils.layerCutPressure ++ " / layer"))
+            none
             (Mass.grams 20)
             PlotterControl.Msg.CuttingPressureChanged
         , PlotterControl.Utils.View.quantityInput
