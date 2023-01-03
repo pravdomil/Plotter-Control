@@ -24,17 +24,19 @@ view model =
         Just
             { attributes = []
             , left =
-                [ textButton theme
+                [ button theme
                     []
                     { label = text "Reset"
+                    , active = False
                     , onPress = Just PlotterControl.Msg.Reset
                     }
                 ]
             , center = text "Plotter Control"
             , right =
-                [ textButton theme
+                [ button theme
                     [ fontSemiBold ]
                     { label = text "Open"
+                    , active = False
                     , onPress = Just PlotterControl.Msg.OpenFilesRequested
                     }
                 ]

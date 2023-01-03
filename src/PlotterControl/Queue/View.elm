@@ -32,9 +32,10 @@ view model =
                         el [] none
 
                     False ->
-                        textButton theme
+                        button theme
                             []
                             { label = text "Download"
+                            , active = False
                             , onPress = Just PlotterControl.Msg.QueueDownloadRequested
                             }
                 ]
@@ -68,9 +69,10 @@ view model =
                                                 id
                                                 (row [ width fill ]
                                                     [ textEllipsis [] (PlotterControl.Queue.itemNameToString x.name)
-                                                    , textButton theme
+                                                    , button theme
                                                         [ height fill ]
                                                         { label = FeatherIcons.x |> FeatherIcons.withSize 20 |> PlotterControl.Utils.View.iconToElement
+                                                        , active = False
                                                         , onPress = Just (PlotterControl.Msg.QueueItemRemoveRequested id)
                                                         }
                                                     ]
@@ -94,17 +96,19 @@ mainButton model =
                 el [] none
 
             else
-                textButton theme
+                button theme
                     [ fontSemiBold ]
                     { label = text "Send"
+                    , active = False
                     , onPress = Just PlotterControl.Msg.SendQueueRequested
                     }
 
         stopButton : Element PlotterControl.Msg.Msg
         stopButton =
-            textButton theme
+            button theme
                 [ fontSemiBold, fontColor style.danger ]
                 { label = text "Stop"
+                , active = False
                 , onPress = Just PlotterControl.Msg.StopSendingRequested
                 }
     in

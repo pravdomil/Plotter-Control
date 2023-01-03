@@ -29,17 +29,19 @@ view { name } model =
                 Just
                     { attributes = []
                     , left =
-                        [ textButton theme
+                        [ button theme
                             []
                             { label = text "Download"
+                            , active = False
                             , onPress = Just (PlotterControl.Msg.DownloadSvgRequested name)
                             }
                         ]
                     , center = textEllipsis [ fontCenter, fontVariant fontTabularNumbers ] ("File " ++ PlotterControl.File.nameToString name)
                     , right =
-                        [ textButton theme
+                        [ button theme
                             [ fontSemiBold ]
                             { label = text "Enqueue"
+                            , active = False
                             , onPress = Just (PlotterControl.Msg.AddFileToQueueRequested name)
                             }
                         ]
@@ -109,9 +111,10 @@ markers name a =
                      ]
                         |> String.join " × "
                     )
-                , textButton theme
+                , button theme
                     []
                     { label = text "Test"
+                    , active = False
                     , onPress = Just (PlotterControl.Msg.FileMarkerTestRequested name)
                     }
                 ]

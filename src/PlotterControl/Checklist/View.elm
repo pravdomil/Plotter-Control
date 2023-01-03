@@ -150,9 +150,10 @@ markersTest model =
             none
             (PlotterControl.MarkerSensitivity.percentage 5)
             PlotterControl.Msg.MarkerSensitivityChanged
-        , textButton theme
+        , button theme
             [ centerX ]
             { label = text "Test Markers"
+            , active = False
             , onPress = Just PlotterControl.Msg.MarkerTestRequested
             }
         ]
@@ -178,9 +179,10 @@ drawingTest model =
             none
             (Mass.grams 20)
             PlotterControl.Msg.DrawingPressureChanged
-        , textButton theme
+        , button theme
             [ centerX ]
             { label = text "Test Drawing"
+            , active = False
             , onPress = Just PlotterControl.Msg.DrawingTestRequested
             }
         ]
@@ -212,9 +214,10 @@ cuttingTest model =
             none
             (Length.millimeters 0.05)
             PlotterControl.Msg.CuttingOffsetChanged
-        , textButton theme
+        , button theme
             [ centerX ]
             { label = text "Test Cutting"
+            , active = False
             , onPress = Just PlotterControl.Msg.CuttingTestRequested
             }
         ]
@@ -240,9 +243,10 @@ perforationTest model =
             none
             (Length.millimeters 0.05)
             PlotterControl.Msg.PerforationOffsetChanged
-        , textButton theme
+        , button theme
             [ centerX ]
             { label = text "Test Perforation"
+            , active = False
             , onPress = Just PlotterControl.Msg.PerforationTestRequested
             }
         ]

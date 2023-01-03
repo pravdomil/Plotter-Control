@@ -18,32 +18,36 @@ inputNumber : Element msg -> (Int -> msg) -> Element msg
 inputNumber value onChange =
     row [ width fill, spacing 8 ]
         [ el [ width fill, fontVariant fontTabularNumbers ] value
-        , textButton theme
+        , button theme
             []
             { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> iconToElement
+            , active = False
             , onPress = onChange -1 |> Just
             }
-        , textButton theme
+        , button theme
             []
             { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> iconToElement
+            , active = False
             , onPress = onChange 1 |> Just
             }
-        , textButton theme
+        , button theme
             []
             { label =
                 row []
                     [ FeatherIcons.minus |> FeatherIcons.withSize 20 |> iconToElement
                     , text " 10"
                     ]
+            , active = False
             , onPress = onChange -10 |> Just
             }
-        , textButton theme
+        , button theme
             []
             { label =
                 row []
                     [ FeatherIcons.plus |> FeatherIcons.withSize 20 |> iconToElement
                     , text " 10"
                     ]
+            , active = False
             , onPress = onChange 10 |> Just
             }
         ]
@@ -55,14 +59,16 @@ quantityInput label value note step onChange =
         label
         (row [ width fill, spacing 8 ]
             [ el [ width (px 80), fontVariant fontTabularNumbers ] (text value)
-            , textButton theme
+            , button theme
                 []
                 { label = FeatherIcons.minus |> FeatherIcons.withSize 20 |> iconToElement
+                , active = False
                 , onPress = Just (onChange (step |> Quantity.negate))
                 }
-            , textButton theme
+            , button theme
                 []
                 { label = FeatherIcons.plus |> FeatherIcons.withSize 20 |> iconToElement
+                , active = False
                 , onPress = Just (onChange step)
                 }
             , el [ fontSize 15, fontColor style.fore60 ] note

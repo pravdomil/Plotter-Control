@@ -48,9 +48,10 @@ view model =
                     , spellcheck = False
                     , onChange = PlotterControl.Msg.CommanderCommandChanged
                     }
-                , textButton theme
+                , button theme
                     [ fontSemiBold, centerX ]
                     { label = text "Enqueue"
+                    , active = False
                     , onPress = Just PlotterControl.Msg.CommanderSendRequested
                     }
                 , statusText theme [] "To enter service mode press left & right & enter on startup."
@@ -68,9 +69,10 @@ view model =
                     none
                     (Length.millimeters 0.1)
                     PlotterControl.Msg.CommanderSensorUpOffsetChanged
-                , textButton theme
+                , button theme
                     [ fontSemiBold, centerX ]
                     { label = text "Calibrate"
+                    , active = False
                     , onPress = Just PlotterControl.Msg.CommanderSensorCalibrateRequested
                     }
                 ]
