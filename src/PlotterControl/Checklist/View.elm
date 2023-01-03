@@ -67,11 +67,8 @@ viewItem model a =
         PlotterControl.Checklist.DrawingPenInHolder ->
             checkbox model (text "Pen is in tool holder.") a
 
-        PlotterControl.Checklist.DrawingPenDepth ->
-            checkbox model (text "Pen depth is set.") a
-
         PlotterControl.Checklist.DrawingTestOk ->
-            checkbox model (text "Drawing test succeed.") a
+            drawingTest model
 
         PlotterControl.Checklist.DrawingToolHolderKnob ->
             checkbox model (text "Tool holder knob is tight.") a
@@ -141,11 +138,14 @@ markersTest model =
 --
 
 
-drawingTest : PlotterControl.Model.Model -> Element.PravdomilUi.Application.Block.Block PlotterControl.Msg.Msg
+drawingTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 drawingTest model =
-    Element.PravdomilUi.Application.Block.Block
-        (Just "Test")
-        [ PlotterControl.Utils.View.quantityInput
+    column [ width fill, spacing 8 ]
+        [ checkbox model (text "Drawing test succeed.") PlotterControl.Checklist.DrawingTestOk
+        , PlotterControl.Utils.View.twoColumns
+            "Pen Depth:"
+            (text "Set manually")
+        , PlotterControl.Utils.View.quantityInput
             "Speed:"
             (PlotterControl.Utils.Utils.speedToString model.drawingSpeed)
             none

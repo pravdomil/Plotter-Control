@@ -71,7 +71,6 @@ type Item
     | MarkersTestOk
       --
     | DrawingPenInHolder
-    | DrawingPenDepth
     | DrawingTestOk
     | DrawingToolHolderKnob
       --
@@ -105,7 +104,6 @@ markersItems =
 drawingItems : List Item
 drawingItems =
     [ DrawingPenInHolder
-    , DrawingPenDepth
     , DrawingTestOk
     , DrawingToolHolderKnob
     ]
@@ -152,9 +150,6 @@ itemToComparable a =
 
         DrawingPenInHolder ->
             "DrawingPenInHolder"
-
-        DrawingPenDepth ->
-            "DrawingPenDepth"
 
         DrawingToolHolderKnob ->
             "DrawingToolHolderKnob"
