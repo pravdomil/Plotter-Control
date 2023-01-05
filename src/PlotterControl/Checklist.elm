@@ -76,6 +76,7 @@ type Item
     | CuttingKnifeInHolder
     | CuttingTestOk
     | CuttingKnifeSecureNut
+    | CuttingKnifeOffsetCorrected
       --
     | PerforationKnifeInHolder
     | PerforationTestOk
@@ -110,6 +111,7 @@ cuttingItems =
     [ CuttingKnifeInHolder
     , CuttingTestOk
     , CuttingKnifeSecureNut
+    , CuttingKnifeOffsetCorrected
     ]
 
 
@@ -156,6 +158,9 @@ itemToComparable a =
 
         CuttingTestOk ->
             "CuttingTestOk"
+
+        CuttingKnifeOffsetCorrected ->
+            "CuttingKnifeOffsetCorrected"
 
         PerforationKnifeInHolder ->
             "PerforationKnifeInHolder"
