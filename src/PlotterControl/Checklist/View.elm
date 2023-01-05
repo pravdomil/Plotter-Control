@@ -139,9 +139,6 @@ drawingTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 drawingTest model =
     column [ width fill, spacing 8 ]
         [ checkbox model (text "Drawing test succeed.") PlotterControl.Checklist.DrawingTestOk
-        , PlotterControl.Utils.View.twoColumns
-            "Pen Depth:"
-            (text "Set manually")
         , PlotterControl.Utils.View.quantityInput
             "Speed:"
             (PlotterControl.Utils.Utils.speedToString model.drawingSpeed)
@@ -154,6 +151,9 @@ drawingTest model =
             none
             (Mass.grams 20)
             PlotterControl.Msg.DrawingPressureChanged
+        , PlotterControl.Utils.View.twoColumns
+            "Pen Depth:"
+            (text "Set manually")
         , button theme
             [ centerX ]
             { label = text "Configure & Test"
