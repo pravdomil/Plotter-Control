@@ -65,17 +65,14 @@ viewItem model a =
 
         --
         PlotterControl.Checklist.DrawingPenInHolder ->
-            checkbox model (text "Pen is in tool holder.") a
+            checkbox model (text "Pen is in tool holder and knob is tight.") a
 
         PlotterControl.Checklist.DrawingTestOk ->
             drawingTest model
 
-        PlotterControl.Checklist.DrawingToolHolderKnob ->
-            checkbox model (text "Tool holder knob is tight.") a
-
         --
         PlotterControl.Checklist.CuttingKnifeInHolder ->
-            checkbox model (text "Cutting knife is in tool holder.") a
+            checkbox model (text "Cutting knife is in tool holder and knob is tight.") a
 
         PlotterControl.Checklist.CuttingTestOk ->
             cuttingTest model
@@ -83,21 +80,15 @@ viewItem model a =
         PlotterControl.Checklist.CuttingKnifeSecureNut ->
             checkbox model (text "Knife depth is secured with nut.") a
 
-        PlotterControl.Checklist.CuttingToolHolderKnob ->
-            checkbox model (text "Tool holder knob is tight.") a
-
         --
         PlotterControl.Checklist.PerforationKnifeInHolder ->
-            checkbox model (text "Perforation knife is in tool holder.") a
+            checkbox model (text "Perforation knife is in tool holder knob is tight.") a
 
         PlotterControl.Checklist.PerforationTestOk ->
             perforationTest model
 
         PlotterControl.Checklist.PerforationKnifeSecureNut ->
             checkbox model (text "Knife depth is secured with nut.") a
-
-        PlotterControl.Checklist.PerforationToolHolderKnob ->
-            checkbox model (text "Tool holder knob is tight.") a
 
 
 checkbox : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg

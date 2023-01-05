@@ -72,17 +72,14 @@ type Item
       --
     | DrawingPenInHolder
     | DrawingTestOk
-    | DrawingToolHolderKnob
       --
     | CuttingKnifeInHolder
     | CuttingTestOk
     | CuttingKnifeSecureNut
-    | CuttingToolHolderKnob
       --
     | PerforationKnifeInHolder
     | PerforationTestOk
     | PerforationKnifeSecureNut
-    | PerforationToolHolderKnob
 
 
 mediaItems : List Item
@@ -105,7 +102,6 @@ drawingItems : List Item
 drawingItems =
     [ DrawingPenInHolder
     , DrawingTestOk
-    , DrawingToolHolderKnob
     ]
 
 
@@ -114,7 +110,6 @@ cuttingItems =
     [ CuttingKnifeInHolder
     , CuttingTestOk
     , CuttingKnifeSecureNut
-    , CuttingToolHolderKnob
     ]
 
 
@@ -123,7 +118,6 @@ perforationItems =
     [ PerforationKnifeInHolder
     , PerforationTestOk
     , PerforationKnifeSecureNut
-    , PerforationToolHolderKnob
     ]
 
 
@@ -151,9 +145,6 @@ itemToComparable a =
         DrawingPenInHolder ->
             "DrawingPenInHolder"
 
-        DrawingToolHolderKnob ->
-            "DrawingToolHolderKnob"
-
         DrawingTestOk ->
             "DrawingTestOk"
 
@@ -163,9 +154,6 @@ itemToComparable a =
         CuttingKnifeSecureNut ->
             "CuttingKnifeSecureNut"
 
-        CuttingToolHolderKnob ->
-            "CuttingToolHolderKnob"
-
         CuttingTestOk ->
             "CuttingTestOk"
 
@@ -174,9 +162,6 @@ itemToComparable a =
 
         PerforationKnifeSecureNut ->
             "PerforationKnifeSecureNut"
-
-        PerforationToolHolderKnob ->
-            "PerforationToolHolderKnob"
 
         PerforationTestOk ->
             "PerforationTestOk"
