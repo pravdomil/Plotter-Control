@@ -165,9 +165,6 @@ cuttingTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 cuttingTest model =
     column [ width fill, spacing 8 ]
         [ checkbox model (text "Cutting test succeed.") PlotterControl.Checklist.CuttingTestOk
-        , PlotterControl.Utils.View.twoColumns
-            "Knife Depth:"
-            (text "Set manually")
         , PlotterControl.Utils.View.quantityInput
             "Speed:"
             (PlotterControl.Utils.Utils.speedToString model.cuttingSpeed)
@@ -180,6 +177,9 @@ cuttingTest model =
             none
             (Mass.grams 20)
             PlotterControl.Msg.CuttingPressureChanged
+        , PlotterControl.Utils.View.twoColumns
+            "Knife Depth:"
+            (text "Set manually")
         , button theme
             [ centerX ]
             { label = text "Configure & Test"
