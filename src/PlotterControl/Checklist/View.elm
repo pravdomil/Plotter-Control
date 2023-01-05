@@ -180,12 +180,6 @@ cuttingTest model =
             none
             (Mass.grams 20)
             PlotterControl.Msg.CuttingPressureChanged
-        , PlotterControl.Utils.View.quantityInput
-            "Offset:"
-            (PlotterControl.Utils.Utils.lengthToString model.cuttingOffset)
-            none
-            (Length.millimeters 0.05)
-            PlotterControl.Msg.CuttingOffsetChanged
         , button theme
             [ centerX ]
             { label = text "Configure & Test"
