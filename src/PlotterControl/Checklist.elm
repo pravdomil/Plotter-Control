@@ -81,6 +81,7 @@ type Item
     | PerforationKnifeInHolder
     | PerforationTestOk
     | PerforationKnifeSecureNut
+    | PerforationKnifeOffsetCorrected
 
 
 mediaItems : List Item
@@ -120,6 +121,7 @@ perforationItems =
     [ PerforationKnifeInHolder
     , PerforationTestOk
     , PerforationKnifeSecureNut
+    , PerforationKnifeOffsetCorrected
     ]
 
 
@@ -170,3 +172,6 @@ itemToComparable a =
 
         PerforationTestOk ->
             "PerforationTestOk"
+
+        PerforationKnifeOffsetCorrected ->
+            "PerforationKnifeOffsetCorrected"

@@ -93,6 +93,9 @@ viewItem model a =
         PlotterControl.Checklist.PerforationKnifeSecureNut ->
             checkbox model (text "Knife depth is secured with nut.") a
 
+        PlotterControl.Checklist.PerforationKnifeOffsetCorrected ->
+            perforationTestKnifeOffset model
+
 
 checkbox : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
 checkbox model label a =
@@ -211,6 +214,10 @@ cuttingTestKnifeOffset model =
         ]
 
 
+
+--
+
+
 perforationTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 perforationTest model =
     column [ width fill, spacing 8 ]
@@ -224,6 +231,19 @@ perforationTest model =
             none
             (Length.millimeters 0.2)
             PlotterControl.Msg.PerforationSpacingChanged
+        , button theme
+            [ centerX ]
+            { label = text "Configure & Test"
+            , active = False
+            , onPress = Just PlotterControl.Msg.PerforationTestRequested
+            }
+        ]
+
+
+perforationTestKnifeOffset : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
+perforationTestKnifeOffset model =
+    column [ width fill, spacing 8 ]
+        [ checkbox model (text "Knife offset is corrected.") PlotterControl.Checklist.PerforationKnifeOffsetCorrected
         , PlotterControl.Utils.View.quantityInput
             "Offset:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationOffset)
