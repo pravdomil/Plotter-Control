@@ -80,6 +80,9 @@ viewItem model a =
         PlotterControl.Checklist.CuttingKnifeSecureNut ->
             checkbox model (text "Knife depth is secured with nut.") a
 
+        PlotterControl.Checklist.CuttingKnifeOffsetCorrected ->
+            cuttingTestKnifeOffset model
+
         --
         PlotterControl.Checklist.PerforationKnifeInHolder ->
             checkbox model (text "Perforation knife is in tool holder knob is tight.") a
@@ -180,6 +183,25 @@ cuttingTest model =
         , PlotterControl.Utils.View.twoColumns
             "Knife Depth:"
             (text "Set manually")
+        , button theme
+            [ centerX ]
+            { label = text "Configure & Test"
+            , active = False
+            , onPress = Just PlotterControl.Msg.CuttingTestRequested
+            }
+        ]
+
+
+cuttingTestKnifeOffset : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
+cuttingTestKnifeOffset model =
+    column [ width fill, spacing 8 ]
+        [ checkbox model (text "Knife offset is corrected.") PlotterControl.Checklist.CuttingKnifeOffsetCorrected
+        , PlotterControl.Utils.View.quantityInput
+            "Offset:"
+            (PlotterControl.Utils.Utils.lengthToString model.cuttingOffset)
+            none
+            (Length.millimeters 0.05)
+            PlotterControl.Msg.CuttingOffsetChanged
         , button theme
             [ centerX ]
             { label = text "Configure & Test"
