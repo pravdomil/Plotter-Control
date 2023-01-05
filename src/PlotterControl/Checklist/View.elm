@@ -222,15 +222,15 @@ perforationTest : PlotterControl.Model.Model -> Element PlotterControl.Msg.Msg
 perforationTest model =
     column [ width fill, spacing 8 ]
         [ checkbox model (text "Perforation test succeed.") PlotterControl.Checklist.PerforationTestOk
-        , PlotterControl.Utils.View.twoColumns
-            "Knife Depth:"
-            (text "Set manually")
         , PlotterControl.Utils.View.quantityInput
             "Spacing:"
             (PlotterControl.Utils.Utils.lengthToString model.perforationSpacing)
             none
             (Length.millimeters 0.2)
             PlotterControl.Msg.PerforationSpacingChanged
+        , PlotterControl.Utils.View.twoColumns
+            "Knife Depth:"
+            (text "Set manually")
         , button theme
             [ centerX ]
             { label = text "Configure & Test"
