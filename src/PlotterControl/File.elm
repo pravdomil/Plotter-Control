@@ -348,9 +348,9 @@ readyToSvg a =
                 [ XmlParser.Attribute "xmlns" "http://www.w3.org/2000/svg"
                 , XmlParser.Attribute "viewBox" (box |> Maybe.map boundingBoxToViewBox |> Maybe.withDefault "")
                 ]
-                [ XmlParser.Element "g" [] (polylines |> List.map polylineToSvg)
-                , XmlParser.Element "g" [] (markers |> List.map rectangleToSvg)
-                ]
+                ((polylines |> List.map polylineToSvg)
+                    ++ (markers |> List.map rectangleToSvg)
+                )
     in
     XmlParser.format (XmlParser.Xml [] Nothing node)
 
