@@ -316,7 +316,7 @@ readyToSvg a =
         resolution =
             Pixels.pixels 72 |> Quantity.per (Length.inches 1)
 
-        box : Maybe (BoundingBox2d.BoundingBox2d Length.Meters ())
+        box : BoundingBox2d.BoundingBox2d Length.Meters ()
         box =
             polylines
                 |> List.filterMap Polyline2d.boundingBox
@@ -325,6 +325,7 @@ readyToSvg a =
                     (\x ->
                         BoundingBox2d.aggregate x (markers |> List.map Rectangle2d.boundingBox)
                     )
+                |> Maybe.withDefault (BoundingBox2d.from Point2d.origin Point2d.origin)
 
         rotation : Angle.Angle
         rotation =
@@ -342,14 +343,20 @@ readyToSvg a =
                 |> Maybe.withDefault []
                 |> List.map (Rectangle2d.mirrorAcross Axis2d.x >> Rectangle2d.rotateAround Point2d.origin rotation)
 
+        toZero : Vector2d.Vector2d Length.Meters coordinates
+        toZero =
+            Vector2d.from
+                (Point2d.xy (BoundingBox2d.minX box) (BoundingBox2d.minY box))
+                Point2d.origin
+
         node : XmlParser.Node
         node =
             XmlParser.Element "svg"
                 [ XmlParser.Attribute "xmlns" "http://www.w3.org/2000/svg"
-                , XmlParser.Attribute "viewBox" (box |> Maybe.map boundingBoxToViewBox |> Maybe.withDefault "")
+                , XmlParser.Attribute "viewBox" (box |> BoundingBox2d.translateBy toZero |> boundingBoxToViewBox)
                 ]
-                ((polylines |> List.map polylineToSvg)
-                    ++ (markers |> List.map rectangleToSvg)
+                ((polylines |> List.map (Polyline2d.translateBy toZero >> polylineToSvg))
+                    ++ (markers |> List.map (Rectangle2d.translateBy toZero >> rectangleToSvg))
                 )
     in
     XmlParser.format (XmlParser.Xml [] Nothing node)
