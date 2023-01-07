@@ -44,6 +44,9 @@ viewChecklist model items =
 viewItem : PlotterControl.Model.Model -> PlotterControl.Checklist.Item -> Element PlotterControl.Msg.Msg
 viewItem model a =
     case a of
+        PlotterControl.Checklist.MediaStraightEnd ->
+            checkbox model (text "Medium has straight end.") a
+
         PlotterControl.Checklist.MediaRollersInRange ->
             checkbox model (text "Rollers are within white range.") a
 

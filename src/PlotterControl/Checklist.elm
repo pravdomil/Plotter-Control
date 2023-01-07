@@ -62,7 +62,8 @@ items a =
 
 
 type Item
-    = MediaRollersInRange
+    = MediaStraightEnd
+    | MediaRollersInRange
     | MediaRollersAlignment
     | MediaFlangeGuides
     | MediaLeverArmDown
@@ -128,6 +129,9 @@ perforationItems =
 itemToComparable : Item -> String
 itemToComparable a =
     case a of
+        MediaStraightEnd ->
+            "MediaStraightEnd"
+
         MediaRollersInRange ->
             "MediaRollersInRange"
 
